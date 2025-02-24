@@ -25,41 +25,41 @@ public class Cell {
 
 	Marble getMarble()
 	{
-		 /**
-	     * Retrieves the marble occupying this cell.
-	     *
-	     * @return The Marble object or null if unoccupied.
-	     */
+		/**
+		 * Retrieves the marble occupying this cell.
+		 *
+		 * @return The Marble object or null if unoccupied.
+		 */
 		return marble;
 	}
 
 	CellType getCellType()
 	{
-		 /**
-	     * Retrieves the type of the cell.
-	     *
-	     * @return The CellType of this cell.
-	     */
+		/**
+		 * Retrieves the type of the cell.
+		 *
+		 * @return The CellType of this cell.
+		 */
 		return cellType;
 	}
 
 	boolean isTrap()
 	{
-		 /**
-	     * Checks if this cell is a trap.
-	     *
-	     * @return true if this cell is a trap, false otherwise.
-	     */
+		/**
+		 * Checks if this cell is a trap.
+		 *
+		 * @return true if this cell is a trap, false otherwise.
+		 */
 		return trap;
 	}
 
 	void setMarble(Marble marble)
 	{
 		/**
-	     * Assigns a marble to this cell.
-	     *
-	     * @param marble The marble to place in the cell.
-	     */
+		 * Assigns a marble to this cell.
+		 *
+		 * @param marble The marble to place in the cell.
+		 */
 		this.marble = marble;
 	}
 
@@ -76,10 +76,10 @@ public class Cell {
 	void setTrap(boolean trap)
 	{
 		/**
-	     * Marks this cell as a trap or removes the trap status.
-	     *
-	     * @param trap true to mark as a trap, false to remove the trap status.
-	     */
+		 * Marks this cell as a trap or removes the trap status.
+		 *
+		 * @param trap true to mark as a trap, false to remove the trap status.
+		 */
 		this.trap = trap;
 	}
 
