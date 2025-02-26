@@ -15,10 +15,10 @@ public class Board implements BoardManager {
 		this.safeZones = new ArrayList<>();
 		splitDistance = 3;
 		assignCells();
-		assignTrapCell();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 8; i++)// assign 8 random cells to traps
+			assignTrapCell();
+		for (int i = 0; i < 4; i++)
 			safeZones.add(new SafeZone(colourOrder.get(i)));
-		}
 
 	}
 
@@ -39,14 +39,13 @@ public class Board implements BoardManager {
 		}
 	}
 
-	private void assignTrapCell() {// Assigning 8 random trap cells to 8 NORMAL cells
-		int assignedCellsCount = 0;
-		while (assignedCellsCount < 8) {
+	private void assignTrapCell() {// Assigning a random trap cell
+		while (true) {
 			int random = (int) (Math.random() * 100);// generates a random integer from 0 to 99 inclusive
 			Cell randomCell = track.get(random);
 			if (randomCell.getCellType() == CellType.NORMAL && !randomCell.isTrap()) {
-				randomCell.setTrap(true);
-				assignedCellsCount++;
+				randomCell.setTrap(true);// randomCell pointer points at same value of actual cell in track
+				break;
 			}
 		}
 	}
