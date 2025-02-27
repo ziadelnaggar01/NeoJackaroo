@@ -18,6 +18,11 @@ public class Game implements GameManager {
 
 	public Game(String playerName) throws IOException {
 		ArrayList<Colour> colours = new ArrayList<>();
+		colours.add(Colour.RED);
+		colours.add(Colour.GREEN);
+		colours.add(Colour.BLUE);
+		colours.add(Colour.YELLOW);
+
 		Collections.shuffle(colours);// built in method to shuffle elements in a list, can use a seed with it
 		this.board = new Board(colours, this);
 		Deck.loadCardPool(this, board);
