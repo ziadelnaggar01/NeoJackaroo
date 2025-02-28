@@ -6,6 +6,7 @@ import model.Colour;
 // A class representing the Players available in the game.
 
 public class Player {
+
 	private final String name; // A String representing the name of a player, cannot be changed once initialized
 	private final Colour colour; //  An object of type Colour acting as a reference to associate a player to their SafeZone and Marbles, cannot be changed once initialized
 	private Card[] hand; // An arraylist representing the hand of cards each player has. 
@@ -13,9 +14,9 @@ public class Player {
 	private Card selectedCard; // A Card object representing the card to be played.
 	private final Marble[] selectedMarbles; // An arraylist representing the marbles to be played, cannot be changed once initialized
 
-	Player(String name, Colour colour)
+	public Player(String name, Colour colour)
 	{
-		//Player object constructor, with default access, no need to access it outside package.
+		//Player object constructor
 
 		/*
 		 * Constructor that initializes a Player object with the player name and colour as attributes, 

@@ -6,7 +6,8 @@ import engine.board.BoardManager;
 // Represents a burner card, a subclass of Wild.
 
 public class Burner extends Wild {
-	public  Burner(String name, String description, BoardManager boardManager, GameManager gameManager)
+
+	public Burner(String name, String description, BoardManager boardManager, GameManager gameManager)
 	{
 		/**
 		 * Constructs a Burner card with the specified parameters.
