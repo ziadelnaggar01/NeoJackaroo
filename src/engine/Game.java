@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import engine.board.Board;
+import model.Colour;
 import model.card.Card;
+import model.card.Deck;
 import model.player.CPU;
 import model.player.Player;
 
@@ -15,7 +17,7 @@ public class Game implements GameManager {
 	private final ArrayList<Card> firePit;
 	private int currentPlayerIndex;
 	private int turn;
-
+    
 	public Game(String playerName) throws IOException {
 		ArrayList<Colour> colours = new ArrayList<>();
 		colours.add(Colour.RED);

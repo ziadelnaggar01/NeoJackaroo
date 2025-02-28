@@ -2,6 +2,9 @@ package engine.board;
 
 import java.util.ArrayList;
 
+import engine.GameManager;
+import model.Colour;
+
 public class Board implements BoardManager {
 
 	private final GameManager gameManager;

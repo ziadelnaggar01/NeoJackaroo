@@ -2,6 +2,8 @@ package engine.board;
 
 import java.util.ArrayList;
 
+import model.Colour;
+
 
 public class SafeZone {
 	// READ ONLY attributes
