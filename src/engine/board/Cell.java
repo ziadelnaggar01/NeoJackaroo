@@ -5,13 +5,14 @@ import model.player.Marble;
 // A class representing the Cells available on the board.
 
 public class Cell {
+
 	private Marble marble; // It's either null of occupied by a marble object
 	private CellType cellType; // To specify cell type (NORMAL, SAFE, BASE, ENTRY)
 	private boolean trap; // Indicates if this cell is a trap cell
 
-	Cell(CellType cellType)
+	public Cell(CellType cellType)
 	{
-		// Cell Object constructor with default access, no need to access it outside the board package
+		// Cell Object constructor
 
 		/*
 		 *  initializes a Cell object with the cell type 
@@ -23,7 +24,7 @@ public class Cell {
 		trap = false;
 	}
 
-	Marble getMarble()
+	public Marble getMarble()
 	{
 		/**
 		 * Retrieves the marble occupying this cell.
@@ -33,7 +34,7 @@ public class Cell {
 		return marble;
 	}
 
-	CellType getCellType()
+	public CellType getCellType()
 	{
 		/**
 		 * Retrieves the type of the cell.
@@ -43,7 +44,7 @@ public class Cell {
 		return cellType;
 	}
 
-	boolean isTrap()
+	public boolean isTrap()
 	{
 		/**
 		 * Checks if this cell is a trap.
@@ -53,7 +54,7 @@ public class Cell {
 		return trap;
 	}
 
-	void setMarble(Marble marble)
+	public void setMarble(Marble marble)
 	{
 		/**
 		 * Assigns a marble to this cell.
@@ -63,7 +64,7 @@ public class Cell {
 		this.marble = marble;
 	}
 
-	void setCellType(CellType cellType)
+	public void setCellType(CellType cellType)
 	{
 		/**
 		 * Sets the type of this cell.
@@ -73,7 +74,7 @@ public class Cell {
 		this.cellType = cellType;
 	}
 
-	void setTrap(boolean trap)
+	public void setTrap(boolean trap)
 	{
 		/**
 		 * Marks this cell as a trap or removes the trap status.

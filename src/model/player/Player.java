@@ -1,21 +1,23 @@
 package model.player;
 
+import java.util.ArrayList;
 import model.card.Card;
 import model.Colour;
 
 // A class representing the Players available in the game.
 
 public class Player {
+
 	private final String name; // A String representing the name of a player, cannot be changed once initialized
 	private final Colour colour; //  An object of type Colour acting as a reference to associate a player to their SafeZone and Marbles, cannot be changed once initialized
-	private Card[] hand; // An arraylist representing the hand of cards each player has. 
-	private final Marble[] marbles; // An arraylist representing the marbles each player has in their HomeZone, cannot be changed once initialized
+	private ArrayList<Card>  hand; // An arraylist representing the hand of cards each player has. 
+	private final ArrayList<Marble> marbles; // An arraylist representing the marbles each player has in their HomeZone, cannot be changed once initialized
 	private Card selectedCard; // A Card object representing the card to be played.
-	private final Marble[] selectedMarbles; // An arraylist representing the marbles to be played, cannot be changed once initialized
+	private final ArrayList<Marble> selectedMarbles; // An arraylist representing the marbles to be played, cannot be changed once initialized
 
-	Player(String name, Colour colour)
+	public Player(String name, Colour colour)
 	{
-		//Player object constructor, with default access, no need to access it outside package.
+		//Player object constructor
 
 		/*
 		 * Constructor that initializes a Player object with the player name and colour as attributes, 
@@ -26,9 +28,9 @@ public class Player {
 		 */
 		this.name = name;
 		this.colour = colour;
-		hand = new Card[4];
-		marbles = new Marble[4];
-		selectedMarbles = new Marble[4];
+		hand = new ArrayList<>();
+		marbles = new ArrayList<>();
+		selectedMarbles = new ArrayList<>();
 		selectedCard = null;
 	}
 
@@ -52,28 +54,28 @@ public class Player {
 		return colour;
 	}
 
-	public Card[] getHand()
+	public ArrayList<Card> getHand()
 	{
 		/**
 		 * Retrieves the player's hand of cards.
 		 *
-		 * @return An array of Cards representing the player's hand.
+		 * @return An ArrayList of Card objects representing the player's hand.
 		 */
 		return hand;
 	}
 
-	public void setHand(Card[] newHand)
+	public void setHand(ArrayList<Card> newHand)
 	{
 		/**
 		 * Updates the player's hand with a new set of cards.
 		 *
-		 * @param newHand An array of Cards representing the new hand.
+		 * @param newHand An arraylist of Cards representing the new hand.
 		 */
-		for(int i=0; i<newHand.length;i++)
-			hand[i] = newHand[i];
+		hand.clear();
+		hand.addAll(newHand);
 	}
 
-	public Marble[] getMarbles()
+	public ArrayList<Marble> getMarbles()
 	{
 		/**
 		 * Retrieves the marbles in the player's Home Zone.
