@@ -84,7 +84,4 @@ public class Cell {
 		this.trap = trap;
 	}
 
-
-
-
 }
