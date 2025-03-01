@@ -10,22 +10,19 @@ public class Cell {
 	private CellType cellType; // To specify cell type (NORMAL, SAFE, BASE, ENTRY)
 	private boolean trap; // Indicates if this cell is a trap cell
 
-	public Cell(CellType cellType)
-	{
+	public Cell(CellType cellType) {
 		// Cell Object constructor
 
 		/*
-		 *  initializes a Cell object with the cell type 
-		 *  sets the marble to null
-		 *  sets trap to false
+		 * initializes a Cell object with the cell type sets the marble to null sets
+		 * trap to false
 		 */
 		this.cellType = cellType;
 		marble = null;
 		trap = false;
 	}
 
-	public Marble getMarble()
-	{
+	public Marble getMarble() {
 		/**
 		 * Retrieves the marble occupying this cell.
 		 *
@@ -34,8 +31,7 @@ public class Cell {
 		return marble;
 	}
 
-	public CellType getCellType()
-	{
+	public CellType getCellType() {
 		/**
 		 * Retrieves the type of the cell.
 		 *
@@ -44,8 +40,7 @@ public class Cell {
 		return cellType;
 	}
 
-	public boolean isTrap()
-	{
+	public boolean isTrap() {
 		/**
 		 * Checks if this cell is a trap.
 		 *
@@ -54,8 +49,7 @@ public class Cell {
 		return trap;
 	}
 
-	public void setMarble(Marble marble)
-	{
+	public void setMarble(Marble marble) {
 		/**
 		 * Assigns a marble to this cell.
 		 *
@@ -64,8 +58,7 @@ public class Cell {
 		this.marble = marble;
 	}
 
-	public void setCellType(CellType cellType)
-	{
+	public void setCellType(CellType cellType) {
 		/**
 		 * Sets the type of this cell.
 		 *
@@ -74,8 +67,7 @@ public class Cell {
 		this.cellType = cellType;
 	}
 
-	public void setTrap(boolean trap)
-	{
+	public void setTrap(boolean trap) {
 		/**
 		 * Marks this cell as a trap or removes the trap status.
 		 *

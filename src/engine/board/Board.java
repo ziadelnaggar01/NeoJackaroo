@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import engine.GameManager;
 import model.Colour;
 
+/**
+ * Represents the game board, including the main track and safe zones. Manages
+ * cell assignments and trap placements.
+ */
 public class Board implements BoardManager {
 
 	private final GameManager gameManager;
@@ -12,29 +16,37 @@ public class Board implements BoardManager {
 	private final ArrayList<SafeZone> safeZones;
 	private int splitDistance;
 
+	/**
+	 * Constructs a game board with the given player color order. Initializes the
+	 * track, safe zones, and assigns trap cells.
+	 *
+	 * @param colourOrder The order of colors assigned to players.
+	 * @param gameManager The game manager responsible for overall game control.
+	 */
 	public Board(ArrayList<Colour> colourOrder, GameManager gameManager) {
 		this.gameManager = gameManager;
 		this.track = new ArrayList<>();
 		this.safeZones = new ArrayList<>();
-		splitDistance = 3;
+		this.splitDistance = 3;
 		assignCells();
-		for (int i = 0; i < 8; i++)// assign 8 random cells to traps
+
+		// Assign trap cells randomly on the track
+		for (int i = 0; i < 8; i++)
 			assignTrapCell();
+
+		// Initialize safe zones for each player
 		for (int i = 0; i < 4; i++)
 			safeZones.add(new SafeZone(colourOrder.get(i)));
-
 	}
 
-	private void assignCells() {// Assigning cells on the main track (safeEntry, normal, base), neither safeZone
-								// nor homeZone included
+	/**
+	 * Assigns cells to the main track, including base, normal, and entry cells.
+	 */
+	private void assignCells() {
 		for (int i = 0; i < 100; i++) {
-			// if i%25 means start of quarter so base cell
-			if (i % 25 == 0) {
+			if (i % 25 == 0) { // Base cell at the start of each quarter
 				track.add(new Cell(CellType.BASE));
-			}
-			// before start of quarter by 2 cells means its the entry safe zone for the
-			// quarter/player
-			else if (i == 23 || i == 48 || i == 73 || i == 98) {
+			} else if ((i + 2) % 25 == 0) { // Entry cell before each quarter start by 2 cells
 				track.add(new Cell(CellType.ENTRY));
 			} else {
 				track.add(new Cell(CellType.NORMAL));
@@ -42,12 +54,15 @@ public class Board implements BoardManager {
 		}
 	}
 
-	private void assignTrapCell() {// Assigning a random trap cell
+	/**
+	 * Assigns a trap to a random normal cell that does not already contain one.
+	 */
+	private void assignTrapCell() {
 		while (true) {
-			int random = (int) (Math.random() * 100);// generates a random integer from 0 to 99 inclusive
+			int random = (int) (Math.random() * 100);
 			Cell randomCell = track.get(random);
 			if (randomCell.getCellType() == CellType.NORMAL && !randomCell.isTrap()) {
-				randomCell.setTrap(true);// randomCell pointer points at same value of actual cell in track
+				randomCell.setTrap(true);
 				break;
 			}
 		}
@@ -73,5 +88,4 @@ public class Board implements BoardManager {
 	public void setSplitDistance(int splitDistance) {
 		this.splitDistance = splitDistance;
 	}
-
 }

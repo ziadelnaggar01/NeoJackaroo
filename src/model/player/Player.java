@@ -4,27 +4,30 @@ import java.util.ArrayList;
 import model.card.Card;
 import model.Colour;
 
-// A class representing the Players available in the game.
+/** A class representing the Players available in the game. */
 
 public class Player {
 
-	private final String name; // A String representing the name of a player, cannot be changed once initialized
-	private final Colour colour; //  An object of type Colour acting as a reference to associate a player to their SafeZone and Marbles, cannot be changed once initialized
-	private ArrayList<Card>  hand; // An arraylist representing the hand of cards each player has. 
-	private final ArrayList<Marble> marbles; // An arraylist representing the marbles each player has in their HomeZone, cannot be changed once initialized
+	private final String name; // A String representing the name of a player, cannot be changed once
+								// initialized
+	private final Colour colour; // An object of type Colour acting as a reference to associate a player to their
+									// SafeZone and Marbles, cannot be changed once initialized
+	private ArrayList<Card> hand; // An arraylist representing the hand of cards each player has.
+	private final ArrayList<Marble> marbles; // An arraylist representing the marbles each player has in their HomeZone,
+												// cannot be changed once initialized
 	private Card selectedCard; // A Card object representing the card to be played.
-	private final ArrayList<Marble> selectedMarbles; // An arraylist representing the marbles to be played, cannot be changed once initialized
+	private final ArrayList<Marble> selectedMarbles; // An arraylist representing the marbles to be played, cannot be
+														// changed once initialized
 
-	public Player(String name, Colour colour)
-	{
-		//Player object constructor
+	public Player(String name, Colour colour) {
+		// Player object constructor
 
-		/*
-		 * Constructor that initializes a Player object with the player name and colour as attributes, 
-		 * and does the following:
-			 1. Initialize the hand, selectedMarbles, and marbles to empty ArrayLists
-			 2. Create 4 marbles with the same colour as the player and add them to the marbles.
-			 3. Initialize the selectedCard to null (Default Value)
+		/**
+		 * Constructor that initializes a Player object with the player name and colour
+		 * as attributes, and does the following: 1. Initialize the hand,
+		 * selectedMarbles, and marbles to empty ArrayLists 2. Create 4 marbles with the
+		 * same colour as the player and add them to the marbles. 3. Initialize the
+		 * selectedCard to null (Default Value)
 		 */
 		this.name = name;
 		this.colour = colour;
@@ -34,8 +37,7 @@ public class Player {
 		selectedCard = null;
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		/**
 		 * Retrieves the player's name.
 		 *
@@ -44,8 +46,7 @@ public class Player {
 		return name;
 	}
 
-	public Colour getColour()
-	{
+	public Colour getColour() {
 		/**
 		 * Retrieves the player's assigned colour.
 		 *
@@ -54,8 +55,7 @@ public class Player {
 		return colour;
 	}
 
-	public ArrayList<Card> getHand()
-	{
+	public ArrayList<Card> getHand() {
 		/**
 		 * Retrieves the player's hand of cards.
 		 *
@@ -64,8 +64,7 @@ public class Player {
 		return hand;
 	}
 
-	public void setHand(ArrayList<Card> newHand)
-	{
+	public void setHand(ArrayList<Card> newHand) {
 		/**
 		 * Updates the player's hand with a new set of cards.
 		 *
@@ -75,8 +74,7 @@ public class Player {
 		hand.addAll(newHand);
 	}
 
-	public ArrayList<Marble> getMarbles()
-	{
+	public ArrayList<Marble> getMarbles() {
 		/**
 		 * Retrieves the marbles in the player's Home Zone.
 		 *
@@ -85,9 +83,7 @@ public class Player {
 		return marbles;
 	}
 
-
-	public Card getSelectedCard()
-	{
+	public Card getSelectedCard() {
 		/**
 		 * Retrieves the selected card for the player's turn.
 		 *

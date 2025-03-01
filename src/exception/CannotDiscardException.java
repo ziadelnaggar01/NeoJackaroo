@@ -1,22 +1,27 @@
 package exception;
 
-// Class representing an exception that can occur whenever an invalid card discard occurs.
+/**
+ * A subclass from ActionException class representing an exception that can occur whenever an invalid card
+ * discard occurs.
+ */
 
-public class CannotDiscardException extends ActionException{
+public class CannotDiscardException extends ActionException {
 
-	public CannotDiscardException()
-	{
-		// Constructs an CannotDiscardException with no detailed message.
+	/**
+	 * Constructs an CannotDiscardException with no detailed message.
+	 */
+
+	public CannotDiscardException() {
 		super();
 	}
 
-	public CannotDiscardException(String message)
-	{
-		/**
-		 * Constructs an CannotDiscardException with a specified error message.
-		 *
-		 * @param message The detail message explaining the cause of the exception.
-		 */
+	/**
+	 * Constructs an CannotDiscardException with a specified error message.
+	 *
+	 * @param message The detail message explaining the cause of the exception.
+	 */
+	public CannotDiscardException(String message) {
+
 		super(message);
 	}
 

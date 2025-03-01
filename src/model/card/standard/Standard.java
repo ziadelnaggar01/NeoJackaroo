@@ -4,21 +4,47 @@ import engine.GameManager;
 import engine.board.BoardManager;
 import model.card.Card;
 
-// A class representing the standard deck cards available in the game.
+/**
+ * A class representing the standard deck cards available in the game. This
+ * serves as the parent class for other specific card types.
+ */
 public class Standard extends Card {
-// parent of the remaining cards
-	private final int rank;
-	private final Suit suit;
-	public Standard(String name, String description, int rank,Suit suit,BoardManager boardManager, GameManager gameManager) {
-		super(name,description,boardManager,gameManager);
+
+	private final int rank; // The rank of the card (e.g., 2-10, face cards).
+	private final Suit suit; // The suit of the card (e.g., Hearts, Diamonds, Clubs, Spades).
+
+	/**
+	 * Constructs a standard card with the given attributes.
+	 *
+	 * @param name         The name of the card.
+	 * @param description  A brief description of the card's function.
+	 * @param rank         The numerical rank of the card.
+	 * @param suit         The suit of the card.
+	 * @param boardManager The board manager instance.
+	 * @param gameManager  The game manager instance.
+	 */
+	public Standard(String name, String description, int rank, Suit suit, BoardManager boardManager,
+			GameManager gameManager) {
+		super(name, description, boardManager, gameManager);
 		this.rank = rank;
 		this.suit = suit;
 	}
+
+	/**
+	 * Gets the rank of the card.
+	 *
+	 * @return The rank of the card.
+	 */
 	public int getRank() {
 		return rank;
 	}
+
+	/**
+	 * Gets the suit of the card.
+	 *
+	 * @return The suit of the card.
+	 */
 	public Suit getSuit() {
 		return suit;
 	}
-	
 }

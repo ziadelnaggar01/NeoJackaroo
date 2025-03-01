@@ -1,17 +1,18 @@
 package exception;
 
-// Class representing an exception that can occur whenever an invalid split distance is chosen.
+/**
+ * Class representing an exception that can occur whenever an invalid split
+ * distance is chosen.
+ */
 
-public class SplitOutOfRangeException extends InvalidSelectionException{
+public class SplitOutOfRangeException extends InvalidSelectionException {
 
-	public SplitOutOfRangeException()
-	{
-		// Constructs an SplitOutOfRangeException with no detailed message.
+	public SplitOutOfRangeException() {
+		/** Constructs an SplitOutOfRangeException with no detailed message. */
 		super();
 	}
 
-	public SplitOutOfRangeException(String message)
-	{
+	public SplitOutOfRangeException(String message) {
 		/**
 		 * Constructs an SplitOutOfRangeException with a specified error message.
 		 *

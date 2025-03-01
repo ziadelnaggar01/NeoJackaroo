@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import model.Colour;
 
-
 public class SafeZone {
 	// READ ONLY attributes
 	private final Colour colour;
@@ -12,7 +11,7 @@ public class SafeZone {
 
 	// Constructor that initializes colour of safe zone and add 4 safe cells to the
 	// safe zone
-	
+
 	public SafeZone(Colour colour) {
 		this.colour = colour;
 		cells = new ArrayList<Cell>();
@@ -20,7 +19,6 @@ public class SafeZone {
 			cells.add(new Cell(CellType.SAFE));
 		}
 	}
-	
 
 	// Getters for safe zone attributes
 	public Colour getColour() {
