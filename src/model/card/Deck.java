@@ -42,36 +42,44 @@ public class Deck {
 				int frequency = Integer.parseInt(data[1]);
 				String name = data[2];
 				String description = data[3];
-				System.out.println(name + " " + description + " ");
 				// Determine the type of the card
 				for (int i = 0; i < frequency; i++) {
 					Card card;
-					if (code == 14) {
-						card = new Burner(name, description, boardManager, gameManager);
-					} else if (code == 15) {
-						card = new Saver(name, description, boardManager, gameManager);
-					} else if (code == 13) { // King
-						Suit suit = Suit.valueOf(data[5]);
-						card = new King(name, description, suit, boardManager, gameManager);
-					} else if (code == 12) {
-						Suit suit = Suit.valueOf(data[5]);
-						card = new Queen(name, description, suit, boardManager, gameManager);
-					} else if (code == 11) {
-						Suit suit = Suit.valueOf(data[5]);
-						card = new Jack(name, description, suit, boardManager, gameManager);
-					} else if (code == 10) {
-						card = new Ten(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-					} else if (code == 7) {
-						card = new Seven(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-					} else if (code == 5) {
-						card = new Five(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-					} else if (code == 4) {
-						card = new Four(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-					} else if (code == 1) {
-						card = new Ace(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-					} else { // Standard card
-						card = new Standard(name, description, Integer.parseInt(data[4]), Suit.valueOf(data[5]), boardManager, gameManager);
-					}
+					switch (code) {
+				    case 14:
+				        card = new Burner(name, description, boardManager, gameManager);
+				        break;
+				    case 15:
+				        card = new Saver(name, description, boardManager, gameManager);
+				        break;
+				    case 13: // King
+				        card = new King(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
+				        break;
+				    case 12:
+				        card = new Queen(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
+				        break;
+				    case 11:
+				        card = new Jack(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
+				        break;
+				    case 10:
+				        card = new Ten(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
+				        break;
+				    case 7:
+				        card = new Seven(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
+				        break;
+				    case 5:
+				        card = new Five(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
+				        break;
+				    case 4:
+				        card = new Four(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
+				        break;
+				    case 1:
+				        card = new Ace(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
+				        break;
+				    default: // Standard card
+				        card = new Standard(name, description, Integer.parseInt(data[4]), Suit.valueOf(data[5]), boardManager, gameManager);
+				        break;
+				}
 					cardsPool.add(card);
 				}
 			}
