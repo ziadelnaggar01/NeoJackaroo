@@ -17,12 +17,12 @@ public class Deck {
 	/**
 	 * The file path where the card data is stored.
 	 */
-	private final String CARDS_FILE = "Cards.csv";
+	private final static String CARDS_FILE = "Cards.csv";
 
 	/**
 	 * Stores the available cards in the deck.
 	 */
-	private ArrayList<Card> cardsPool = new ArrayList<>();
+	private static ArrayList<Card> cardsPool = new ArrayList<>();
 
 	/**
 	 * Loads the card pool from a CSV file, creating instances of different types of
@@ -33,7 +33,7 @@ public class Deck {
 	 * @param gameManager  The game manager to associate with each card.
 	 * @throws IOException If an error occurs while reading the file.
 	 */
-	public void loadCardPool(BoardManager boardManager, GameManager gameManager) throws IOException {
+	public static void loadCardPool(BoardManager boardManager, GameManager gameManager) throws IOException {
 		try (BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE))) {
 			String line = "";
 			while ((line = br.readLine()) != null) {
@@ -44,7 +44,6 @@ public class Deck {
 				String description = data[3];
 				int rank = Integer.parseInt(data[4]);
 				Suit suit = Suit.valueOf(data[5]);
-
 				// Determine the type of the card
 				for (int i = 0; i < frequency; i++) {
 					Card card;
@@ -71,6 +70,7 @@ public class Deck {
 					} else { // Standard card
 						card = new Standard(name, description, rank, suit, boardManager, gameManager);
 					}
+					cardsPool.add(card);
 				}
 			}
 		}
@@ -82,7 +82,7 @@ public class Deck {
 	 *
 	 * @return An ArrayList containing four drawn cards.
 	 */
-	public ArrayList<Card> drawCards() {
+	public static ArrayList<Card> drawCards() {
 		Collections.shuffle(cardsPool);
 		ArrayList<Card> drawnCards = new ArrayList<>();
 		for (int i = 0; i < 4; i++) {

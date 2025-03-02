@@ -17,6 +17,7 @@ import model.player.Player;
  */
 
 public class Game implements GameManager {
+	
 	/**
 	 * The current game board instance.
 	 */
@@ -24,7 +25,7 @@ public class Game implements GameManager {
 	/**
 	 * List of players in the game, including the human player and CPUs.
 	 */
-	private final ArrayList<Player> players;
+
 	/**
 	 * The pile of cards in the center of the board where players discard cards.
 	 */
@@ -37,6 +38,18 @@ public class Game implements GameManager {
 	 * The current turn number, indicating how many turns have passed in the game.
 	 */
 	private int turn;
+	private final ArrayList<Player> players;
+	public Board getBoard() {
+		return board;
+	}
+
+	public ArrayList<Card> getFirePit() {
+		return firePit;
+	}
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
 
 	/**
 	 * Initializes a new game, setting up the board, shuffling colors, and dealing
@@ -46,7 +59,7 @@ public class Game implements GameManager {
 	 * @throws IOException If there is an issue loading the deck or initializing the
 	 *                     game components.
 	 */
-	public Game(String playerName) throws IOException {
+	  public Game(String playerName) throws IOException {
 
 		// Initialize and randomize the colors for the players (used to assign player
 		// colors).
@@ -63,7 +76,7 @@ public class Game implements GameManager {
 		this.firePit = new ArrayList<>();
 		this.board = new Board(colours, this);
 		this.players = new ArrayList<>();
-		Deck.loadCardPool(this, board);
+		Deck.loadCardPool(board, this); // fixed
 
 		// add the players
 		players.add(new Player(playerName, colours.get(0)));
