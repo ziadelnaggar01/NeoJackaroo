@@ -8,7 +8,7 @@ public class InvalidMarbleException extends InvalidSelectionException {
 	{
 		super();
 	}
-	InvalidMarbleException(String message)
+	public InvalidMarbleException(String message)
 	{
 		super(message);
 	}
