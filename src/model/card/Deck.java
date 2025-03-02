@@ -42,8 +42,7 @@ public class Deck {
 				int frequency = Integer.parseInt(data[1]);
 				String name = data[2];
 				String description = data[3];
-				int rank = Integer.parseInt(data[4]);
-				Suit suit = Suit.valueOf(data[5]);
+				System.out.println(name + " " + description + " ");
 				// Determine the type of the card
 				for (int i = 0; i < frequency; i++) {
 					Card card;
@@ -52,23 +51,26 @@ public class Deck {
 					} else if (code == 15) {
 						card = new Saver(name, description, boardManager, gameManager);
 					} else if (code == 13) { // King
+						Suit suit = Suit.valueOf(data[5]);
 						card = new King(name, description, suit, boardManager, gameManager);
 					} else if (code == 12) {
+						Suit suit = Suit.valueOf(data[5]);
 						card = new Queen(name, description, suit, boardManager, gameManager);
 					} else if (code == 11) {
+						Suit suit = Suit.valueOf(data[5]);
 						card = new Jack(name, description, suit, boardManager, gameManager);
 					} else if (code == 10) {
-						card = new Ten(name, description, suit, boardManager, gameManager);
+						card = new Ten(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
 					} else if (code == 7) {
-						card = new Seven(name, description, suit, boardManager, gameManager);
+						card = new Seven(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
 					} else if (code == 5) {
-						card = new Five(name, description, suit, boardManager, gameManager);
+						card = new Five(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
 					} else if (code == 4) {
-						card = new Four(name, description, suit, boardManager, gameManager);
+						card = new Four(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
 					} else if (code == 1) {
-						card = new Ace(name, description, suit, boardManager, gameManager);
+						card = new Ace(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
 					} else { // Standard card
-						card = new Standard(name, description, rank, suit, boardManager, gameManager);
+						card = new Standard(name, description, Integer.parseInt(data[4]), Suit.valueOf(data[5]), boardManager, gameManager);
 					}
 					cardsPool.add(card);
 				}
