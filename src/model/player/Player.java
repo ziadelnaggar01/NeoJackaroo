@@ -24,10 +24,10 @@ public class Player {
 
 		/**
 		 * Constructor that initializes a Player object with the player name and colour
-		 * as attributes, and does the following: 1. Initialize the hand,
-		 * selectedMarbles, and marbles to empty ArrayLists 2. Create 4 marbles with the
-		 * same colour as the player and add them to the marbles. 3. Initialize the
-		 * selectedCard to null (Default Value)
+		 * as attributes, and does the following: 
+		 * 1. Initialize the hand, selectedMarbles, and marbles to empty ArrayLists 
+		 * 2. Create 4 marbles with the same colour as the player and add them to the marbles. 
+		 * 3. Initialize the selectedCard to null (Default Value)
 		 */
 		this.name = name;
 		this.colour = colour;
@@ -35,6 +35,10 @@ public class Player {
 		marbles = new ArrayList<>();
 		selectedMarbles = new ArrayList<>();
 		selectedCard = null;
+		
+		// Create 4 marbles with the same colour as the player
+		for(int i=0; i<4; i++)
+			marbles.add(new Marble(colour));
 	}
 
 	public String getName() {
