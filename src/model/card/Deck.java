@@ -34,7 +34,7 @@ public class Deck {
 	 * @throws IOException If an error occurs while reading the file.
 	 */
 	public static void loadCardPool(BoardManager boardManager, GameManager gameManager) throws IOException {
-		cardsPool.clear();
+		cardsPool=new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE))) {
 			String line = "";
 			while ((line = br.readLine()) != null) {
