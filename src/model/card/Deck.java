@@ -3,6 +3,9 @@ package model.card;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import engine.GameManager;
 import engine.board.BoardManager;
@@ -38,7 +41,7 @@ public class Deck {
 		try (BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE))) {
 			String line = "";
 			while ((line = br.readLine()) != null) {
-				String[] data = line.split(",");
+				String[] data = parseCSVLine(line);
 				int code = Integer.parseInt(data[0]);
 				int frequency = Integer.parseInt(data[1]);
 				String name = data[2];
@@ -86,7 +89,19 @@ public class Deck {
 			}
 		}
 	}
+	  private static String[] parseCSVLine(String line) {
+	        List<String> result = new ArrayList<>();
+	        Matcher matcher = Pattern.compile("\"([^\"]*)\"|([^,]+)").matcher(line);
 
+	        while (matcher.find()) {
+	            if (matcher.group(1) != null) { // Quoted field
+	                result.add(matcher.group(1));
+	            } else if (matcher.group(2) != null) { // Normal field
+	                result.add(matcher.group(2).trim());
+	            }
+	        }
+	        return result.toArray(new String[0]);
+	    }
 	/**
 	 * Draws a set of four cards randomly from the deck. The drawn cards are removed
 	 * from the pool to prevent reuse.
