@@ -73,9 +73,7 @@ public class Board implements BoardManager {
 		return splitDistance;
 	}
 
-	public GameManager getGameManager() {
-		return gameManager;
-	}
+
 
 	public ArrayList<Cell> getTrack() {
 		return track;
