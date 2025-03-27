@@ -2,6 +2,7 @@ package engine;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import engine.board.Board;
@@ -15,7 +16,7 @@ import model.player.Player;
  * Represents the engine of the game, where it allows the game to start and
  * initializes all core elements of the game
  */
-
+@SuppressWarnings("unused")
 public class Game implements GameManager {
 
 	/**
@@ -60,34 +61,33 @@ public class Game implements GameManager {
 	 *                     game components.
 	 */
 	public Game(String playerName) throws IOException {
-
-		// Initialize and randomize the colors for the players (used to assign player
-		// colors).
-		ArrayList<Colour> colours = new ArrayList<>();
-		colours.add(Colour.RED);
-		colours.add(Colour.GREEN);
-		colours.add(Colour.BLUE);
-		colours.add(Colour.YELLOW);
-		Collections.shuffle(colours);// Shuffle the colors randomly to assign unique colors to players.
-
 		// initialize core game components
-		this.currentPlayerIndex = 0;
-		this.turn = 0;
-		this.firePit = new ArrayList<>();
-		this.board = new Board(colours, this);
-		this.players = new ArrayList<>();
-		Deck.loadCardPool(board, this); // fixed
 
+        turn = 0;
+        currentPlayerIndex = 0;
+        firePit = new ArrayList<>();
+
+        ArrayList<Colour> colourOrder = new ArrayList<>();
+        
+        colourOrder.addAll(Arrays.asList(Colour.values()));
+        
+        Collections.shuffle(colourOrder);
+        
+        this.board = new Board(colourOrder, this);
+        
+        Deck.loadCardPool(this.board, (GameManager)this);
+        
 		// add the players
-		players.add(new Player(playerName, colours.get(0)));
-		players.add(new CPU("CPU 1", colours.get(1), board));
-		players.add(new CPU("CPU 2", colours.get(2), board));
-		players.add(new CPU("CPU 3", colours.get(3), board));
 
+        this.players = new ArrayList<>();
+        this.players.add(new Player(playerName, colourOrder.get(0)));
+        for (int i = 1; i < 4; i++) 
+            this.players.add(new CPU("CPU " + i, colourOrder.get(i), this.board));
+        
 		// initialize hand of each player
-		for (int i = 0; i < 4; i++) {
-			players.get(i).setHand(Deck.drawCards());
-		}
 
-	}
+        for (int i = 0; i < 4; i++) 
+            this.players.get(i).setHand(Deck.drawCards());
+        
+    }
 }

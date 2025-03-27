@@ -3,10 +3,6 @@ package model.card;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import engine.GameManager;
 import engine.board.BoardManager;
 import model.card.standard.*;
@@ -36,72 +32,82 @@ public class Deck {
 	 * @param gameManager  The game manager to associate with each card.
 	 * @throws IOException If an error occurs while reading the file.
 	 */
+
+	@SuppressWarnings("resource")
 	public static void loadCardPool(BoardManager boardManager, GameManager gameManager) throws IOException {
-		cardsPool=new ArrayList<>();
-		try (BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE))) {
-			String line = "";
-			while ((line = br.readLine()) != null) {
-				String[] data = parseCSVLine(line);
-				int code = Integer.parseInt(data[0]);
-				int frequency = Integer.parseInt(data[1]);
-				String name = data[2];
-				String description = data[3];
-				// Determine the type of the card
-				for (int i = 0; i < frequency; i++) {
-					Card card;
+		cardsPool = new ArrayList<>();
+
+		BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE));
+
+		while (br.ready()) {
+			String nextLine = br.readLine();
+			String[] data = nextLine.split(",");
+
+			if (data.length == 0)
+				throw new IOException(nextLine);
+
+			String name = data[2];
+			String description = data[3];
+
+			int code = Integer.parseInt(data[0]);
+			int frequency = Integer.parseInt(data[1]);
+
+			for (int i = 0; i < frequency; i++) {
+				Card card;
+
+				if (code > 13)
 					switch (code) {
-				    case 14:
-				        card = new Burner(name, description, boardManager, gameManager);
-				        break;
-				    case 15:
-				        card = new Saver(name, description, boardManager, gameManager);
-				        break;
-				    case 13: // King
-				        card = new King(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-				        break;
-				    case 12:
-				        card = new Queen(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-				        break;
-				    case 11:
-				        card = new Jack(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-				        break;
-				    case 10:
-				        card = new Ten(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-				        break;
-				    case 7:
-				        card = new Seven(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-				        break;
-				    case 5:
-				        card = new Five(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-				        break;
-				    case 4:
-				        card = new Four(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-				        break;
-				    case 1:
-				        card = new Ace(name, description, Suit.valueOf(data[5]), boardManager, gameManager);
-				        break;
-				    default: // Standard card
-				        card = new Standard(name, description, Integer.parseInt(data[4]), Suit.valueOf(data[5]), boardManager, gameManager);
-				        break;
+					case 14:
+						card = new Burner(name, description, boardManager, gameManager);
+						break;
+					case 15:
+						card = new Saver(name, description, boardManager, gameManager);
+						break;
+					default:
+						throw new IOException(nextLine);
+					}
+
+				else {
+					int rank = Integer.parseInt(data[4]);
+					Suit cardSuit = Suit.valueOf(data[5]);
+					switch (code) {
+					case 0:
+						card = new Standard(name, description, rank, cardSuit, boardManager, gameManager);
+						break;
+					case 1:
+						card = new Ace(name, description, cardSuit, boardManager, gameManager);
+						break;
+					case 4:
+						card = new Four(name, description, cardSuit, boardManager, gameManager);
+						break;
+					case 5:
+						card = new Five(name, description, cardSuit, boardManager, gameManager);
+						break;
+					case 7:
+						card = new Seven(name, description, cardSuit, boardManager, gameManager);
+						break;
+					case 10:
+						card = new Ten(name, description, cardSuit, boardManager, gameManager);
+						break;
+					case 11:
+						card = new Jack(name, description, cardSuit, boardManager, gameManager);
+						break;
+					case 12:
+						card = new Queen(name, description, cardSuit, boardManager, gameManager);
+						break;
+					case 13:
+						card = new King(name, description, cardSuit, boardManager, gameManager);
+						break;
+					default:
+						throw new IOException(nextLine);
+					}
 				}
-					cardsPool.add(card);
-				}
+
+				cardsPool.add(card);
 			}
 		}
 	}
-	  private static String[] parseCSVLine(String line) {
-	        List<String> result = new ArrayList<>();
-	        Matcher matcher = Pattern.compile("\"([^\"]*)\"|([^,]+)").matcher(line);
 
-	        while (matcher.find()) {
-	            if (matcher.group(1) != null) { // Quoted field
-	                result.add(matcher.group(1));
-	            } else if (matcher.group(2) != null) { // Normal field
-	                result.add(matcher.group(2).trim());
-	            }
-	        }
-	        return result.toArray(new String[0]);
-	    }
 	/**
 	 * Draws a set of four cards randomly from the deck. The drawn cards are removed
 	 * from the pool to prevent reuse.
@@ -110,12 +116,9 @@ public class Deck {
 	 */
 	public static ArrayList<Card> drawCards() {
 		Collections.shuffle(cardsPool);
-		ArrayList<Card> drawnCards = new ArrayList<>();
-		for (int i = 0; i < 4; i++) {
-			if (!cardsPool.isEmpty()) {
-				drawnCards.add(cardsPool.remove(0));
-			}
-		}
-		return drawnCards;
+		ArrayList<Card> cards = new ArrayList<>(cardsPool.subList(0, 4));
+		cardsPool.subList(0, 4).clear();
+		return cards;
 	}
+
 }

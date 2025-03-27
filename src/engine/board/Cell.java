@@ -18,8 +18,8 @@ public class Cell {
 		 * trap to false
 		 */
 		this.cellType = cellType;
-		marble = null;
-		trap = false;
+		this.marble = null;
+		this.trap = false;
 	}
 
 	public Marble getMarble() {
