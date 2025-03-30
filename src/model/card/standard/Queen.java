@@ -27,6 +27,18 @@ public class Queen extends Standard {
 	}
 	
 	/**
+     * Validates whether the given list of marbles contains at most one marble.
+     * 
+     * @param marbleList The list of marbles to validate.
+     * @return true if the list contains at most one marble, false otherwise.
+     */
+	@Override
+	public boolean validateMarbleSize(ArrayList<Marble> marbles)
+	{
+		return marbles.size()<=1;
+	}
+	
+	/**
      * Validates whether the given list of marbles is empty or contains a marble that belongs to the active player.
      * 
      * @param marbleList The list of marbles to check.
