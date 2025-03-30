@@ -1,5 +1,10 @@
 package model.card;
 
+
+import java.util.ArrayList;
+
+import exception.*;
+import model.player.Marble;
 import engine.GameManager;
 import engine.board.BoardManager;
 
@@ -48,4 +53,28 @@ public abstract class Card {
 	public String getDescription() {
 		return description;
 	}
+	
+	/**
+	 * Validates whether the given list of marbles contains the correct number of marbles that each card is supposed to act on (0, 1 or 2 based on the type of card).
+	 * @param marbles
+	 * @return true if number of marbles matches type of card, false otherwise.
+	 */
+	public abstract boolean validateMarbleSize(ArrayList<Marble> marbles);
+
+	
+	/**
+	 * Validates whether the given list of marbles contains the correct color of marbles that each card is supposed to act on (same color as the player or not based on the type of card).
+	 * @param marbles
+	 * @return true if color of marble matches card action, false otherwise.
+	 */
+	public abstract boolean validateMarbleColours(ArrayList<Marble> marbles);
+	
+	/**
+	 * Checks if the selected marbles match the required number for this card.
+	 * 
+	 * @param marbles The list of marbles selected for this card's action.
+	 * @return true if the number of marbles is correct, false otherwise.
+	 * @throws InvalidMarbleException if the number is invalid.
+	 */
+	public  abstract void act(ArrayList<Marble> marbles) throws ActionException,InvalidMarbleException;
 }
