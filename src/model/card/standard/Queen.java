@@ -1,7 +1,13 @@
 package model.card.standard;
 
+import java.util.ArrayList;
+
 import engine.GameManager;
 import engine.board.BoardManager;
+import exception.ActionException;
+import exception.InvalidMarbleException;
+import model.Colour;
+import model.player.Marble;
 
 /** Represents a Queen card, a subclass of Standard with a rank of 12. */
 
@@ -18,5 +24,46 @@ public class Queen extends Standard {
 
 	public Queen(String name, String description, Suit suit, BoardManager boardManager, GameManager gameManager) {
 		super(name, description, 12, suit, boardManager, gameManager);
+	}
+	
+	/**
+     * Validates whether the given list of marbles is empty or contains a marble that belongs to the active player.
+     * 
+     * @param marbleList The list of marbles to check.
+     * @return true if the marble belongs to the active player or if the list is empty, false otherwise.
+     */
+	@Override
+	public boolean validateMarbleColours(ArrayList<Marble> marbles)
+	{
+		Colour activePlayerColour = gameManager.getActivePlayerColour();
+		if(marbles.isEmpty()) return true;
+		Marble selectedMarble = marbles.getFirst();
+		return activePlayerColour.equals(selectedMarble.getColour());
+	}
+	
+	/**
+	 * Executes the Queen card action:
+	 * - If no marble is selected, discards a random card from the hand of a random player (excluding the active player).
+	 * - If one marble is selected, it moves forward by 12 steps.
+	 *
+	 * @param marbles The list of selected marbles (should be 0 or 1).
+	 * @throws InvalidMarbleException If more than one marble is selected or if the marble does not belong to the active player.
+	 * @throws ActionException If the action cannot be executed due to game constraints.
+	 */
+	@Override
+	public void act(ArrayList<Marble> marbles) throws ActionException , InvalidMarbleException
+	{
+		if(!validateMarbleSize(marbles))
+			throw new InvalidMarbleException("Queen card allows selecting at most one marble.");
+		if(!validateMarbleColours(marbles))
+			throw new InvalidMarbleException("Selected marble does not belong to the active player.");
+		
+		if(marbles.isEmpty())
+			gameManager.discardCard();
+		else
+		{
+		Marble selectedMarble = marbles.getFirst();
+		boardManager.moveBy(selectedMarble, 12, false);
+		}
 	}
 }
