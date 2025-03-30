@@ -32,6 +32,7 @@ public class Ace extends Standard {
      * @param marbleList The list of marbles to validate.
      * @return true if the list contains at most one marble, false otherwise.
      */
+	@Override
 	public boolean validateMarbleSize(ArrayList<Marble> marbles)
 	{
 		return marbles.size()<=1;
@@ -43,6 +44,7 @@ public class Ace extends Standard {
      * @param marbleList The list of marbles to check.
      * @return true if the marble belongs to the active player or if the list is empty, false otherwise.
      */
+	@Override
 	public boolean validateMarbleColours(ArrayList<Marble> marbles)
 	{
 		Colour activePlayerColour = gameManager.getActivePlayerColour();
@@ -52,12 +54,12 @@ public class Ace extends Standard {
 	}
 	
 	/**
-	 * Executes the Ace card action based on the player's selection:
+	 * Executes the Ace card action:
 	 * - If no marble is selected, the active player fields a new marble from home.
-	 * - If one marble is selected, it moves forward by one step.
+	 * - If one marble is selected, it moves forward by 1 step.
 	 *
-	 * @param marbles The list of marbles selected for this card's action.
-	 * @throws InvalidMarbleException If an invalid number of marbles is selected or if the marble belongs to another player.
+	 * @param marbles The list of selected marbles (should be 0 or 1).
+	 * @throws InvalidMarbleException If more than one marble is selected or if the marble belongs to another player.
 	 * @throws ActionException If the action cannot be executed due to game constraints.
 	 */
 	@Override
