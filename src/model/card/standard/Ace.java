@@ -49,7 +49,7 @@ public class Ace extends Standard {
 	{
 		Colour activePlayerColour = gameManager.getActivePlayerColour();
 		if(marbles.isEmpty()) return true;
-		Marble selectedMarble = marbles.getFirst();
+		Marble selectedMarble = marbles.get(0);
 		return activePlayerColour.equals(selectedMarble.getColour());
 	}
 	
@@ -74,7 +74,7 @@ public class Ace extends Standard {
 			gameManager.fieldMarble();
 		else
 		{
-		Marble selectedMarble = marbles.getFirst();
+		Marble selectedMarble = marbles.get(0);
 		boardManager.moveBy(selectedMarble, 1, false);
 		}
 	}

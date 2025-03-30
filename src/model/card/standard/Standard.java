@@ -73,7 +73,7 @@ public class Standard extends Card {
 	{
 		Colour activePlayerColour = gameManager.getActivePlayerColour();
 		if(marbles.isEmpty()) return false;
-		Marble selectedMarble = marbles.getFirst();
+		Marble selectedMarble = marbles.get(0);
 		return activePlayerColour.equals(selectedMarble.getColour());
 	}
 	
@@ -90,7 +90,7 @@ public class Standard extends Card {
 			throw new InvalidMarbleException("You can only select your own marbles.");
 		if(!validateMarbleSize(marbles))
 			throw new InvalidMarbleException("You must select exactly one marble.");
-		Marble selectedMarble = marbles.getFirst();
+		Marble selectedMarble = marbles.get(0);
 		boardManager.moveBy(selectedMarble, rank, false);
 	}
 }

@@ -80,7 +80,7 @@ public class Jack extends Standard {
 		switch(numberOfMarbles)
 		{
 		case 1:
-			Marble selectedMarble = marbles.getFirst();
+			Marble selectedMarble = marbles.get(0);
 			boardManager.moveBy(selectedMarble, 11, false);
 			break;
 		case 2:
