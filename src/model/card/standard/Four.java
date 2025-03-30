@@ -26,7 +26,7 @@ public class Four extends Standard {
 		super(name, description, 4, suit, boardManager, gameManager);
 	}
 	
-	  /**
+	 /**
      * Executes the Four card action:
      * - Moves one of the active player's marbles 4 steps backward.
      *
@@ -38,7 +38,7 @@ public class Four extends Standard {
 	public void act(ArrayList<Marble> marbles) throws ActionException , InvalidMarbleException
 	{
 		if(!validateMarbleSize(marbles))
-			throw new InvalidMarbleException("Four card allows selecting at only one marble.");
+			throw new InvalidMarbleException("Four card allows selecting only one marble.");
 		if(!validateMarbleColours(marbles))
 			throw new InvalidMarbleException("Selected marble does not belong to the active player.");
 		
