@@ -20,6 +20,7 @@ public abstract class Card {
 	protected BoardManager boardManager;
 	protected GameManager gameManager;
 
+	
 	/**
 	 * Constructs a card with the given name, description, and references to the
 	 * game managers.
@@ -36,6 +37,7 @@ public abstract class Card {
 		this.gameManager = gameManager;
 	}
 
+	
 	/**
 	 * Retrieves the card's name.
 	 *
@@ -45,6 +47,7 @@ public abstract class Card {
 		return name;
 	}
 
+	
 	/**
 	 * Retrieves the card's description.
 	 *
@@ -53,6 +56,7 @@ public abstract class Card {
 	public String getDescription() {
 		return description;
 	}
+	
 	
 	/**
 	 * Validates whether the given list of marbles contains the correct number of marbles that each card is supposed to act on (0, 1 or 2 based on the type of card).
@@ -69,12 +73,13 @@ public abstract class Card {
 	 */
 	public abstract boolean validateMarbleColours(ArrayList<Marble> marbles);
 	
+	
 	/**
-	 * Checks if the selected marbles match the required number for this card.
+	 * Performs the specified action of the card on the selected marbles.
 	 * 
 	 * @param marbles The list of marbles selected for this card's action.
 	 * @return true if the number of marbles is correct, false otherwise.
 	 * @throws InvalidMarbleException if the number is invalid.
 	 */
-	public  abstract void act(ArrayList<Marble> marbles) throws ActionException,InvalidMarbleException;
+	public abstract void act(ArrayList<Marble> marbles) throws ActionException,InvalidMarbleException;
 }
