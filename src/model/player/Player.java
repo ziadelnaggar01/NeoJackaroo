@@ -1,11 +1,12 @@
 package model.player;
 
 import java.util.ArrayList;
+
+import exception.*;
 import model.card.Card;
 import model.Colour;
 
 /** A class representing the Players available in the game. */
-@SuppressWarnings("unused")
 
 public class Player {
 
@@ -95,5 +96,85 @@ public class Player {
 		return selectedCard;
 	}
 	
+	/**
+	 * Adds a specified marble to the player’s collection of marbles which acts as the player’s Home Zone.
+	 *
+	 * @param marble The marble to be added to Player's Home Zone.
+	 */
+	public void regainMarble(Marble marble)
+	{
+		marbles.add(marble);
+	}
+	
+	/**
+	 * Returns the first marble without removing it, if any from Home Zone.
+	 *
+	 * @return First Marble object in marbles ArrayList, and null if list is empty.
+	 */
+	public Marble getOneMarble()
+	{
+		if(marbles.isEmpty())
+			return null;
+		return marbles.getFirst();
+	}
+	
+	/**
+	 * Checks if the given card is available in the player’s hand and sets it to the selectedCard.
+	 *
+	 * @param card Object to be checked in player's hand.
+	 * @throws InvalidCardException if the card does not belong to the current player’s hand.
+	 */
+	public void selectCard(Card card) throws InvalidCardException
+	{
+		if (hand.contains(card))
+		    selectedCard = card;
+		else
+		    throw new InvalidCardException();
+	}
+	
+	/**
+	 * Selects a marble to be used in the game by adding it to the selectedMarbles.
+	 *
+	 * @param marble to be added to selectedMarbles ArrayList.
+	 * @throws InvalidMarbleException if player is trying to select more than two marbles.
+	 */
+	public void selectMarble(Marble marble) throws InvalidMarbleException
+	{
+		if (selectedMarbles.contains(marble))
+			throw new InvalidMarbleException("Marble already selected.");
+		if(selectedMarbles.size()>=2)
+			throw new InvalidMarbleException("Can't select more than 2 marbles.");
+		selectedMarbles.add(marble);
+	}
+	
+	/**
+	 * Clears all selections, including the selected card and any selected marbles, resetting the player’s choices.
+	 */
+	public void deselectAll()
+	{
+		this.selectedCard = null;
+		this.selectedMarbles.clear();
+	}
+	
+    /**
+     * Executes the selected card's action with the chosen marbles.
+     * Ensures constraints on card selection and marble selection before execution.
+     *
+     * @throws GameException If any validation fails.
+     */
+	public void play() throws GameException
+	{
+		// Check there is a selected card
+		if(selectedCard==null)
+			throw new InvalidCardException("No card selected.");
+		// Check number of marbles selected is correct
+		if(!selectedCard.validateMarbleSize(selectedMarbles))
+			throw new InvalidMarbleException("Incorrect number of marbles");
+		// Check color of marbles selected
+		if(!selectedCard.validateMarbleColours(selectedMarbles))
+			throw new InvalidMarbleException("Incorrect colour of marbles");
+		// Perform card action on marbles
+		selectedCard.act(selectedMarbles);
+	}
 	
 }
