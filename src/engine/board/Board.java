@@ -30,7 +30,7 @@ public class Board implements BoardManager {
 			SafeZone safeZone = safeZones.get(i);
 			if (safeZone.getColour() == colour) {// comparison with == works with enums
 
-				return safeZone;
+				return safeZone.getCells();
 
 			}
 		}
