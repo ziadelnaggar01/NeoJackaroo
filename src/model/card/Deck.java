@@ -120,5 +120,24 @@ public class Deck {
 		cardsPool.subList(0, 4).clear();
 		return cards;
 	}
+	
+	/*
+	 *  Adds a collection of cards to the existing card pool. 
+	 *  This static method receives an ArrayList of Card objects and appends them all to the 
+	 *  cardsPool. Used to refill the cardspool with the cards in the firepit once empty.
+	 * */
+	public static void refillPool(ArrayList<Card> cards)
+	{
+		for(Card x : cards)
+		{
+			cardsPool.add(x);
+		}
+	}
+	
+	public static int getPoolSize()
+	{
+		return cardsPool.size();
+	}
+	
 
 }
