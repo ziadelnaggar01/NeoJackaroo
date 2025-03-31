@@ -48,6 +48,7 @@ public class Board implements BoardManager {
 	}
 
 	private int getBasePosition(Colour colour) {
+
 //main idea: 
 //look for all base cells on track (only four on the %25==0 positions), and look if that base cell contains the required colour
 		if (this.track.get(0).getMarble().getColour() == colour)
@@ -61,6 +62,25 @@ public class Board implements BoardManager {
 
 		if (this.track.get(75).getMarble().getColour() == colour)
 			return 75;
+
+		return -1;// default return value in case of an invalid colour
+	}
+
+	private int getEntryPosition(Colour colour) {
+		// main idea:
+		// look for all entry cells on track (only four on the (i+2) %25==0
+		// positions), and look if that base cell contains the required colour
+		if (this.track.get(23).getMarble().getColour() == colour)
+			return 23;
+
+		if (this.track.get(48).getMarble().getColour() == colour)
+			return 48;
+
+		if (this.track.get(73).getMarble().getColour() == colour)
+			return 73;
+
+		if (this.track.get(98).getMarble().getColour() == colour)
+			return 98;
 
 		return -1;// default return value in case of an invalid colour
 	}
