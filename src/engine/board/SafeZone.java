@@ -9,9 +9,10 @@ public class SafeZone {
 	private final Colour colour;
 	private final ArrayList<Cell> cells;
 
-	// Constructor that initializes colour of safe zone and add 4 safe cells to the
-	// safe zone
-
+	/**
+	 *  Constructor that initializes colour of safe zone and add 4 safe cells to the safe zone
+	 * @param colour
+	 */
 	public SafeZone(Colour colour) {
 		this.colour = colour;
 		this.cells = new ArrayList<>();
@@ -27,6 +28,18 @@ public class SafeZone {
 
 	public ArrayList<Cell> getCells() {
 		return cells;
+	}
+	
+	/**
+	 * Checks whether all Safe Zone Cells are occupied by marbles.
+	 *
+	 * @return true if all Safe Zone cells contain marbles, false otherwise.
+	 */
+	public boolean isFull()
+	{
+		for(int i=0; i<cells.size(); i++)
+			if(cells.get(i).getMarble()==null) return false;
+		return true;
 	}
 
 }
