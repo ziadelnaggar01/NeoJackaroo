@@ -1,35 +1,33 @@
 package model.player;
 
 import java.util.ArrayList;
+
+import exception.*;
 import model.card.Card;
 import model.Colour;
 
 /** A class representing the Players available in the game. */
-@SuppressWarnings("unused")
 
 public class Player {
 
-	private final String name; // A String representing the name of a player, cannot be changed once
-								// initialized
-	private final Colour colour; // An object of type Colour acting as a reference to associate a player to their
-									// SafeZone and Marbles, cannot be changed once initialized
+	private final String name; // A String representing the name of a player, cannot be changed once initialized
+	private final Colour colour; // An object of type Colour acting as a reference to associate a player to their SafeZone and Marbles, cannot be changed once initialized
 	private ArrayList<Card> hand; // An arraylist representing the hand of cards each player has.
-	private final ArrayList<Marble> marbles; // An arraylist representing the marbles each player has in their HomeZone,
-												// cannot be changed once initialized
+	private final ArrayList<Marble> marbles; // An arraylist representing the marbles each player has in their HomeZone, cannot be changed once initialized
 	private Card selectedCard; // A Card object representing the card to be played.
-	private final ArrayList<Marble> selectedMarbles; // An arraylist representing the marbles to be played, cannot be
-														// changed once initialized
+	private final ArrayList<Marble> selectedMarbles; // An arraylist representing the marbles to be played, cannot be changed once initialized
 
+	
+	/**
+	 * Player object constructor
+	 * 
+	 * Constructor that initializes a Player object with the player name and colour
+	 * as attributes, and does the following: 
+	 * 1. Initialize the hand, selectedMarbles, and marbles to empty ArrayLists 
+	 * 2. Create 4 marbles with the same colour as the player and add them to the marbles. 
+	 * 3. Initialize the selectedCard to null (Default Value)
+	 */
 	public Player(String name, Colour colour) {
-		// Player object constructor
-
-		/**
-		 * Constructor that initializes a Player object with the player name and colour
-		 * as attributes, and does the following: 
-		 * 1. Initialize the hand, selectedMarbles, and marbles to empty ArrayLists 
-		 * 2. Create 4 marbles with the same colour as the player and add them to the marbles. 
-		 * 3. Initialize the selectedCard to null (Default Value)
-		 */
 		this.name = name;
 		this.colour = colour;
 		this.hand = new ArrayList<>();
@@ -41,61 +39,142 @@ public class Player {
 			marbles.add(new Marble(colour));
 		
 		this.selectedCard = null;
-
 	}
-
+	
+	/**
+	 * Retrieves the player's name.
+	 *
+	 * @return The player's name as a String.
+	 */
 	public String getName() {
-		/**
-		 * Retrieves the player's name.
-		 *
-		 * @return The player's name as a String.
-		 */
 		return name;
 	}
-
+	
+	/**
+	 * Retrieves the player's assigned colour.
+	 *
+	 * @return The player's Colour.
+	 */
 	public Colour getColour() {
-		/**
-		 * Retrieves the player's assigned colour.
-		 *
-		 * @return The player's Colour.
-		 */
 		return colour;
 	}
-
+	
+	/**
+	 * Retrieves the player's hand of cards.
+	 *
+	 * @return An ArrayList of Card objects representing the player's hand.
+	 */
 	public ArrayList<Card> getHand() {
-		/**
-		 * Retrieves the player's hand of cards.
-		 *
-		 * @return An ArrayList of Card objects representing the player's hand.
-		 */
 		return hand;
 	}
 
+	/**
+	 * Updates the player's hand with a new set of cards.
+	 *
+	 * @param newHand An arraylist of Cards representing the new hand.
+	 */
 	public void setHand(ArrayList<Card> newHand) {
-		/**
-		 * Updates the player's hand with a new set of cards.
-		 *
-		 * @param newHand An arraylist of Cards representing the new hand.
-		 */
 		hand.clear();
 		hand.addAll(newHand);
 	}
 
+	/**
+	 * Retrieves the marbles in the player's Home Zone.
+	 *
+	 * @return An array of Marbles representing the player's marbles.
+	 */
 	public ArrayList<Marble> getMarbles() {
-		/**
-		 * Retrieves the marbles in the player's Home Zone.
-		 *
-		 * @return An array of Marbles representing the player's marbles.
-		 */
 		return marbles;
 	}
 
+	/**
+	 * Retrieves the selected card for the player's turn.
+	 *
+	 * @return The selected Card object.
+	 */
 	public Card getSelectedCard() {
-		/**
-		 * Retrieves the selected card for the player's turn.
-		 *
-		 * @return The selected Card object.
-		 */
 		return selectedCard;
 	}
+	
+	/**
+	 * Adds a specified marble to the player’s collection of marbles which acts as the player’s Home Zone.
+	 *
+	 * @param marble The marble to be added to Player's Home Zone.
+	 */
+	public void regainMarble(Marble marble)
+	{
+		marbles.add(marble);
+	}
+	
+	/**
+	 * Returns the first marble without removing it, if any from Home Zone.
+	 *
+	 * @return First Marble object in marbles ArrayList, and null if list is empty.
+	 */
+	public Marble getOneMarble()
+	{
+		if(marbles.isEmpty())
+			return null;
+		return marbles.getFirst();
+	}
+	
+	/**
+	 * Checks if the given card is available in the player’s hand and sets it to the selectedCard.
+	 *
+	 * @param card Object to be checked in player's hand.
+	 * @throws InvalidCardException if the card does not belong to the current player’s hand.
+	 */
+	public void selectCard(Card card) throws InvalidCardException
+	{
+		if (hand.contains(card))
+		    selectedCard = card;
+		else
+		    throw new InvalidCardException();
+	}
+	
+	/**
+	 * Selects a marble to be used in the game by adding it to the selectedMarbles.
+	 *
+	 * @param marble to be added to selectedMarbles ArrayList.
+	 * @throws InvalidMarbleException if player is trying to select more than two marbles.
+	 */
+	public void selectMarble(Marble marble) throws InvalidMarbleException
+	{
+		if (selectedMarbles.contains(marble))
+			throw new InvalidMarbleException("Marble already selected.");
+		if(selectedMarbles.size()>=2)
+			throw new InvalidMarbleException("Can't select more than 2 marbles.");
+		selectedMarbles.add(marble);
+	}
+	
+	/**
+	 * Clears all selections, including the selected card and any selected marbles, resetting the player’s choices.
+	 */
+	public void deselectAll()
+	{
+		this.selectedCard = null;
+		this.selectedMarbles.clear();
+	}
+	
+    /**
+     * Executes the selected card's action with the chosen marbles.
+     * Ensures constraints on card selection and marble selection before execution.
+     *
+     * @throws GameException If any validation fails.
+     */
+	public void play() throws GameException
+	{
+		// Check there is a selected card
+		if(selectedCard==null)
+			throw new InvalidCardException("No card selected.");
+		// Check number of marbles selected is correct
+		if(!selectedCard.validateMarbleSize(selectedMarbles))
+			throw new InvalidMarbleException("Incorrect number of marbles");
+		// Check color of marbles selected
+		if(!selectedCard.validateMarbleColours(selectedMarbles))
+			throw new InvalidMarbleException("Incorrect colour of marbles");
+		// Perform card action on marbles
+		selectedCard.act(selectedMarbles);
+	}
+	
 }
