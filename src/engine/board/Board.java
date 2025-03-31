@@ -34,9 +34,16 @@ public class Board implements BoardManager {
 
 			}
 		}
-
 		return null;// default return value if colour not found is null
+	}
 
+	private int getPositionInPath(ArrayList<Cell> path, Marble marble) {
+		for (int i = 0; i < path.size(); i++) {
+			if (path.get(i).getMarble().equals(marble)) {//comparing reference of the two marbles, since no overriden .equals method 
+				return i;// 0 based positioning (refer to page 3 in game description, figure 2)
+			}
+		}
+		return -1;
 	}
 
 	/**
