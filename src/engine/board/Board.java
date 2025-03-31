@@ -111,7 +111,7 @@ public class Board implements BoardManager {
 			if (steps == 4) {// move backwards
 				recordBackwards(steps, position, pathTaken);
 			} else if (steps == 5) {// move forward with no entry to safe zone
-				recordForward(steps,position,pathTaken,track);//wrap around version
+				recordForward(steps, position, pathTaken, track);// wrap around version
 			}
 
 			else {// move normally
@@ -140,7 +140,8 @@ public class Board implements BoardManager {
 				throw new IllegalMovementException("Cannot move backwards in safezones");
 			}
 
-			// if it's a five it'd always too high of a rank (seperate from below for clarity)
+			// if it's a five it'd always too high of a rank (seperate from below for
+			// clarity)
 			else if (steps == 5) {
 				throw new IllegalMovementException("Rank is too high");
 			}
@@ -163,6 +164,90 @@ public class Board implements BoardManager {
 		// Return the full path, where the current position is at the first index and
 		// the target position is at the last index.
 		return pathTaken;
+	}
+
+	private void validatePath(Marble marble, ArrayList<Cell> fullPath, boolean destroy)
+			throws IllegalMovementException {
+
+		boolean selfBlock = false;
+		boolean pathBlock = false;
+		boolean safeZoneEntryBlock = false;// cant bypass at entry
+		boolean safeZoneBlock = false;// kind cant bypass a marble WITHIN safezone
+		boolean baseCellBlock = false;
+		int entry = getEntryPosition(marble.getColour());
+		int positionInTrack = getPositionInPath(track, marble);
+		if (!destroy) {
+			int selfMarbles = 0;
+			int otherMarbles = 0;
+			Colour colour = marble.getColour();
+			for (int i = 1; i < fullPath.size(); i++) {// start from after current till the end
+				Cell cell = fullPath.get(i);
+				if (cell.getMarble() != null) {
+					if (colour == cell.getMarble().getColour())
+						selfMarbles++;
+					// different marble AND NOT TARGET ELEMENT
+					if (i != fullPath.size() - 1 && colour != cell.getMarble().getColour())
+						otherMarbles++;
+
+					// if there is a base cell in the path or target and it's it's base then cant
+					// move (comparing position of base of marble with actual current position)
+					// OR IS IT A MATTER OF A CELL OF AN ENEMY EXISTING IN MY BASE??/
+					if (cell.getCellType() == CellType.BASE
+							&& getBasePosition(cell.getMarble().getColour()) == getPositionInPath(track,
+									cell.getMarble()))
+						baseCellBlock = true;
+				}
+			}
+			if (selfMarbles >= 1)
+				selfBlock = true;
+			if (otherMarbles + selfMarbles >= 2)// CLEARLY MENTIONS MORE THAN ONE
+				pathBlock = true;
+
+			// if the marble exists on track, and it will pass the entry, and a marble of
+			// same colour exists in entry, then invalid
+			if (positionInTrack != -1 && positionInTrack + (fullPath.size() - 1) > entry
+					&& track.get(entry).getMarble() != null
+					&& track.get(entry).getMarble().getColour() == marble.getColour())
+				safeZoneEntryBlock = true;
+
+		} else {
+			// king cannot break two rules, baseBlock and cannot bypass nor land on a marble
+			// in safeZone
+
+			for (int i = 1; i < fullPath.size(); i++) {
+				Cell cell = fullPath.get(i);
+				if (cell.getMarble() != null) {
+					// OR IS IT A MATTER OF A CELL OF AN ENEMY EXISTING IN MY BASE??/
+					if (cell.getCellType() == CellType.BASE
+							&& getBasePosition(cell.getMarble().getColour()) == getPositionInPath(track, cell.getMarble()))
+						baseCellBlock = true;
+					if (cell.getCellType() == CellType.SAFE) {
+						safeZoneBlock = true;
+					}
+				}
+			}
+		}
+
+		if (selfBlock) {
+			throw new IllegalMovementException("A marble cannot move if there is another marble owned by the same\r\n"
+					+ " player either in its path or at the target position");
+		}
+		if (pathBlock) {
+			throw new IllegalMovementException("Movement is invalid if there is more than one marble (owned by\r\n"
+					+ " any player) blocking the path");
+		}
+		if (safeZoneEntryBlock) {
+			throw new IllegalMovementException("A marble cannot enter its player’s Safe Zone if any marble is "
+					+ "stationed at its player’s Safe Zone Entry");
+		}
+		if (baseCellBlock) {
+			throw new IllegalMovementException("A marble’s movement is blocked if another player’s marble is\r\n"
+					+ " in its player’s Base cell, either in the path or target position");
+		}
+		if (safeZoneBlock) {
+			throw new IllegalMovementException("A King cannot bypass or land on a Safe Zone marble");
+		}
+
 	}
 
 	/**
@@ -272,7 +357,7 @@ public class Board implements BoardManager {
 		// record path on a single path either safeZone or track, regardless of on track
 		// or wrapped around it works
 		for (int i = 0; i <= steps; i++)
-			pathTaken.add(path.get((position + i) % 100));//even when it's a safezone, it doesnt matter
+			pathTaken.add(path.get((position + i) % 100));// even when it's a safezone, it doesnt matter
 	}
 
 }
