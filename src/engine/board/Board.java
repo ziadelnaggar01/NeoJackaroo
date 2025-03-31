@@ -39,11 +39,30 @@ public class Board implements BoardManager {
 
 	private int getPositionInPath(ArrayList<Cell> path, Marble marble) {
 		for (int i = 0; i < path.size(); i++) {
-			if (path.get(i).getMarble().equals(marble)) {//comparing reference of the two marbles, since no overriden .equals method 
+			if (path.get(i).getMarble().equals(marble)) {// comparing reference of the two marbles, since no overriden
+															// .equals method
 				return i;// 0 based positioning (refer to page 3 in game description, figure 2)
 			}
 		}
 		return -1;
+	}
+
+	private int getBasePosition(Colour colour) {
+//main idea: 
+//look for all base cells on track (only four on the %25==0 positions), and look if that base cell contains the required colour
+		if (this.track.get(0).getMarble().getColour() == colour)
+			return 0;
+
+		if (this.track.get(25).getMarble().getColour() == colour)
+			return 25;
+
+		if (this.track.get(50).getMarble().getColour() == colour)
+			return 50;
+
+		if (this.track.get(75).getMarble().getColour() == colour)
+			return 75;
+
+		return -1;// default return value in case of an invalid colour
 	}
 
 	/**
