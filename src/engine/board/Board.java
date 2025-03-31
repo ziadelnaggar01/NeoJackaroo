@@ -85,6 +85,86 @@ public class Board implements BoardManager {
 		return -1;// default return value in case of an invalid colour
 	}
 
+	private ArrayList<Cell> validateSteps(Marble marble, int steps) throws IllegalMovementException {
+
+		// ONE MAJOR ISSUE HERE, DO WE CONSIDER THE SPLITTING (7) HERE, SO IF 4 WE MOVE
+		// NORMALLY? AND IF 5 WE ARE ONLY ALLOWED TO MOVE OUR CELL? OR IS THE SPLITTING
+		// IN A DIFFERENT METHOD
+
+		// SECOND MAJOR ISSUE,
+		// EXCEPTIONS HERE ARE NOT HANDLED LIKE ILLEGAL MOVEMENTS DUE TO BLOCKAGE
+		// NOR CHECKING IF IT'S YOUR OWN MARBLE OR NOT TO HANDLE 5
+
+		// THIRD MAJOR ISSUE: DO I ADJUST FOR BLOCKAGE EXCEPTIONS IN THE FIVE IN THIS
+		// METHOD OR NOT
+
+		// Identify the marble’s current position, whether on the track or within the
+		// player’s Safe Zone, If the marble is neither on the track nor in the Safe
+		// Zone, throw an IllegalMovementException
+		ArrayList<Cell> pathTaken = new ArrayList<>();
+		int positionInTrack = getPositionInPath(track, marble);
+		int positionInSafeZone = getPositionInPath(getSafeZone(marble.getColour()), marble);// safe zone of the marble
+		int position; // and the marble itself
+		if (positionInTrack != -1) {// found marble in track
+			position = positionInTrack;
+
+			if (steps == 4) {// move backwards
+				recordBackwards(steps, position, pathTaken);
+			} else if (steps == 5) {// move forward with no entry to safe zone
+				recordForward(steps,position,pathTaken,track);//wrap around version
+			}
+
+			else {// move normally
+
+				// first check if the movement is valid by getting where the entry position for
+				// this marble is and adding 4 to it (notice it's guaranteed we find it in track
+				// if we are here)
+
+				int entry = getEntryPosition(marble.getColour());
+				int end = entry + 4;
+				if (position + steps > end) {
+					throw new IllegalMovementException("Rank is too high");
+				} else if (position + steps <= entry) { // record path on track only
+					recordForward(steps, position, pathTaken, track);
+				} else {// record path that will include both track and safe zone cells
+					recordForward(steps, position, entry, track, getSafeZone(marble.getColour()), pathTaken);
+				}
+			}
+
+		} // found marble in safe zone
+		else if (positionInSafeZone != -1) {
+			position = positionInSafeZone;
+
+			// if its a four throw an illegalMovement exception since can't move backwards
+			if (steps == 4) {
+				throw new IllegalMovementException("Cannot move backwards in safezones");
+			}
+
+			// if it's a five it'd always too high of a rank (seperate from below for clarity)
+			else if (steps == 5) {
+				throw new IllegalMovementException("Rank is too high");
+			}
+
+			// if normal, check if it will not pass end
+			else {// normal movement
+					// check if valid (doesnt pass end, i.e 3 since 0 indexed)
+				if (position + steps > 3) {// more than 3 is invalid (0 based)
+					throw new IllegalMovementException("Rank is too high");
+				} else {// record path in safeZone only
+					recordForward(steps, position, pathTaken, getSafeZone(marble.getColour()));
+				}
+			}
+
+		} else// Not in track nor safe zone, i.e it's in base cells, so it cannot be moved
+				// except with a 1 or a king, but since it's a special activity it is defined
+				// elsewhere
+			throw new IllegalMovementException("Marble cannot be moved");
+
+		// Return the full path, where the current position is at the first index and
+		// the target position is at the last index.
+		return pathTaken;
+	}
+
 	/**
 	 * Constructs a game board with the given player color order. Initializes the
 	 * track, safe zones, and assigns trap cells.
@@ -153,6 +233,46 @@ public class Board implements BoardManager {
 
 	public void setSplitDistance(int splitDistance) {
 		this.splitDistance = splitDistance;
+	}
+
+	// HELPERS
+
+	private void recordBackwards(int steps, int position, ArrayList<Cell> path) {
+		// Gets path of moving backwards, since passed by reference return type is void
+
+		// no need to first check if movement is valid, i.e not in safe zone, since it's
+		// guaranteed we find it in track if we are here, so just record path
+
+		for (int i = 0; i <= steps; i++) {
+			path.add(track.get(((position - i) + 100) % 100));// all movements are on track only, adjusting wrap
+																// arounds for each cell
+		}
+	}
+
+	private void recordForward(int steps, int position, int entry, ArrayList<Cell> track, ArrayList<Cell> safeZone,
+			ArrayList<Cell> pathTaken) {
+//IMPORTANT ASSUMPTION: THE LAST CELL THE MARBLE CAN GO TO BEFORE THE SAFEZONE IS THE SAFEZONE ENTRY, THE CELL RIGHT BEFORE BASE
+		// IS USELESS
+		pathTaken.add(track.get(position));
+		int trackIndex = 0;
+		int safeZoneIndex = 0;
+		while (steps-- > 0) {
+			// Records path on both track and safezone, no wrapping around
+			if (trackIndex + position <= entry) {// still on track
+				pathTaken.add(track.get(trackIndex + position));
+				trackIndex++;
+			} else {
+				pathTaken.add(safeZone.get(safeZoneIndex));
+				safeZoneIndex++;
+			}
+		}
+	}
+
+	private void recordForward(int steps, int position, ArrayList<Cell> pathTaken, ArrayList<Cell> path) {
+		// record path on a single path either safeZone or track, regardless of on track
+		// or wrapped around it works
+		for (int i = 0; i <= steps; i++)
+			pathTaken.add(path.get((position + i) % 100));//even when it's a safezone, it doesnt matter
 	}
 
 }
