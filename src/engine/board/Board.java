@@ -3,7 +3,13 @@ package engine.board;
 import java.util.ArrayList;
 
 import engine.GameManager;
+import exception.CannotFieldException;
+import exception.IllegalDestroyException;
+import exception.IllegalMovementException;
+import exception.IllegalSwapException;
+import exception.InvalidMarbleException;
 import model.Colour;
+import model.player.Marble;
 
 /**
  * Represents the game board, including the main track and safe zones. Manages
@@ -17,6 +23,21 @@ public class Board implements BoardManager {
 	private final ArrayList<Cell> track;
 	private final ArrayList<SafeZone> safeZones;
 	private int splitDistance;
+
+	private ArrayList<Cell> getSafeZone(Colour colour) {
+
+		for (int i = 0; i < safeZones.size(); i++) {
+			SafeZone safeZone = safeZones.get(i);
+			if (safeZone.getColour() == colour) {// comparison with == works with enums
+
+				return safeZone;
+
+			}
+		}
+
+		return null;// default return value if colour not found is null
+
+	}
 
 	/**
 	 * Constructs a game board with the given player color order. Initializes the
@@ -87,4 +108,5 @@ public class Board implements BoardManager {
 	public void setSplitDistance(int splitDistance) {
 		this.splitDistance = splitDistance;
 	}
+
 }
