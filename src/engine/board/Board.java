@@ -256,9 +256,9 @@ public class Board implements BoardManager {
 		int target = position + (fullPath.size() - 1);// position + steps taken
 		Cell targetCell = track.get(target);
 		if (targetCell.getMarble() != null) {// it will be destroyed, no neeed to validate destroy since you cannot land
-												// on a base cell nor on ur own cell in a safe zone
+												// on a base cell nor on ur own cell , it is validated in validate steps
 
-			destroyMarbleWithKing(targetCell.getMarble());
+			destroyMarble(targetCell.getMarble());
 		}
 		if (destroy) {
 			for (int i = 1; i < fullPath.size() - 1; i++) {// path execluding target and current
