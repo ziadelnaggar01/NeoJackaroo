@@ -291,23 +291,44 @@ public class Board implements BoardManager {
 		if (cm1 == cm2) {
 			throw new IllegalSwapException(" Marbles owned by the same player are ineligible for swapping");
 		}
-		
+
 //cant swap two enemy marbles (added by me)	
-		Colour activeColour=getActivePlayerColour();
-		if (cm1!=activeColour&&cm2!=activeColour) {
+		Colour activeColour = getActivePlayerColour();
+		if (cm1 != activeColour && cm2 != activeColour) {
 			throw new IllegalSwapException("Cannot swap two oponents' marbles");
 		}
-		
+
 //swapping is invalid if the other marble is positioned in its Base cell.		
-		if (activeColour==cm1) {//cm2 is the oponent marble
-			if (m2==getBasePosition(cm2)) {//check if it's in it's base 
-				throw new IllegalSwapException("Swapping is invalid if the other marble is positioned in its Base cell");
+		if (activeColour == cm1) {// cm2 is the oponent marble
+			if (m2 == getBasePosition(cm2)) {// check if it's in it's base
+				throw new IllegalSwapException(
+						"Swapping is invalid if the other marble is positioned in its Base cell");
+			}
+		} else {// cm1 is the oponent marble
+			if (m1 == getBasePosition(cm1)) {// check if it's in it's base
+				throw new IllegalSwapException(
+						"Swapping is invalid if the other marble is positioned in its Base cell");
 			}
 		}
-		else {//cm1 is the oponent marble
-			if (m1==getBasePosition(cm1)) {//check if it's in it's base 
-				throw new IllegalSwapException("Swapping is invalid if the other marble is positioned in its Base cell");
-			}
+	}
+
+	private void validateDestroy(int positionInPath) throws IllegalDestroyException {
+		if (positionInPath == -1) {
+			throw new IllegalDestroyException("Cannot destroy a marble not on general track");
+		}
+		// get position to check if not it's base cell
+		Cell cell = track.get(positionInPath);
+		Marble marble = cell.getMarble();
+		// first part of condition is not needed but for clarity
+		if (cell.getCellType() == CellType.BASE && getBasePosition(marble.getColour()) == positionInPath) {
+			throw new IllegalDestroyException("Cannot destroy a marble in it's base cell");
+		}
+	}
+
+	private void validateFielding(Cell occupiedBaseCell) throws CannotFieldException {
+		Colour active = getActivePlayerColour();
+		if (occupiedBaseCell.getCellType() == CellType.BASE && active == occupiedBaseCell.getMarble().getColour()) {
+			throw new CannotFieldException("Cannot field a marble if base cell is occupied by you own marble");
 		}
 	}
 
