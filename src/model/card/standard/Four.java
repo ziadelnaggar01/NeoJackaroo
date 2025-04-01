@@ -44,6 +44,5 @@ public class Four extends Standard {
 		
 		Marble selectedMarble = marbles.get(0);
 		boardManager.moveBy(selectedMarble, -4, false);
-		}
 	}
 }
