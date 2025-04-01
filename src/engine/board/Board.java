@@ -50,16 +50,16 @@ public class Board implements BoardManager {
 
 //main idea: 
 //look for all base cells on track (only four on the %25==0 positions), and look if that base cell contains the required colour
-		if (this.track.get(0).getMarble()!=null&&this.track.get(0).getMarble().getColour() == colour)
+		if (this.track.get(0).getMarble() != null && this.track.get(0).getMarble().getColour() == colour)
 			return 0;
 
-		if (this.track.get(25).getMarble()!=null&&this.track.get(25).getMarble().getColour() == colour)
+		if (this.track.get(25).getMarble() != null && this.track.get(25).getMarble().getColour() == colour)
 			return 25;
 
-		if (this.track.get(50).getMarble()!=null&&this.track.get(50).getMarble().getColour() == colour)
+		if (this.track.get(50).getMarble() != null && this.track.get(50).getMarble().getColour() == colour)
 			return 50;
 
-		if (this.track.get(75).getMarble()!=null&&this.track.get(75).getMarble().getColour() == colour)
+		if (this.track.get(75).getMarble() != null && this.track.get(75).getMarble().getColour() == colour)
 			return 75;
 
 		return -1;// default return value in case of an invalid colour
@@ -69,16 +69,16 @@ public class Board implements BoardManager {
 		// main idea:
 		// look for all entry cells on track (only four on the (i+2) %25==0
 		// positions), and look if that base cell contains the required colour
-		if (this.track.get(23).getMarble()!=null&&this.track.get(23).getMarble().getColour() == colour)
+		if (this.track.get(23).getMarble() != null && this.track.get(23).getMarble().getColour() == colour)
 			return 23;
 
-		if (this.track.get(48).getMarble()!=null&&this.track.get(48).getMarble().getColour() == colour)
+		if (this.track.get(48).getMarble() != null && this.track.get(48).getMarble().getColour() == colour)
 			return 48;
 
-		if (this.track.get(73).getMarble()!=null&&this.track.get(73).getMarble().getColour() == colour)
+		if (this.track.get(73).getMarble() != null && this.track.get(73).getMarble().getColour() == colour)
 			return 73;
 
-		if (this.track.get(98).getMarble()!=null&&this.track.get(98).getMarble().getColour() == colour)
+		if (this.track.get(98).getMarble() != null && this.track.get(98).getMarble().getColour() == colour)
 			return 98;
 
 		return -1;// default return value in case of an invalid colour
@@ -253,27 +253,52 @@ public class Board implements BoardManager {
 	private void move(Marble marble, ArrayList<Cell> fullPath, boolean destroy) throws IllegalDestroyException {
 		// destroy target with normal cell, no need for validation
 		int position = getPositionInPath(track, marble);
-		int target = position + (fullPath.size() - 1);// position + steps taken
-		Cell targetCell = track.get(target);
-		if (targetCell.getMarble() != null) {// it will be destroyed, no neeed to validate destroy since you cannot land
-												// on a base cell nor on ur own cell , it is validated in validate steps
 
-			destroyMarble(targetCell.getMarble());
-		}
-		if (destroy) {
-			for (int i = 1; i < fullPath.size() - 1; i++) {// path execluding target and current
-				if (fullPath.get(i).getMarble() != null) {// if there is a marble destroy it, no need to validate
-					destroyMarbleNoConstraint(fullPath.get(i).getMarble());
+		if (fullPath.get(fullPath.size() - 1).getCellType() == CellType.SAFE) {// you will enter a safe zone
+			// target in safezone is guaranteed to be free since validation, and guaranteed
+			// if king no safe marbles are before it GUARANTEED FROM VALIDATE PATH
+			if (destroy) {
+				for (int i = 1; i < fullPath.size() - 1; i++) {// path execluding target and current
+					if (fullPath.get(i).getMarble() != null) {// if there is a marble destroy it SINCE NOT FREE
+						destroyMarbleNoConstraint(fullPath.get(i).getMarble());
+					}
 				}
 			}
-		}
+			track.get(position).setMarble(null);// remove marble in the track, not fullPath
+			int safeIndex = -1;
+			for (int i = 0; i < fullPath.size(); i++) {// search how many safe does it path
+				if (fullPath.get(i).getCellType() == CellType.SAFE) {
+					safeIndex++;
+				}
+			}
+			getSafeZone(marble.getColour()).get(safeIndex).setMarble(marble);
 
-		track.get(target).setMarble(marble);
-		track.get(position).setMarble(null);// change in the track, not fullPath
-		if (targetCell.isTrap()) {
-			destroyMarbleNoConstraint(marble);
-			targetCell.setTrap(false);
-			assignTrapCell();
+		} else {
+
+			int target = position + (fullPath.size() - 1);// position + steps taken
+			Cell targetCell = track.get(target);
+			if (targetCell.getMarble() != null) {// it will be destroyed, no neeed to validate destroy since you cannot
+													// land
+													// on a base cell nor on ur own cell , it is validated in validate
+													// steps
+
+				destroyMarble(targetCell.getMarble());
+			}
+			if (destroy) {
+				for (int i = 1; i < fullPath.size() - 1; i++) {// path execluding target and current
+					if (fullPath.get(i).getMarble() != null) {// if there is a marble destroy it, no need to validate
+						destroyMarbleNoConstraint(fullPath.get(i).getMarble());
+					}
+				}
+			}
+
+			track.get(target).setMarble(marble);
+			track.get(position).setMarble(null);// change in the track, not fullPath
+			if (targetCell.isTrap()) {
+				destroyMarbleNoConstraint(marble);
+				targetCell.setTrap(false);
+				assignTrapCell();
+			}
 		}
 	}
 
@@ -400,7 +425,8 @@ public class Board implements BoardManager {
 			destroyMarble(track.get(base).getMarble());
 
 		}
-		gameManager.fieldMarble();// or is it on the track, doeds this mean this method is only called for fielding??????????????
+		gameManager.fieldMarble();// or is it on the track, doeds this mean this method is only called for
+									// fielding??????????????
 
 	}
 
