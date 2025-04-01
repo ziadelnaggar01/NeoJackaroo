@@ -29,6 +29,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
+@SuppressWarnings("all")
 public class Milestone1PublicTests {
 
 	private String playerPath="model.player.Player";

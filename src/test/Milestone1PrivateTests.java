@@ -23,6 +23,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
+@SuppressWarnings("all")
 public class Milestone1PrivateTests {
 
 	private String playerPath="model.player.Player";
