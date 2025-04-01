@@ -392,41 +392,66 @@ public class Board implements BoardManager {
 	}
 
 	@Override
-	public void sendToBase(Marble marble) throws CannotFieldException, IllegalDestroyException {
-		// TODO Auto-generated method stub
+	public void sendToBase(Marble marble) throws CannotFieldException, IllegalDestroyException {// to field using a king
+																								// or an ace
+		int base = getBasePosition(marble.getColour());
+		if (track.get(base).getMarble() != null) {// if occupied
+			validateFielding(track.get(base));
+			destroyMarble(track.get(base).getMarble());
+
+		}
+		track.get(base).setMarble(marble);// add marble regardless of base was occupied or not, if it was either an
+											// exception was thrown or destroyed
 
 	}
 
 	@Override
 	public void sendToSafe(Marble marble) throws InvalidMarbleException {
-		// TODO Auto-generated method stub
+		ArrayList<Cell> safeZone = getSafeZone(marble.getColour());
+
+		int positionInTrack = getPositionInPath(track, marble);
+		int positionInSafeZone = getPositionInPath(safeZone, marble);
+		validateSaving(positionInSafeZone, positionInTrack);
+
+		// remove from current location
+		track.get(positionInTrack).setMarble(null);// guaranteed to be found in track as else it would have thrown an
+													// excpetion in validating
+
+		// add to a random unoccupied safeZone cell
+		int randIndex = -1;
+
+		do
+			randIndex = (int) (Math.random() * safeZone.size());// max is 3
+		while (safeZone.get(randIndex).getMarble() != null);
+
+		safeZone.get(randIndex).setMarble(marble);// safeZone is a pointer pointing to the safeZone in the list of
+													// safeZones in class attributes
 
 	}
 
 	@Override
 	public ArrayList<Marble> getActionableMarbles() {
 		ArrayList<Marble> res = new ArrayList<>();
-		Colour active=getActivePlayerColour();
-		
-		//add all marbles on track 
-		for (int i=0;i<track.size();i++) {
-			if (track.get(i).getMarble()!=null) {
+		Colour active = getActivePlayerColour();
+
+		// add all marbles on track
+		for (int i = 0; i < track.size(); i++) {
+			if (track.get(i).getMarble() != null) {
 				res.add(track.get(i).getMarble());
 			}
 		}
-		//get safe zone of current player
-		ArrayList<Cell>safeZone=getSafeZone(active);
-		
-		//add all marbles in safeZone of current player
-		for (int i=0;i<safeZone.size();i++) {
-			if (safeZone.get(i).getMarble()!=null) {
+		// get safe zone of current player
+		ArrayList<Cell> safeZone = getSafeZone(active);
+
+		// add all marbles in safeZone of current player
+		for (int i = 0; i < safeZone.size(); i++) {
+			if (safeZone.get(i).getMarble() != null) {
 				res.add(safeZone.get(i).getMarble());
 			}
 		}
-		
+
 		return res;
 
-		
 	}
 
 	/**
