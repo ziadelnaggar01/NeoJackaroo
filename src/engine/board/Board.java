@@ -48,12 +48,15 @@ public class Board implements BoardManager {
 
 	private int getBasePosition(Colour colour) {
 
-		if (safeZones.get(0).getColour()==colour)return 0;
-		if (safeZones.get(1).getColour()==colour)return 25;
-		if (safeZones.get(2).getColour()==colour)return 50;
-		if (safeZones.get(3).getColour()==colour)return 75;
+		if (safeZones.get(0).getColour() == colour)
+			return 0;
+		if (safeZones.get(1).getColour() == colour)
+			return 25;
+		if (safeZones.get(2).getColour() == colour)
+			return 50;
+		if (safeZones.get(3).getColour() == colour)
+			return 75;
 
-		
 		return -1;// default return value in case of an invalid colour
 	}
 
@@ -67,17 +70,6 @@ public class Board implements BoardManager {
 
 	private ArrayList<Cell> validateSteps(Marble marble, int steps) throws IllegalMovementException {
 
-		// ONE MAJOR ISSUE HERE, DO WE CONSIDER THE SPLITTING (7) HERE, SO IF 4 WE MOVE
-		// NORMALLY? AND IF 5 WE ARE ONLY ALLOWED TO MOVE OUR CELL? OR IS THE SPLITTING
-		// IN A DIFFERENT METHOD
-
-		// SECOND MAJOR ISSUE,
-		// EXCEPTIONS HERE ARE NOT HANDLED LIKE ILLEGAL MOVEMENTS DUE TO BLOCKAGE
-		// NOR CHECKING IF IT'S YOUR OWN MARBLE OR NOT TO HANDLE 5
-
-		// THIRD MAJOR ISSUE: DO I ADJUST FOR BLOCKAGE EXCEPTIONS IN THE FIVE IN THIS
-		// METHOD OR NOT
-
 		// Identify the marble’s current position, whether on the track or within the
 		// player’s Safe Zone, If the marble is neither on the track nor in the Safe
 		// Zone, throw an IllegalMovementException
@@ -85,6 +77,7 @@ public class Board implements BoardManager {
 		int positionInTrack = getPositionInPath(track, marble);
 		int positionInSafeZone = getPositionInPath(getSafeZone(marble.getColour()), marble);// safe zone of the marble
 		int position; // and the marble itself
+
 		if (positionInTrack != -1) {// found marble in track
 			position = positionInTrack;
 
@@ -101,13 +94,20 @@ public class Board implements BoardManager {
 				// if we are here)
 
 				int entry = getEntryPosition(marble.getColour());
-				int end = entry + 4;
-				if (position + steps > end) {
+				// get distance to entry keeping in mind circular nature
+				int distanceToEntry;
+				if (entry >= positionInTrack) {
+					distanceToEntry = entry - positionInTrack;
+				} else {
+					distanceToEntry = (track.size() - positionInTrack) + entry;
+				}
+
+				if (distanceToEntry + 4 < steps) {// steps taken bigger than total possible steps
 					throw new IllegalMovementException("Rank is too high");
-				} else if (position + steps <= entry) { // record path on track only
+				} else if (steps <= distanceToEntry) { // record path on track only
 					recordForward(steps, position, pathTaken, track);
 				} else {// record path that will include both track and safe zone cells
-					recordForward(steps, position, entry, track, getSafeZone(marble.getColour()), pathTaken);
+					recordForward(steps, position, track, getSafeZone(marble.getColour()), pathTaken, distanceToEntry);
 				}
 			}
 
@@ -156,6 +156,14 @@ public class Board implements BoardManager {
 		boolean baseCellBlock = false;
 		int entry = getEntryPosition(marble.getColour());
 		int positionInTrack = getPositionInPath(track, marble);
+
+		int distanceToEntry;
+		if (entry >= positionInTrack) {
+			distanceToEntry = entry - positionInTrack;
+		} else {
+			distanceToEntry = (track.size() - positionInTrack) + entry;
+		}
+
 		if (!destroy) {
 			int selfMarbles = 0;
 			int otherMarbles = 0;
@@ -171,7 +179,6 @@ public class Board implements BoardManager {
 
 					// if there is a base cell in the path or target and it's it's base then cant
 					// move (comparing position of base of marble with actual current position)
-					// OR IS IT A MATTER OF A CELL OF AN ENEMY EXISTING IN MY BASE??/
 					if (cell.getCellType() == CellType.BASE
 							&& getBasePosition(cell.getMarble().getColour()) == getPositionInPath(track,
 									cell.getMarble()))
@@ -185,8 +192,7 @@ public class Board implements BoardManager {
 
 			// if the marble exists on track, and it will pass the entry, and a marble of
 			// same colour exists in entry, then invalid
-			if (positionInTrack != -1 && positionInTrack + (fullPath.size() - 1) > entry
-					&& track.get(entry).getMarble() != null
+			if (positionInTrack != -1 && distanceToEntry <= fullPath.size() - 1 && track.get(entry).getMarble() != null
 					&& track.get(entry).getMarble().getColour() == marble.getColour())
 				safeZoneEntryBlock = true;
 
@@ -197,7 +203,6 @@ public class Board implements BoardManager {
 			for (int i = 1; i < fullPath.size(); i++) {
 				Cell cell = fullPath.get(i);
 				if (cell.getMarble() != null) {
-					// OR IS IT A MATTER OF A CELL OF AN ENEMY EXISTING IN MY BASE??/
 					if (cell.getCellType() == CellType.BASE
 							&& getBasePosition(cell.getMarble().getColour()) == getPositionInPath(track,
 									cell.getMarble()))
@@ -297,7 +302,7 @@ public class Board implements BoardManager {
 			throw new IllegalSwapException(" Marbles owned by the same player are ineligible for swapping");
 		}
 
-//cant swap two enemy marbles (added by me)	
+//cant swap two enemy marbles
 		Colour activeColour = gameManager.getActivePlayerColour();
 		if (cm1 != activeColour && cm2 != activeColour) {
 			throw new IllegalSwapException("Cannot swap two oponents' marbles");
@@ -321,7 +326,7 @@ public class Board implements BoardManager {
 		if (positionInPath == -1) {
 			throw new IllegalDestroyException("Cannot destroy a marble not on general track");
 		}
-		// get position to check if not it's base cell
+		// get position to check, if not it's base cell
 		Cell cell = track.get(positionInPath);
 		Marble marble = cell.getMarble();
 		// first part of condition is not needed but for clarity
@@ -343,7 +348,7 @@ public class Board implements BoardManager {
 			throw new InvalidMarbleException("Cannot save a card not on the general track");
 		}
 
-		// added from my own, check if opponents marble or not (game description)
+		// check if opponents marble or not (game description)
 		Marble marble = track.get(positionOnTrack).getMarble();
 		if (marble.getColour() != gameManager.getActivePlayerColour()) {
 			throw new InvalidMarbleException("Cannot save an opponent's card");
@@ -406,9 +411,7 @@ public class Board implements BoardManager {
 			destroyMarble(track.get(base).getMarble());
 
 		}
-		gameManager.fieldMarble();// or is it on the track, doeds this mean this method is only called for
-									// fielding??????????????
-
+		gameManager.fieldMarble();// only called for fielding
 	}
 
 	@Override
@@ -544,18 +547,20 @@ public class Board implements BoardManager {
 		}
 	}
 
-	private void recordForward(int steps, int position, int entry, ArrayList<Cell> track, ArrayList<Cell> safeZone,
-			ArrayList<Cell> pathTaken) {
+	private void recordForward(int steps, int position, ArrayList<Cell> track, ArrayList<Cell> safeZone,
+			ArrayList<Cell> pathTaken, int distanceToEntry) {
 //IMPORTANT ASSUMPTION: THE LAST CELL THE MARBLE CAN GO TO BEFORE THE SAFEZONE IS THE SAFEZONE ENTRY, THE CELL RIGHT BEFORE BASE
 		// IS USELESS
 		pathTaken.add(track.get(position));
 		int trackIndex = 0;
 		int safeZoneIndex = 0;
+
 		while (steps-- > 0) {
 			// Records path on both track and safezone, no wrapping around
-			if (trackIndex + position <= entry) {// still on track
-				pathTaken.add(track.get(trackIndex + position));
+			if (distanceToEntry >= 0) {// still on track
+				pathTaken.add(track.get((trackIndex + position) % 100));
 				trackIndex++;
+				distanceToEntry--;
 			} else {
 				pathTaken.add(safeZone.get(safeZoneIndex));
 				safeZoneIndex++;
