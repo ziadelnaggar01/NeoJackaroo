@@ -346,21 +346,24 @@ public class Board implements BoardManager {
 	}
 
 	// BoardManager methods overriding
+
 	@Override
 	public void moveBy(Marble marble, int steps, boolean destroy)
 			throws IllegalMovementException, IllegalDestroyException {
 		// TODO Auto-generated method stub
-		
-		//this method will validate all standard and special that was not implemented below it, get the full path and call move 
+
+		// this method will validate all standard and special that was not implemented
+		// below it, get the full path and call move
 
 	}
 
 	@Override
 	public void swap(Marble marble, Marble marble2) throws IllegalSwapException {
-		//get position in track of both marbles, put second in the first slot and put the first in the second slot 
-		validateSwap(marble,marble2);
-		int pos1=getPositionInPath(track,marble);
-		int pos2=getPositionInPath(track,marble2);
+		// get position in track of both marbles, put second in the first slot and put
+		// the first in the second slot
+		validateSwap(marble, marble2);
+		int pos1 = getPositionInPath(track, marble);
+		int pos2 = getPositionInPath(track, marble2);
 
 		track.get(pos2).setMarble(marble);
 		track.get(pos1).setMarble(marble2);
@@ -369,22 +372,23 @@ public class Board implements BoardManager {
 
 	@Override
 	public void destroyMarble(Marble marble) throws IllegalDestroyException {
-		//the implementation here assumes this will only be used by the burner card since it does not allow destruction of you own card, for the king's destruction it will call another method 
-		//check if not my marble
-		if (getActivePlayerColour()==marble.getColour()) {
+		// the implementation here assumes this will only be used by the burner card
+		// since it does not allow destruction of you own card, for the king's
+		// destruction it will call another method
+		// check if not my marble
+		if (getActivePlayerColour() == marble.getColour()) {
 			throw new IllegalDestroyException("Cannot destroy your own marble with a burner");
 		}
-		int position =getPositionInPath(track,marble);
-		//validate destruction
+		int position = getPositionInPath(track, marble);
+		// validate destruction
 		validateDestroy(position);
-		
-		//remove from track 
+
+		// remove from track
 		track.get(position).setMarble(null);
-		
-		//put in home 
-		gameManager.sendHome(marble);//the power of an interface!!!
-		 
-		
+
+		// put in home
+		gameManager.sendHome(marble);// the power of an interface!!!
+
 	}
 
 	@Override
@@ -401,10 +405,29 @@ public class Board implements BoardManager {
 
 	@Override
 	public ArrayList<Marble> getActionableMarbles() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		ArrayList<Marble> res = new ArrayList<>();
+		Colour active=getActivePlayerColour();
+		
+		//add all marbles on track 
+		for (int i=0;i<track.size();i++) {
+			if (track.get(i).getMarble()!=null) {
+				res.add(track.get(i).getMarble());
+			}
+		}
+		//get safe zone of current player
+		ArrayList<Cell>safeZone=getSafeZone(active);
+		
+		//add all marbles in safeZone of current player
+		for (int i=0;i<safeZone.size();i++) {
+			if (safeZone.get(i).getMarble()!=null) {
+				res.add(safeZone.get(i).getMarble());
+			}
+		}
+		
+		return res;
 
+		
+	}
 
 	/**
 	 * Constructs a game board with the given player color order. Initializes the
@@ -515,13 +538,13 @@ public class Board implements BoardManager {
 		for (int i = 0; i <= steps; i++)
 			pathTaken.add(path.get((position + i) % 100));// even when it's a safezone, it doesnt matter
 	}
-	
-	public void destroyMarbleWithKing(Marble marble) throws IllegalDestroyException {
-		//remove from track 
-		track.get(getPositionInPath(track,marble)).setMarble(null);
-				
-		//put in home 
-		gameManager.sendHome(marble);//the power of an interface!!!	}
 
-}
+	public void destroyMarbleWithKing(Marble marble) throws IllegalDestroyException {
+		// remove from track
+		track.get(getPositionInPath(track, marble)).setMarble(null);
+
+		// put in home
+		gameManager.sendHome(marble);// the power of an interface!!! }
+
+	}
 }
