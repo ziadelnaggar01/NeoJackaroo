@@ -263,7 +263,7 @@ public class Board implements BoardManager {
 		if (destroy) {
 			for (int i = 1; i < fullPath.size() - 1; i++) {// path execluding target and current
 				if (fullPath.get(i).getMarble() != null) {// if there is a marble destroy it, no need to validate
-					destroyMarbleWithKing(fullPath.get(i).getMarble());
+					destroyMarbleNoConstraint(fullPath.get(i).getMarble());
 				}
 			}
 		}
@@ -271,7 +271,7 @@ public class Board implements BoardManager {
 		track.get(target).setMarble(marble);
 		track.get(position).setMarble(null);// change in the track, not fullPath
 		if (targetCell.isTrap()) {
-			destroyMarbleWithKing(marble);
+			destroyMarbleNoConstraint(marble);
 			targetCell.setTrap(false);
 			assignTrapCell();
 		}
@@ -350,11 +350,11 @@ public class Board implements BoardManager {
 	@Override
 	public void moveBy(Marble marble, int steps, boolean destroy)
 			throws IllegalMovementException, IllegalDestroyException {
-		// TODO Auto-generated method stub
-
 		// this method will validate all standard and special that was not implemented
-		// below it, get the full path and call move
-
+		// below it so the 4,5,7,king, get the full path, validate and call move
+		ArrayList<Cell> fullPath = validateSteps(marble, steps);
+		validatePath(marble, fullPath, destroy);
+		move(marble, fullPath, destroy);
 	}
 
 	@Override
@@ -400,8 +400,7 @@ public class Board implements BoardManager {
 			destroyMarble(track.get(base).getMarble());
 
 		}
-		track.get(base).setMarble(marble);// add marble regardless of base was occupied or not, if it was either an
-											// exception was thrown or destroyed
+		gameManager.fieldMarble();// or is it on the track, doeds this mean this method is only called for fielding??????????????
 
 	}
 
@@ -564,7 +563,7 @@ public class Board implements BoardManager {
 			pathTaken.add(path.get((position + i) % 100));// even when it's a safezone, it doesnt matter
 	}
 
-	private void destroyMarbleWithKing(Marble marble) throws IllegalDestroyException {
+	private void destroyMarbleNoConstraint(Marble marble) throws IllegalDestroyException {
 		// remove from track
 		track.get(getPositionInPath(track, marble)).setMarble(null);
 
