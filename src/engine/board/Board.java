@@ -18,7 +18,6 @@ import model.player.Marble;
 @SuppressWarnings("unused")
 
 public class Board implements BoardManager {
-
 	private final GameManager gameManager;
 	private final ArrayList<Cell> track;
 	private final ArrayList<SafeZone> safeZones;
@@ -259,12 +258,12 @@ public class Board implements BoardManager {
 		if (targetCell.getMarble() != null) {// it will be destroyed, no neeed to validate destroy since you cannot land
 												// on a base cell nor on ur own cell in a safe zone
 
-			destroyMarble(targetCell.getMarble());
+			destroyMarbleWithKing(targetCell.getMarble());
 		}
 		if (destroy) {
 			for (int i = 1; i < fullPath.size() - 1; i++) {// path execluding target and current
 				if (fullPath.get(i).getMarble() != null) {// if there is a marble destroy it, no need to validate
-					destroyMarble(fullPath.get(i).getMarble());
+					destroyMarbleWithKing(fullPath.get(i).getMarble());
 				}
 			}
 		}
@@ -272,7 +271,7 @@ public class Board implements BoardManager {
 		track.get(target).setMarble(marble);
 		track.get(position).setMarble(null);// change in the track, not fullPath
 		if (targetCell.isTrap()) {
-			destroyMarble(marble);
+			destroyMarbleWithKing(marble);
 			targetCell.setTrap(false);
 			assignTrapCell();
 		}
@@ -331,6 +330,81 @@ public class Board implements BoardManager {
 			throw new CannotFieldException("Cannot field a marble if base cell is occupied by you own marble");
 		}
 	}
+
+	private void validateSaving(int positionInSafeZone, int positionOnTrack) throws InvalidMarbleException {
+
+		if (positionOnTrack == -1) {
+			throw new InvalidMarbleException("Cannot save a card not on the general track");
+		}
+
+		// added from my own, check if opponents marble or not (game description)
+		Marble marble = track.get(positionOnTrack).getMarble();
+		if (marble.getColour() != getActivePlayerColour()) {
+			throw new InvalidMarbleException("Cannot save an opponent's card");
+		}
+
+	}
+
+	// BoardManager methods overriding
+	@Override
+	public void moveBy(Marble marble, int steps, boolean destroy)
+			throws IllegalMovementException, IllegalDestroyException {
+		// TODO Auto-generated method stub
+		
+		//this method will validate all standard and special that was not implemented below it, get the full path and call move 
+
+	}
+
+	@Override
+	public void swap(Marble marble, Marble marble2) throws IllegalSwapException {
+		//get position in track of both marbles, put second in the first slot and put the first in the second slot 
+		validateSwap(marble,marble2);
+		int pos1=getPositionInPath(track,marble);
+		int pos2=getPositionInPath(track,marble2);
+
+		track.get(pos2).setMarble(marble);
+		track.get(pos1).setMarble(marble2);
+
+	}
+
+	@Override
+	public void destroyMarble(Marble marble) throws IllegalDestroyException {
+		//the implementation here assumes this will only be used by the burner card since it does not allow destruction of you own card, for the king's destruction it will call another method 
+		//check if not my marble
+		if (getActivePlayerColour()==marble.getColour()) {
+			throw new IllegalDestroyException("Cannot destroy your own marble with a burner");
+		}
+		int position =getPositionInPath(track,marble);
+		//validate destruction
+		validateDestroy(position);
+		
+		//remove from track 
+		track.get(position).setMarble(null);
+		
+		//put in home 
+		gameManager.sendHome(marble);//the power of an interface!!!
+		 
+		
+	}
+
+	@Override
+	public void sendToBase(Marble marble) throws CannotFieldException, IllegalDestroyException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void sendToSafe(Marble marble) throws InvalidMarbleException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public ArrayList<Marble> getActionableMarbles() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	/**
 	 * Constructs a game board with the given player color order. Initializes the
@@ -441,5 +515,13 @@ public class Board implements BoardManager {
 		for (int i = 0; i <= steps; i++)
 			pathTaken.add(path.get((position + i) % 100));// even when it's a safezone, it doesnt matter
 	}
+	
+	public void destroyMarbleWithKing(Marble marble) throws IllegalDestroyException {
+		//remove from track 
+		track.get(getPositionInPath(track,marble)).setMarble(null);
+				
+		//put in home 
+		gameManager.sendHome(marble);//the power of an interface!!!	}
 
+}
 }
