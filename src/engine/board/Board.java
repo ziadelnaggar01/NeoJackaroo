@@ -219,7 +219,8 @@ public class Board implements BoardManager {
 				if (cell.getMarble() != null) {
 					// OR IS IT A MATTER OF A CELL OF AN ENEMY EXISTING IN MY BASE??/
 					if (cell.getCellType() == CellType.BASE
-							&& getBasePosition(cell.getMarble().getColour()) == getPositionInPath(track, cell.getMarble()))
+							&& getBasePosition(cell.getMarble().getColour()) == getPositionInPath(track,
+									cell.getMarble()))
 						baseCellBlock = true;
 					if (cell.getCellType() == CellType.SAFE) {
 						safeZoneBlock = true;
@@ -248,6 +249,66 @@ public class Board implements BoardManager {
 			throw new IllegalMovementException("A King cannot bypass or land on a Safe Zone marble");
 		}
 
+	}
+
+	private void move(Marble marble, ArrayList<Cell> fullPath, boolean destroy) throws IllegalDestroyException {
+		// destroy target with normal cell, no need for validation
+		int position = getPositionInPath(track, marble);
+		int target = position + (fullPath.size() - 1);// position + steps taken
+		Cell targetCell = track.get(target);
+		if (targetCell.getMarble() != null) {// it will be destroyed, no neeed to validate destroy since you cannot land
+												// on a base cell nor on ur own cell in a safe zone
+
+			destroyMarble(targetCell.getMarble());
+		}
+		if (destroy) {
+			for (int i = 1; i < fullPath.size() - 1; i++) {// path execluding target and current
+				if (fullPath.get(i).getMarble() != null) {// if there is a marble destroy it, no need to validate
+					destroyMarble(fullPath.get(i).getMarble());
+				}
+			}
+		}
+
+		track.get(target).setMarble(marble);
+		track.get(position).setMarble(null);// change in the track, not fullPath
+		if (targetCell.isTrap()) {
+			destroyMarble(marble);
+			targetCell.setTrap(false);
+			assignTrapCell();
+		}
+	}
+
+	private void validateSwap(Marble marble1, Marble marble2) throws IllegalSwapException {
+
+		int m1 = getPositionInPath(track, marble1);
+		int m2 = getPositionInPath(track, marble2);
+// Swapping is prohibited if either of the involved marbles are not on the general track
+		if (m1 == -1 || m2 == -1)
+			throw new IllegalSwapException("The two marbles aren’t on the track.");
+		Colour cm1 = marble1.getColour();
+		Colour cm2 = marble2.getColour();
+// Marbles owned by the same player are ineligible for swapping
+		if (cm1 == cm2) {
+			throw new IllegalSwapException(" Marbles owned by the same player are ineligible for swapping");
+		}
+		
+//cant swap two enemy marbles (added by me)	
+		Colour activeColour=getActivePlayerColour();
+		if (cm1!=activeColour&&cm2!=activeColour) {
+			throw new IllegalSwapException("Cannot swap two oponents' marbles");
+		}
+		
+//swapping is invalid if the other marble is positioned in its Base cell.		
+		if (activeColour==cm1) {//cm2 is the oponent marble
+			if (m2==getBasePosition(cm2)) {//check if it's in it's base 
+				throw new IllegalSwapException("Swapping is invalid if the other marble is positioned in its Base cell");
+			}
+		}
+		else {//cm1 is the oponent marble
+			if (m1==getBasePosition(cm1)) {//check if it's in it's base 
+				throw new IllegalSwapException("Swapping is invalid if the other marble is positioned in its Base cell");
+			}
+		}
 	}
 
 	/**
