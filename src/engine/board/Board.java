@@ -298,7 +298,7 @@ public class Board implements BoardManager {
 		}
 
 //cant swap two enemy marbles (added by me)	
-		Colour activeColour = getActivePlayerColour();
+		Colour activeColour = gameManager.getActivePlayerColour();
 		if (cm1 != activeColour && cm2 != activeColour) {
 			throw new IllegalSwapException("Cannot swap two oponents' marbles");
 		}
@@ -331,7 +331,7 @@ public class Board implements BoardManager {
 	}
 
 	private void validateFielding(Cell occupiedBaseCell) throws CannotFieldException {
-		Colour active = getActivePlayerColour();
+		Colour active = gameManager.getActivePlayerColour();
 		if (occupiedBaseCell.getCellType() == CellType.BASE && active == occupiedBaseCell.getMarble().getColour()) {
 			throw new CannotFieldException("Cannot field a marble if base cell is occupied by you own marble");
 		}
@@ -345,7 +345,7 @@ public class Board implements BoardManager {
 
 		// added from my own, check if opponents marble or not (game description)
 		Marble marble = track.get(positionOnTrack).getMarble();
-		if (marble.getColour() != getActivePlayerColour()) {
+		if (marble.getColour() != gameManager.getActivePlayerColour()) {
 			throw new InvalidMarbleException("Cannot save an opponent's card");
 		}
 
@@ -382,7 +382,7 @@ public class Board implements BoardManager {
 		// since it does not allow destruction of you own card, for the king's
 		// destruction it will call another method
 		// check if not my marble
-		if (getActivePlayerColour() == marble.getColour()) {
+		if (gameManager.getActivePlayerColour() == marble.getColour()) {
 			throw new IllegalDestroyException("Cannot destroy your own marble with a burner");
 		}
 		int position = getPositionInPath(track, marble);
@@ -438,7 +438,7 @@ public class Board implements BoardManager {
 	@Override
 	public ArrayList<Marble> getActionableMarbles() {
 		ArrayList<Marble> res = new ArrayList<>();
-		Colour active = getActivePlayerColour();
+		Colour active = gameManager.getActivePlayerColour();
 
 		// add all marbles on track
 		for (int i = 0; i < track.size(); i++) {
