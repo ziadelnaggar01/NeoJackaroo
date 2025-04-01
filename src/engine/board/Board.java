@@ -564,7 +564,7 @@ public class Board implements BoardManager {
 			pathTaken.add(path.get((position + i) % 100));// even when it's a safezone, it doesnt matter
 	}
 
-	public void destroyMarbleWithKing(Marble marble) throws IllegalDestroyException {
+	private void destroyMarbleWithKing(Marble marble) throws IllegalDestroyException {
 		// remove from track
 		track.get(getPositionInPath(track, marble)).setMarble(null);
 
