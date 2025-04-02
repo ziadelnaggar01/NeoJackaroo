@@ -115,7 +115,7 @@ public class Player {
 	{
 		if(marbles.isEmpty())
 			return null;
-		return marbles.getFirst();
+		return marbles.get(0);
 	}
 	
 	/**

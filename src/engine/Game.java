@@ -240,7 +240,7 @@ public class Game implements GameManager {
 		}else
 		{
 			board.sendToBase(x); // throws 
-			players.get(currentPlayerIndex).getMarbles().removeFirst();
+			players.get(currentPlayerIndex).getMarbles().remove(0);
 		}
 	}
 	
