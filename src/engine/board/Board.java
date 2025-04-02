@@ -558,9 +558,9 @@ public class Board implements BoardManager {
 		ArrayList<Marble> res = new ArrayList<>();
 		Colour active = gameManager.getActivePlayerColour();
 
-		// add all marbles on track of the active player's colours
+		// add all marbles on track regardless of colour
 		for (int i = 0; i < track.size(); i++) {
-			if (track.get(i).getMarble() != null && track.get(i).getMarble().getColour() == active) {
+			if (track.get(i).getMarble() != null) {
 				res.add(track.get(i).getMarble());
 			}
 		}
@@ -650,8 +650,6 @@ public class Board implements BoardManager {
 	}
 
 
-	
-	
 	
 	private ArrayList<Cell> validateSteps(Marble marble, int steps) throws IllegalMovementException {
 
@@ -774,8 +772,6 @@ public class Board implements BoardManager {
 		for (int i = 0; i <= steps; i++)
 			pathTaken.add(path.get((position + i) % 100));// even when it's a safezone, it doesnt matter
 	}
-	
-	
-	
+
 
 }
