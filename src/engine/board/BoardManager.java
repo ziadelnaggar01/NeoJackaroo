@@ -12,7 +12,7 @@ import exception.*;
  */
 public interface BoardManager {
 	int getSplitDistance();
-	
+
 	void moveBy(Marble marble, int steps, boolean destroy) throws IllegalMovementException, IllegalDestroyException;
 
 	void swap(Marble marble, Marble marble2) throws IllegalSwapException;
