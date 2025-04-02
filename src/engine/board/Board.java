@@ -15,7 +15,6 @@ import model.player.Marble;
  * Represents the game board, including the main track and safe zones. Manages
  * cell assignments and trap placements.
  */
-@SuppressWarnings("unused")
 
 public class Board implements BoardManager {
 	private final GameManager gameManager;
