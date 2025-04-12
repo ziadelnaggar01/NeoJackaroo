@@ -171,14 +171,9 @@ public class Game implements GameManager {
 		Card x = players.get(currentPlayerIndex).getSelectedCard();
 		if(x != null)
 		{
-			for (int i = 0; i < players.get(currentPlayerIndex).getHand().size(); i++) {
-			    if (players.get(currentPlayerIndex).getHand().get(i).getName().equals(x.getName())          ) {
-			    	 players.get(currentPlayerIndex).getHand().remove(i);
-			                 break; 
-			    }
-		}
+			players.get(currentPlayerIndex).getHand().remove(x); // remove from hand directly
 			firePit.add(x);
-	}
+	    }
 		deselectAll();
 		currentPlayerIndex++;
 		currentPlayerIndex %= 4;
