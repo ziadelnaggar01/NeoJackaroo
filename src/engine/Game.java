@@ -267,6 +267,7 @@ public class Game implements GameManager {
 		    
 		    // Remove the selected card from the player's hand
 		    players.get(idx).getHand().remove(randomIndex);
+		    firePit.add(cardToDiscard); // add to firepit
 		}
 	}
 	
