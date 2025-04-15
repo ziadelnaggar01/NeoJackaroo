@@ -54,30 +54,6 @@ public class Standard extends Card {
 	}
 	
 	/**
-	 * Validates whether the given list of marbles contains only one marble.
-	 * @param marbles
-	 * @return true if number of marbles is one, false otherwise.
-	 */
-	public boolean validateMarbleSize(ArrayList<Marble> marbles)
-	{
-		return marbles.size()==1;
-	}
-
-	
-	/**
-	 * Validates whether the given list of marbles contains a marble that belongs to the active player.
-	 * @param marbles The list of marbles to check.
-	 * @return true if the marble belongs to the active player, false otherwise.
-	 */
-	public boolean validateMarbleColours(ArrayList<Marble> marbles)
-	{
-		Colour activePlayerColour = gameManager.getActivePlayerColour();
-		if(marbles.isEmpty()) return false;
-		Marble selectedMarble = marbles.get(0);
-		return activePlayerColour.equals(selectedMarble.getColour());
-	}
-	
-	/**
 	 * Moves one of active player marbles a number of forwards steps based on the card rank.
 	 * 
 	 * @param marbles The list of marbles selected for this card's action.
