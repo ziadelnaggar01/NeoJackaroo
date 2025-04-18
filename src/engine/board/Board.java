@@ -66,7 +66,7 @@ public class Board implements BoardManager {
 	 */
 	private int getPositionInPath(ArrayList<Cell> path, Marble marble) {
 		for (int i = 0; i < path.size(); i++) {
-			if (path.get(i).getMarble().equals(marble)) // Comparing reference of the two marbles
+			if (path.get(i).getMarble()==(marble)) // Comparing reference of the two marbles
 				return i; // 0-based positioning (refer to page 3 in game description, figure 2)
 		}
 		return -1;
@@ -118,52 +118,60 @@ public class Board implements BoardManager {
 			return (((basePosition - 2) + 100) % 100);
 		return -1;
 	}
-	
+
 	/**
 	 * Determines the path a marble will take based on a number of movement steps.
-	 * The method checks whether the marble is currently on the main track or in the 
+	 * The method checks whether the marble is currently on the main track or in the
 	 * player's Safe Zone. If it is found in neither, an exception is thrown.
 	 *
 	 * Movement rules:
 	 * <ul>
-	 *   <li>If on the track and moving -4, the path will be traced backwards with wrap around.</li>
-	 *   <li>If the marble is moved using a 5 by another player (opponent), special rules apply:
-	 *     <ul>
-	 *       <li>Cannot enter the safe zone.</li>
-	 *       <li>Cannot bypass or land on any marble of the active player.</li>
-	 *       <li>Can bypass or land own marbles,BIG ASSUMPTION HERE, IT CAN
-			 BYPASS HOWEVER MANY MARBLES THERE IS.</li>
-	 *       <li>Note that this technically should be in validatePath(), but it's written in the validateSteps() section
-	 *     </ul>
-	 *   </li>
-	 *   <li>If moving forward normally:
-	 *     <ul>
-	 *       <li>The path might remain entirely on the track.</li>
-	 *       <li>Or transition from the track into the safe zone depending on distance to entry.</li>
-	 *     </ul>
-	 *   </li>
-	 *   <li>If in the safe zone:
-	 *     <ul>
-	 *       <li>Cannot move backward.</li>
-	 *       <li>Cannot exceed the bounds of the safe zone.</li>
-	 *     </ul>
-	 *   </li>
+	 * <li>If on the track and moving -4, the path will be traced backwards with
+	 * wrap around.</li>
+	 * <li>If the marble is moved using a 5 by another player (opponent), special
+	 * rules apply:
+	 * <ul>
+	 * <li>Cannot enter the safe zone.</li>
+	 * <li>Cannot bypass or land on any marble of the active player.</li>
+	 * <li>Can bypass or land own marbles,BIG ASSUMPTION HERE, IT CAN BYPASS HOWEVER
+	 * MANY MARBLES THERE IS.</li>
+	 * <li>Note that this technically should be in validatePath(), but it's written
+	 * in the validateSteps() section
+	 * </ul>
+	 * </li>
+	 * <li>If moving forward normally:
+	 * <ul>
+	 * <li>The path might remain entirely on the track.</li>
+	 * <li>Or transition from the track into the safe zone depending on distance to
+	 * entry.</li>
+	 * </ul>
+	 * </li>
+	 * <li>If in the safe zone:
+	 * <ul>
+	 * <li>Cannot move backward.</li>
+	 * <li>Cannot exceed the bounds of the safe zone.</li>
+	 * </ul>
+	 * </li>
 	 * </ul>
 	 *
 	 * @param marble the marble to move
 	 * @param steps  the number of steps to move (can be negative for backwards)
-	 * @return the full path as a list of {@code Cell}, starting with the marble's current position
-	 *         and ending with the intended destination
+	 * @return the full path as a list of {@code Cell}, starting with the marble's
+	 *         current position and ending with the intended destination
 	 * 
 	 * @throws IllegalMovementException if:
-	 *         <ul>
-	 *           <li>The marble is not on the track or safe zone</li>
-	 *           <li>The movement is backward within a safe zone</li>
-	 *           <li>Too many steps are taken (exceeding track or safe zone limits)</li>
-	 *           <li>An opponent’s marble attempts to bypass or land on an active player’s marble</li>
-	 *         </ul>
+	 *                                  <ul>
+	 *                                  <li>The marble is not on the track or safe
+	 *                                  zone</li>
+	 *                                  <li>The movement is backward within a safe
+	 *                                  zone</li>
+	 *                                  <li>Too many steps are taken (exceeding
+	 *                                  track or safe zone limits)</li>
+	 *                                  <li>An opponent’s marble attempts to bypass
+	 *                                  or land on an active player’s marble</li>
+	 *                                  </ul>
 	 */
- 
+
 	private ArrayList<Cell> validateSteps(Marble marble, int steps) throws IllegalMovementException {
 
 		// An alternative way to simplify the method is implementing a record in track
@@ -257,21 +265,23 @@ public class Board implements BoardManager {
 		return pathTaken;
 	}
 
-	
 	/**
-	 * Records the backward path taken by a marble on the track based on a negative step value.
-	 * The marble wraps around the circular track in reverse.
+	 * Records the backward path taken by a marble on the track based on a negative
+	 * step value. The marble wraps around the circular track in reverse.
 	 * 
 	 * Note:
 	 * <ul>
-	 *   <li>This movement never enters the safe zone.</li>
-	 *   <li>The {@code steps} parameter must be negative. The method will convert it to positive internally.</li>
-	 *   <li>The resulting path is appended to the given {@code path} list by reference.</li>
+	 * <li>This movement never enters the safe zone.</li>
+	 * <li>The {@code steps} parameter must be negative. The method will convert it
+	 * to positive internally.</li>
+	 * <li>The resulting path is appended to the given {@code path} list by
+	 * reference.</li>
 	 * </ul>
 	 *
-	 * @param steps  the number of steps to move backward (expected negative)
+	 * @param steps    the number of steps to move backward (expected negative)
 	 * @param position the marble's current index on the track
-	 * @param path the list to store the sequence of {@code Cell}s the marble will move through
+	 * @param path     the list to store the sequence of {@code Cell}s the marble
+	 *                 will move through
 	 */
 	private void recordBackwards(int steps, int position, ArrayList<Cell> path) {
 		steps = Math.abs(steps);
@@ -736,9 +746,7 @@ public class Board implements BoardManager {
 				res.add(safeZone.get(i).getMarble());
 			}
 		}
-
 		return res;
-
 	}
 
 	/**
