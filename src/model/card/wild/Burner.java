@@ -62,6 +62,6 @@ public class Burner extends Wild {
 		if(!validateMarbleSize(marbles))
 			throw new InvalidMarbleException("You must select exactly one marble.");
 		Marble selectedMarble = marbles.get(0);
-		gameManager.sendHome(selectedMarble);
+		boardManager.destroyMarble(selectedMarble);
 	}
 }
