@@ -24,18 +24,8 @@ public class Saver extends Wild {
 	public Saver(String name, String description, BoardManager boardManager, GameManager gameManager) {
 		super(name, description, boardManager, gameManager);
 	}
-	
-	/**
-	 * Validates whether the given list of marbles contains only one marble.
-	 * @param marbles
 	 * @return true if number of marbles is one, false otherwise.
-	 */
-	public boolean validateMarbleSize(ArrayList<Marble> marbles)
-	{
-		return marbles.size()==1;
-	}
-
-	
+		
 	/**
 	 * Validates whether the given list of marbles contains a marble that belongs to the active player.
 	 * @param marbles The list of marbles to check.
