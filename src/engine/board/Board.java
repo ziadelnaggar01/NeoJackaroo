@@ -483,7 +483,7 @@ public class Board implements BoardManager {
 
 		Cell targetCell = track.get(positionInPath);
 		Marble targetMarble = targetCell.getMarble();
-
+		if (targetMarble==null) return;
 		// Validate that the marble is not in its base cell.
 		boolean isInItsBasePosition = (getBasePosition(targetMarble.getColour()) == positionInPath);
 
