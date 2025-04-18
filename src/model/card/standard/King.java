@@ -39,22 +39,7 @@ public class King extends Standard {
 	{
 		return marbles.size()<=1;
 	}
-	
-	/**
-     * Validates whether the given list of marbles is empty or contains a marble that belongs to the active player.
-     * 
-     * @param marbleList The list of marbles to check.
-     * @return true if the marble belongs to the active player or if the list is empty, false otherwise.
-     */
-	@Override
-	public boolean validateMarbleColours(ArrayList<Marble> marbles)
-	{
-		Colour activePlayerColour = gameManager.getActivePlayerColour();
-		if(marbles.isEmpty()) return true;
-		Marble selectedMarble = marbles.get(0);
-		return activePlayerColour.equals(selectedMarble.getColour());
-	}
-	
+
 	/**
 	 * Executes the King card action:
 	 * - If no marble is selected, the active player fields a new marble from home.
@@ -69,16 +54,15 @@ public class King extends Standard {
 	{
 		if(!validateMarbleSize(marbles))
 			throw new InvalidMarbleException("King card allows selecting at most one marble.");
-		if(!validateMarbleColours(marbles))
-			throw new InvalidMarbleException("Selected marble does not belong to the active player.");
 		
 		if(marbles.isEmpty())
 			gameManager.fieldMarble();
-		else
-		{
+		
+		if(!validateMarbleColours(marbles))
+			throw new InvalidMarbleException("Selected marble does not belong to the active player.");
+		
 		Marble selectedMarble = marbles.get(0);
 		boardManager.moveBy(selectedMarble, 13, true);
-		}
 	}
 
 }
