@@ -4,6 +4,7 @@ package model.card;
 import java.util.ArrayList;
 
 import exception.*;
+import model.Colour;
 import model.player.Marble;
 import engine.GameManager;
 import engine.board.BoardManager;
@@ -63,7 +64,10 @@ public abstract class Card {
 	 * @param marbles
 	 * @return true if number of marbles matches type of card, false otherwise.
 	 */
-	public abstract boolean validateMarbleSize(ArrayList<Marble> marbles);
+	public boolean validateMarbleSize(ArrayList<Marble> marbles)
+	{
+		return marbles.size()==1;
+	}
 
 	
 	/**
@@ -71,7 +75,13 @@ public abstract class Card {
 	 * @param marbles
 	 * @return true if color of marble matches card action, false otherwise.
 	 */
-	public abstract boolean validateMarbleColours(ArrayList<Marble> marbles);
+	public boolean validateMarbleColours(ArrayList<Marble> marbles)
+	{
+		Colour activePlayerColour = gameManager.getActivePlayerColour();
+		if(marbles.isEmpty()) return false;
+		Marble selectedMarble = marbles.get(0);
+		return activePlayerColour.equals(selectedMarble.getColour());
+	}
 	
 	
 	/**
