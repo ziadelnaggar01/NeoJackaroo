@@ -66,7 +66,7 @@ public class Board implements BoardManager {
 	 */
 	private int getPositionInPath(ArrayList<Cell> path, Marble marble) {
 		for (int i = 0; i < path.size(); i++) {
-			if (path.get(i).getMarble()==(marble)) // Comparing reference of the two marbles
+			if (path.get(i).getMarble() == (marble)) // Comparing reference of the two marbles
 				return i; // 0-based positioning (refer to page 3 in game description, figure 2)
 		}
 		return -1;
@@ -196,12 +196,17 @@ public class Board implements BoardManager {
 				for (int i = 0; i <= steps; i++) {
 					int movingPosition = (position + i) + 100 % 100;
 					Cell currentCell = track.get((movingPosition));
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					/// THE FOLLOWING CONDITION IS MOST LIKLEY OPTIONAL, IT IS AUTO HANDLED IN
+					/// VALIDATE PATH
 					// if you find a cell in the path that is the active player's colour, you cannot
 					// bypass it
 					if (i != 0 && currentCell.getMarble() != null
 							&& currentCell.getMarble().getColour() == gameManager.getActivePlayerColour())
 						throw new IllegalMovementException(
 								"A moved marble by another player cannot bypass or land on that player's marbles");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 					pathTaken.add(currentCell);
 				}
@@ -217,7 +222,7 @@ public class Board implements BoardManager {
 				// get distance to entry keeping in mind circular nature
 				int distanceToEntry = ((entry - positionInTrack) + track.size()) % track.size();
 
-				if (steps >= distanceToEntry + 4) {// steps taken bigger than total possible steps
+				if (steps > distanceToEntry + 4) {// steps taken bigger than total possible steps
 					throw new IllegalMovementException("Rank is too high");
 				} else if (steps <= distanceToEntry) { // record path on track only
 					for (int i = 0; i <= steps; i++)
@@ -343,7 +348,7 @@ public class Board implements BoardManager {
 									+ " any player) blocking the path");
 
 				// Your entry has a marble occupying it and you will enter the safe zone
-				if (!destroy && track.get(getEntryPosition(cell.getMarble().getColour())).getMarble() != null
+				if (!destroy && track.get(getEntryPosition(marble.getColour())).getMarble() != null
 						&& fullPath.get(fullPath.size() - 1).getCellType() == CellType.SAFE)
 					throw new IllegalMovementException("A marble cannot enter its player’s Safe Zone if any marble is "
 							+ "stationed at its player’s Safe Zone Entry");
