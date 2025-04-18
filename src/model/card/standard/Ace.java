@@ -52,16 +52,18 @@ public class Ace extends Standard {
 	{
 		if(!validateMarbleSize(marbles))
 			throw new InvalidMarbleException("Ace card allows selecting at most one marble.");
-		if(!validateMarbleColours(marbles))
-			throw new InvalidMarbleException("Selected marble does not belong to the active player.");
 		
 		if(marbles.isEmpty())
-			gameManager.fieldMarble();
-		else
 		{
+			gameManager.fieldMarble();
+			return;
+		}
+		
+		if(!validateMarbleColours(marbles))
+			throw new InvalidMarbleException("Selected marble does not belong to the active player.");
+
 		Marble selectedMarble = marbles.get(0);
 		boardManager.moveBy(selectedMarble, 1, false);
-		}
 	}
 
 }
