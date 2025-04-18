@@ -528,7 +528,7 @@ public class Board implements BoardManager {
 	 */
 	private void validateSaving(int positionInSafeZone, int positionOnTrack) throws InvalidMarbleException {
 		// If the marble is not on the general track, throwing an exception.
-		if (positionOnTrack == -1) {
+		if (positionOnTrack == -1||positionInSafeZone!=-1) {
 			throw new InvalidMarbleException("Cannot save a marble not on the general track.");
 		}
 	}
