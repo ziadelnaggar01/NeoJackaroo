@@ -331,9 +331,9 @@ public class Board implements BoardManager {
 					otherMarbles++;
 
 				// A marble exists on the path or target with the same colour
-				if (!destroy && cell.getMarble().getColour() == marble.getColour())
+				if (!destroy && cell.getMarble().getColour() == gameManager.getActivePlayerColour())
 					throw new IllegalMovementException(
-							"A marble cannot move if there is another marble owned by the same\r\n"
+							"A marble cannot move if there is another marble owned by the same"
 									+ " player either in its path or at the target position");
 
 				// More than 1 marbles exist on the path execluding target
