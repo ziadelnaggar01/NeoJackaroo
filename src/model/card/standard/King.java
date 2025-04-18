@@ -56,7 +56,10 @@ public class King extends Standard {
 			throw new InvalidMarbleException("King card allows selecting at most one marble.");
 		
 		if(marbles.isEmpty())
+		{
 			gameManager.fieldMarble();
+			return;
+		}
 		
 		if(!validateMarbleColours(marbles))
 			throw new InvalidMarbleException("Selected marble does not belong to the active player.");
