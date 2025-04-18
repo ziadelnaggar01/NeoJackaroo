@@ -202,10 +202,10 @@ public class Board implements BoardManager {
 /// VALIDATE PATH
 // if you find a cell in the path that is the active player's colour, you cannot
 // bypass it
-					if (i != 0 && currentCell.getMarble() != null
-							&& currentCell.getMarble().getColour() == gameManager.getActivePlayerColour())
-						throw new IllegalMovementException(
-								"A moved marble by another player cannot bypass or land on that player's marbles");
+		///			if (i != 0 && currentCell.getMarble() != null
+		///					&& currentCell.getMarble().getColour() == gameManager.getActivePlayerColour())
+		///				throw new IllegalMovementException(
+		///						"A moved marble by another player cannot bypass or land on that player's marbles");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 					pathTaken.add(currentCell);
