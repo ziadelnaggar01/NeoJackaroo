@@ -169,11 +169,10 @@ public class Game implements GameManager {
 	public void endPlayerTurn()
 	{
 		Card x = players.get(currentPlayerIndex).getSelectedCard();
-		if(x != null)
-		{
+		// I should add if condition here
 			players.get(currentPlayerIndex).getHand().remove(x); // remove from hand directly
 			firePit.add(x);
-	    }
+	    
 		deselectAll();
 		currentPlayerIndex++;
 		currentPlayerIndex %= 4;
@@ -213,7 +212,16 @@ public class Game implements GameManager {
 	
 	public void sendHome(Marble marble)
 	{
-		players.get(currentPlayerIndex).regainMarble(marble);
+		int idx = 0;
+		for(int i = 0;i<4;i++)
+		{
+			if(players.get(i).getColour() == marble.getColour())
+			{
+				idx = i;
+				break;
+			}
+		}
+		players.get(idx).regainMarble(marble);
 	}
 	
 	/**
