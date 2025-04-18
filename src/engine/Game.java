@@ -148,7 +148,7 @@ public class Game implements GameManager {
 	public boolean canPlayTurn()
 	{
 		int x = players.get(currentPlayerIndex).getHand().size();
-		if(x >= 4-turn)
+		if(x == 4-turn)
 		return true;
 		return false;
 	}
@@ -185,12 +185,12 @@ public class Game implements GameManager {
 			turn = 0;
 			for (int i = 0; i < 4; i++) 
 			{
-				 this.players.get(i).setHand(Deck.drawCards());
-					if(Deck.getPoolSize() < 4)
+				 if(Deck.getPoolSize() < 4)
 					{
 						Deck.refillPool(firePit);
 						firePit.clear();
 					}
+				 this.players.get(i).setHand(Deck.drawCards());
 			}
 		}
     }

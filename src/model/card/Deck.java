@@ -128,10 +128,7 @@ public class Deck {
 	 * */
 	public static void refillPool(ArrayList<Card> cards)
 	{
-		for(Card x : cards)
-		{
-			cardsPool.add(x);
-		}
+		cardsPool.addAll(cards);
 	}
 	
 	public static int getPoolSize()
