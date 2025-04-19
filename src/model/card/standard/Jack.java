@@ -71,11 +71,6 @@ public class Jack extends Standard {
 	@Override
 	public void act(ArrayList<Marble> marbles) throws ActionException , InvalidMarbleException
 	{
-		if(!validateMarbleSize(marbles))
-			throw new InvalidMarbleException("Jack card allows selecting only one or two marbles.");
-		if(!validateMarbleColours(marbles))
-			throw new InvalidMarbleException("Invalid marble selection.");
-		
 		int numberOfMarbles = marbles.size();
 		switch(numberOfMarbles)
 		{

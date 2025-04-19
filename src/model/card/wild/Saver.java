@@ -47,10 +47,6 @@ public class Saver extends Wild {
 	 */
 	public void act(ArrayList<Marble> marbles) throws ActionException , InvalidMarbleException
 	{
-		if(!validateMarbleColours(marbles))
-			throw new InvalidMarbleException("You can only select your own marbles.");
-		if(!validateMarbleSize(marbles))
-			throw new InvalidMarbleException("You must select exactly one marble.");
 		Marble selectedMarble = marbles.get(0);
 		boardManager.sendToSafe(selectedMarble);
 	}

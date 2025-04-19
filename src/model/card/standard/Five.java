@@ -47,9 +47,6 @@ public class Five extends Standard {
 	@Override
 	public void act(ArrayList<Marble> marbles) throws ActionException , InvalidMarbleException
 	{
-		if(!validateMarbleSize(marbles))
-			throw new InvalidMarbleException("Five card allows selecting only one marble.");
-		
 		Marble selectedMarble = marbles.get(0);
 		boardManager.moveBy(selectedMarble, 5, false);
 	}

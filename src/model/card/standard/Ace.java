@@ -50,17 +50,11 @@ public class Ace extends Standard {
 	@Override
 	public void act(ArrayList<Marble> marbles) throws ActionException , InvalidMarbleException
 	{
-		if(!validateMarbleSize(marbles))
-			throw new InvalidMarbleException("Ace card allows selecting at most one marble.");
-		
 		if(marbles.isEmpty())
 		{
 			gameManager.fieldMarble();
 			return;
 		}
-		
-		if(!validateMarbleColours(marbles))
-			throw new InvalidMarbleException("Selected marble does not belong to the active player.");
 
 		Marble selectedMarble = marbles.get(0);
 		boardManager.moveBy(selectedMarble, 1, false);

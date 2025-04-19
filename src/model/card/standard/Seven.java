@@ -71,11 +71,6 @@ public class Seven extends Standard {
 	@Override
 	public void act(ArrayList<Marble> marbles) throws ActionException , InvalidMarbleException
 	{
-		if(!validateMarbleSize(marbles))
-			throw new InvalidMarbleException("Seven card allows selecting only one or two marbles.");
-		if(!validateMarbleColours(marbles))
-			throw new InvalidMarbleException("Selected marbles must belong to the active player.");
-		
 		int numberOfMarbles = marbles.size();
 		switch(numberOfMarbles)
 		{

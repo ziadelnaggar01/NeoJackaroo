@@ -66,11 +66,6 @@ public class Ten extends Standard {
 	@Override
 	public void act(ArrayList<Marble> marbles) throws ActionException , InvalidMarbleException
 	{
-		if(!validateMarbleSize(marbles))
-			throw new InvalidMarbleException("Ten card allows selecting at most one marble.");
-		if(!validateMarbleColours(marbles))
-			throw new InvalidMarbleException("Selected marble does not belong to the active player.");
-		
 		if(marbles.isEmpty())
 		{
 			Colour nextPlayerColour = gameManager.getNextPlayerColour();
