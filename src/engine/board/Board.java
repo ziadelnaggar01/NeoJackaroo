@@ -508,7 +508,7 @@ public class Board implements BoardManager {
 		Colour activePlayerColour = gameManager.getActivePlayerColour();
 
 		// Check if the base cell is occupied by the active player's own marble.
-		if (occupiedBaseCell.getCellType() == CellType.BASE
+		if (occupiedBaseCell.getMarble()!=null&&occupiedBaseCell.getCellType() == CellType.BASE
 				&& activePlayerColour == occupiedBaseCell.getMarble().getColour()) {
 			throw new CannotFieldException("Cannot field a marble if base cell is occupied by your own marble.");
 		}
