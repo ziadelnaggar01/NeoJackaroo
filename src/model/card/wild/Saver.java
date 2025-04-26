@@ -24,19 +24,6 @@ public class Saver extends Wild {
 	public Saver(String name, String description, BoardManager boardManager, GameManager gameManager) {
 		super(name, description, boardManager, gameManager);
 	}
-		
-	/**
-	 * Validates whether the given list of marbles contains a marble that belongs to the active player.
-	 * @param marbles The list of marbles to check.
-	 * @return true if the marble belongs to the active player, false otherwise.
-	 */
-	public boolean validateMarbleColours(ArrayList<Marble> marbles)
-	{
-		Colour activePlayerColour = gameManager.getActivePlayerColour();
-		if(marbles.isEmpty()) return false;
-		Marble selectedMarble = marbles.get(0);
-		return activePlayerColour.equals(selectedMarble.getColour());
-	}
 	
 	/**
 	 * Moves an active player's marble from the track or base to a random empty safe zone cell.
