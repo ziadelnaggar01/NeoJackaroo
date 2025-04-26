@@ -35,19 +35,4 @@ public class Five extends Standard {
 	{
 		return true;
 	}
-	
-	 /**
-     * Executes the Five card action:
-     * - Moves any marble (including opponent's) 5 steps forward.
-     *
-     * @param marbles The list of selected marbles (should be exactly 1).
-     * @throws InvalidMarbleException If more than one marble is selected.
-     * @throws ActionException If the action cannot be executed due to game constraints.
-     */
-	@Override
-	public void act(ArrayList<Marble> marbles) throws ActionException , InvalidMarbleException
-	{
-		Marble selectedMarble = marbles.get(0);
-		boardManager.moveBy(selectedMarble, 5, false);
-	}
 }
