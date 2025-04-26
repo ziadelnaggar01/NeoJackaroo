@@ -26,16 +26,6 @@ public class Burner extends Wild {
 	}
 	
 	/**
-	 * Validates whether the given list of marbles contains only one marble.
-	 * @param marbles
-	 * @return true if number of marbles is one, false otherwise.
-	 */
-	public boolean validateMarbleSize(ArrayList<Marble> marbles)
-	{
-		return marbles.size()==1;
-	}
-	
-	/**
 	 * Validates whether the given list of marbles contains a marble that belongs to opponent player.
 	 * @param marbles The list of marbles to check.
 	 * @return true if the marble belongs to the opponent player, false otherwise.
