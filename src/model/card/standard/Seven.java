@@ -53,7 +53,7 @@ public class Seven extends Standard {
 		Colour activePlayerColour = gameManager.getActivePlayerColour();
 		int numberOfMarbles = marbles.size();
 		for(int i=0; i<numberOfMarbles; i++)
-			if(!marbles.get(i).getColour().equals(activePlayerColour)) 
+			if(!(marbles.get(i).getColour()==activePlayerColour))
 				return false;
 		return true;
 	}
