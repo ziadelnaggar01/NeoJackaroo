@@ -18,7 +18,7 @@ import model.player.Player;
  * Represents the engine of the game, where it allows the game to start and
  * initializes all core elements of the game
  */
-@SuppressWarnings("unused")
+
 public class Game implements GameManager {
 
 	/**

@@ -32,7 +32,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-
+@SuppressWarnings("all")
 public class Milestone2PublicTests {
 	private String playerPath = "model.player.Player";
 	private String CPUPath = "model.player.CPU";
