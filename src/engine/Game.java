@@ -212,7 +212,7 @@ public class Game implements GameManager {
 		Colour x = null;
 		for (int i = 0; i < 4; i++) 
             if(board.getSafeZones().get(i).isFull())
-            	x = players.get(i).getColour();
+            	x = board.getSafeZones().get(i).getColour();
 		return x;
 	}
 	
@@ -269,6 +269,7 @@ public class Game implements GameManager {
 			if(players.get(i).getColour() == colour)
 			{
 				idx = i;
+				break;
 			}
 		}
 		if(idx == -1 || players.get(idx).getHand().size() == 0)
