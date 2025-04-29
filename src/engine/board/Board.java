@@ -184,7 +184,7 @@ public class Board implements BoardManager {
 
 		if (positionInTrack != -1) {// Found marble in track
 			position = positionInTrack;
-			if (steps == -4) {// Record a backward path
+			if (steps < 0) {// Record a backward path
 				recordBackwards(steps, position, pathTaken);
 
 			}
@@ -246,7 +246,7 @@ public class Board implements BoardManager {
 
 			// if its a backwards four throw an illegalMovement exception since can't move
 			// backwards
-			if (steps == -4) {
+			if (steps < 0) {
 				throw new IllegalMovementException("Cannot move backwards in safezones");
 			}
 
