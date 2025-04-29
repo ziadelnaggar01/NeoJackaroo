@@ -353,7 +353,7 @@ public class Board implements BoardManager {
 				// by checking if the cell is an entry and it is not null and you will enter
 				// safe, no card makes you move that much so it works, but the first way is more
 				// correct but makes failures in tests
-				if (!destroy && cell.getMarble() != null && cell.getCellType() == CellType.ENTRY
+				if (!destroy && cell.getCellType() == CellType.ENTRY
 						&& fullPath.get(fullPath.size() - 1).getCellType() == CellType.SAFE)
 					throw new IllegalMovementException("A marble cannot enter its player’s Safe Zone if any marble is "
 							+ "stationed at its player’s Safe Zone Entry");
