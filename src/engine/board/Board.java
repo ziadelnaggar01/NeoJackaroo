@@ -371,6 +371,81 @@ public class Board implements BoardManager {
 			}
 		}
 	}
+	
+	/*
+	 * ================================================
+	 * Alternative validatePath() Implementation
+	 * -----------------------------------------------
+	 * Retained for reference: an earlier version of the
+	 * validatePath() method based on a different logic flow.
+	 * Can be revisited if design requirements or constraints evolve.
+	 * ================================================
+	 */
+	//	private void validatePath(Marble marble, ArrayList<Cell> fullPath, boolean destroy) throws IllegalMovementException 
+	//	{
+	//		Colour activePlayerColour = gameManager.getActivePlayerColour(); 
+	//		int targetCellPosition = fullPath.size() - 1; //Index of target cell in given path, i.e last index in array.
+	//		int marblesInPath = 0; // Keeps track of enemy marbles in path
+	//		
+	//		for(int i=1; i< fullPath.size(); i++)
+	//		{
+	//			Cell currentCell = fullPath.get(i);
+	//			Marble marbleInCell = currentCell.getMarble();
+	//			if(marbleInCell != null)
+	//			{
+	//				boolean inSafeZone = currentCell.getCellType() == CellType.SAFE;
+	//				
+	//				/*
+	//				 * Check Self-Blocking
+	//				 * if there is any marble of my own in my path or target, move is invalid, 
+	//				 * unless we're using a king card, it destroys my marbles if on track,
+	//				 * however move stays invalid if my marble is in safezone.
+	//				 */
+	//				if(marbleInCell.getColour() == activePlayerColour)
+	//				{
+	//					if(!destroy || inSafeZone)
+	//						throw new IllegalMovementException("A marble cannot move if there is another marble owned by the same\r\n"
+	//								+ " player either in its path or at the target position. Meaning, I, as a player cannot\r\n"
+	//								+ " bypass or destroy my own marble.");
+	//				}
+	//				
+	//				/*
+	//				 * Check Path Blockage
+	//				 * if there is more than 1 marble in my path in path, move is invalid, 
+	//				 * unless we're using a king card, it destroys my marbles if on track.
+	//				 */
+	//				else
+	//				{
+	//					// Update count of marbles in path, excluding target cell
+	//					if(i!= targetCellPosition)
+	//						marblesInPath++;
+	//					
+	//					if(marblesInPath > 1 && !destroy)
+	//						throw new IllegalMovementException("Movement is invalid if there is more than one marble (owned by\r\n"
+	//								+ " any player) blocking the path.");
+	//				}
+	//				
+	//				/*
+	//				 * Check SafeZone Entry
+	//				 * if a marble is in my entry cell it would be an invalid move unless we're playing a king card, it will destroy the marble and enter safezone
+	//				 */
+	//				if(!destroy && currentCell.getCellType() == CellType.ENTRY && fullPath.get(targetCellPosition).getCellType() == CellType.SAFE)
+	//					throw new IllegalMovementException("A marble cannot enter its player’s Safe Zone if any marble is\r\n"
+	//							+ " stationed at its player’s Safe Zone Entry.");
+	//				
+	//				/*
+	//				 * Check Base Cell Blockage
+	//				 * If a player has one of his marbles in his Base cell, you can't pass it or land on it,
+	//				 * marking your move as invalid
+	//				 */
+	//				int playerBaseCellPosition = getBasePosition(marbleInCell.getColour());
+	//				Cell playerBaseCell = track.get(playerBaseCellPosition); 
+	//				if(currentCell == playerBaseCell)
+	//					throw new IllegalMovementException("A marble’s movement is blocked if another player’s marble is\r\n"
+	//							+ " in its player’s Base cell, either in the path or target position.");
+	//			}
+	//		}
+	//	}
 
 	/**
 	 * Moves a marble along the specified path, handling marble destruction and trap
