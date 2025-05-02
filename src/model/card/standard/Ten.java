@@ -40,21 +40,6 @@ public class Ten extends Standard {
 	}
 	
 	/**
-     * Validates whether the given list of marbles is empty or contains a marble that belongs to the active player.
-     * 
-     * @param marbleList The list of marbles to check.
-     * @return true if the marble belongs to the active player or if the list is empty, false otherwise.
-     */
-	@Override
-	public boolean validateMarbleColours(ArrayList<Marble> marbles)
-	{
-		Colour activePlayerColour = gameManager.getActivePlayerColour();
-		if(marbles.isEmpty()) return true;
-		Marble selectedMarble = marbles.get(0);
-		return activePlayerColour.equals(selectedMarble.getColour());
-	}
-	
-	/**
 	 * Executes the Ten card action:
 	 * - If no marble is selected, forces the next player to discard a card. (Also skips their turn if required).
 	 * - If one marble is selected, moves it forward by 10 steps.
