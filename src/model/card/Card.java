@@ -78,7 +78,7 @@ public abstract class Card {
 	public boolean validateMarbleColours(ArrayList<Marble> marbles)
 	{
 		Colour activePlayerColour = gameManager.getActivePlayerColour();
-		if(marbles.isEmpty()) return false;
+		if(marbles.isEmpty()) return true;
 		Marble selectedMarble = marbles.get(0);
 		return activePlayerColour.equals(selectedMarble.getColour());
 	}
