@@ -42,23 +42,6 @@ public class Seven extends Standard {
 	}
 	
 	/**
-	 * Validates the selected marbles all belong to active player.
-	 *
-	 * @param marbles The list of marbles to check.
-	 * @return true if the selection follows the rules, false otherwise.
-	 */
-	@Override
-	public boolean validateMarbleColours(ArrayList<Marble> marbles)
-	{
-		Colour activePlayerColour = gameManager.getActivePlayerColour();
-		int numberOfMarbles = marbles.size();
-		for(int i=0; i<numberOfMarbles; i++)
-			if(!(marbles.get(i).getColour()==activePlayerColour))
-				return false;
-		return true;
-	}
-	
-	/**
 	 * Executes the Seven card action:
 	 * - If one marble is selected, it moves forward by 7 steps.
 	 * - If two marbles are selected, moves both marbles a combined total of 7 steps.
