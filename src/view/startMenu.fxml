@@ -31,7 +31,7 @@
                   <Insets top="25.0" />
                </VBox.margin>
             </ImageView>
-            <ImageView fx:id="HWTButton" fitHeight="150.0" fitWidth="350.0" onMouseEntered="#HWTButtonOnMouseEntered" onMouseExited="#HWTButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="HWTButton" fitHeight="150.0" fitWidth="350.0" onMouseClicked="#switchSceneToHWTPlay" onMouseEntered="#HWTButtonOnMouseEntered" onMouseExited="#HWTButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/buttons/How%20To%20Play.png" />
                </image>

@@ -119,6 +119,22 @@ public class StartMenu {
 	    } 
 	}
 	
+	@FXML
+	private void switchSceneToHWTPlay(MouseEvent event) throws Exception {
+		// Load the new scene's FXML
+		Parent root = FXMLLoader.load(getClass().getResource("HWTPlay.fxml"));
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Scene currentScene = stage.getScene();
+	    if (currentScene != null) 
+	    	 currentScene.setRoot(root);
+	    else
+	    {
+	        // Fallback if no scene exists (initial load)
+	        currentScene = new Scene(root);
+	        stage.setScene(currentScene);
+	    } 
+	}
+	
 	
 	public static void initalizeStage(Stage primaryStage) throws Exception
 	{
