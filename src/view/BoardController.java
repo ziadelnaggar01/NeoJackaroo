@@ -32,40 +32,40 @@ public class BoardController {
 
     @FXML
     public void initialize() {
-    	 boardPane.setOnMouseMoved(event -> {
-    	        double x = event.getX();
-    	        double y = event.getY();
-    	        System.out.println("Mouse X: " + x + ", Y: " + y);
-    	    });
+//    	 boardPane.setOnMouseMoved(event -> {
+//    	        double x = event.getX();
+//    	        double y = event.getY();
+//    	        System.out.println("Mouse X: " + x + ", Y: " + y);
+//    	    });
       //  loadCards();
       //  distributeCards();
     }
 
     private void loadCards() {
-        for (int i = 0; i < 4; i++) {
-            ImageView card = new ImageView(new Image(getClass().getResource("assests/deck/Clovers_10_white.png").toExternalForm()));
-            card.setFitWidth(80);
-            card.setFitHeight(120);
-            card.setLayoutX(deckX);
-            card.setLayoutY(deckY);
-            cards.add(card);
-            boardPane.getChildren().add(card);
-        }
+//        for (int i = 0; i < 4; i++) {
+//            ImageView card = new ImageView(new Image(getClass().getResource("assests/deck/Clovers_10_white.png").toExternalForm()));
+//            card.setFitWidth(80);
+//            card.setFitHeight(120);
+//            card.setLayoutX(deckX);
+//            card.setLayoutY(deckY);
+//            cards.add(card);
+//            boardPane.getChildren().add(card);
+//        }
     }
 
 
     private void distributeCards() {
-        for (int i = 0; i < cards.size(); i++) {
-            ImageView card = cards.get(i);
-            double targetX = targetPositions[i][0];
-            double targetY = targetPositions[i][1];
-
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), card);
-            transition.setToX(targetX - deckX);
-            transition.setToY(targetY - deckY);
-            transition.setDelay(Duration.seconds(i * 0.3)); // Staggered animation
-            transition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
-            transition.play();
-        }
+//        for (int i = 0; i < cards.size(); i++) {
+//            ImageView card = cards.get(i);
+//            double targetX = targetPositions[i][0];
+//            double targetY = targetPositions[i][1];
+//
+//            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), card);
+//            transition.setToX(targetX - deckX);
+//            transition.setToY(targetY - deckY);
+//            transition.setDelay(Duration.seconds(i * 0.3)); // Staggered animation
+//            transition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
+//            transition.play();
+//        }
     }
 }
