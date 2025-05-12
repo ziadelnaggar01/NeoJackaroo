@@ -42,7 +42,7 @@ public class StartMenu {
 	}
 
 	@FXML
-	private void switchSceswitchToNameEntry(MouseEvent event) throws Exception {
+	private void switchSceneToNameEntry(MouseEvent event) throws Exception {
 		// Load the new scene's FXML
 		Parent root = FXMLLoader.load(getClass().getResource("playerName.fxml"));
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

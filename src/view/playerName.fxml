@@ -6,10 +6,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.StartMenu">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.playerName">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0">
          <image>
@@ -21,7 +22,7 @@
          <children>
             <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@assets/startMenu/Pop%20Up%20Background.png" />
+                  <Image url="@assets/Pop%20Up%20Menu.png" />
                </image>
             </ImageView>
             <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0">
@@ -30,6 +31,9 @@
                      <font>
                         <Font name="Dubai Medium" size="70.0" />
                      </font>
+                     <BorderPane.margin>
+                        <Insets top="50.0" />
+                     </BorderPane.margin>
                   </Label>
                </top>
                <center>
@@ -42,8 +46,33 @@
                      </font>
                   </TextField>
                </center>
+               <bottom>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fx:id="cancelButton" fitHeight="300.0" fitWidth="300.0" onMouseClicked="#switchSceneToStartMenu" onMouseEntered="#cancelButtonOnMouseEntered" onMouseExited="#cancelbuttonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@assets/buttons/Cancel.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="okButton" fitHeight="150.0" fitWidth="300.0" onMouseEntered="#okButtonOnMouseEntered" onMouseExited="#okbuttonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/buttons/Ok.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets bottom="25.0" left="100.0" />
+                     </BorderPane.margin>
+                  </HBox>
+               </bottom>
             </BorderPane>
          </children>
+         <StackPane.margin>
+            <Insets bottom="25.0" />
+         </StackPane.margin>
       </StackPane>
    </children>
 </StackPane>
