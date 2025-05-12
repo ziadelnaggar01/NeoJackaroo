@@ -1,0 +1,71 @@
+package view;
+
+import javafx.animation.TranslateTransition;
+import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class BoardController {
+
+    @FXML
+    private BorderPane boardPane;
+
+    private final List<ImageView> cards = new ArrayList<>();
+
+    // Deck position (e.g., center of the board or anywhere you like)
+    private final double deckX = 448;
+    private final double deckY = 396;
+
+    // Target positions on the board
+    private final double[][] targetPositions = {
+        {593.33, 35.666},
+        {483.33, 35.666},
+        {373.33, 35.666},
+        {263.33,35.666}
+    };
+
+    @FXML
+    public void initialize() {
+    	 boardPane.setOnMouseMoved(event -> {
+    	        double x = event.getX();
+    	        double y = event.getY();
+    	        System.out.println("Mouse X: " + x + ", Y: " + y);
+    	    });
+      //  loadCards();
+      //  distributeCards();
+    }
+
+    private void loadCards() {
+        for (int i = 0; i < 4; i++) {
+            ImageView card = new ImageView(new Image(getClass().getResource("assests/deck/Clovers_10_white.png").toExternalForm()));
+            card.setFitWidth(80);
+            card.setFitHeight(120);
+            card.setLayoutX(deckX);
+            card.setLayoutY(deckY);
+            cards.add(card);
+            boardPane.getChildren().add(card);
+        }
+    }
+
+
+    private void distributeCards() {
+        for (int i = 0; i < cards.size(); i++) {
+            ImageView card = cards.get(i);
+            double targetX = targetPositions[i][0];
+            double targetY = targetPositions[i][1];
+
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), card);
+            transition.setToX(targetX - deckX);
+            transition.setToY(targetY - deckY);
+            transition.setDelay(Duration.seconds(i * 0.3)); // Staggered animation
+            transition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
+            transition.play();
+        }
+    }
+}

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BoardController">
+
+    <children>
+        <BorderPane fx:id="boardPane" prefHeight="800.0" prefWidth="1200.0" styleClass="bodybg" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <!-- CENTER: Game Board -->
+            <center>
+                <ImageView fitHeight="550.0" fitWidth="445.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                    <image>
+                        <Image url="@assests/scene/boardd.png" />
+                    </image>
+                </ImageView>
+            </center>
+
+            <!-- TOP: Cards -->
+            <top>
+                <HBox alignment="CENTER" prefHeight="35.0" prefWidth="1096.0" spacing="20.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fx:id="playerA1" fitHeight="120.0" fitWidth="80.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerA2" fitHeight="120.0" fitWidth="80.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerA3" fitHeight="120.0" fitWidth="80.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerA4" fitHeight="120.0" fitWidth="80.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                    </children>
+               <padding>
+                  <Insets top="30.0" />
+               </padding>
+                </HBox>
+            </top>
+
+            <!-- BOTTOM: Cards -->
+            <bottom>
+                <HBox alignment="CENTER" prefHeight="150.0" spacing="20.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fx:id="playerB1" fitHeight="120.0" fitWidth="80.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerB2" fitHeight="120.0" fitWidth="80.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerB3" fitHeight="120.0" fitWidth="80.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerB4" fitHeight="120.0" fitWidth="80.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                    </children>
+               <padding>
+                  <Insets bottom="30.0" />
+               </padding>
+                </HBox>
+            </bottom>
+
+            <!-- LEFT: Cards -->
+            <left>
+                <VBox alignment="CENTER" prefWidth="120.0" spacing="10.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fx:id="playerC1" fitHeight="134.0" fitWidth="65.0" preserveRatio="true" rotate="-90.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerC2" fitHeight="134.0" fitWidth="65.0" preserveRatio="true" rotate="-90.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerC3" fitHeight="134.0" fitWidth="65.0" preserveRatio="true" rotate="-90.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerC4" fitHeight="134.0" fitWidth="65.0" preserveRatio="true" rotate="-90.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                    </children>
+               <padding>
+                  <Insets right="-50.0" />
+               </padding>
+                </VBox>
+            </left>
+
+            <!-- RIGHT: Cards -->
+            <right>
+                <VBox alignment="CENTER" prefWidth="120.0" spacing="10.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fx:id="playerD1" fitHeight="134.0" fitWidth="65.0" preserveRatio="true" rotate="90.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerD2" fitHeight="134.0" fitWidth="65.0" preserveRatio="true" rotate="90.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerD3" fitHeight="134.0" fitWidth="65.0" preserveRatio="true" rotate="90.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                        <ImageView fx:id="playerD4" fitHeight="134.0" fitWidth="65.0" preserveRatio="true" rotate="90.0">
+                            <image><Image url="@assests/deck/Clovers_4_white.png" /></image>
+                        </ImageView>
+                    </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="-50.0" />
+               </padding>
+                </VBox>
+            </right>
+
+        </BorderPane>
+    </children>
+</AnchorPane>
