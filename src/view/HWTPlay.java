@@ -18,9 +18,12 @@ public class HWTPlay {
 
 	@FXML
 	private void initialize() {
-	    Text text = new Text("🕹️ How to Play NeoJackaroo\r\n"
+	    Text text = new Text("How to Play NeoJackaroo\r\n"
+	    		+ "\r\n"
 	    		+ "🎯 Objective:\r\n"
-	    		+ "Move all 4 of your marbles from your Home Zone to your Safe Zone before your 3 CPU opponents do.\r\n"
+	    		+ "Move all 4 of your marbles from your Home Zone to your Safe Zone"
+	    		+ "\r\n"
+	    		+ "before your 3 CPU opponents do.\r\n"
 	    		+ "\r\n"
 	    		+ "🎲 Game Setup:\r\n"
 	    		+ "You play against 3 CPU players, each with a unique color.\r\n"
@@ -38,7 +41,7 @@ public class HWTPlay {
 	    		+ "\r\n"
 	    		+ "Unusable cards are discarded to the Fire Pit, and your turn is skipped.\r\n"
 	    		+ "\r\n"
-	    		+ "🧩 Your Turn:\r\n"
+	    		+ "Your Turn:\r\n"
 	    		+ "Select a card from your hand.\r\n"
 	    		+ "\r\n"
 	    		+ "Perform the associated action (e.g., move a marble X steps).\r\n"
@@ -55,7 +58,9 @@ public class HWTPlay {
 	    		+ "Entering the Safe Zone requires an exact move count.\r\n"
 	    		+ "\r\n"
 	    		+ "💥 Special Cells:\r\n"
-	    		+ "Trap Cells: Randomly change positions and destroy any marble landing on them.\r\n"
+	    		+ "Trap Cells: Randomly change positions and destroy any marble"
+	    		+ "\r\n"
+	    		+ "landing on them.\r\n"
 	    		+ "\r\n"
 	    		+ "Base Cell: Starting cell for marbles; blocks other marbles from passing.\r\n"
 	    		+ "\r\n"
@@ -71,9 +76,11 @@ public class HWTPlay {
 	    		+ "Use Ten or Queen to discard an opponent’s card and skip their turn.\r\n"
 	    		+ "\r\n"
 	    		+ "🏆 Winning:\r\n"
-	    		+ "Be the first to move all 4 marbles into your Safe Zone. That’s how you win NeoJackaroo!");
-	    text.setWrappingWidth(560);
-	    text.setStyle("-fx-font-size: 14px; -fx-fill: #333;");
+	    		+ "Be the first to move all 4 marbles into your Safe Zone. "
+	    		+ "\r\n"
+	    		+ "That’s how you win NeoJackaroo!");
+	    text.setWrappingWidth(500);
+	    text.setStyle("-fx-fill: #22abdd; -fx-font-size: 23px;");
 
 	    TextFlow flow = new TextFlow(text);
 	    flow.setPadding(new Insets(20));

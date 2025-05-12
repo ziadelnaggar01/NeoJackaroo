@@ -28,6 +28,6 @@
 /* Make sure your Text nodes are visible */
 .transparent-textflow Text {
   -fx-fill: white;         /* or any color that stands out on your board */
-  -fx-font-size: 14px;     /* your chosen size */
+  -fx-font-size: 68px;     /* your chosen size */
   -fx-font-family: Verdana, Arial, sans-serif;
 }
