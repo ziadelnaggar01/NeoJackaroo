@@ -1,0 +1,31 @@
+/* Base text style for all popups */
+.popup-container * {
+    /* Font family: Segoe UI on Windows, then Tahoma, then generic sans-serif */
+    -fx-font-family: "Verdana", Tahoma, Geneva, Verdana, sans-serif;
+    /* Base font size */
+    -fx-font-size: 62px;
+    /* Dark gray text for good contrast on white backgrounds */
+    -fx-text-fill: #000000;
+}
+
+/* Make titles slightly larger and bolder */
+.popup-container .popup-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Inputs and buttons inside popups */
+.popup-container TextField,
+.popup-container TextArea {
+    -fx-font-size: 14px;
+}
+
+.popup-container Button {
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+}
+
+/* Optional: adjust prompt text in TextField */
+.popup-container .text-field .text {
+    -fx-fill: #666666;  /* lighter gray for placeholder */
+}

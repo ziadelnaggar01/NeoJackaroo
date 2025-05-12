@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
@@ -14,15 +15,15 @@
       </ImageView>
       <VBox alignment="BOTTOM_CENTER" prefHeight="400.0" prefWidth="242.0">
          <children>
-            <ImageView fx:id="startButton" fitHeight="128.0" fitWidth="400.0" onMouseClicked="#startGame" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="startButton" fitHeight="128.0" fitWidth="400.0" onMouseClicked="#switchSceswitchToNameEntry" onMouseEntered="#redButtonOnMouseEntered" onMouseExited="#buttonOnMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/startMenu/Start%20Button.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children>
+         <StackPane.margin>
+            <Insets bottom="450.0" />
+         </StackPane.margin>
       </VBox>
    </children>
 </StackPane>
