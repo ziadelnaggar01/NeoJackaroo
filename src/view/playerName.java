@@ -39,7 +39,7 @@ public class playerName {
 		// Apply a red DropShadow effect on the image
 		DropShadow shadow = new DropShadow();
 		shadow.setColor(Color.PURPLE);
-		shadow.setRadius(15);
+		shadow.setRadius(35);
 		shadow.setOffsetX(0);
 		shadow.setOffsetY(0);
 		okButton.setEffect(shadow);
