@@ -46,17 +46,17 @@ public class StartMenu {
 		// Load the new scene's FXML
 		Parent root = FXMLLoader.load(getClass().getResource("playerName.fxml"));
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Scene scene = new Scene(root);
-		// Switch to the new scene
-		loadScene(stage, scene);
+		Scene currentScene = stage.getScene();
+	    if (currentScene != null) 
+	    	 currentScene.setRoot(root);
+	    else
+	    {
+	        // Fallback if no scene exists (initial load)
+	        currentScene = new Scene(root);
+	        stage.setScene(currentScene);
+	    } 
 	}
 	
-	public static void loadScene(Stage primaryStage, Scene scene) throws Exception
-	{
-		primaryStage.setScene(scene);
-		primaryStage.setFullScreen(true);
-        primaryStage.show();
-	}
 	
 	public static void initalizeStage(Stage primaryStage) throws Exception
 	{
@@ -67,11 +67,6 @@ public class StartMenu {
 		primaryStage.setFullScreen(true);
 		primaryStage.getIcons().add(new Image("/view/assets/Game Icon.png"));
 		primaryStage.setFullScreenExitHint("");
-        // Initial fixed size constraints
-        primaryStage.setMinWidth(initialWidth);
-        primaryStage.setMinHeight(initialHeight);
-        primaryStage.setMaxWidth(initialWidth);
-        primaryStage.setMaxHeight(initialHeight);
 
         // Intercept maximize button click to enter fullscreen
         primaryStage.maximizedProperty().addListener((obs, wasMaximized, isMaximized) -> {
@@ -82,7 +77,16 @@ public class StartMenu {
 
         // Reset to fixed size when exiting fullscreen
         primaryStage.fullScreenProperty().addListener((obs, wasFull, isFull) -> {
-            if (!isFull) {
+            if (isFull) 
+            {
+                // entering full-screen → remove constraints
+                primaryStage.setMinWidth(0);
+                primaryStage.setMinHeight(0);
+                primaryStage.setMaxWidth(Double.MAX_VALUE);
+                primaryStage.setMaxHeight(Double.MAX_VALUE);
+            } 
+            else  
+            {
                 // Restore fixed constraints and size
                 primaryStage.setMinWidth(initialWidth);
                 primaryStage.setMinHeight(initialHeight);

@@ -18,7 +18,8 @@ public class Main extends Application{
 	    Scene scene = new Scene(root);
 	    // 🔸 Attach scene to stage and display
 	    StartMenu.initalizeStage(primaryStage);
-	    StartMenu.loadScene(primaryStage, scene);
+	    primaryStage.setScene(scene);
+	    primaryStage.show();
 	}
 	
 	public static void main(String[] args) {
