@@ -13,17 +13,41 @@
             <Image url="@assets/startMenu/Start%20Background.png" />
          </image>
       </ImageView>
-      <VBox alignment="BOTTOM_CENTER" prefHeight="400.0" prefWidth="242.0">
+      <VBox alignment="BOTTOM_CENTER" prefHeight="400.0" prefWidth="242.0" spacing="25.0">
          <children>
-            <ImageView fx:id="startButton" fitHeight="128.0" fitWidth="400.0" onMouseClicked="#switchSceneToNameEntry" onMouseEntered="#redButtonOnMouseEntered" onMouseExited="#buttonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="startButton" fitHeight="128.0" fitWidth="400.0" onMouseClicked="#switchSceneToNameEntry" onMouseEntered="#startButtonOnMouseEntered" onMouseExited="#startButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/startMenu/Start%20Button.png" />
+               </image>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ImageView>
+            <ImageView fx:id="settingsButton" fitHeight="150.0" fitWidth="350.0" onMouseEntered="#settingsButtonOnMouseEntered" onMouseExited="#settingsButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/buttons/Settings.png" />
+               </image>
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+            </ImageView>
+            <ImageView fx:id="HWTButton" fitHeight="150.0" fitWidth="350.0" onMouseEntered="#HWTButtonOnMouseEntered" onMouseExited="#HWTButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/buttons/How%20To%20Play.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="exitButton" fitHeight="150.0" fitWidth="350.0" onMouseClicked="#closeGame" onMouseEntered="#exitButtonOnMouseEntered" onMouseExited="#exitButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/buttons/Exit.png" />
                </image>
             </ImageView>
          </children>
          <StackPane.margin>
-            <Insets bottom="450.0" />
+            <Insets />
          </StackPane.margin>
+         <padding>
+            <Insets bottom="125.0" />
+         </padding>
       </VBox>
    </children>
 </StackPane>

@@ -21,10 +21,16 @@ public class StartMenu {
 
 	@FXML
 	private ImageView startButton;  // This should match the fx:id in Scene Builder
+	@FXML
+	private ImageView settingsButton;
+	@FXML
+	private ImageView HWTButton;
+	@FXML
+	private ImageView exitButton;
 
 	// Method for Mouse Entered event
 	@FXML
-	private void redButtonOnMouseEntered() {
+	private void startButtonOnMouseEntered() {
 		// Apply a red DropShadow effect on the image
 		DropShadow shadow = new DropShadow();
 		shadow.setColor(Color.RED);
@@ -33,13 +39,69 @@ public class StartMenu {
 		shadow.setOffsetY(0);
 		startButton.setEffect(shadow);
 	}
-
+	
 	// Method for Mouse Exited event
 	@FXML
-	private void buttonOnMouseExited() {
+	private void startButtonOnMouseExited() {
 		// Remove the effect when the mouse exits
 		startButton.setEffect(null);
 	}
+	
+	@FXML
+	private void settingsButtonOnMouseEntered() {
+		// Apply a red DropShadow effect on the image
+		DropShadow shadow = new DropShadow();
+		shadow.setColor(Color.PURPLE);
+		shadow.setRadius(15);
+		shadow.setOffsetX(0);
+		shadow.setOffsetY(0);
+		settingsButton.setEffect(shadow);
+	}
+	
+	// Method for Mouse Exited event
+	@FXML
+	private void settingsButtonOnMouseExited() {
+		// Remove the effect when the mouse exits
+		settingsButton.setEffect(null);
+	}
+	
+	@FXML
+	private void HWTButtonOnMouseEntered() {
+		// Apply a red DropShadow effect on the image
+		DropShadow shadow = new DropShadow();
+		shadow.setColor(Color.CYAN);
+		shadow.setRadius(15);
+		shadow.setOffsetX(0);
+		shadow.setOffsetY(0);
+		HWTButton.setEffect(shadow);
+	}
+	
+	// Method for Mouse Exited event
+	@FXML
+	private void HWTButtonOnMouseExited() {
+		// Remove the effect when the mouse exits
+		HWTButton.setEffect(null);
+	}
+	
+	@FXML
+	private void exitButtonOnMouseEntered() {
+		// Apply a red DropShadow effect on the image
+		DropShadow shadow = new DropShadow();
+		shadow.setColor(Color.RED);
+		shadow.setRadius(15);
+		shadow.setOffsetX(0);
+		shadow.setOffsetY(0);
+		exitButton.setEffect(shadow);
+	}
+	
+	// Method for Mouse Exited event
+	@FXML
+	private void exitButtonOnMouseExited() {
+		// Remove the effect when the mouse exits
+		exitButton.setEffect(null);
+	}
+
+
 
 	@FXML
 	private void switchSceneToNameEntry(MouseEvent event) throws Exception {
@@ -96,5 +158,11 @@ public class StartMenu {
                 primaryStage.setHeight(initialHeight);
             }
         });
+	}
+	
+	@FXML
+	private void closeGame(MouseEvent event) {
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
 	}
 }
