@@ -127,7 +127,20 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                        <ImageView fx:id="playerA1" fitHeight="180.0" fitWidth="150.0" preserveRatio="true" rotate="-90.0">
+                        <ImageView fx:id="playerA1" fitHeight="122.0" fitWidth="81.0" preserveRatio="true" rotate="-90.0">
+                            <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="50.0" top="120.0" />
+                     </GridPane.margin>
+                        </ImageView>
+                        <ImageView fx:id="playerA2" fitHeight="124.0" fitWidth="100.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                        </ImageView>
+                        <ImageView fx:id="playerA3" fitHeight="148.0" fitWidth="84.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="1">
                             <image>
                         <Image url="@assests/deck/Clovers_4_white.png" />
                      </image>
@@ -135,25 +148,12 @@
                         <Insets left="50.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerA2" fitHeight="180.0" fitWidth="150.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                            <image>
-                        <Image url="@assests/deck/Clovers_4_white.png" />
-                     </image>
-                        </ImageView>
-                        <ImageView fx:id="playerA3" fitHeight="180.0" fitWidth="150.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="1">
+                        <ImageView fx:id="playerA4" fitHeight="117.0" fitWidth="87.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
                             <image>
                         <Image url="@assests/deck/Clovers_4_white.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="50.0" />
-                     </GridPane.margin>
-                        </ImageView>
-                        <ImageView fx:id="playerA4" fitHeight="180.0" fitWidth="150.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
-                            <image>
-                        <Image url="@assests/deck/Clovers_4_white.png" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets right="100.0" />
+                        <Insets right="100.0" top="120.0" />
                      </GridPane.margin>
                         </ImageView>
                </children>
@@ -204,5 +204,14 @@
             <Insets top="80.0" />
          </padding>
       </VBox>
+      <AnchorPane layoutX="1501.0" layoutY="-108.0" prefHeight="200.0" prefWidth="423.0">
+         <children>
+            <ImageView fx:id="settingsIcon" fitHeight="87.0" fitWidth="97.0" layoutX="302.0" layoutY="120.0" onMouseClicked="#openSettings" onMouseEntered="#settingsIconOnMouseEntered" onMouseExited="#settingsIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assests/scene/NeonSettings.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

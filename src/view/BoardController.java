@@ -2,10 +2,12 @@ package view;
 
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -37,8 +39,13 @@ public class BoardController {
 //    	        double y = event.getY();
 //    	        System.out.println("Mouse X: " + x + ", Y: " + y);
 //    	    });
+    	//initializeSettings();
       //  loadCards();
       //  distributeCards();
+    	
+    	
+    	
+    	
     }
 
     private void loadCards() {
@@ -68,4 +75,46 @@ public class BoardController {
 //            transition.play();
 //        }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    //Code for settings icon
+    @FXML
+    private ImageView settingsIcon;
+    @FXML
+	private void settingsIconOnMouseEntered() {
+		// Apply a red DropShadow effect on the image
+		DropShadow shadow = new DropShadow();
+		shadow.setColor(Color.BLUE);
+		shadow.setRadius(1000);
+		settingsIcon.setEffect(shadow);
+	}
+	
+	// Method for Mouse Exited event
+	@FXML
+	private void settingsIconOnMouseExited() {
+		// Remove the effect when the mouse exits
+		settingsIcon.setEffect(null);
+	}
+	
+	
+	
+	@FXML
+	private void openSettings(){
+		//opens up settings 
+		//sounds adjusting
+		//continue 
+		//exit 
+	}
+	
+	
+		
+	
+    
+    
 }
