@@ -25,7 +25,18 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
+
+import model.Colour;
+import model.player.CPU;
+import model.player.Player;
+import engine.Game;
+import settingsView.settingsController;
+import generic.GenericController;
+
 public class BoardController {
+
+	// Tamer's work
 
 	@FXML
 	private BorderPane boardPane;
@@ -83,7 +94,10 @@ public class BoardController {
 		// }
 	}
 
-	// Code for settings icon
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// Code for settings
+	public static boolean gamePaused = false;
+
 	@FXML
 	private ImageView settingsIcon;
 
@@ -104,14 +118,26 @@ public class BoardController {
 	}
 
 	@FXML
-	private void openSettings() {
-		// opens up settings
-		// sounds adjusting
-		// continue
-		// exit
+	private void openSettings(MouseEvent event) {// just call switch scene from
+													// where it is supposed to
+													// be called
+		gamePaused = true;// if opening settings from boardscene, pause the game
+		new GenericController().switchSceneWithFade(
+				(Stage) ((Node) event.getSource()).getScene().getWindow(),
+				"/settingsView/SettingsScene.fxml");
 	}
+
+	// ----------------------------------------------------------------------------------------------------------------------------------
+
+	// Setting up names & set current and next player
+
 	
-	//Setting up names
+	//you need to initialize these values, get players from game
+	private Game game;
+	private ArrayList<Player> players;
+	
+	
+	
 
 	@FXML
 	private Label nextPlayerLabel;
@@ -140,17 +166,49 @@ public class BoardController {
 		CPU2Name.setText(cpuNames.get(1));
 		CPU3Name.setText(cpuNames.get(2));
 		userName.setText(playerName);
+	}
+
+	private void setCurrentPlayerLabel() {
+		Colour colour = game.getActivePlayerColour();
+		setPlayerLabel(currentPlayerLabel, colour);
 
 	}
-	
-	
-	
-	
-	
-	
-	// Setting up marbles 
-	//Marble1 = (1,1), Marble2 = (1,2), Marble3 =(2,1), Mabrle4 = (2,2)
-	
-	
-	
+
+	private void setNextPlayerLabel() {
+		Colour colour = game.getNextPlayerColour();
+		setPlayerLabel(nextPlayerLabel, colour);
+	}
+
+	// Helper which given a label and a colour, searches for the correct player
+	// given the colour and assigns the given label to the name of the colour
+	// holder accordingly
+	private void setPlayerLabel(Label label, Colour colour) {
+		int cpuCount = 0;
+
+		for (Player p : players) {
+			if (!(p instanceof CPU)) {
+				if (p.getColour() == colour) {
+					currentPlayerLabel.setText(userName.getText());
+					return;
+				}
+			} else {
+				cpuCount++;
+				if (p.getColour() == colour) {
+					switch (cpuCount) {
+					case 1: //first CPU to encounter
+						label.setText(CPU1Name.getText());
+						break;
+					case 2:	//second CPU to encounter 
+						label.setText(CPU2Name.getText());
+						break;
+					case 3:	//third CPU to  encounter
+						label.setText(CPU3Name.getText());
+						break;
+					}
+					return;
+				}
+			}
+		}
+	}
+
 }
