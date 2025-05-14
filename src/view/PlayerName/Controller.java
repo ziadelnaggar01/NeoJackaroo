@@ -35,6 +35,17 @@ public class Controller {
 	}
 	
 	@FXML
+	private void switchSceneToGame(MouseEvent event) throws Exception {
+		// Load the new scene's FXML
+		Parent root = FXMLLoader.load(getClass().getResource("/view/BoardScene.fxml"));
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Scene currentScene = stage.getScene();
+		currentScene.getStylesheets().add(getClass().getResource("/view/BoardScene.fxml").toExternalForm());
+	    if (currentScene != null) 
+	    	 currentScene.setRoot(root);
+	}
+	
+	@FXML
 	private void okButtonOnMouseEntered() {
 		// Apply a red DropShadow effect on the image
 		DropShadow shadow = new DropShadow();

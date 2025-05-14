@@ -57,7 +57,7 @@
                               <Image url="@../assets/buttons/Cancel.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="okButton" fitHeight="150.0" fitWidth="300.0" onMouseEntered="#okButtonOnMouseEntered" onMouseExited="#okbuttonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="okButton" fitHeight="150.0" fitWidth="300.0" onMouseClicked="#switchSceneToGame" onMouseEntered="#okButtonOnMouseEntered" onMouseExited="#okbuttonOnMouseExited" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../assets/buttons/Ok.png" />
                            </image>
