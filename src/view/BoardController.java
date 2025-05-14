@@ -151,42 +151,6 @@ public class BoardController {
 	// Setting up marbles 
 	//Marble1 = (1,1), Marble2 = (1,2), Marble3 =(2,1), Mabrle4 = (2,2)
 	
-	@FXML
-	private Label greenMarble1;
-	@FXML
-	private Label greenMarble2;
-	@FXML
-	private Label greenMarble3;
-	@FXML
-	private Label greenMarble4;
 	
-	@FXML
-	private Label blueMarble1;
-	@FXML
-	private Label blueMarble2;
-	@FXML
-	private Label blueMarble3;
-	@FXML
-	private Label blueMarble4;
-	
-	
-	@FXML
-	private Label redMarble1;
-	@FXML
-	private Label redMarble2;
-	@FXML
-	private Label redMarble3;
-	@FXML
-	private Label redMarble4;
-	
-	
-	@FXML
-	private Label yellowMarble1;
-	@FXML
-	private Label yellowMarble2;
-	@FXML
-	private Label yellowMarble3;
-	@FXML
-	private Label yellowMarble4;
 	
 }

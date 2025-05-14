@@ -17,6 +17,170 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BoardController">
    <children>
+      <VBox alignment="TOP_RIGHT" prefHeight="1080.0" prefWidth="423.0" spacing="400.0">
+         <padding>
+            <Insets top="80.0" />
+         </padding>
+         <children>
+            <AnchorPane>
+               <children>
+                  <ImageView fx:id="playerD3" fitHeight="87.0" fitWidth="61.0" layoutX="178.0" layoutY="175.0" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="playerD2" fitHeight="86.0" fitWidth="66.0" layoutX="290.0" layoutY="254.0" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="playerD4" fitHeight="87.0" fitWidth="60.0" layoutX="179.0" layoutY="254.0" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="playerD1" fitHeight="102.0" fitWidth="57.0" layoutX="292.0" layoutY="178.0" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="CPU1Name" layoutX="14.0" layoutY="134.0" prefHeight="44.0" prefWidth="230.0" text="Euler" textFill="#00c5ff">
+                     <font>
+                        <Font name="Orbitron Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="blueMarble1" fitHeight="76.0" fitWidth="72.0" layoutX="496.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/BlueMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="blueMarble2" fitHeight="76.0" fitWidth="72.0" layoutX="583.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/BlueMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="blueMarble4" fitHeight="76.0" fitWidth="72.0" layoutX="583.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/BlueMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="blueMarble3" fitHeight="76.0" fitWidth="72.0" layoutX="496.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/BlueMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="redMarble1" fitHeight="72.0" fitWidth="72.0" layoutX="1265.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/RedMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="redMarble2" fitHeight="72.0" fitWidth="72.0" layoutX="1353.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/RedMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="redMarble4" fitHeight="72.0" fitWidth="72.0" layoutX="1353.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/RedMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="redMarble3" fitHeight="72.0" fitWidth="72.0" layoutX="1265.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/RedMarble.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefWidth="1426.0">
+               <children>
+                  <ImageView fx:id="playerC3" fitHeight="105.0" fitWidth="78.0" layoutX="150.0" layoutY="-1.0" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="playerC2" fitHeight="117.0" fitWidth="75.0" layoutX="285.0" layoutY="88.0" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="playerC4" fitHeight="130.0" fitWidth="74.0" layoutX="150.0" layoutY="89.0" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="playerC1" fitHeight="108.0" fitWidth="81.0" layoutX="285.0" layoutY="-2.0" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="userName" layoutY="187.0" prefHeight="46.0" prefWidth="210.0" text="Player">
+                     <font>
+                        <Font name="Orbitron Bold" size="37.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color green="0.8999999761581421" blue="1.0" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+                  <ImageView fx:id="yellowMarble1" fitHeight="72.0" fitWidth="72.0" layoutX="496.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/YellowMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="yellowMarble2" fitHeight="72.0" fitWidth="72.0" layoutX="584.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/YellowMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="yellowMarble3" fitHeight="72.0" fitWidth="72.0" layoutX="496.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/YellowMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="yellowMarble4" fitHeight="72.0" fitWidth="72.0" layoutX="584.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/YellowMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="greenMarble1" fitHeight="87.0" fitWidth="72.0" layoutX="1265.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/GreenMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="greenMarble2" fitHeight="87.0" fitWidth="72.0" layoutX="1337.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/GreenMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="greenMarble3" fitHeight="87.0" fitWidth="72.0" layoutX="1272.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/GreenMarble.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="greenMarble4" fitHeight="87.0" fitWidth="72.0" layoutX="1337.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assests/scene/GreenMarble.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
       <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="1081.0" fitWidth="1992.0" pickOnBounds="true" preserveRatio="true">
@@ -87,170 +251,6 @@
                   </AnchorPane>
                </children>
             </GridPane>
-            <VBox alignment="TOP_RIGHT" prefHeight="1080.0" prefWidth="423.0" spacing="400.0">
-               <padding>
-                  <Insets top="80.0" />
-               </padding>
-               <children>
-                  <AnchorPane>
-                     <children>
-                        <ImageView fx:id="playerD3" fitHeight="87.0" fitWidth="61.0" layoutX="178.0" layoutY="175.0" preserveRatio="true" rotate="-90.0">
-                           <image>
-                              <Image url="@assests/deck/Clovers_4_white.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="playerD2" fitHeight="86.0" fitWidth="66.0" layoutX="290.0" layoutY="254.0" preserveRatio="true" rotate="-90.0">
-                           <image>
-                              <Image url="@assests/deck/Clovers_4_white.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="playerD4" fitHeight="87.0" fitWidth="60.0" layoutX="179.0" layoutY="254.0" preserveRatio="true" rotate="-90.0">
-                           <image>
-                              <Image url="@assests/deck/Clovers_4_white.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="playerD1" fitHeight="102.0" fitWidth="57.0" layoutX="292.0" layoutY="178.0" preserveRatio="true" rotate="-90.0">
-                           <image>
-                              <Image url="@assests/deck/Clovers_4_white.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="CPU1Name" layoutX="14.0" layoutY="134.0" prefHeight="44.0" prefWidth="230.0" text="Euler" textFill="#00c5ff">
-                           <font>
-                              <Font name="Orbitron Bold" size="30.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="blueMarble1" fitHeight="76.0" fitWidth="72.0" layoutX="496.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/BlueMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="blueMarble2" fitHeight="76.0" fitWidth="72.0" layoutX="583.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/BlueMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="blueMarble4" fitHeight="76.0" fitWidth="72.0" layoutX="583.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/BlueMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="blueMarble3" fitHeight="76.0" fitWidth="72.0" layoutX="496.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/BlueMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="redMarble1" fitHeight="72.0" fitWidth="72.0" layoutX="1265.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/RedMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="redMarble2" fitHeight="72.0" fitWidth="72.0" layoutX="1353.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/RedMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="redMarble4" fitHeight="72.0" fitWidth="72.0" layoutX="1353.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/RedMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="redMarble3" fitHeight="72.0" fitWidth="72.0" layoutX="1265.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/RedMarble.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane>
-                     <children>
-                        <ImageView fx:id="playerC3" fitHeight="105.0" fitWidth="78.0" layoutX="150.0" layoutY="-1.0" preserveRatio="true" rotate="-90.0">
-                           <image>
-                              <Image url="@assests/deck/Clovers_4_white.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="playerC2" fitHeight="117.0" fitWidth="75.0" layoutX="285.0" layoutY="88.0" preserveRatio="true" rotate="-90.0">
-                           <image>
-                              <Image url="@assests/deck/Clovers_4_white.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="playerC4" fitHeight="130.0" fitWidth="74.0" layoutX="150.0" layoutY="89.0" preserveRatio="true" rotate="-90.0">
-                           <image>
-                              <Image url="@assests/deck/Clovers_4_white.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="playerC1" fitHeight="108.0" fitWidth="81.0" layoutX="285.0" layoutY="-2.0" preserveRatio="true" rotate="-90.0">
-                           <image>
-                              <Image url="@assests/deck/Clovers_4_white.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="userName" layoutY="187.0" prefHeight="46.0" prefWidth="210.0" text="Player">
-                           <font>
-                              <Font name="Orbitron Bold" size="37.0" />
-                           </font>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                           <textFill>
-                              <LinearGradient endX="1.0" endY="1.0">
-                                 <stops>
-                                    <Stop>
-                                       <color>
-                                          <Color green="0.8999999761581421" blue="1.0" />
-                                       </color>
-                                    </Stop>
-                                    <Stop offset="1.0">
-                                       <color>
-                                          <Color red="1.0" green="1.0" blue="1.0" />
-                                       </color>
-                                    </Stop>
-                                 </stops>
-                              </LinearGradient>
-                           </textFill>
-                        </Label>
-                        <ImageView fx:id="yellowMarble1" fitHeight="72.0" fitWidth="72.0" layoutX="496.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/YellowMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="yellowMarble2" fitHeight="72.0" fitWidth="72.0" layoutX="584.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/YellowMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="yellowMarble3" fitHeight="72.0" fitWidth="72.0" layoutX="496.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/YellowMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="yellowMarble4" fitHeight="72.0" fitWidth="72.0" layoutX="584.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/YellowMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="greenMarble1" fitHeight="87.0" fitWidth="72.0" layoutX="1265.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/GreenMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="greenMarble2" fitHeight="87.0" fitWidth="72.0" layoutX="1337.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/GreenMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="greenMarble3" fitHeight="87.0" fitWidth="72.0" layoutX="1272.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/GreenMarble.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="greenMarble4" fitHeight="87.0" fitWidth="72.0" layoutX="1337.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assests/scene/GreenMarble.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </VBox>
             <GridPane hgap="25.0" prefHeight="259.0" prefWidth="121.0" vgap="25.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="140.0000244140625" />
