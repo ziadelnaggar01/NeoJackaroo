@@ -138,7 +138,7 @@ public class Game implements GameManager {
 	{
 		if(splitDistance >= 1 && splitDistance <= 6)
 		board.setSplitDistance(splitDistance);
-		else throw new SplitOutOfRangeException("Split distance must be between 1 and 6.");
+		else throw new SplitOutOfRangeException("You're not playing Monopoly — splits can only go from 1 to 6!");
 	}
 	/**
 	 * Determines if the player's turn should be skipped based on their hand card count
@@ -246,7 +246,7 @@ public class Game implements GameManager {
 		Marble x = players.get(currentPlayerIndex).getOneMarble();
 		if(x == null)
 		{
-			throw new CannotFieldException("The current player has no marble to field.");
+			throw new CannotFieldException("You can’t summon what doesn’t exist, no marbles to field!");
 		}else
 		{
 			board.sendToBase(x); // throws 
@@ -274,7 +274,7 @@ public class Game implements GameManager {
 		}
 		if(idx == -1 || players.get(idx).getHand().size() == 0)
 		{
-			throw new CannotDiscardException("The player has no cards to discard.");
+			throw new CannotDiscardException("Trying to discard air? You’ve got nothing to toss!");
 		}else
 		{
 		    int randomIndex = (int) (Math.random() * players.get(idx).getHand().size());
