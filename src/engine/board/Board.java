@@ -26,11 +26,12 @@ public class Board implements BoardManager {
 	 * Retrieves the safe zone cells associated with the specified colour.
 	 *
 	 * <p>
-	 * The method iterates through the list of safe zones and returns the list of
-	 * cells belonging to the safe zone that matches the given colour. If no
+	 * The method iterates through the list of safe zones and returns the list
+	 * of cells belonging to the safe zone that matches the given colour. If no
 	 * matching safe zone is found, it returns {null}.
 	 *
-	 * @param colour The colour of the player whose safe zone is being retrieved.
+	 * @param colour
+	 *            The colour of the player whose safe zone is being retrieved.
 	 * @return An {@code ArrayList} of {@code Cell} objects representing the
 	 *         player's safe zone, or {@code null} if no matching safe zone is
 	 *         found.
@@ -38,7 +39,8 @@ public class Board implements BoardManager {
 	private ArrayList<Cell> getSafeZone(Colour colour) {
 		for (int i = 0; i < safeZones.size(); i++) {
 			SafeZone safeZone = safeZones.get(i);
-			if (safeZone.getColour() == colour) // Comparison with == works with enums
+			if (safeZone.getColour() == colour) // Comparison with == works with
+												// enums
 				return safeZone.getCells();
 
 		}
@@ -49,25 +51,30 @@ public class Board implements BoardManager {
 	 * Retrieves the position of a given marble within a specified path.
 	 *
 	 * <p>
-	 * The method iterates through the provided list of {@code Cell} objects to find
-	 * the index of the cell that contains the given marble. The comparison is done
-	 * using reference equality ({@code ==}) since the {@code Marble} class does not
-	 * override the {@code equals} method.
+	 * The method iterates through the provided list of {@code Cell} objects to
+	 * find the index of the cell that contains the given marble. The comparison
+	 * is done using reference equality ({@code ==}) since the {@code Marble}
+	 * class does not override the {@code equals} method.
 	 *
 	 * <p>
-	 * If the marble is found, its index within the list is returned (0-based). If
-	 * the marble is not found in the given path, the method returns {@code -1}.
+	 * If the marble is found, its index within the list is returned (0-based).
+	 * If the marble is not found in the given path, the method returns
+	 * {@code -1}.
 	 *
-	 * @param path   The list of {@code Cell} objects representing a track or safe
-	 *               zone.
-	 * @param marble The {@code Marble} object whose position needs to be found.
-	 * @return The 0-based index of the marble within the path, or {@code -1} if not
-	 *         found.
+	 * @param path
+	 *            The list of {@code Cell} objects representing a track or safe
+	 *            zone.
+	 * @param marble
+	 *            The {@code Marble} object whose position needs to be found.
+	 * @return The 0-based index of the marble within the path, or {@code -1} if
+	 *         not found.
 	 */
 	private int getPositionInPath(ArrayList<Cell> path, Marble marble) {
 		for (int i = 0; i < path.size(); i++) {
-			if (path.get(i).getMarble() == (marble)) // Comparing reference of the two marbles
-				return i; // 0-based positioning (refer to page 3 in game description, figure 2)
+			if (path.get(i).getMarble() == (marble)) // Comparing reference of
+														// the two marbles
+				return i; // 0-based positioning (refer to page 3 in game
+							// description, figure 2)
 		}
 		return -1;
 	}
@@ -76,12 +83,13 @@ public class Board implements BoardManager {
 	 * Retrieves the base position for a given colour.
 	 *
 	 * <p>
-	 * This method determines the starting position of a player's base by checking
-	 * the associated {@code Colour} of the {@code SafeZone} objects. Each player's
-	 * base is located at fixed positions (0, 25, 50, 75) corresponding to their
-	 * index in the {@code safeZones} list.
+	 * This method determines the starting position of a player's base by
+	 * checking the associated {@code Colour} of the {@code SafeZone} objects.
+	 * Each player's base is located at fixed positions (0, 25, 50, 75)
+	 * corresponding to their index in the {@code safeZones} list.
 	 *
-	 * @param colour The {@code Colour} representing the player.
+	 * @param colour
+	 *            The {@code Colour} representing the player.
 	 * @return The base position of the specified colour, or {@code -1} if the
 	 *         colour is invalid.
 	 */
@@ -104,10 +112,11 @@ public class Board implements BoardManager {
 	 *
 	 * <p>
 	 * The entry position is calculated based on the base position of the given
-	 * colour. It is determined as {@code (base - 2 + 100) % 100} to ensure proper
-	 * wrap-around on the board, which consists of 100 positions.
+	 * colour. It is determined as {@code (base - 2 + 100) % 100} to ensure
+	 * proper wrap-around on the board, which consists of 100 positions.
 	 *
-	 * @param colour The {@code Colour} representing the player.
+	 * @param colour
+	 *            The {@code Colour} representing the player.
 	 * @return The entry position of the specified colour, or {@code -1} if the
 	 *         colour is invalid.
 	 */
@@ -120,30 +129,31 @@ public class Board implements BoardManager {
 	}
 
 	/**
-	 * Determines the path a marble will take based on a number of movement steps.
-	 * The method checks whether the marble is currently on the main track or in the
-	 * player's Safe Zone. If it is found in neither, an exception is thrown.
+	 * Determines the path a marble will take based on a number of movement
+	 * steps. The method checks whether the marble is currently on the main
+	 * track or in the player's Safe Zone. If it is found in neither, an
+	 * exception is thrown.
 	 *
 	 * Movement rules:
 	 * <ul>
 	 * <li>If on the track and moving -4, the path will be traced backwards with
 	 * wrap around.</li>
-	 * <li>If the marble is moved using a 5 by another player (opponent), special
-	 * rules apply:
+	 * <li>If the marble is moved using a 5 by another player (opponent),
+	 * special rules apply:
 	 * <ul>
 	 * <li>Cannot enter the safe zone.</li>
 	 * <li>Cannot bypass or land on any marble of the active player.</li>
-	 * <li>Can bypass or land own marbles,BIG ASSUMPTION HERE, IT CAN BYPASS HOWEVER
-	 * MANY MARBLES THERE IS.</li>
-	 * <li>Note that this technically should be in validatePath(), but it's written
-	 * in the validateSteps() section
+	 * <li>Can bypass or land own marbles,BIG ASSUMPTION HERE, IT CAN BYPASS
+	 * HOWEVER MANY MARBLES THERE IS.</li>
+	 * <li>Note that this technically should be in validatePath(), but it's
+	 * written in the validateSteps() section
 	 * </ul>
 	 * </li>
 	 * <li>If moving forward normally:
 	 * <ul>
 	 * <li>The path might remain entirely on the track.</li>
-	 * <li>Or transition from the track into the safe zone depending on distance to
-	 * entry.</li>
+	 * <li>Or transition from the track into the safe zone depending on distance
+	 * to entry.</li>
 	 * </ul>
 	 * </li>
 	 * <li>If in the safe zone:
@@ -154,32 +164,37 @@ public class Board implements BoardManager {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param marble the marble to move
-	 * @param steps  the number of steps to move (can be negative for backwards)
-	 * @return the full path as a list of {@code Cell}, starting with the marble's
-	 *         current position and ending with the intended destination
+	 * @param marble
+	 *            the marble to move
+	 * @param steps
+	 *            the number of steps to move (can be negative for backwards)
+	 * @return the full path as a list of {@code Cell}, starting with the
+	 *         marble's current position and ending with the intended
+	 *         destination
 	 * 
-	 * @throws IllegalMovementException if:
-	 *                                  <ul>
-	 *                                  <li>The marble is not on the track or safe
-	 *                                  zone</li>
-	 *                                  <li>The movement is backward within a safe
-	 *                                  zone</li>
-	 *                                  <li>Too many steps are taken (exceeding
-	 *                                  track or safe zone limits)</li>
-	 *                                  <li>An opponent’s marble attempts to bypass
-	 *                                  or land on an active player’s marble</li>
-	 *                                  </ul>
+	 * @throws IllegalMovementException
+	 *             if:
+	 *             <ul>
+	 *             <li>The marble is not on the track or safe zone</li>
+	 *             <li>The movement is backward within a safe zone</li>
+	 *             <li>Too many steps are taken (exceeding track or safe zone
+	 *             limits)</li>
+	 *             <li>An opponent’s marble attempts to bypass or land on an
+	 *             active player’s marble</li>
+	 *             </ul>
 	 */
 
-	private ArrayList<Cell> validateSteps(Marble marble, int steps) throws IllegalMovementException {
+	private ArrayList<Cell> validateSteps(Marble marble, int steps)
+			throws IllegalMovementException {
 
-		// An alternative way to simplify the method is implementing a record in track
+		// An alternative way to simplify the method is implementing a record in
+		// track
 		// helper and a record in safe zone helper
 
 		ArrayList<Cell> pathTaken = new ArrayList<>();
 		int positionInTrack = getPositionInPath(track, marble);
-		int positionInSafeZone = getPositionInPath(getSafeZone(marble.getColour()), marble);
+		int positionInSafeZone = getPositionInPath(
+				getSafeZone(marble.getColour()), marble);
 		int position; // Current position of marble
 
 		if (positionInTrack != -1) {// Found marble in track
@@ -189,7 +204,8 @@ public class Board implements BoardManager {
 
 			}
 
-			// Note that if it is a five and your own marble, then you will move normally
+			// Note that if it is a five and your own marble, then you will move
+			// normally
 			else if (marble.getColour() != gameManager.getActivePlayerColour()) {
 
 				// Record path wrapping around and Validate path of 5
@@ -197,16 +213,20 @@ public class Board implements BoardManager {
 					int movingPosition = ((position + i) + 100) % 100;
 					Cell currentCell = track.get((movingPosition));
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// THE FOLLOWING CONDITION IS MOST LIKLEY OPTIONAL, IT IS AUTO HANDLED IN
-/// VALIDATE PATH
-// if you find a cell in the path that is the active player's colour, you cannot
-// bypass it
-		///			if (i != 0 && currentCell.getMarble() != null
-		///					&& currentCell.getMarble().getColour() == gameManager.getActivePlayerColour())
-		///				throw new IllegalMovementException(
-		///						"A moved marble by another player cannot bypass or land on that player's marbles");
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					// / THE FOLLOWING CONDITION IS MOST LIKLEY OPTIONAL, IT IS
+					// AUTO HANDLED IN
+					// / VALIDATE PATH
+					// if you find a cell in the path that is the active
+					// player's colour, you cannot
+					// bypass it
+					// / if (i != 0 && currentCell.getMarble() != null
+					// / && currentCell.getMarble().getColour() ==
+					// gameManager.getActivePlayerColour())
+					// / throw new IllegalMovementException(
+					// /
+					// "A moved marble by another player cannot bypass or land on that player's marbles");
+					// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 					pathTaken.add(currentCell);
 				}
@@ -214,27 +234,39 @@ public class Board implements BoardManager {
 
 			else { // Move normally
 
-				// First check if the movement is valid by getting where the entry position for
+				// First check if the movement is valid by getting where the
+				// entry position for
 				// this marble is and adding 4 to it
 
 				int entry = getEntryPosition(marble.getColour());
 
 				// get distance to entry keeping in mind circular nature
-				int distanceToEntry = ((entry - positionInTrack) + track.size()) % track.size();
+				int distanceToEntry = ((entry - positionInTrack) + track.size())
+						% track.size();
 
-				if (steps > distanceToEntry + 4) {// steps taken bigger than total possible steps
-					throw new IllegalMovementException("Rank is too high");
-				} else if (steps <= distanceToEntry) { // record path on track only
+				if (steps > distanceToEntry + 4) {// steps taken bigger than
+													// total possible steps
+					throw new IllegalMovementException(
+							"Calm down, that card’s too powerful for this move, you're going to hit a wall");
+				} else if (steps <= distanceToEntry) { // record path on track
+														// only
 					for (int i = 0; i <= steps; i++)
 						pathTaken.add(track.get(((position + i) + 100) % 100));
-				} else {// record path that will include both track and safe zone cells
-					for (int i = 0; i <= steps; i++) {// You start at index zero because you want the current, then you
+				} else {// record path that will include both track and safe
+						// zone cells
+					for (int i = 0; i <= steps; i++) {// You start at index zero
+														// because you want the
+														// current, then you
 														// walk the steps
-						if (i <= distanceToEntry) {// still on track, note that it's distance to entry, not distance
+						if (i <= distanceToEntry) {// still on track, note that
+													// it's distance to entry,
+													// not distance
 													// to safe zone
-							pathTaken.add(track.get(((position + i) + 100) % 100));
+							pathTaken.add(track
+									.get(((position + i) + 100) % 100));
 						} else {// entered safe zone
-							pathTaken.add(getSafeZone(marble.getColour()).get((i - distanceToEntry - 1)));
+							pathTaken.add(getSafeZone(marble.getColour()).get(
+									(i - distanceToEntry - 1)));
 						}
 					}
 				}
@@ -244,15 +276,18 @@ public class Board implements BoardManager {
 		} else if (positionInSafeZone != -1) {
 			position = positionInSafeZone;
 
-			// if its a backwards four throw an illegalMovement exception since can't move
+			// if its a backwards four throw an illegalMovement exception since
+			// can't move
 			// backwards
 			if (steps < 0) {
-				throw new IllegalMovementException("Cannot move backwards in safezones");
+				throw new IllegalMovementException(
+						"Safe zones are one-way streets, no reverse allowed!");
 			}
 
 			// if it's a five it'd always too high of a rank
 			else if (position + steps > 3) {// 0 index
-				throw new IllegalMovementException("Rank is too high");
+				throw new IllegalMovementException(
+						"Calm down, that card’s too powerful for this move, you're going to hit a wall");
 			}
 
 			else {
@@ -264,29 +299,34 @@ public class Board implements BoardManager {
 
 			// Not in track nor safe zone
 		} else
-			throw new IllegalMovementException("Marble cannot be moved");
+			throw new IllegalMovementException(
+					"That marble’s in chill mode, still at home, no moving for it until fielded.");
 
 		// Return the full path
 		return pathTaken;
 	}
 
 	/**
-	 * Records the backward path taken by a marble on the track based on a negative
-	 * step value. The marble wraps around the circular track in reverse.
+	 * Records the backward path taken by a marble on the track based on a
+	 * negative step value. The marble wraps around the circular track in
+	 * reverse.
 	 * 
 	 * Note:
 	 * <ul>
 	 * <li>This movement never enters the safe zone.</li>
-	 * <li>The {@code steps} parameter must be negative. The method will convert it
-	 * to positive internally.</li>
+	 * <li>The {@code steps} parameter must be negative. The method will convert
+	 * it to positive internally.</li>
 	 * <li>The resulting path is appended to the given {@code path} list by
 	 * reference.</li>
 	 * </ul>
 	 *
-	 * @param steps    the number of steps to move backward (expected negative)
-	 * @param position the marble's current index on the track
-	 * @param path     the list to store the sequence of {@code Cell}s the marble
-	 *                 will move through
+	 * @param steps
+	 *            the number of steps to move backward (expected negative)
+	 * @param position
+	 *            the marble's current index on the track
+	 * @param path
+	 *            the list to store the sequence of {@code Cell}s the marble
+	 *            will move through
 	 */
 	private void recordBackwards(int steps, int position, ArrayList<Cell> path) {
 		steps = Math.abs(steps);
@@ -297,243 +337,171 @@ public class Board implements BoardManager {
 
 	/**
 	 * Validates whether a marble can move along a specified path, checking for
-	 * obstacles and other movement restrictions. This includes validating if the
-	 * path is clear of marbles owned by the same player, ensuring that multiple
-	 * marbles don't block the path, and ensuring that the marble doesn't violate
-	 * any game-specific rules regarding Safe Zones, Base Cells, or King's movement.
+	 * obstacles and other movement restrictions. This includes validating if
+	 * the path is clear of marbles owned by the same player, ensuring that
+	 * multiple marbles don't block the path, and ensuring that the marble
+	 * doesn't violate any game-specific rules regarding Safe Zones, Base Cells,
+	 * or King's movement.
 	 * 
-	 * @param marble   the marble to be moved
-	 * @param fullPath a list of `Cell` objects representing the path the marble
-	 *                 will take from the current position to the target position
-	 * @param destroy  a flag indicating whether marbles encountered along the path
-	 *                 should be destroyed (e.g., when passing over or landing on
-	 *                 enemy marbles)
+	 * @param marble
+	 *            the marble to be moved
+	 * @param fullPath
+	 *            a list of `Cell` objects representing the path the marble will
+	 *            take from the current position to the target position
+	 * @param destroy
+	 *            a flag indicating whether marbles encountered along the path
+	 *            should be destroyed (e.g., when passing over or landing on
+	 *            enemy marbles)
 	 * 
-	 * @throws IllegalMovementException if any movement rule is violated, such as: -
-	 *                                  A marble cannot move if another marble owned
-	 *                                  by the same player is in its path or at the
-	 *                                  target position. - More than one marble is
-	 *                                  blocking the path. - A marble cannot enter a
-	 *                                  Safe Zone if the entry point is blocked. - A
-	 *                                  marble cannot bypass or land on a Base cell
-	 *                                  occupied by an opponent's marble regardless
-	 *                                  of being king or not. - A King cannot bypass
-	 *                                  or land on a Safe Zone.
+	 * @throws IllegalMovementException
+	 *             if any movement rule is violated, such as: - A marble cannot
+	 *             move if another marble owned by the same player is in its
+	 *             path or at the target position. - More than one marble is
+	 *             blocking the path. - A marble cannot enter a Safe Zone if the
+	 *             entry point is blocked. - A marble cannot bypass or land on a
+	 *             Base cell occupied by an opponent's marble regardless of
+	 *             being king or not. - A King cannot bypass or land on a Safe
+	 *             Zone.
 	 */
 
-	private void validatePath(Marble marble, ArrayList<Cell> fullPath, boolean destroy)
-			throws IllegalMovementException {
+	private void validatePath(Marble marble, ArrayList<Cell> fullPath,
+			boolean destroy) throws IllegalMovementException {
+		Colour ownerColour = gameManager.getActivePlayerColour();
 
-		int otherMarbles = 0;
+		int marbleCount = 0;
+
 		for (int i = 1; i < fullPath.size(); i++) {
 			Cell cell = fullPath.get(i);
-
-			// Cell is occupied
 			if (cell.getMarble() != null) {
+				if (i != fullPath.size() - 1) // counting marbles in my path
+												// excluding target
+					marbleCount++;
 
-				// Increment total otherMarbles if not target
-				if (cell.getMarble().getColour() != marble.getColour() && i < fullPath.size() - 1)
-					otherMarbles++;
-
-				// A marble exists on the path or target with the same colour
-				if (!destroy && cell.getMarble().getColour() == gameManager.getActivePlayerColour())
+				if (cell.getCellType() == CellType.SAFE)
 					throw new IllegalMovementException(
-							"A marble cannot move if there is another marble owned by the same"
-									+ " player either in its path or at the target position");
+							"Nice try, but you can’t leapfrog your own bodyguards.");
 
-				// More than 1 marbles exist on the path execluding target
-				if (!destroy && cell.getMarble().getColour() != marble.getColour() && otherMarbles >= 2)
+				if (cell.getCellType() == CellType.BASE
+						&& track.indexOf(cell) == getBasePosition(cell
+								.getMarble().getColour()))
 					throw new IllegalMovementException(
-							"Movement is invalid if there is more than one marble (owned by\r\n"
-									+ " any player) blocking the path");
+							"Those marbles are off-limits, base cells are sacred ground.");
 
-				// Your entry has a marble occupying it and you will enter the safe zone
-				// Do not check if the entry position of the marble is occupied, check it
-				// manually
-				// by checking if the cell is an entry and it is not null and you will enter
-				// safe, no card makes you move that much so it works, but the first way is more
-				// correct but makes failures in tests
-				if (!destroy && cell.getCellType() == CellType.ENTRY
-						&& fullPath.get(fullPath.size() - 1).getCellType() == CellType.SAFE)
-					throw new IllegalMovementException("A marble cannot enter its player’s Safe Zone if any marble is "
-							+ "stationed at its player’s Safe Zone Entry");
+				if (!destroy) {
+					// not marble colour as even with moving opponent marble I
+					// cannot kill my own marbles not his
+					if (ownerColour == cell.getMarble().getColour())
+						throw new IllegalMovementException(
+								"Ever tried stepping on your own foot? Same energy. Ypu cannot bypass your own marbles");
 
-				// Cannot bypass a base cell with it's marble in it regardless of king or not
-				if (getPositionInPath(track, cell.getMarble()) == getBasePosition(cell.getMarble().getColour()))
-					throw new IllegalMovementException(
-							"A marble’s movement is blocked if another player’s marble is\r\n"
-									+ " in its player’s Base cell, either in the path or target position");
+					// going into safe zone with a marble in the entry
+					if (cell.getCellType() == CellType.ENTRY
+							&& (i + 1) < fullPath.size()
+							&& fullPath.get(i + 1).getCellType() == CellType.SAFE)
+						throw new IllegalMovementException(
+								"There’s a bouncer at your gate to safety — that marble says no entry for safe zone");
 
-				// Cannot bypass or land on a safe cell with a king
-				if (destroy && cell.getCellType() == CellType.SAFE)
-					throw new IllegalMovementException("A King cannot bypass or land on a Safe Zone marble");
+					if (marbleCount > 1)
+						throw new IllegalMovementException(
+								"You’re not a magician, only one marble can be passed across the path.");
+				}
 
 			}
 		}
+
 	}
-	
-	/*
-	 * ================================================
-	 * Alternative validatePath() Implementation
-	 * -----------------------------------------------
-	 * Retained for reference: an earlier version of the
-	 * validatePath() method based on a different logic flow.
-	 * Can be revisited if design requirements or constraints evolve.
-	 * ================================================
-	 */
-	//	private void validatePath(Marble marble, ArrayList<Cell> fullPath, boolean destroy) throws IllegalMovementException 
-	//	{
-	//		Colour activePlayerColour = gameManager.getActivePlayerColour(); 
-	//		int targetCellPosition = fullPath.size() - 1; //Index of target cell in given path, i.e last index in array.
-	//		int marblesInPath = 0; // Keeps track of enemy marbles in path
-	//		
-	//		for(int i=1; i< fullPath.size(); i++)
-	//		{
-	//			Cell currentCell = fullPath.get(i);
-	//			Marble marbleInCell = currentCell.getMarble();
-	//			if(marbleInCell != null)
-	//			{
-	//				boolean inSafeZone = currentCell.getCellType() == CellType.SAFE;
-	//				
-	//				/*
-	//				 * Check Self-Blocking
-	//				 * if there is any marble of my own in my path or target, move is invalid, 
-	//				 * unless we're using a king card, it destroys my marbles if on track,
-	//				 * however move stays invalid if my marble is in safezone.
-	//				 */
-	//				if(marbleInCell.getColour() == activePlayerColour)
-	//				{
-	//					if(!destroy || inSafeZone)
-	//						throw new IllegalMovementException("A marble cannot move if there is another marble owned by the same\r\n"
-	//								+ " player either in its path or at the target position. Meaning, I, as a player cannot\r\n"
-	//								+ " bypass or destroy my own marble.");
-	//				}
-	//				
-	//				/*
-	//				 * Check Path Blockage
-	//				 * if there is more than 1 marble in my path in path, move is invalid, 
-	//				 * unless we're using a king card, it destroys my marbles if on track.
-	//				 */
-	//				else
-	//				{
-	//					// Update count of marbles in path, excluding target cell
-	//					if(i!= targetCellPosition)
-	//						marblesInPath++;
-	//					
-	//					if(marblesInPath > 1 && !destroy)
-	//						throw new IllegalMovementException("Movement is invalid if there is more than one marble (owned by\r\n"
-	//								+ " any player) blocking the path.");
-	//				}
-	//				
-	//				/*
-	//				 * Check SafeZone Entry
-	//				 * if a marble is in my entry cell it would be an invalid move unless we're playing a king card, it will destroy the marble and enter safezone
-	//				 */
-	//				if(!destroy && currentCell.getCellType() == CellType.ENTRY && fullPath.get(targetCellPosition).getCellType() == CellType.SAFE)
-	//					throw new IllegalMovementException("A marble cannot enter its player’s Safe Zone if any marble is\r\n"
-	//							+ " stationed at its player’s Safe Zone Entry.");
-	//				
-	//				/*
-	//				 * Check Base Cell Blockage
-	//				 * If a player has one of his marbles in his Base cell, you can't pass it or land on it,
-	//				 * marking your move as invalid
-	//				 */
-	//				int playerBaseCellPosition = getBasePosition(marbleInCell.getColour());
-	//				Cell playerBaseCell = track.get(playerBaseCellPosition); 
-	//				if(currentCell == playerBaseCell)
-	//					throw new IllegalMovementException("A marble’s movement is blocked if another player’s marble is\r\n"
-	//							+ " in its player’s Base cell, either in the path or target position.");
-	//			}
-	//		}
-	//	}
 
 	/**
-	 * Moves a marble along the specified path, handling marble destruction and trap
-	 * resetting. This method assumes that validation for the movement and
-	 * conditions for destruction have already been handled elsewhere (e.g., in the
-	 * `moveBy` method).
+	 * Moves a marble along the specified path, handling marble destruction and
+	 * trap resetting. This method assumes that validation for the movement and
+	 * conditions for destruction have already been handled elsewhere (e.g., in
+	 * the `moveBy` method).
 	 * 
-	 * @param marble   the marble to be moved
-	 * @param fullPath a list of `Cell` objects representing the path the marble
-	 *                 will take from the current position to the target position
-	 * @param destroy  a flag indicating whether marbles encountered along the path
-	 *                 should be destroyed (i.e a King card)
+	 * @param marble
+	 *            the marble to be moved
+	 * @param fullPath
+	 *            a list of `Cell` objects representing the path the marble will
+	 *            take from the current position to the target position
+	 * @param destroy
+	 *            a flag indicating whether marbles encountered along the path
+	 *            should be destroyed (i.e a King card)
 	 * 
-	 * @throws IllegalDestroyException if there is an error during the destruction
-	 *                                 of a marble (e.g., attempting to destroy a
-	 *                                 marble when it's not allowed)
+	 * @throws IllegalDestroyException
+	 *             if there is an error during the destruction of a marble
+	 *             (e.g., attempting to destroy a marble when it's not allowed)
 	 */
 
-	private void move(Marble marble, ArrayList<Cell> fullPath, boolean destroy) throws IllegalDestroyException {
-		// No validation for anything required in this method, all is done in moveBy
-		// method, validation here might cause problems, for example if you check if you
-		// are destroying the same colour or not that would contradict king and 5
-		int steps = fullPath.size() - 1;
-		fullPath.get(0).setMarble(null);// Same as doing it in track
+	private void move(Marble marble, ArrayList<Cell> fullPath, boolean destroy)
+			throws IllegalDestroyException {
+		Cell currentCell = fullPath.get(0);
+		Cell targetCell = fullPath.get(fullPath.size() - 1);
 
-		// Iterate through the path till target
-		for (int i = 1; i <= steps; i++) {
+		currentCell.setMarble(null);
 
-			Cell cell = fullPath.get(i);
-
-			// If cell is occupied, AND it is a king OR target cell, then destroy marble
-			// No validation required for safe cells nor destroying own cell in target
-			if (cell.getMarble() != null && (destroy || i == steps))
-				destroyMarble(cell.getMarble());
+		if (destroy) {
+			for (Cell cell : fullPath) {
+				if (cell.getMarble() != null)
+					destroyMarble(cell.getMarble());
+			}
 		}
 
-		// Get the target cell, last index in full path
-		Cell targetCell = fullPath.get(steps);
+		else if (targetCell.getMarble() != null)
+			destroyMarble(targetCell.getMarble());
 
-		// Add marble to target cell
 		targetCell.setMarble(marble);
 
-		// If target is a trap, destroy marble and reset trap
 		if (targetCell.isTrap()) {
 			destroyMarble(marble);
 			targetCell.setTrap(false);
 			assignTrapCell();
 		}
+
 	}
 
 	/**
 	 * Validates whether a swap between two marbles is allowed.
 	 *
 	 * <p>
-	 * This method ensures that both marbles are on the general track and that the
-	 * opponent's marble is not positioned in its base cell, as swapping is
+	 * This method ensures that both marbles are on the general track and that
+	 * the opponent's marble is not positioned in its base cell, as swapping is
 	 * prohibited in such cases.
 	 *
-	 * @param marble1 The first marble involved in the swap.
-	 * @param marble2 The second marble involved in the swap.
-	 * @throws IllegalSwapException If either marble is not on the track or if the
-	 *                              swap is attempted with a marble that is
-	 *                              positioned in its base cell.
+	 * @param marble1
+	 *            The first marble involved in the swap.
+	 * @param marble2
+	 *            The second marble involved in the swap.
+	 * @throws IllegalSwapException
+	 *             If either marble is not on the track or if the swap is
+	 *             attempted with a marble that is positioned in its base cell.
 	 */
-	private void validateSwap(Marble marble1, Marble marble2) throws IllegalSwapException {
-		// No need to validate illegal colors since it is handled in the Player class.
+	private void validateSwap(Marble marble1, Marble marble2)
+			throws IllegalSwapException {
+		// No need to validate illegal colors since it is handled in the Player
+		// class.
 
 		int m1 = getPositionInPath(track, marble1);
 		int m2 = getPositionInPath(track, marble2);
 
 		// Swapping is prohibited if either marble is not on the general track.
 		if (m1 == -1 || m2 == -1)
-			throw new IllegalSwapException("The two marbles aren’t on the track.");
+			throw new IllegalSwapException(
+					"Uh-oh, trying to swap ghosts, a marble is off the grid.");
 
 		Colour cm1 = marble1.getColour();
 		Colour cm2 = marble2.getColour();
 		Colour activeColour = gameManager.getActivePlayerColour();
 
-		// Swapping is invalid if the opponent's marble is positioned in its Base cell.
+		// Swapping is invalid if the opponent's marble is positioned in its
+		// Base cell.
 		if (activeColour == cm1) { // cm2 is the opponent's marble
 			if (m2 == getBasePosition(cm2)) { // Check if it's in its base
 				throw new IllegalSwapException(
-						"Swapping is invalid if the other marble is positioned in its Base cell.");
+						"That marble’s chill at base, you can’t swap it out.");
 			}
 		} else { // cm1 is the opponent's marble
 			if (m1 == getBasePosition(cm1)) { // Check if it's in its base
 				throw new IllegalSwapException(
-						"Swapping is invalid if the other marble is positioned in its Base cell.");
+						"That marble’s chill at base, you can’t swap it out.");
 			}
 		}
 	}
@@ -546,24 +514,30 @@ public class Board implements BoardManager {
 	 * positioned in its base cell, as marbles in base cells are protected from
 	 * destruction.
 	 *
-	 * @param positionInPath The position of the marble in the track.
-	 * @throws IllegalDestroyException If the marble is not on the general track or
-	 *                                 if it is located in its base cell.
+	 * @param positionInPath
+	 *            The position of the marble in the track.
+	 * @throws IllegalDestroyException
+	 *             If the marble is not on the general track or if it is located
+	 *             in its base cell.
 	 */
-	private void validateDestroy(int positionInPath) throws IllegalDestroyException {
+	private void validateDestroy(int positionInPath)
+			throws IllegalDestroyException {
 		// Ensure the marble exists on the general track.
 		if (positionInPath == -1) {
-			throw new IllegalDestroyException("Cannot destroy a marble not on the general track.");
+			throw new IllegalDestroyException(
+					"CYou can’t hit what’s not there, marble’s off the board.");
 		}
 
 		Cell targetCell = track.get(positionInPath);
 		Marble targetMarble = targetCell.getMarble();
-		if (targetMarble==null) return;
+		if (targetMarble == null)
+			return;
 		// Validate that the marble is not in its base cell.
 		boolean isInItsBasePosition = (getBasePosition(targetMarble.getColour()) == positionInPath);
 
 		if (isInItsBasePosition) {
-			throw new IllegalDestroyException("Cannot destroy a marble in its base cell.");
+			throw new IllegalDestroyException(
+					"That’s a no-no, marbles in their base are untouchable.");
 		}
 	}
 
@@ -575,18 +549,18 @@ public class Board implements BoardManager {
 	 * marble. If the base cell contains the player's own marble, the fielding
 	 * action is not allowed.
 	 *
-	 * @param occupiedBaseCell The base cell to be checked for fielding.
-	 * @throws CannotFieldException If the base cell is occupied by the active
-	 *                              player's own marble.
+	 * @param occupiedBaseCell
+	 *            The base cell to be checked for fielding.
+	 * @throws CannotFieldException
+	 *             If the base cell is occupied by the active player's own
+	 *             marble.
 	 */
-	private void validateFielding(Cell occupiedBaseCell) throws CannotFieldException {
-		Colour activePlayerColour = gameManager.getActivePlayerColour();
-
-		// Check if the base cell is occupied by the active player's own marble.
-		if (occupiedBaseCell.getMarble()!=null&&occupiedBaseCell.getCellType() == CellType.BASE
-				&& activePlayerColour == occupiedBaseCell.getMarble().getColour()) {
-			throw new CannotFieldException("Cannot field a marble if base cell is occupied by your own marble.");
-		}
+	private void validateFielding(Cell occupiedBaseCell)
+			throws CannotFieldException {
+		if (occupiedBaseCell.getMarble().getColour() == gameManager
+				.getActivePlayerColour())
+			throw new CannotFieldException(
+					"Double parking? You already have a marble at base.");
 	}
 
 	/**
@@ -594,22 +568,26 @@ public class Board implements BoardManager {
 	 *
 	 * <p>
 	 * This method checks if the marble is on the general track before it can be
-	 * saved to a safe zone. If the marble is not on the general track (position is
-	 * -1), an exception is thrown.
+	 * saved to a safe zone. If the marble is not on the general track (position
+	 * is -1), an exception is thrown.
 	 *
 	 * <p>
-	 * Note: The color check for the marble is not performed here as it is handled
-	 * within the Player class.
+	 * Note: The color check for the marble is not performed here as it is
+	 * handled within the Player class.
 	 *
-	 * @param positionInSafeZone The position in the safe zone where the marble is
-	 *                           to be saved.
-	 * @param positionOnTrack    The position of the marble on the general track.
-	 * @throws InvalidMarbleException If the marble is not on the general track.
+	 * @param positionInSafeZone
+	 *            The position in the safe zone where the marble is to be saved.
+	 * @param positionOnTrack
+	 *            The position of the marble on the general track.
+	 * @throws InvalidMarbleException
+	 *             If the marble is not on the general track.
 	 */
-	private void validateSaving(int positionInSafeZone, int positionOnTrack) throws InvalidMarbleException {
+	private void validateSaving(int positionInSafeZone, int positionOnTrack)
+			throws InvalidMarbleException {
 		// If the marble is not on the general track, throwing an exception.
 		if (positionOnTrack == -1 || positionInSafeZone != -1) {
-			throw new InvalidMarbleException("Cannot save a marble not on the general track.");
+			throw new InvalidMarbleException(
+					"You can’t rescue someone not in danger, marble is already off the track.");
 		}
 	}
 
@@ -619,21 +597,24 @@ public class Board implements BoardManager {
 	 * Moves a marble by a specified number of steps on the track.
 	 *
 	 * <p>
-	 * This method calculates the full path for the marble's movement based on the
-	 * specified number of steps. It first validates the steps, then validates the
-	 * path based on the marble's current position and the destination. If the path
-	 * is valid, the marble is moved along the path. The method also handles special
-	 * cases like "king" and other movement rules that are not implemented in the
-	 * standard movement logic.
+	 * This method calculates the full path for the marble's movement based on
+	 * the specified number of steps. It first validates the steps, then
+	 * validates the path based on the marble's current position and the
+	 * destination. If the path is valid, the marble is moved along the path.
+	 * The method also handles special cases like "king" and other movement
+	 * rules that are not implemented in the standard movement logic.
 	 *
-	 * @param marble  The marble to be moved.
-	 * @param steps   The number of steps the marble should move.
-	 * @param destroy Whether to destroy marbles in the path if needed (based on the
-	 *                game rules).
-	 * @throws IllegalMovementException If the movement is not allowed due to
-	 *                                  invalid steps or rules.
-	 * @throws IllegalDestroyException  If the destruction of marbles during
-	 *                                  movement is invalid.
+	 * @param marble
+	 *            The marble to be moved.
+	 * @param steps
+	 *            The number of steps the marble should move.
+	 * @param destroy
+	 *            Whether to destroy marbles in the path if needed (based on the
+	 *            game rules).
+	 * @throws IllegalMovementException
+	 *             If the movement is not allowed due to invalid steps or rules.
+	 * @throws IllegalDestroyException
+	 *             If the destruction of marbles during movement is invalid.
 	 */
 	@Override
 	public void moveBy(Marble marble, int steps, boolean destroy)
@@ -653,19 +634,23 @@ public class Board implements BoardManager {
 	 *
 	 * <p>
 	 * This method swaps the positions of two specified marbles on the track. It
-	 * first validates whether the swap can occur by ensuring the conditions for a
-	 * valid swap are met. If valid, it retrieves the positions of both marbles on
-	 * the track and then exchanges their positions.
+	 * first validates whether the swap can occur by ensuring the conditions for
+	 * a valid swap are met. If valid, it retrieves the positions of both
+	 * marbles on the track and then exchanges their positions.
 	 *
-	 * @param marble  The first marble to be swapped.
-	 * @param marble2 The second marble to be swapped.
-	 * @throws IllegalSwapException If the swap is not allowed due to invalid
-	 *                              conditions (e.g., marbles are not on the track,
-	 *                              or swapping would violate game rules).
+	 * @param marble
+	 *            The first marble to be swapped.
+	 * @param marble2
+	 *            The second marble to be swapped.
+	 * @throws IllegalSwapException
+	 *             If the swap is not allowed due to invalid conditions (e.g.,
+	 *             marbles are not on the track, or swapping would violate game
+	 *             rules).
 	 */
 	@Override
 	public void swap(Marble marble, Marble marble2) throws IllegalSwapException {
-		// get position in track of both marbles, put second in the first slot and put
+		// get position in track of both marbles, put second in the first slot
+		// and put
 		// the first in the second slot
 		validateSwap(marble, marble2);
 		int pos1 = getPositionInPath(track, marble);
@@ -680,35 +665,39 @@ public class Board implements BoardManager {
 	 * Destroys a marble from the track and sends it to the player's home zone.
 	 *
 	 * <p>
-	 * This method removes the specified marble from the track, checks if the active
-	 * player is allowed to destroy the marble based on the current game rules, and
-	 * sends the destroyed marble to the player's home zone. The method also handles
-	 * specific
+	 * This method removes the specified marble from the track, checks if the
+	 * active player is allowed to destroy the marble based on the current game
+	 * rules, and sends the destroyed marble to the player's home zone. The
+	 * method also handles specific
 	 *
 	 *
 	 * Note: if this method was called by King in move, it does not require
 	 * validation since:
 	 * 
-	 * 1- it is guaranteed to be on track (king cannot move if there is a marble in
-	 * safe zone whther in it's path or target)
+	 * 1- it is guaranteed to be on track (king cannot move if there is a marble
+	 * in safe zone whther in it's path or target)
 	 * 
 	 * 2- it is guaranteed to not destroy a marble in it's base cell since king
 	 * cannot bypass a marble in it's base cell, making it an invalid move
 	 * 
-	 * 3- the two above validations are made by the move method before calling the
-	 * move by method, which performs the destruction
+	 * 3- the two above validations are made by the move method before calling
+	 * the move by method, which performs the destruction
 	 * 
-	 * @param marble The marble to be destroyed.
-	 * @throws IllegalDestroyException If the destruction of the marble is not
-	 *                                 allowed, such as if the marble is not the
-	 *                                 opponent's or if the destruction violates the
-	 *                                 game rules.
+	 * @param marble
+	 *            The marble to be destroyed.
+	 * @throws IllegalDestroyException
+	 *             If the destruction of the marble is not allowed, such as if
+	 *             the marble is not the opponent's or if the destruction
+	 *             violates the game rules.
 	 */
 	@Override
 	public void destroyMarble(Marble marble) throws IllegalDestroyException {
-		// In this method no validation of same colour is required since that is done
-		// when the burner card is played, which allows this method to be also used by
-		// move method when it's king or POSSIBLy five, as they require self destruction
+		// In this method no validation of same colour is required since that is
+		// done
+		// when the burner card is played, which allows this method to be also
+		// used by
+		// move method when it's king or POSSIBLy five, as they require self
+		// destruction
 		int position = getPositionInPath(track, marble);
 
 		// validate destruction if not the same colour as active player
@@ -719,7 +708,8 @@ public class Board implements BoardManager {
 		// remove from track
 		track.get(position).setMarble(null);
 
-		// Send through the game manager interface to access home zone of the player
+		// Send through the game manager interface to access home zone of the
+		// player
 		gameManager.sendHome(marble);
 
 	}
@@ -729,24 +719,26 @@ public class Board implements BoardManager {
 	 *
 	 * <p>
 	 * This method attempts to move a specified marble to the base cell of the
-	 * player, however it does not remove a marble from the home zone, that is done
-	 * in fieldMarble method that utilizes this method. If the base cell is already
-	 * occupied by another marble, the method validates the fielding conditions and,
-	 * if necessary, destroys the occupying marble before moving the current marble
-	 * to the base cell. If the marble cannot be fielded or destroyed, an exception
-	 * will be thrown.
+	 * player, however it does not remove a marble from the home zone, that is
+	 * done in fieldMarble method that utilizes this method. If the base cell is
+	 * already occupied by another marble, the method validates the fielding
+	 * conditions and, if necessary, destroys the occupying marble before moving
+	 * the current marble to the base cell. If the marble cannot be fielded or
+	 * destroyed, an exception will be thrown.
 	 *
-	 * @param marble The marble to be sent to the base cell.
-	 * @throws CannotFieldException    If the marble cannot be fielded (e.g., if the
-	 *                                 base cell is occupied by the player's own
-	 *                                 marble).
-	 * @throws IllegalDestroyException If the marble cannot be destroyed (e.g., if
-	 *                                 there is an issue with the destruction
-	 *                                 process).
+	 * @param marble
+	 *            The marble to be sent to the base cell.
+	 * @throws CannotFieldException
+	 *             If the marble cannot be fielded (e.g., if the base cell is
+	 *             occupied by the player's own marble).
+	 * @throws IllegalDestroyException
+	 *             If the marble cannot be destroyed (e.g., if there is an issue
+	 *             with the destruction process).
 	 */
 
 	@Override
-	public void sendToBase(Marble marble) throws CannotFieldException, IllegalDestroyException {
+	public void sendToBase(Marble marble) throws CannotFieldException,
+			IllegalDestroyException {
 		int base = getBasePosition(marble.getColour());
 		if (track.get(base).getMarble() != null) {// if occupied
 			validateFielding(track.get(base));
@@ -759,20 +751,21 @@ public class Board implements BoardManager {
 	 * Sends a marble to the safe zone of the player.
 	 *
 	 * <p>
-	 * This method attempts to move a specified marble from its current position on
-	 * the track to a random empty cell in the player's safe zone. The method
+	 * This method attempts to move a specified marble from its current position
+	 * on the track to a random empty cell in the player's safe zone. The method
 	 * ensures that the marble is not already in the safe zone and is in a valid
-	 * position before being sent to the safe zone. If the marble is not in a valid
-	 * state to be saved, an exception will be thrown.
+	 * position before being sent to the safe zone. If the marble is not in a
+	 * valid state to be saved, an exception will be thrown.
 	 *
 	 * <p>
-	 * Note that selecting a marble of opponent to save is not allowed, however that
-	 * exception is handled when playing the card
+	 * Note that selecting a marble of opponent to save is not allowed, however
+	 * that exception is handled when playing the card
 	 * 
-	 * @param marble The marble to be sent to the safe zone.
-	 * @throws InvalidMarbleException If the marble is not in a valid position to be
-	 *                                saved (e.g., it's already in the safe zone or
-	 *                                its position is invalid).
+	 * @param marble
+	 *            The marble to be sent to the safe zone.
+	 * @throws InvalidMarbleException
+	 *             If the marble is not in a valid position to be saved (e.g.,
+	 *             it's already in the safe zone or its position is invalid).
 	 */
 	@Override
 	public void sendToSafe(Marble marble) throws InvalidMarbleException {
@@ -800,14 +793,15 @@ public class Board implements BoardManager {
 	 * Retrieves all marbles that are actionable by the active player.
 	 *
 	 * <p>
-	 * This method identifies all marbles that belong to the active player and can
-	 * be acted upon. It checks both the marbles on the general track and those in
-	 * the active player's safe zone. If the active player has a marble at any
-	 * position on the track or within their safe zone, those marbles are considered
-	 * actionable and are added to the result list.
+	 * This method identifies all marbles that belong to the active player and
+	 * can be acted upon. It checks both the marbles on the general track and
+	 * those in the active player's safe zone. If the active player has a marble
+	 * at any position on the track or within their safe zone, those marbles are
+	 * considered actionable and are added to the result list.
 	 * 
-	 * @return An ArrayList of actionable marbles that belong to the active player,
-	 *         including those on the general track and in the safe zone.
+	 * @return An ArrayList of actionable marbles that belong to the active
+	 *         player, including those on the general track and in the safe
+	 *         zone.
 	 */
 	@Override
 	public ArrayList<Marble> getActionableMarbles() {
@@ -835,11 +829,13 @@ public class Board implements BoardManager {
 	}
 
 	/**
-	 * Constructs a game board with the given player color order. Initializes the
-	 * track, safe zones, and assigns trap cells.
+	 * Constructs a game board with the given player color order. Initializes
+	 * the track, safe zones, and assigns trap cells.
 	 *
-	 * @param colourOrder The order of colors assigned to players.
-	 * @param gameManager The game manager responsible for overall game control.
+	 * @param colourOrder
+	 *            The order of colors assigned to players.
+	 * @param gameManager
+	 *            The game manager responsible for overall game control.
 	 */
 	public Board(ArrayList<Colour> colourOrder, GameManager gameManager) {
 		this.gameManager = gameManager;
@@ -882,7 +878,8 @@ public class Board implements BoardManager {
 
 		do
 			randIndex = (int) (Math.random() * 100);
-		while (this.track.get(randIndex).getCellType() != CellType.NORMAL || this.track.get(randIndex).isTrap());
+		while (this.track.get(randIndex).getCellType() != CellType.NORMAL
+				|| this.track.get(randIndex).isTrap());
 
 		this.track.get(randIndex).setTrap(true);
 	}

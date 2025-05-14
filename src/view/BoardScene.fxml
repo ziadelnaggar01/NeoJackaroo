@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BoardController">
+   <children>
+      <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="1081.0" fitWidth="1992.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assests/scene/Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="1076.0" fitWidth="1202.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assests/scene/Board.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <VBox alignment="TOP_RIGHT" prefHeight="1080.0" prefWidth="408.0" spacing="400.0" translateY="200.0">
+         <padding>
+            <Insets top="80.0" />
+         </padding>
+         <children>
+            <GridPane layoutY="150.0" prefHeight="289.0" prefWidth="408.0" translateY="-75.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.59999694824216" minWidth="10.0" prefWidth="269.59999694824216" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.3333465576172" minWidth="10.0" prefWidth="138.40000305175784" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="107.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                     <image>
+                        <Image url="@assests/deck/2.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="100.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="110.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@assests/deck/2.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="115.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@assests/deck/Clovers_5_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="118.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@assests/deck/Clovers_10_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="100.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <Label fx:id="CPU1Name" prefHeight="38.0" prefWidth="293.0" text="Euler" textFill="#00b7ff" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Orbitron Bold" size="30.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+            </GridPane>
+            <GridPane prefHeight="289.0" prefWidth="408.0" translateY="-250.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.59999694824216" minWidth="10.0" prefWidth="269.59999694824216" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.3333465576172" minWidth="10.0" prefWidth="138.40000305175784" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                     <image>
+                        <Image url="@assests/deck/2.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="100.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@assests/deck/2.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="128.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@assests/deck/Clovers_5_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="124.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@assests/deck/Clovers_10_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="100.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <Label fx:id="userName" prefHeight="38.0" prefWidth="293.0" text="Player" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Orbitron Bold" size="36.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color green="0.7333333492279053" blue="1.0" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+      <VBox layoutX="1547.0" layoutY="-1.0" prefHeight="1080.0" prefWidth="431.0" spacing="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane hgap="25.0" prefHeight="259.0" prefWidth="319.0" translateY="75.0" vgap="100.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="163.9999755859375" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.2000732421875" minWidth="10.0" prefWidth="242.4000244140625" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                        <ImageView fx:id="playerA1" fitHeight="115.0" fitWidth="71.0" preserveRatio="true" rotate="-90.0">
+                            <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="50.0" top="120.0" />
+                     </GridPane.margin>
+                        </ImageView>
+                        <ImageView fx:id="playerA2" fitHeight="123.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets right="100.0" />
+                     </GridPane.margin>
+                        </ImageView>
+                        <ImageView fx:id="playerA3" fitHeight="116.0" fitWidth="73.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
+                            <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="50.0" />
+                     </GridPane.margin>
+                        </ImageView>
+                        <ImageView fx:id="playerA4" fitHeight="110.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
+                            <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets right="100.0" top="120.0" />
+                     </GridPane.margin>
+                        </ImageView>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label fx:id="CPU2Name" alignment="CENTER_RIGHT" layoutX="-29.0" layoutY="31.0" prefHeight="54.0" prefWidth="260.0" text="Balabizo" textFill="#00daff">
+                           <font>
+                              <Font name="Orbitron Bold" size="30.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets right="10.0" />
+                           </opaqueInsets>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+            <GridPane hgap="25.0" prefHeight="259.0" prefWidth="121.0" vgap="25.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="140.0000244140625" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.8000732421875" minWidth="10.0" prefWidth="267.1999755859375" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="160.1999755859375" minHeight="0.0" prefHeight="121.80001220703124" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="160.1999755859375" minHeight="0.0" prefHeight="121.80001220703124" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="234.8" minHeight="10.0" prefHeight="112.99998779296877" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fx:id="playerB1" fitHeight="124.0" fitWidth="72.0" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="50.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="playerB4" fitHeight="104.0" fitWidth="76.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="30.0" right="150.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="playerB2" fitHeight="109.0" fitWidth="76.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="50.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="playerB3" fitHeight="123.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@assests/deck/Clovers_4_white.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <Label fx:id="CPU3Name" alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="260.0" text="Hamoksha" textFill="#00f6ff" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Orbitron Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+         </children>
+         <padding>
+            <Insets top="80.0" />
+         </padding>
+      </VBox>
+      <AnchorPane layoutX="1501.0" layoutY="-108.0" prefHeight="200.0" prefWidth="423.0">
+         <children>
+            <ImageView fx:id="settingsIcon" fitHeight="87.0" fitWidth="97.0" layoutX="302.0" layoutY="120.0" onMouseClicked="#openSettings" onMouseEntered="#settingsIconOnMouseEntered" onMouseExited="#settingsIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assests/scene/NeonSettings.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="-7.0" layoutY="-130.0" prefHeight="259.0" prefWidth="423.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="259.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assests/scene/PurpleNeonArrow.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="nextPlayerLabel" alignment="CENTER" layoutX="240.0" layoutY="166.0" prefHeight="43.0" prefWidth="180.0" text="CPU 1">
+               <font>
+                  <Font name="System Bold Italic" size="26.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.722885012626648" green="0.08538011461496353" blue="0.7684210538864136" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <ImageView fitHeight="87.0" fitWidth="119.0" layoutX="54.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assests/scene/NeonBlueClick.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="currentPlayerLabel" alignment="CENTER" layoutX="3.0" layoutY="160.0" prefHeight="43.0" prefWidth="198.0" text="Player">
+               <font>
+                  <Font name="System Bold Italic" size="26.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.08483430743217468" green="0.6736842393875122" blue="0.5461000800132751" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

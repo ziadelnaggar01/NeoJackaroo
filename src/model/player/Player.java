@@ -129,7 +129,7 @@ public class Player {
 		if (hand.contains(card))
 		    selectedCard = card;
 		else
-		    throw new InvalidCardException();
+		    throw new InvalidCardException("That card doesn’t exist, try pulling from this universe.");
 	}
 	
 	/**
@@ -141,13 +141,13 @@ public class Player {
 	public void selectMarble(Marble marble) throws InvalidMarbleException
 	{
 		if (marble == null)
-			throw new InvalidMarbleException("Cannot select null marble.");
+			throw new InvalidMarbleException("You just selected… nothing. That’s not very helpful.");
 		
 		// If marble is already selected, no change
         if (selectedMarbles.contains(marble)) return;
         
 		if(selectedMarbles.size()>=2)
-			throw new InvalidMarbleException("Can't select more than 2 marbles.");
+			throw new InvalidMarbleException("Slow down! You only get to pick two marbles.");
 		selectedMarbles.add(marble);
 	}
 	
@@ -170,13 +170,13 @@ public class Player {
 	{
 		// Check there is a selected card
 		if(selectedCard==null)
-			throw new InvalidCardException("No card selected.");
+			throw new InvalidCardException("Did you forget something? Pick a card before proceeding.");
 		// Check number of marbles selected is correct
 		if(!selectedCard.validateMarbleSize(selectedMarbles))
-			throw new InvalidMarbleException("Incorrect number of marbles");
+			throw new InvalidMarbleException("Math is important, wrong number of marbles selected.");
 		// Check color of marbles selected
 		if(!selectedCard.validateMarbleColours(selectedMarbles))
-			throw new InvalidMarbleException("Incorrect colour of marbles");
+			throw new InvalidMarbleException("Those marbles don’t match, maybe check your Trichromacy level?");
 		// Perform card action on marbles
 		selectedCard.act(selectedMarbles);
 	}
