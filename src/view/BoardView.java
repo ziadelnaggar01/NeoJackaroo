@@ -9,16 +9,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class BoardScene extends Application {
+public class BoardView extends Application {
 
 	int initialWidth = 1920;
 	int initialHeight = 1080;
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Sample.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("BoardScene.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 900, 800);
+            primaryStage.setFullScreen(true);
         	primaryStage.setTitle("NeoJackaroo");
     	//	primaryStage.setFullScreen(true);
     		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
