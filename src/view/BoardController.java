@@ -2,6 +2,8 @@ package view;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.PathTransition;
+import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -19,6 +21,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -39,85 +44,150 @@ public class BoardController {
 	@FXML
 	private final List<ImageView> cards = new ArrayList<>();
 
-	@FXML private Circle m1;
-	@FXML private Circle m2;
-	@FXML private Circle m3;
-	@FXML private Circle m4;
-	@FXML private Circle m9;
-	@FXML private Circle m10;
-	@FXML private Circle m11;
-	@FXML private Circle m12;
-	@FXML private Circle m13;
-	@FXML private Circle moving;
+	@FXML
+	Circle shit;
+	@FXML 
+	private AnchorPane animationPane;
 	// Deck position (e.g., center of the board or anywhere you like)
 	private final double deckX = 448;
 	private final double deckY = 396;
-
-	// Target positions on the board
-	private final double[][] targetPositions = { { 593.33, 35.666 },
-			{ 483.33, 35.666 }, { 373.33, 35.666 }, { 263.33, 35.666 } };
-
+	@FXML
+	List<Circle> track = new ArrayList<>();
+	@FXML
+	List<Circle> movableMarbles = new ArrayList<>();
+	@FXML
+	Circle mA1;
 	@FXML
 	public void initialize() {
 	    // Load the marble image
-	    Image image = new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png"));
-	    moving.setFill(new ImagePattern(image));
-
-	    // Define the full movement path
-	    List<Circle> path = List.of(m1, m2, m3, m4, m9, m10, m11,m12,m13);
-
-	    // Make the path circles transparent
-	    for (Circle circle : path) {
-	        circle.setFill(Color.TRANSPARENT);
-	        circle.setStroke(Color.TRANSPARENT);
+	    System.out.println(track.size());
+	    Set_Your_Track();
+	    Set_movable_marbles();
+	    Circle ss = movableMarbles.get(0);
+	    moveThroughPath(ss,track);
+	}
+	private void Set_movable_marbles() {
+	    for (Node node : animationPane.getChildren()) {
+	        if (node instanceof Circle) {
+	            // Add the circle to the movableMarbles list if its ID starts with "move"
+	        	  Circle circle = (Circle) node;
+	        	if (circle.getId().startsWith("move")) {
+	  	            circle.setFill(Color.TRANSPARENT);
+	  	            circle.setStroke(Color.TRANSPARENT);
+	               movableMarbles.add(circle);
+	            }
+	        	if(circle.getId().charAt(1) == 'A' || circle.getId().charAt(1) == 'B'
+	        			|| circle.getId().charAt(1) == 'C' || circle.getId().charAt(1) == 'D'  )
+	        	{
+	        		  circle.setFill(Color.TRANSPARENT);
+		  	            circle.setStroke(Color.TRANSPARENT);
+	        	}
+	        }
 	    }
+	}
 
-	    // Step 1: Move to first circle
-	    Circle start = path.get(0);
+	private void Set_Your_Track() {
+	    for (int i = 0; i < 100; i++) {
+	        Circle circle = (Circle) animationPane.lookup("#m" + i);
+	     
+	        if (circle != null) {
+	        	System.out.println(i);
+	            circle.setFill(Color.TRANSPARENT);  // Make the fill transparent
+	            circle.setStroke(Color.TRANSPARENT);  // Optionally, make the stroke transparent too
+	            track.add(circle);  // Add to your track list
+	        } else {
+	            // Debugging: If the circle doesn't exist, print a warning
+	            System.out.println("Warning: Circle with fx:id m" + i + " not found.");
+	        }
+	    }
+	}
+	private void smoothlyResize(Circle circle1, Circle circle2) {
+	    // Get the current radius of both circles
+	    double circle1Radius = circle1.getRadius();
+	    double circle2Radius = circle2.getRadius();
 
-	    // Compute offset
-	    double dx = start.getLayoutX() - moving.getLayoutX();
-	    double dy = start.getLayoutY() - moving.getLayoutY();
+	    // Calculate the scaling factor to match the size of circle2
+	    double scaleFactor = circle2Radius / circle1Radius;
 
-	    // Create position animation
-	    TranslateTransition toStart = new TranslateTransition(Duration.seconds(1), moving);
-	    toStart.setByX(dx);
-	    toStart.setByY(dy);
+	    // Create a ScaleTransition to smoothly change the size of circle1
+	    ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1.5), circle1);
+	    scaleTransition.setToX(scaleFactor); // Set the scale to match circle2's size
+	    scaleTransition.setToY(scaleFactor); // Set the scale to match circle2's size
 
-	    // After position transition, animate radius then move along path
-	    toStart.setOnFinished(e -> {
-	        Timeline resize = new Timeline(
-	            new KeyFrame(Duration.seconds(0.5),
-	                new KeyValue(moving.radiusProperty(), start.getRadius())
-	            )
-	        );
-	        resize.setOnFinished(ev -> moveThroughPath(moving, path));
-	        resize.play();
-	    });
+	    // Optionally, you can apply some interpolation to make the transition smoother
+	    scaleTransition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
 
-	    toStart.play();
+	    // Play the transition
+	    scaleTransition.play();
 	}
 
 	private void moveThroughPath(Circle marble, List<Circle> pathNodes) {
+	    // Set marble image
+	    Image image = new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png"));
+	    marble.setFill(new ImagePattern(image));
+
+	    // First resize the marble to match the first node's size
+	    smoothlyResize(marble, pathNodes.get(0));
+
+	    // Create list of TranslateTransitions for moving the marble
 	    List<TranslateTransition> transitions = new ArrayList<>();
 
-	    for (int i = 0; i < pathNodes.size() - 1; i++) {
-	        Node from = pathNodes.get(i);
-	        Node to = pathNodes.get(i + 1);
+	    double startX = marble.getLayoutX();
+	    double startY = marble.getLayoutY();
 
-	        double dx = to.getLayoutX() - from.getLayoutX();
-	        double dy = to.getLayoutY() - from.getLayoutY();
+	    double currentToX = 0;
+	    double currentToY = 0;
 
-	        TranslateTransition transition = new TranslateTransition(Duration.seconds(1), marble);
-	        transition.setByX(dx);
-	        transition.setByY(dy);
+	    for (int i = 0; i < pathNodes.size(); i++) {
+	        Circle target = pathNodes.get(i);
+
+	        // Calculate target position relative to marble's original position
+	        double targetX = target.getLayoutX() - startX;
+	        double targetY = target.getLayoutY() - startY;
+
+	        TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), marble);
+	        transition.setToX(targetX);
+	        transition.setToY(targetY);
+	        transition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
+
 	        transitions.add(transition);
+
+	        currentToX = targetX;
+	        currentToY = targetY;
 	    }
 
+	    // Create a SequentialTransition to play the resize and movement sequentially
 	    SequentialTransition sequence = new SequentialTransition();
+
+	    // Add the resize transition first
 	    sequence.getChildren().addAll(transitions);
+
+	    // On completion of the movement sequence, update the movable marbles list
+	    sequence.setOnFinished(e -> {
+	        movableMarbles.remove(marble);  // Remove the old position
+	        movableMarbles.add(pathNodes.get(pathNodes.size() - 1));  // Add the last node as the new position
+	        System.out.println("Smooth and accurate movement finished.");
+	    });
+
+	    // Start the sequential transition
 	    sequence.play();
 	}
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
