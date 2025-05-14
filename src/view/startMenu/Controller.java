@@ -1,4 +1,4 @@
-package view;
+package view.startMenu;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class StartMenu {
+public class Controller {
 
 	public void startGame()
 	{
@@ -106,7 +106,7 @@ public class StartMenu {
 	@FXML
 	private void switchSceneToNameEntry(MouseEvent event) throws Exception {
 		// Load the new scene's FXML
-		Parent root = FXMLLoader.load(getClass().getResource("playerName.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/view/PlayerName/Scene.fxml"));
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene currentScene = stage.getScene();
 	    if (currentScene != null) 
@@ -122,7 +122,7 @@ public class StartMenu {
 	@FXML
 	private void switchSceneToHWTPlay(MouseEvent event) throws Exception {
 		// Load the new scene's FXML
-		Parent root = FXMLLoader.load(getClass().getResource("HWTPlay.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/view/HowToPlayScreen/Scene.fxml"));
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene currentScene = stage.getScene();
 	    if (currentScene != null) 

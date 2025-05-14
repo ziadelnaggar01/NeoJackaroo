@@ -1,4 +1,4 @@
-package view;
+package view.HowToPlayScreen;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-public class HWTPlay {
+public class Controller {
 	
 	@FXML private ScrollPane howToPlayScrollPane;
 
@@ -90,7 +90,7 @@ public class HWTPlay {
 	@FXML
 	private void switchSceneToStartMenu(MouseEvent event) throws Exception {
 		// Load the new scene's FXML
-		Parent root = FXMLLoader.load(getClass().getResource("startMenu.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/view/startMenu/Scene.fxml"));
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene currentScene = stage.getScene();
 	    if (currentScene != null) 

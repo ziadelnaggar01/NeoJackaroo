@@ -1,4 +1,4 @@
-package view;
+package view.PlayerName;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class playerName {
+public class Controller {
 	
 	@FXML
 	private ImageView okButton;
@@ -21,7 +21,7 @@ public class playerName {
 	@FXML
 	private void switchSceneToStartMenu(MouseEvent event) throws Exception {
 		// Load the new scene's FXML
-		Parent root = FXMLLoader.load(getClass().getResource("startMenu.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/view/startMenu/Scene.fxml"));
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene currentScene = stage.getScene();
 	    if (currentScene != null) 
