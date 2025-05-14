@@ -52,12 +52,12 @@
                                  <stops>
                                     <Stop>
                                        <color>
-                                          <Color red="0.9833333492279053" blue="1.0" />
+                                          <Color red="0.9894737005233765" />
                                        </color>
                                     </Stop>
                                     <Stop offset="1.0">
                                        <color>
-                                          <Color red="1.0" blue="0.6666666865348816" />
+                                          <Color red="1.0" green="0.6129441857337952" />
                                        </color>
                                     </Stop>
                                  </stops>
@@ -104,9 +104,9 @@
                         </GridPane>
                         <HBox prefHeight="173.0" prefWidth="1411.0" spacing="200.0">
                            <children>
-                              <ImageView fx:id="continueGameIcon" fitHeight="178.0" fitWidth="419.0" onMouseClicked="#continueButtonOnClick" onMouseEntered="#continueIconOnMouseEntered" onMouseExited="#continueIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="continueGameIcon" fitHeight="102.0" fitWidth="441.0" onMouseClicked="#continueButtonOnClick" onMouseEntered="#continueIconOnMouseEntered" onMouseExited="#continueIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../view/assests/settingsScene/Ok.png" />
+                                    <Image url="@../view/assests/settingsScene/Back.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="175.0" top="16.0" />
