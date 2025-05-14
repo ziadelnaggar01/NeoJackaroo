@@ -13,6 +13,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BoardController">
@@ -337,6 +338,26 @@
                   </LinearGradient>
                </textFill>
             </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane layoutX="433.0" prefHeight="1090.0" prefWidth="1062.0">
+         <children>
+            <Circle fx:id="m11" fill="DODGERBLUE" layoutX="413.0" layoutY="480.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m10" fill="DODGERBLUE" layoutX="382.0" layoutY="480.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m9" fill="DODGERBLUE" layoutX="350.0" layoutY="480.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m8" fill="DODGERBLUE" layoutX="320.0" layoutY="480.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moving" fill="#fdfeff" layoutX="97.0" layoutY="200.0" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m7" fill="DODGERBLUE" layoutX="288.0" layoutY="480.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m6" fill="DODGERBLUE" layoutX="254.0" layoutY="481.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m5" fill="DODGERBLUE" layoutX="222.0" layoutY="481.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m4" fill="DODGERBLUE" layoutX="192.0" layoutY="481.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m3" fill="DODGERBLUE" layoutX="160.0" layoutY="481.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m2" fill="DODGERBLUE" layoutX="130.0" layoutY="480.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m1" fill="DODGERBLUE" layoutX="99.0" layoutY="480.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m0" fill="DODGERBLUE" layoutX="62.0" layoutY="481.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m12" fill="DODGERBLUE" layoutX="470.0" layoutY="428.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="m13" fill="DODGERBLUE" layoutX="470.0" layoutY="394.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </AnchorPane>
    </children>

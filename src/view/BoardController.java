@@ -1,5 +1,9 @@
 package view;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +16,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -30,8 +36,19 @@ public class BoardController {
 	@FXML
 	private BorderPane boardPane;
 
+	@FXML
 	private final List<ImageView> cards = new ArrayList<>();
 
+	@FXML private Circle m1;
+	@FXML private Circle m2;
+	@FXML private Circle m3;
+	@FXML private Circle m4;
+	@FXML private Circle m9;
+	@FXML private Circle m10;
+	@FXML private Circle m11;
+	@FXML private Circle m12;
+	@FXML private Circle m13;
+	@FXML private Circle moving;
 	// Deck position (e.g., center of the board or anywhere you like)
 	private final double deckX = 448;
 	private final double deckY = 396;
@@ -42,16 +59,68 @@ public class BoardController {
 
 	@FXML
 	public void initialize() {
-		// boardPane.setOnMouseMoved(event -> {
-		// double x = event.getX();
-		// double y = event.getY();
-		// System.out.println("Mouse X: " + x + ", Y: " + y);
-		// });
-		// initializeSettings();
-		// loadCards();
-		// distributeCards();
+	    // Load the marble image
+	    Image image = new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png"));
+	    moving.setFill(new ImagePattern(image));
 
+	    // Define the full movement path
+	    List<Circle> path = List.of(m1, m2, m3, m4, m9, m10, m11,m12,m13);
+
+	    // Make the path circles transparent
+	    for (Circle circle : path) {
+	        circle.setFill(Color.TRANSPARENT);
+	        circle.setStroke(Color.TRANSPARENT);
+	    }
+
+	    // Step 1: Move to first circle
+	    Circle start = path.get(0);
+
+	    // Compute offset
+	    double dx = start.getLayoutX() - moving.getLayoutX();
+	    double dy = start.getLayoutY() - moving.getLayoutY();
+
+	    // Create position animation
+	    TranslateTransition toStart = new TranslateTransition(Duration.seconds(1), moving);
+	    toStart.setByX(dx);
+	    toStart.setByY(dy);
+
+	    // After position transition, animate radius then move along path
+	    toStart.setOnFinished(e -> {
+	        Timeline resize = new Timeline(
+	            new KeyFrame(Duration.seconds(0.5),
+	                new KeyValue(moving.radiusProperty(), start.getRadius())
+	            )
+	        );
+	        resize.setOnFinished(ev -> moveThroughPath(moving, path));
+	        resize.play();
+	    });
+
+	    toStart.play();
 	}
+
+	private void moveThroughPath(Circle marble, List<Circle> pathNodes) {
+	    List<TranslateTransition> transitions = new ArrayList<>();
+
+	    for (int i = 0; i < pathNodes.size() - 1; i++) {
+	        Node from = pathNodes.get(i);
+	        Node to = pathNodes.get(i + 1);
+
+	        double dx = to.getLayoutX() - from.getLayoutX();
+	        double dy = to.getLayoutY() - from.getLayoutY();
+
+	        TranslateTransition transition = new TranslateTransition(Duration.seconds(1), marble);
+	        transition.setByX(dx);
+	        transition.setByY(dy);
+	        transitions.add(transition);
+	    }
+
+	    SequentialTransition sequence = new SequentialTransition();
+	    sequence.getChildren().addAll(transitions);
+	    sequence.play();
+	}
+
+
+
 
 	private void loadCards() {
 		// for (int i = 0; i < 4; i++) {
