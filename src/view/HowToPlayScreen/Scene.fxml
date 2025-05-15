@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.TextFlow?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HowToPlayScreen.Controller">
+   <children>
+      <ImageView fitHeight="1080.0" fitWidth="1920.0">
+         <image>
+            <Image url="@../assets/Start%20Background.png" />
+         </image>
+      </ImageView>
+      <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000; -fx-opacity: 0.6;" />
+      <StackPane onMousePressed="#switchSceneToStartMenu" prefHeight="1080.0" prefWidth="1920.0">
+         <children>
+            <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/Pop%20Up%20Menu.png" />
+               </image>
+            </ImageView>
+            <ScrollPane fx:id="howToPlayScrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="transparent-scroll" stylesheets="@Style.css">
+               <content>
+                  <StackPane prefHeight="500.0" prefWidth="800.0" styleClass="transparent-stack">
+                     <children>
+                        <TextFlow fx:id="instructions" prefHeight="400.0" prefWidth="600.0" styleClass="transparent-textflow" textAlignment="CENTER" />
+                     </children>
+                  </StackPane>
+               </content>
+            </ScrollPane>
+         </children>
+         <StackPane.margin>
+            <Insets bottom="25.0" />
+         </StackPane.margin>
+      </StackPane>
+   </children>
+</StackPane>

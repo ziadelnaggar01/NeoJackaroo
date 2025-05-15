@@ -11,8 +11,6 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
@@ -20,7 +18,6 @@ import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -38,7 +35,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,15 +44,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
+import controller.GenericController;
+import controller.SceneConfig;
+
+//import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
 
 import model.Colour;
 import model.player.CPU;
 import model.player.Marble;
 import model.player.Player;
 import engine.Game;
-import settingsView.settingsController;
-import generic.GenericController;
 
 public class BoardController {
 
@@ -460,27 +457,21 @@ public class BoardController {
 
 	@FXML
 	private void settingsIconOnMouseEntered() {
-		// Apply a red DropShadow effect on the image
-		DropShadow shadow = new DropShadow();
-		shadow.setColor(Color.BLUE);
-		shadow.setRadius(1000);
-		settingsIcon.setEffect(shadow);
+		GenericController.buttonGlowON(settingsIcon, Color.BLUE, 1000);
 	}
 
 	// Method for Mouse Exited event
 	@FXML
 	private void settingsIconOnMouseExited() {
-		// Remove the effect when the mouse exits
-		settingsIcon.setEffect(null);
+		GenericController.buttonGlowOFF(settingsIcon);
 	}
 
 	@FXML
-	private void openSettings(MouseEvent event) {// just call switch scene from
-													// where it is supposed to
-													// be called
+	private void openSettings(MouseEvent event) {
 		gamePaused = true;// if opening settings from boardscene, pause the game
-		new GenericController().switchSceneWithFade((Stage) ((Node) event.getSource()).getScene().getWindow(),
-				"/settingsView/SettingsScene.fxml");
+		SceneConfig.getInstance().setInGame(true);
+		Parent root = SceneConfig.getInstance().getSettingsScene();
+		GenericController.switchScene(event, root);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,33 @@
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+}
+
+.transparent-scroll {
+  /* remove ScrollPane background & borders */
+  -fx-background-color: transparent;
+  -fx-background: transparent;
+  -fx-border-color: transparent;
+}
+
+.transparent-scroll .viewport {
+  /* make the scrolling viewport itself transparent */
+  -fx-background-color: transparent;
+}
+
+.transparent-stack {
+  /* remove any default StackPane background */
+  -fx-background-color: transparent;
+}
+
+.transparent-textflow {
+  /* TextFlow has no background by default, but if you set one elsewhere, clear it: */
+  -fx-background-color: transparent;
+}
+
+/* Make sure your Text nodes are visible */
+.transparent-textflow Text {
+  -fx-fill: white;         /* or any color that stands out on your board */
+  -fx-font-size: 68px;     /* your chosen size */
+  -fx-font-family: Verdana, Arial, sans-serif;
+}
