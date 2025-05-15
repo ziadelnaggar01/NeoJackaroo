@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -35,6 +37,20 @@ public class Controller {
 		{
 		Parent root = SceneConfig.getInstance().getGameScene();
 		GenericController.switchScene(event, root);
+		}
+	}
+	
+	@FXML
+	private void keyboardSwitchSceneToGame(KeyEvent  event) throws Exception {
+		if (event.getCode() == KeyCode.ENTER)
+		{
+		if(nameTextField.getText().equals(""))
+			popUpLabel.setText("Please enter a name!");
+		else
+		{
+		Parent root = SceneConfig.getInstance().getGameScene();
+		GenericController.switchScene(event, root);
+		}
 		}
 	}
 	
