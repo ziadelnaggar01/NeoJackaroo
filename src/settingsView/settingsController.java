@@ -5,11 +5,13 @@ import controller.GenericController;
 import controller.SceneConfig;
 import view.BoardController;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class settingsController {
 
@@ -63,5 +65,13 @@ public class settingsController {
 	private void exitButtonOnClick(MouseEvent event) throws IOException {
 		//Go back to start screen, no boardscene 
 		BoardController.gamePaused=false;//return game 
+		Parent root;
+		if(!SceneConfig.getInstance().isInGame())
+		{
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	        stage.close();
+		}
+		root = SceneConfig.getInstance().getStartScene();
+		GenericController.switchScene(event, root);
 	}
 }
