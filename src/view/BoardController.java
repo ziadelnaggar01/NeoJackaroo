@@ -1,41 +1,26 @@
 package view;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.transform.Scale;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.scene.Node;
 import javafx.util.Duration;
 import javafx.scene.Parent;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,18 +73,18 @@ public class BoardController {
 	@FXML
 	private GridPane D;
 
-	@FXML
-	public void initialize() {
-		// Load the marble image
-		Set_Your_Track();
-		Set_movable_marbles();
-		Set_safe_zone();
-		// destroy_it(movableMarbles.get(0), 1);
-		// swap(movableMarbles.get(0), movableMarbles.get(4));
-		// destroy_it(movableMarbles.get(0));
-	//	move_backword(movableMarbles.get(0), 99, 10);
-		Trap(movableMarbles.get(0), 2);
-	}
+//	@FXML
+//	public void initialize() {
+//		// Load the marble image
+//		Set_Your_Track();
+//		Set_movable_marbles();
+//		Set_safe_zone();
+//		// destroy_it(movableMarbles.get(0), 1);
+//		// swap(movableMarbles.get(0), movableMarbles.get(4));
+//		// destroy_it(movableMarbles.get(0));
+//	//	move_backword(movableMarbles.get(0), 99, 10);
+//		Trap(movableMarbles.get(0), 2);
+//	}
 
 	private void Set_safe_zone() {
 		for (Node node : animationPane.getChildren()) {
