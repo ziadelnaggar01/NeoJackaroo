@@ -4,6 +4,8 @@ import controller.GenericController;
 import controller.SceneConfig;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -14,6 +16,10 @@ public class Controller {
 	private ImageView okButton;
 	@FXML
 	private ImageView cancelButton;
+	@FXML
+	private TextField nameTextField;
+	@FXML
+	private Label popUpLabel;
 	
 	@FXML
 	private void switchSceneToStartMenu(MouseEvent event) throws Exception {
@@ -23,9 +29,13 @@ public class Controller {
 	
 	@FXML
 	private void switchSceneToGame(MouseEvent event) throws Exception {
-		// Load the new scene's FXML
+		if(nameTextField.getText().equals(""))
+			popUpLabel.setText("Please enter a name!");
+		else
+		{
 		Parent root = SceneConfig.getInstance().getGameScene();
 		GenericController.switchScene(event, root);
+		}
 	}
 	
 	@FXML
