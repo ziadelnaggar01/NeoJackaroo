@@ -2,7 +2,6 @@ package view.HowToPlayScreen;
 
 import controller.GenericController;
 import controller.SceneConfig;
-import controller.SoundManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
