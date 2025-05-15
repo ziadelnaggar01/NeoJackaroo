@@ -2,6 +2,7 @@ package settingsView;
 import java.io.IOException;
 
 import controller.GenericController;
+import controller.MusicManager;
 import controller.SceneConfig;
 import view.BoardController;
 import javafx.fxml.FXML;
@@ -28,6 +29,15 @@ public class settingsController {
 	private ImageView exitSettingsIcon;
 	@FXML
 	private ImageView continueGameIcon;
+	
+	public void initialize() {
+        // Bind volume slider to music player
+		MusicManager musicPlayer = MusicManager.getInstance();
+		musicSlider.setValue(musicPlayer.getVolume());
+		musicSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            musicPlayer.setVolume(newVal.doubleValue());
+        });
+    }
 
 	@FXML
 	private void exitIconOnMouseEntered() {

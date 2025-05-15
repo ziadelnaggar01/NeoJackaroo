@@ -7,7 +7,6 @@ import view.startMenu.Controller;
 
 public class Main extends Application{
 
-	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Scene scene = new Scene(SceneConfig.getInstance().getStartScene());
@@ -15,7 +14,7 @@ public class Main extends Application{
 	    Controller.initalizeStage(primaryStage);
 	    primaryStage.setScene(scene);
 	    
-	    MusicManager.getInstance().playMusic("/view/assets/audio/Digital Voyage - Twin Musicom.mp3");
+	    MusicManager.getInstance().playMusic("/view/assets/audio/Digital Voyage - Twin Musicom.mp3"); 
 	    primaryStage.show();
 	}
 	

@@ -73,18 +73,18 @@ public class BoardController {
 	@FXML
 	private GridPane D;
 
-//	@FXML
-//	public void initialize() {
-//		// Load the marble image
-//		Set_Your_Track();
-//		Set_movable_marbles();
-//		Set_safe_zone();
-//		// destroy_it(movableMarbles.get(0), 1);
-//		// swap(movableMarbles.get(0), movableMarbles.get(4));
-//		// destroy_it(movableMarbles.get(0));
-//	//	move_backword(movableMarbles.get(0), 99, 10);
-//		Trap(movableMarbles.get(0), 2);
-//	}
+	@FXML
+	public void initialize() {
+		// Load the marble image
+		Set_Your_Track();
+		Set_movable_marbles();
+		Set_safe_zone();
+		// destroy_it(movableMarbles.get(0), 1);
+		// swap(movableMarbles.get(0), movableMarbles.get(4));
+		// destroy_it(movableMarbles.get(0));
+		// move_backword(movableMarbles.get(0), 99, 10);
+		// Trap(movableMarbles.get(0), 2);
+	}
 
 	private void Set_safe_zone() {
 		for (Node node : animationPane.getChildren()) {

@@ -9,7 +9,7 @@ public class MusicManager {
 
 	private MediaPlayer mediaPlayer;
 
-	private double volume = 0.5; // Default volume (50%)
+	private double volume = 0.75; // Default volume (75%)
 
 	private MusicManager() {} // Private constructor for singleton
 
@@ -43,6 +43,10 @@ public class MusicManager {
 		if (mediaPlayer != null) {
 			mediaPlayer.setVolume(volume);
 		}
+	}
+	
+	public double getVolume() {
+		return this.volume;
 	}
 
 	public void stop() {
