@@ -283,6 +283,11 @@
                   <Image url="@assests/scene/NeonSettings.png" />
                </image>
             </ImageView>
+            <Button graphicTextGap="5.0" layoutX="32.0" layoutY="132.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="63.0" prefWidth="186.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textFill="#0039e3" textOverrun="WORD_ELLIPSIS">
+               <font>
+                  <Font name="Orbitron Bold" size="26.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-7.0" layoutY="-130.0" prefHeight="259.0" prefWidth="423.0">
@@ -474,7 +479,6 @@
             <Circle fx:id="moveD2" fill="#fdfeff" layoutX="954.0" layoutY="856.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="moveD3" fill="#fdfeff" layoutX="864.0" layoutY="945.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="moveD4" fill="#fdfeff" layoutX="954.0" layoutY="945.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Button graphicTextGap="5.0" layoutX="82.0" layoutY="681.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="63.0" prefWidth="186.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textFill="#e40000" textOverrun="WORD_ELLIPSIS" />
             <ImageView fx:id="firepit" fitHeight="130.0" fitWidth="95.0" layoutX="479.0" layoutY="474.0" opacity="0.03" pickOnBounds="true" preserveRatio="true" rotate="94.8">
                <image>
                   <Image url="@assests/deck/2.png" />

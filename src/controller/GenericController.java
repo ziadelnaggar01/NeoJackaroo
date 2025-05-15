@@ -11,54 +11,47 @@ import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 
 public final class GenericController {
-	
-    // Private constructor to prevent instantiation
-    private GenericController() {}
-    
+
+	// Private constructor to prevent instantiation
+	private GenericController() {
+	}
+
+	// general-purpose version of switch scene, not tied to a mouse or keyboard event
+	public static void switchScene(Stage stage, Parent root) {
+		Scene currentScene = stage.getScene();
+		if (currentScene != null)
+			currentScene.setRoot(root);
+		else
+			stage.setScene(new Scene(root));
+	}
+
+	// keep this for MouseEvent-based transitions
 	public static void switchScene(MouseEvent event, Parent root) {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Scene currentScene = stage.getScene();
-	    if (currentScene != null) 
-	    	 currentScene.setRoot(root);
-	    else
-	    {
-	        // Fallback if no scene exists (initial load)
-	        currentScene = new Scene(root);
-	        stage.setScene(currentScene);
-	    } 
+		switchScene(stage, root); // delegate to the new one
 	}
-	
+
+	// keep this for KeyEvent-based transitions
 	public static void switchScene(KeyEvent event, Parent root) {
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Scene currentScene = stage.getScene();
-	    if (currentScene != null) 
-	    	 currentScene.setRoot(root);
-	    else
-	    {
-	        // Fallback if no scene exists (initial load)
-	        currentScene = new Scene(root);
-	        stage.setScene(currentScene);
-	    } 
+	    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	    switchScene(stage, root);
 	}
-	
-	public static void buttonGlowON(ImageView image, Color color)
-	{
+
+	public static void buttonGlowON(ImageView image, Color color) {
 		DropShadow shadow = new DropShadow();
 		shadow.setColor(color);
 		shadow.setRadius(20);
 		image.setEffect(shadow);
 	}
-	
-	public static void buttonGlowON(ImageView image, Color color, int radius)
-	{
+
+	public static void buttonGlowON(ImageView image, Color color, int radius) {
 		DropShadow shadow = new DropShadow();
 		shadow.setColor(Color.RED);
 		shadow.setRadius(radius);
 		image.setEffect(shadow);
 	}
-	
-	public static void buttonGlowOFF(ImageView image)
-	{
+
+	public static void buttonGlowOFF(ImageView image) {
 		image.setEffect(null);
-	}   
+	}
 }
