@@ -98,7 +98,7 @@
                               <Image url="@../assests/scene/NeonErrorSymbol.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="exceptionMessageLabel1" prefHeight="474.0" prefWidth="1080.0" text="Those marbles don’t match, maybe check your Trichromacy level?" wrapText="true">
+                        <Label fx:id="exceptionMessageLabel" prefHeight="474.0" prefWidth="1080.0" text="Those marbles don’t match, maybe check your Trichromacy level?" wrapText="true">
                            <VBox.margin>
                               <Insets bottom="50.0" left="60.0" right="30.0" />
                            </VBox.margin>
@@ -122,7 +122,7 @@
                               </LinearGradient>
                            </textFill>
                         </Label>
-                        <ImageView fx:id="okExceptionButton1" fitHeight="85.0" fitWidth="400.0" onMouseClicked="#okExceptionButtonOnClick" onMouseEntered="#okButtonOnMouseEntered" onMouseExited="#okbuttonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="okExceptionButton" fitHeight="85.0" fitWidth="400.0" onMouseClicked="#okExceptionButtonOnClick" onMouseEntered="#okButtonOnMouseEntered" onMouseExited="#okbuttonOnMouseExited" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>
                               <Insets bottom="50.0" left="400.0" />
                            </VBox.margin>

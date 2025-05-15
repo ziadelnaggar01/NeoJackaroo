@@ -51,10 +51,13 @@
                   </HBox>
                </bottom>
                <top>
-                  <ImageView fitHeight="600.0" fitWidth="474.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                  <ImageView fitHeight="294.0" fitWidth="435.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                      <image>
                         <Image url="@../assets/celebrate.gif" />
                      </image>
+                     <BorderPane.margin>
+                        <Insets top="75.0" />
+                     </BorderPane.margin>
                   </ImageView>
                </top>
                <center>
@@ -63,7 +66,7 @@
                         <Font name="Orbitron Bold" size="120.0" />
                      </font>
                      <BorderPane.margin>
-                        <Insets bottom="120.0" />
+                        <Insets bottom="150.0" />
                      </BorderPane.margin>
                      <textFill>
                         <LinearGradient endX="1.0" endY="1.0">
