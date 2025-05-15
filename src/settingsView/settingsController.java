@@ -7,7 +7,6 @@ import view.BoardController;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Slider;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
