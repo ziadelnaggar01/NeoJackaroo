@@ -1,2 +1,19 @@
+.play-button {
+    -fx-font-size: 20px;
+    -fx-font-family: "Orbitron", "Arial";
+    -fx-text-fill: #111184;
+    -fx-background-color: #111184;
+    -fx-background-radius: 12;
+    -fx-border-color: #111184;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, #111184, 12, 0.5, 0, 0);
+    -fx-cursor: hand;
+    -fx-padding: 12 30 12 30;
+}
 
-
+.play-button:hover {
+    -fx-background-color: #2a2acf; /* Slightly lighter on hover */
+    -fx-text-fill: #111184;
+    -fx-effect: dropshadow(gaussian, #111184, 24, 0.8, 0, 0);
+}

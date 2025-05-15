@@ -21,7 +21,7 @@ public class BoardView extends Application {
             Scene scene = new Scene(root, 900, 800);
             primaryStage.setFullScreen(true);
         	primaryStage.setTitle("NeoJackaroo");
-    	//	primaryStage.setFullScreen(true);
+    		primaryStage.setFullScreen(true);
         	primaryStage.setFullScreenExitHint("");
     		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 

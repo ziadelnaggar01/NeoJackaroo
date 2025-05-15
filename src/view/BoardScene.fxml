@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -18,7 +19,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BoardController">
    <children>
-      <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane fx:id="boardPane" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="1081.0" fitWidth="1992.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -37,7 +38,7 @@
             <Insets top="80.0" />
          </padding>
          <children>
-            <GridPane layoutY="150.0" prefHeight="289.0" prefWidth="408.0" translateY="-75.0">
+            <GridPane fx:id="B" layoutY="150.0" prefHeight="289.0" prefWidth="408.0" translateY="-75.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.59999694824216" minWidth="10.0" prefWidth="269.59999694824216" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.3333465576172" minWidth="10.0" prefWidth="138.40000305175784" />
@@ -48,7 +49,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fitHeight="107.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                  <ImageView fx:id="playerB1" fitHeight="107.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
                         <Image url="@assests/deck/2.png" />
                      </image>
@@ -56,7 +57,7 @@
                         <Insets left="100.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fitHeight="110.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
+                  <ImageView fx:id="playerB2" fitHeight="110.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
                      <image>
                         <Image url="@assests/deck/2.png" />
                      </image>
@@ -64,7 +65,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fitHeight="115.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerB4" fitHeight="115.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Clovers_5_white.png" />
                      </image>
@@ -72,7 +73,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fitHeight="118.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerB3" fitHeight="118.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Clovers_10_white.png" />
                      </image>
@@ -90,7 +91,7 @@
                   </Label>
                </children>
             </GridPane>
-            <GridPane prefHeight="289.0" prefWidth="408.0" translateY="-250.0">
+            <GridPane fx:id="A" prefHeight="289.0" prefWidth="408.0" translateY="-250.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.59999694824216" minWidth="10.0" prefWidth="269.59999694824216" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.3333465576172" minWidth="10.0" prefWidth="138.40000305175784" />
@@ -101,7 +102,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                  <ImageView fx:id="playerA1" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
                         <Image url="@assests/deck/2.png" />
                      </image>
@@ -109,7 +110,7 @@
                         <Insets left="100.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fitHeight="130.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
+                  <ImageView fx:id="pkayerA2" fitHeight="130.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
                      <image>
                         <Image url="@assests/deck/2.png" />
                      </image>
@@ -117,7 +118,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fitHeight="128.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="pkayerA4" fitHeight="128.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Clovers_5_white.png" />
                      </image>
@@ -125,7 +126,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fitHeight="124.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
+                  <ImageView fx:id="pkayerA3" fitHeight="124.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Clovers_10_white.png" />
                      </image>
@@ -163,7 +164,7 @@
       </VBox>
       <VBox layoutX="1547.0" layoutY="-1.0" prefHeight="1080.0" prefWidth="431.0" spacing="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane hgap="25.0" prefHeight="259.0" prefWidth="319.0" translateY="75.0" vgap="100.0">
+            <GridPane fx:id="C" hgap="25.0" prefHeight="259.0" prefWidth="319.0" translateY="75.0" vgap="100.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="163.9999755859375" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.2000732421875" minWidth="10.0" prefWidth="242.4000244140625" />
@@ -174,7 +175,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                        <ImageView fx:id="playerA1" fitHeight="115.0" fitWidth="71.0" preserveRatio="true" rotate="-90.0">
+                        <ImageView fx:id="playerC1" fitHeight="115.0" fitWidth="71.0" preserveRatio="true" rotate="-90.0">
                             <image>
                         <Image url="@assests/deck/Clovers_4_white.png" />
                      </image>
@@ -182,7 +183,7 @@
                         <Insets left="50.0" top="120.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerA2" fitHeight="123.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <ImageView fx:id="playerC4" fitHeight="123.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <image>
                         <Image url="@assests/deck/Clovers_4_white.png" />
                      </image>
@@ -190,7 +191,7 @@
                         <Insets right="100.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerA3" fitHeight="116.0" fitWidth="73.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
+                        <ImageView fx:id="playerC3" fitHeight="116.0" fitWidth="73.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
                             <image>
                         <Image url="@assests/deck/Clovers_4_white.png" />
                      </image>
@@ -198,7 +199,7 @@
                         <Insets left="50.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerA4" fitHeight="110.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
+                        <ImageView fx:id="playerC2" fitHeight="110.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
                             <image>
                         <Image url="@assests/deck/Clovers_4_white.png" />
                      </image>
@@ -220,7 +221,7 @@
                   </AnchorPane>
                </children>
             </GridPane>
-            <GridPane hgap="25.0" prefHeight="259.0" prefWidth="121.0" vgap="25.0">
+            <GridPane fx:id="D" hgap="25.0" prefHeight="259.0" prefWidth="121.0" vgap="25.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="140.0000244140625" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.8000732421875" minWidth="10.0" prefWidth="267.1999755859375" />
@@ -231,7 +232,7 @@
                   <RowConstraints maxHeight="234.8" minHeight="10.0" prefHeight="112.99998779296877" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fx:id="playerB1" fitHeight="124.0" fitWidth="72.0" preserveRatio="true" rotate="-90.0">
+                  <ImageView fx:id="playerD1" fitHeight="124.0" fitWidth="72.0" preserveRatio="true" rotate="-90.0">
                      <image>
                         <Image url="@assests/deck/Clovers_4_white.png" />
                      </image>
@@ -239,7 +240,7 @@
                         <Insets left="50.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB4" fitHeight="104.0" fitWidth="76.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerD4" fitHeight="104.0" fitWidth="76.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Clovers_4_white.png" />
                      </image>
@@ -247,7 +248,7 @@
                         <Insets left="30.0" right="150.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB2" fitHeight="109.0" fitWidth="76.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerD3" fitHeight="109.0" fitWidth="76.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Clovers_4_white.png" />
                      </image>
@@ -255,7 +256,7 @@
                         <Insets left="50.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB3" fitHeight="123.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
+                  <ImageView fx:id="playerD2" fitHeight="123.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
                      <image>
                         <Image url="@assests/deck/Clovers_4_white.png" />
                      </image>
@@ -459,23 +460,44 @@
             <Circle fx:id="m96" fill="DODGERBLUE" layoutX="99.0" layoutY="594.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="m97" fill="DODGERBLUE" layoutX="62.0" layoutY="594.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="m98" fill="DODGERBLUE" layoutX="62.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveB1" fill="#fdfeff" layoutX="99.0" layoutY="118.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveB2" fill="#fdfeff" layoutX="186.0" layoutY="118.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveB3" fill="#fdfeff" layoutX="99.0" layoutY="200.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveB4" fill="#fdfeff" layoutX="186.0" layoutY="200.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="shit" fill="#fdfeff" layoutX="62.0" layoutY="480.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveC1" fill="#fdfeff" layoutX="864.0" layoutY="118.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveC2" fill="#fdfeff" layoutX="954.0" layoutY="118.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveC3" fill="#fdfeff" layoutX="864.0" layoutY="200.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveC4" fill="#fdfeff" layoutX="954.0" layoutY="198.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveA1" fill="#fdfeff" layoutX="99.0" layoutY="858.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveA2" fill="#fdfeff" layoutX="186.0" layoutY="856.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveA3" fill="#fdfeff" layoutX="99.0" layoutY="945.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveA4" fill="#fdfeff" layoutX="186.0" layoutY="945.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveD1" fill="#fdfeff" layoutX="864.0" layoutY="856.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveD2" fill="#fdfeff" layoutX="954.0" layoutY="856.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveD3" fill="#fdfeff" layoutX="864.0" layoutY="945.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="moveD4" fill="#fdfeff" layoutX="954.0" layoutY="945.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveB2" fill="#fdfeff" layoutX="186.0" layoutY="118.0" onMouseClicked="#setupMarbleSelection" radius="38.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveB3" fill="#fdfeff" layoutX="99.0" layoutY="200.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveB4" fill="#fdfeff" layoutX="186.0" layoutY="200.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveC1" fill="#fdfeff" layoutX="864.0" layoutY="118.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveC2" fill="#fdfeff" layoutX="954.0" layoutY="118.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveC3" fill="#fdfeff" layoutX="864.0" layoutY="200.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveC4" fill="#fdfeff" layoutX="954.0" layoutY="198.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveA2" fill="#fdfeff" layoutX="186.0" layoutY="856.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveA3" fill="#fdfeff" layoutX="99.0" layoutY="945.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveA4" fill="#fdfeff" layoutX="186.0" layoutY="945.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveD1" fill="#fdfeff" layoutX="864.0" layoutY="856.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveD2" fill="#fdfeff" layoutX="954.0" layoutY="856.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveD3" fill="#fdfeff" layoutX="864.0" layoutY="945.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveD4" fill="#fdfeff" layoutX="954.0" layoutY="945.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button graphicTextGap="5.0" layoutX="82.0" layoutY="681.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="63.0" prefWidth="186.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textFill="#e40000" textOverrun="WORD_ELLIPSIS" />
+            <ImageView fx:id="firepit" fitHeight="130.0" fitWidth="95.0" layoutX="479.0" layoutY="474.0" opacity="0.03" pickOnBounds="true" preserveRatio="true" rotate="94.8">
+               <image>
+                  <Image url="@assests/deck/2.png" />
+               </image>
+            </ImageView>
+            <Circle fx:id="safeA1" fill="DODGERBLUE" layoutX="130.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeA2" fill="DODGERBLUE" layoutX="205.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeA3" fill="DODGERBLUE" layoutX="288.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeA4" fill="DODGERBLUE" layoutX="377.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeB1" fill="DODGERBLUE" layoutX="531.0" layoutY="143.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeB2" fill="DODGERBLUE" layoutX="531.0" layoutY="223.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeB3" fill="DODGERBLUE" layoutX="531.0" layoutY="302.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeB4" fill="DODGERBLUE" layoutX="531.0" layoutY="394.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeC1" fill="DODGERBLUE" layoutX="925.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeC2" fill="DODGERBLUE" layoutX="846.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeC3" fill="DODGERBLUE" layoutX="763.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeC4" fill="DODGERBLUE" layoutX="675.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeD1" fill="DODGERBLUE" layoutX="525.0" layoutY="939.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeD2" fill="DODGERBLUE" layoutX="525.0" layoutY="858.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeD3" fill="DODGERBLUE" layoutX="525.0" layoutY="778.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeD4" fill="DODGERBLUE" layoutX="525.0" layoutY="695.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveA1" fill="#fdfeff" layoutX="99.0" layoutY="856.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="moveB1" fill="#fdfeff" layoutX="99.0" layoutY="118.0" onMouseClicked="#setupMarbleSelection" radius="38.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </AnchorPane>
    </children>
