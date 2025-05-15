@@ -2,7 +2,6 @@ package view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -93,18 +92,13 @@ public class BoardController {
 
 	@FXML
 	private void settingsIconOnMouseEntered() {
-		// Apply a red DropShadow effect on the image
-		DropShadow shadow = new DropShadow();
-		shadow.setColor(Color.BLUE);
-		shadow.setRadius(1000);
-		settingsIcon.setEffect(shadow);
+		GenericController.buttonGlowON(settingsIcon, Color.BLUE, 1000);
 	}
 
 	// Method for Mouse Exited event
 	@FXML
 	private void settingsIconOnMouseExited() {
-		// Remove the effect when the mouse exits
-		settingsIcon.setEffect(null);
+		GenericController.buttonGlowOFF(settingsIcon);
 	}
 
 	@FXML

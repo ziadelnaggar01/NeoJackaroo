@@ -30,34 +30,24 @@ public class settingsController {
 
 	@FXML
 	private void exitIconOnMouseEntered() {
-		// Apply a red DropShadow effect on the image
-		DropShadow shadow = new DropShadow();
-		shadow.setColor(Color.RED);
-		shadow.setRadius(23);
-		exitSettingsIcon.setEffect(shadow);
+		GenericController.buttonGlowON(exitSettingsIcon, Color.RED);
 	}
 
 	// Method for Mouse Exited event
 	@FXML
 	private void exitIconOnMouseExited() {
-		// Remove the effect when the mouse exits
-		exitSettingsIcon.setEffect(null);
+		GenericController.buttonGlowOFF(exitSettingsIcon);
 	}
 
 	@FXML
 	private void continueIconOnMouseEntered() {
-		// Apply a red DropShadow effect on the image
-		DropShadow shadow = new DropShadow();
-		shadow.setColor(Color.GREEN);
-		shadow.setRadius(23);
-		continueGameIcon.setEffect(shadow);
+		GenericController.buttonGlowON(continueGameIcon, Color.GREEN);
 	}
 
 	// Method for Mouse Exited event
 	@FXML
 	private void continueIconOnMouseExited() {
-		// Remove the effect when the mouse exits
-		continueGameIcon.setEffect(null);
+		GenericController.buttonGlowOFF(continueGameIcon);
 	}
 	@FXML
 	private void continueButtonOnClick(MouseEvent event) throws IOException {
@@ -75,12 +65,4 @@ public class settingsController {
 		//Go back to start screen, no boardscene 
 		BoardController.gamePaused=false;//return game 
 	}
-	
-	
-	
-	
-
-
-
-
 }

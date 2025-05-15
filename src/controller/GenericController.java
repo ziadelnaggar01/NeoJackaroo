@@ -7,9 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.image.ImageView;
 
 public final class GenericController {
 	
@@ -27,6 +31,27 @@ public final class GenericController {
 	        currentScene = new Scene(root);
 	        stage.setScene(currentScene);
 	    } 
+	}
+	
+	public static void buttonGlowON(ImageView image, Color color)
+	{
+		DropShadow shadow = new DropShadow();
+		shadow.setColor(color);
+		shadow.setRadius(20);
+		image.setEffect(shadow);
+	}
+	
+	public static void buttonGlowON(ImageView image, Color color, int radius)
+	{
+		DropShadow shadow = new DropShadow();
+		shadow.setColor(Color.RED);
+		shadow.setRadius(radius);
+		image.setEffect(shadow);
+	}
+	
+	public static void buttonGlowOFF(ImageView image)
+	{
+		image.setEffect(null);
 	}
 	
 //	public static void switchSceneWithFade(Stage stage, String fxmlPath) {

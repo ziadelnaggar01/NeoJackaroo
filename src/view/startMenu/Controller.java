@@ -5,7 +5,6 @@ import controller.SceneConfig;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
@@ -14,117 +13,6 @@ import javafx.scene.input.MouseEvent;
 
 public class Controller {
 
-	public void startGame()
-	{
-		System.out.print("hi");
-	}
-
-	@FXML
-	private ImageView startButton;  // This should match the fx:id in Scene Builder
-	@FXML
-	private ImageView settingsButton;
-	@FXML
-	private ImageView HWTButton;
-	@FXML
-	private ImageView exitButton;
-
-	// Method for Mouse Entered event
-	@FXML
-	private void startButtonOnMouseEntered() {
-		// Apply a red DropShadow effect on the image
-		DropShadow shadow = new DropShadow();
-		shadow.setColor(Color.RED);
-		shadow.setRadius(15);
-		shadow.setOffsetX(0);
-		shadow.setOffsetY(0);
-		startButton.setEffect(shadow);
-	}
-	
-	// Method for Mouse Exited event
-	@FXML
-	private void startButtonOnMouseExited() {
-		// Remove the effect when the mouse exits
-		startButton.setEffect(null);
-	}
-	
-	@FXML
-	private void settingsButtonOnMouseEntered() {
-		// Apply a red DropShadow effect on the image
-		DropShadow shadow = new DropShadow();
-		shadow.setColor(Color.PURPLE);
-		shadow.setRadius(15);
-		shadow.setOffsetX(0);
-		shadow.setOffsetY(0);
-		settingsButton.setEffect(shadow);
-	}
-	
-	// Method for Mouse Exited event
-	@FXML
-	private void settingsButtonOnMouseExited() {
-		// Remove the effect when the mouse exits
-		settingsButton.setEffect(null);
-	}
-	
-	@FXML
-	private void HWTButtonOnMouseEntered() {
-		// Apply a red DropShadow effect on the image
-		DropShadow shadow = new DropShadow();
-		shadow.setColor(Color.CYAN);
-		shadow.setRadius(15);
-		shadow.setOffsetX(0);
-		shadow.setOffsetY(0);
-		HWTButton.setEffect(shadow);
-	}
-	
-	// Method for Mouse Exited event
-	@FXML
-	private void HWTButtonOnMouseExited() {
-		// Remove the effect when the mouse exits
-		HWTButton.setEffect(null);
-	}
-	
-	@FXML
-	private void exitButtonOnMouseEntered() {
-		// Apply a red DropShadow effect on the image
-		DropShadow shadow = new DropShadow();
-		shadow.setColor(Color.RED);
-		shadow.setRadius(15);
-		shadow.setOffsetX(0);
-		shadow.setOffsetY(0);
-		exitButton.setEffect(shadow);
-	}
-	
-	// Method for Mouse Exited event
-	@FXML
-	private void exitButtonOnMouseExited() {
-		// Remove the effect when the mouse exits
-		exitButton.setEffect(null);
-	}
-
-
-
-	@FXML
-	private void switchSceneToNameEntry(MouseEvent event) throws Exception {
-		Parent root = SceneConfig.getInstance().getPlayerNameScene();
-		GenericController.switchScene(event, root);
-	}
-	
-	@FXML
-	private void switchSceneToHWTPlay(MouseEvent event) throws Exception {
-		// Load the new scene's FXML
-		Parent root = SceneConfig.getInstance().getHowToPlayScene();
-		GenericController.switchScene(event, root);
-	}
-	
-	@FXML
-	private void switchSceneToSettings(MouseEvent event) throws Exception {
-		// Load the new scene's FXML
-		SceneConfig.getInstance().setInGame(false);
-		Parent root = SceneConfig.getInstance().getSettingsScene();
-		GenericController.switchScene(event, root);
-	}
-	
-	
 	public static void initalizeStage(Stage primaryStage) throws Exception
 	{
 		int initialWidth = 1920;
@@ -163,6 +51,83 @@ public class Controller {
                 primaryStage.setHeight(initialHeight);
             }
         });
+	}
+
+	@FXML
+	private ImageView startButton;  // This should match the fx:id in Scene Builder
+	@FXML
+	private ImageView settingsButton;
+	@FXML
+	private ImageView HWTButton;
+	@FXML
+	private ImageView exitButton;
+
+	// Method for Mouse Entered event
+	@FXML
+	private void startButtonOnMouseEntered() {
+		GenericController.buttonGlowON(startButton, Color.RED);
+	}
+	
+	// Method for Mouse Exited event
+	@FXML
+	private void startButtonOnMouseExited() {
+		GenericController.buttonGlowOFF(startButton);
+	}
+	
+	@FXML
+	private void settingsButtonOnMouseEntered() {
+		GenericController.buttonGlowON(settingsButton, Color.PURPLE);
+	}
+	
+	// Method for Mouse Exited event
+	@FXML
+	private void settingsButtonOnMouseExited() {
+		GenericController.buttonGlowOFF(settingsButton);
+	}
+	
+	@FXML
+	private void HWTButtonOnMouseEntered() {
+		GenericController.buttonGlowON(HWTButton, Color.CYAN);
+	}
+	
+	// Method for Mouse Exited event
+	@FXML
+	private void HWTButtonOnMouseExited() {
+		GenericController.buttonGlowOFF(HWTButton);
+	}
+	
+	@FXML
+	private void exitButtonOnMouseEntered() {
+		GenericController.buttonGlowON(exitButton, Color.RED);
+	}
+	
+	// Method for Mouse Exited event
+	@FXML
+	private void exitButtonOnMouseExited() {
+		GenericController.buttonGlowOFF(exitButton);
+	}
+
+
+
+	@FXML
+	private void switchSceneToNameEntry(MouseEvent event) throws Exception {
+		Parent root = SceneConfig.getInstance().getPlayerNameScene();
+		GenericController.switchScene(event, root);
+	}
+	
+	@FXML
+	private void switchSceneToHWTPlay(MouseEvent event) throws Exception {
+		// Load the new scene's FXML
+		Parent root = SceneConfig.getInstance().getHowToPlayScene();
+		GenericController.switchScene(event, root);
+	}
+	
+	@FXML
+	private void switchSceneToSettings(MouseEvent event) throws Exception {
+		// Load the new scene's FXML
+		SceneConfig.getInstance().setInGame(false);
+		Parent root = SceneConfig.getInstance().getSettingsScene();
+		GenericController.switchScene(event, root);
 	}
 	
 	@FXML
