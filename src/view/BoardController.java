@@ -1,16 +1,13 @@
 package view;
 
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.Arrays;
