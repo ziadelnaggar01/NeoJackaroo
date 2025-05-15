@@ -14,6 +14,8 @@ public class Main extends Application{
 	    // 🔸 Attach scene to stage and display
 	    Controller.initalizeStage(primaryStage);
 	    primaryStage.setScene(scene);
+	    
+	    MusicManager.getInstance().playMusic("/view/assets/audio/Digital Voyage - Twin Musicom.mp3");
 	    primaryStage.show();
 	}
 	
