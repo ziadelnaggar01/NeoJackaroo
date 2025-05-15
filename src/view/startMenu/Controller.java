@@ -1,5 +1,6 @@
 package view.startMenu;
 
+import controller.SceneConfig;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -106,7 +107,7 @@ public class Controller {
 	@FXML
 	private void switchSceneToNameEntry(MouseEvent event) throws Exception {
 		// Load the new scene's FXML
-		Parent root = FXMLLoader.load(getClass().getResource("/view/PlayerName/Scene.fxml"));
+		Parent root = SceneConfig.getInstance().getPlayerNameScene();
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene currentScene = stage.getScene();
 	    if (currentScene != null) 
@@ -122,7 +123,7 @@ public class Controller {
 	@FXML
 	private void switchSceneToHWTPlay(MouseEvent event) throws Exception {
 		// Load the new scene's FXML
-		Parent root = FXMLLoader.load(getClass().getResource("/view/HowToPlayScreen/Scene.fxml"));
+		Parent root = SceneConfig.getInstance().getHowToPlayScene();
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene currentScene = stage.getScene();
 	    if (currentScene != null) 
