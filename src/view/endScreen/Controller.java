@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import controller.GenericController;
+import controller.SoundManager;
 
 public class Controller {
 	@FXML
@@ -29,6 +30,7 @@ public class Controller {
 	
 	@FXML
 	private void closeGame(MouseEvent event) {
+		SoundManager.getInstance().playSound("button_click");
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 	}

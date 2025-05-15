@@ -2,6 +2,7 @@ package view.startMenu;
 
 import controller.GenericController;
 import controller.SceneConfig;
+import controller.SoundManager;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -111,20 +112,21 @@ public class Controller {
 
 	@FXML
 	private void switchSceneToNameEntry(MouseEvent event) throws Exception {
+		SoundManager.getInstance().playSound("button_click");
 		Parent root = SceneConfig.getInstance().getPlayerNameScene();
 		GenericController.switchScene(event, root);
 	}
 	
 	@FXML
 	private void switchSceneToHWTPlay(MouseEvent event) throws Exception {
-		// Load the new scene's FXML
+		SoundManager.getInstance().playSound("button_click");
 		Parent root = SceneConfig.getInstance().getHowToPlayScene();
 		GenericController.switchScene(event, root);
 	}
 	
 	@FXML
 	private void switchSceneToSettings(MouseEvent event) throws Exception {
-		// Load the new scene's FXML
+		SoundManager.getInstance().playSound("button_click");
 		SceneConfig.getInstance().setInGame(false);
 		Parent root = SceneConfig.getInstance().getSettingsScene();
 		GenericController.switchScene(event, root);
@@ -132,6 +134,7 @@ public class Controller {
 	
 	@FXML
 	private void closeGame(MouseEvent event) {
+		SoundManager.getInstance().playSound("button_click");
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
 	}

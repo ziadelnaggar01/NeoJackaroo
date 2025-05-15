@@ -31,6 +31,7 @@ import java.util.Set;
 
 import controller.GenericController;
 import controller.SceneConfig;
+import controller.SoundManager;
 
 //import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
 
@@ -453,6 +454,7 @@ public class BoardController {
 
 	@FXML
 	private void openSettings(MouseEvent event) {
+		SoundManager.getInstance().playSound("button_click");
 		gamePaused = true;// if opening settings from boardscene, pause the game
 		SceneConfig.getInstance().setInGame(true);
 		Parent root = SceneConfig.getInstance().getSettingsScene();

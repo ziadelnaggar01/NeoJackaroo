@@ -2,6 +2,7 @@ package view.PlayerName;
 
 import controller.GenericController;
 import controller.SceneConfig;
+import controller.SoundManager;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -25,12 +26,14 @@ public class Controller {
 	
 	@FXML
 	private void switchSceneToStartMenu(MouseEvent event) throws Exception {
+		SoundManager.getInstance().playSound("button_click");
 		Parent root = SceneConfig.getInstance().getStartScene();
 		GenericController.switchScene(event, root);
 	}
 	
 	@FXML
 	private void switchSceneToGame(MouseEvent event) throws Exception {
+		SoundManager.getInstance().playSound("button_click");
 		if(nameTextField.getText().equals(""))
 			popUpLabel.setText("Please enter a name!");
 		else
@@ -42,6 +45,7 @@ public class Controller {
 	
 	@FXML
 	private void keyboardSwitchSceneToGame(KeyEvent  event) throws Exception {
+		SoundManager.getInstance().playSound("button_click");
 		if (event.getCode() == KeyCode.ENTER)
 		{
 		if(nameTextField.getText().equals(""))

@@ -95,7 +95,7 @@
                                     <Insets left="50.0" right="400.0" />
                                  </GridPane.margin>
                               </Slider>
-                              <Slider fx:id="audioSlider" layoutX="504.0" layoutY="100.0" max="1.0" prefHeight="62.0" prefWidth="634.0" value="0.5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <Slider fx:id="sfxSlider" layoutX="504.0" layoutY="100.0" max="1.0" prefHeight="62.0" prefWidth="634.0" value="0.5" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="400.0" />
                                  </GridPane.margin>

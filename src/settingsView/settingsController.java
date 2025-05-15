@@ -4,6 +4,7 @@ import java.io.IOException;
 import controller.GenericController;
 import controller.MusicManager;
 import controller.SceneConfig;
+import controller.SoundManager;
 import view.BoardController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -21,7 +22,7 @@ public class settingsController {
 	@FXML
 	private Slider musicSlider;
 	@FXML
-	private Slider audioSlider;
+	private Slider sfxSlider;
 //---------------------------------------------------------------------------------------------------------------
 	// buttons related
 
@@ -36,6 +37,12 @@ public class settingsController {
 		musicSlider.setValue(musicPlayer.getVolume());
 		musicSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             musicPlayer.setVolume(newVal.doubleValue());
+        });
+		
+        SoundManager soundManager = SoundManager.getInstance();
+        sfxSlider.setValue(soundManager.getVolume());
+        sfxSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            soundManager.setVolume(newVal.doubleValue());
         });
     }
 
@@ -62,6 +69,7 @@ public class settingsController {
 	}
 	@FXML
 	private void continueButtonOnClick(MouseEvent event) throws IOException {
+		SoundManager.getInstance().playSound("button_click");
 		BoardController.gamePaused=false;//return game 
 		Parent root;
 		if(SceneConfig.getInstance().isInGame())
@@ -74,6 +82,7 @@ public class settingsController {
 	@FXML
 	private void exitButtonOnClick(MouseEvent event) throws IOException {
 		//Go back to start screen, no boardscene 
+		SoundManager.getInstance().playSound("button_click");
 		BoardController.gamePaused=false;//return game 
 		Parent root;
 		if(!SceneConfig.getInstance().isInGame())

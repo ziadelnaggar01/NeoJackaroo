@@ -15,6 +15,7 @@ public class Main extends Application{
 	    primaryStage.setScene(scene);
 	    
 	    MusicManager.getInstance().playMusic("/view/assets/audio/Digital Voyage - Twin Musicom.mp3"); 
+	    SoundManager.getInstance().preloadSound("button_click", "/view/assets/audio/button click.mp3");
 	    primaryStage.show();
 	}
 	
