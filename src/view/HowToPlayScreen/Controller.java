@@ -1,5 +1,6 @@
 package view.HowToPlayScreen;
 
+import controller.GenericController;
 import controller.SceneConfig;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -89,17 +90,7 @@ public class Controller {
 	
 	@FXML
 	private void switchSceneToStartMenu(MouseEvent event) throws Exception {
-		// Load the new scene's FXML
 		Parent root = SceneConfig.getInstance().getStartScene();
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Scene currentScene = stage.getScene();
-	    if (currentScene != null) 
-	    	 currentScene.setRoot(root);
-	    else
-	    {
-	        // Fallback if no scene exists (initial load)
-	        currentScene = new Scene(root);
-	        stage.setScene(currentScene);
-	    } 
+		GenericController.switchScene(event, root);
 	}
 }

@@ -1,22 +1,14 @@
 package view;
 
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -25,6 +17,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import controller.GenericController;
 import controller.SceneConfig;
 
 //import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
@@ -33,8 +26,6 @@ import model.Colour;
 import model.player.CPU;
 import model.player.Player;
 import engine.Game;
-import settingsView.settingsController;
-import generic.GenericController;
 
 public class BoardController {
 
@@ -120,22 +111,11 @@ public class BoardController {
 	}
 
 	@FXML
-	private void openSettings(MouseEvent event) {// just call switch scene from
-													// where it is supposed to
-													// be called
+	private void openSettings(MouseEvent event) {
 		gamePaused = true;// if opening settings from boardscene, pause the game
 		SceneConfig.getInstance().setInGame(true);
 		Parent root = SceneConfig.getInstance().getSettingsScene();
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Scene currentScene = stage.getScene();
-	    if (currentScene != null) 
-	    	 currentScene.setRoot(root);
-	    else
-	    {
-	        // Fallback if no scene exists (initial load)
-	        currentScene = new Scene(root);
-	        stage.setScene(currentScene);
-	    } 
+		GenericController.switchScene(event, root);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------------------------

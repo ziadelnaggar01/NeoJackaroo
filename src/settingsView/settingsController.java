@@ -1,26 +1,19 @@
 package settingsView;
-
-import generic.GenericController;
-
 import java.io.IOException;
 
+import controller.GenericController;
 import controller.SceneConfig;
 import view.BoardController;
-import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class settingsController {
 
@@ -77,24 +70,13 @@ public class settingsController {
 			root = SceneConfig.getInstance().getGameScene();
 		else
 			root = SceneConfig.getInstance().getStartScene();
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Scene currentScene = stage.getScene();
-	    if (currentScene != null) 
-	    	 currentScene.setRoot(root);
-	    else
-	    {
-	        // Fallback if no scene exists (initial load)
-	        currentScene = new Scene(root);
-	        stage.setScene(currentScene);
-	    } 
-			
+		GenericController.switchScene(event, root);
 	}
 	
 	@FXML
 	private void exitButtonOnClick(MouseEvent event) throws IOException {
 		//Go back to start screen, no boardscene 
 		BoardController.gamePaused=false;//return game 
-		new GenericController().switchSceneWithFade((Stage) ((Node) event.getSource()).getScene().getWindow(),"/view/BoardScene.fxml");
 	}
 	
 	

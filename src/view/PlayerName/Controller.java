@@ -1,5 +1,6 @@
 package view.PlayerName;
 
+import controller.GenericController;
 import controller.SceneConfig;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -20,29 +21,15 @@ public class Controller {
 	
 	@FXML
 	private void switchSceneToStartMenu(MouseEvent event) throws Exception {
-		// Load the new scene's FXML
 		Parent root = SceneConfig.getInstance().getStartScene();
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Scene currentScene = stage.getScene();
-	    if (currentScene != null) 
-	    	 currentScene.setRoot(root);
-	    else
-	    {
-	        // Fallback if no scene exists (initial load)
-	        currentScene = new Scene(root);
-	        stage.setScene(currentScene);
-	    } 
+		GenericController.switchScene(event, root);
 	}
 	
 	@FXML
 	private void switchSceneToGame(MouseEvent event) throws Exception {
 		// Load the new scene's FXML
 		Parent root = SceneConfig.getInstance().getGameScene();
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Scene currentScene = stage.getScene();
-		currentScene.getStylesheets().add(getClass().getResource("/view/BoardScene.fxml").toExternalForm());
-	    if (currentScene != null) 
-	    	 currentScene.setRoot(root);
+		GenericController.switchScene(event, root);
 	}
 	
 	@FXML
