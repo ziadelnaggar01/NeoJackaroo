@@ -7,6 +7,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.endScreen.Controller">
@@ -55,13 +58,29 @@
                   </ImageView>
                </top>
                <center>
-                  <Label fx:id="winnerName" prefHeight="212.0" prefWidth="1306.0" style="-fx-alignment: center;" text="You Won!!!" textAlignment="CENTER" textFill="#0a82af" BorderPane.alignment="CENTER">
+                  <Label fx:id="winnerName" prefHeight="212.0" prefWidth="1306.0" style="-fx-alignment: center;" text="You Won!!!" textAlignment="CENTER" BorderPane.alignment="CENTER">
                      <font>
-                        <Font name="Dubai Medium" size="120.0" />
+                        <Font name="Orbitron Bold" size="120.0" />
                      </font>
                      <BorderPane.margin>
-                        <Insets bottom="75.0" />
+                        <Insets bottom="120.0" />
                      </BorderPane.margin>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color green="0.7666666507720947" blue="1.0" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
                   </Label>
                </center>
             </BorderPane>
