@@ -23,7 +23,7 @@
                   <Insets />
                </VBox.margin>
             </ImageView>
-            <ImageView fx:id="settingsButton" fitHeight="150.0" fitWidth="350.0" onMouseEntered="#settingsButtonOnMouseEntered" onMouseExited="#settingsButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="settingsButton" fitHeight="150.0" fitWidth="350.0" onMouseClicked="#switchSceneToSettings" onMouseEntered="#settingsButtonOnMouseEntered" onMouseExited="#settingsButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/buttons/Settings.png" />
                </image>

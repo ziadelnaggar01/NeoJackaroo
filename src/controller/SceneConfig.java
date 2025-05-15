@@ -12,8 +12,10 @@ public class SceneConfig {
     private Parent startScene;
     private Parent endScene;
     private Parent howToPlayScene;
+    private Parent settingsScene;
     private Parent playerNameScene;
     private Parent gameScene;
+    private boolean inGame = false;
 
     // Private constructor: load all FXML here
     private SceneConfig() {
@@ -23,6 +25,7 @@ public class SceneConfig {
             howToPlayScene  = FXMLLoader.load(getClass().getResource("/view/HowToPlayScreen/Scene.fxml"));
             playerNameScene = FXMLLoader.load(getClass().getResource("/view/PlayerName/Scene.fxml"));
             gameScene       = FXMLLoader.load(getClass().getResource("/view/BoardScene.fxml"));
+            settingsScene       = FXMLLoader.load(getClass().getResource("/settingsView/SettingsScene.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
             // You may want to throw a runtime exception here if any scene fails to load
@@ -40,4 +43,13 @@ public class SceneConfig {
     public Parent getHowToPlayScene()  { return howToPlayScene; }
     public Parent getPlayerNameScene() { return playerNameScene; }
     public Parent getGameScene()       { return gameScene; }
+	public Parent getSettingsScene() { return settingsScene; }
+
+	public boolean isInGame() {
+		return inGame;
+	}
+
+	public void setInGame(boolean inGame) {
+		this.inGame = inGame;
+	}
 }

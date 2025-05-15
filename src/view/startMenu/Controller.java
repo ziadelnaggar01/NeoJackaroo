@@ -136,6 +136,23 @@ public class Controller {
 	    } 
 	}
 	
+	@FXML
+	private void switchSceneToSettings(MouseEvent event) throws Exception {
+		// Load the new scene's FXML
+		SceneConfig.getInstance().setInGame(false);
+		Parent root = SceneConfig.getInstance().getSettingsScene();
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Scene currentScene = stage.getScene();
+	    if (currentScene != null) 
+	    	 currentScene.setRoot(root);
+	    else
+	    {
+	        // Fallback if no scene exists (initial load)
+	        currentScene = new Scene(root);
+	        stage.setScene(currentScene);
+	    } 
+	}
+	
 	
 	public static void initalizeStage(Stage primaryStage) throws Exception
 	{

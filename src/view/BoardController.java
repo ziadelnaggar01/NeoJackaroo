@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import controller.SceneConfig;
+
 //import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
 
 import model.Colour;
@@ -122,9 +124,18 @@ public class BoardController {
 													// where it is supposed to
 													// be called
 		gamePaused = true;// if opening settings from boardscene, pause the game
-		new GenericController().switchSceneWithFade(
-				(Stage) ((Node) event.getSource()).getScene().getWindow(),
-				"/settingsView/SettingsScene.fxml");
+		SceneConfig.getInstance().setInGame(true);
+		Parent root = SceneConfig.getInstance().getSettingsScene();
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Scene currentScene = stage.getScene();
+	    if (currentScene != null) 
+	    	 currentScene.setRoot(root);
+	    else
+	    {
+	        // Fallback if no scene exists (initial load)
+	        currentScene = new Scene(root);
+	        stage.setScene(currentScene);
+	    } 
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------------------------

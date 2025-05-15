@@ -4,6 +4,7 @@ import generic.GenericController;
 
 import java.io.IOException;
 
+import controller.SceneConfig;
 import view.BoardController;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -71,7 +72,22 @@ public class settingsController {
 	@FXML
 	private void continueButtonOnClick(MouseEvent event) throws IOException {
 		BoardController.gamePaused=false;//return game 
-		new GenericController().switchSceneWithFade((Stage) ((Node) event.getSource()).getScene().getWindow(),"/view/BoardScene.fxml");
+		Parent root;
+		if(SceneConfig.getInstance().isInGame())
+			root = SceneConfig.getInstance().getGameScene();
+		else
+			root = SceneConfig.getInstance().getStartScene();
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Scene currentScene = stage.getScene();
+	    if (currentScene != null) 
+	    	 currentScene.setRoot(root);
+	    else
+	    {
+	        // Fallback if no scene exists (initial load)
+	        currentScene = new Scene(root);
+	        stage.setScene(currentScene);
+	    } 
+			
 	}
 	
 	@FXML
