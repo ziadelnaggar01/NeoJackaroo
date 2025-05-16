@@ -17,18 +17,18 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="settingsView.settingsController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.settingsMenu.settingsController">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0">
          <image>
-            <Image url="@../view/assests/settingsScene/Background.png" />
+            <Image url="@../assests/settingsScene/Background.png" />
          </image>
       </ImageView>
       <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000; -fx-opacity: 0.6;">
          <children>
             <ImageView fitHeight="1105.0" fitWidth="1783.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../view/assests/settingsScene/PopUpMenu.png" />
+                  <Image url="@../assests/settingsScene/PopUpMenu.png" />
                </image>
             </ImageView>
          </children></StackPane>
@@ -36,7 +36,7 @@
          <children>
             <ImageView fitHeight="1043.0" fitWidth="1547.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../view/assests/settingsScene/PopUpMenu.png" />
+                  <Image url="@../assests/settingsScene/PopUpMenu.png" />
                </image>
             </ImageView>
             <Group>
@@ -79,12 +79,12 @@
                            <children>
                               <ImageView fitHeight="266.0" fitWidth="294.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../view/assests/settingsScene/NeonMusic.png" />
+                                    <Image url="@../assests/settingsScene/NeonMusic.png" />
                                  </image>
                               </ImageView>
                               <ImageView fitHeight="292.0" fitWidth="297.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                                  <image>
-                                    <Image url="@../view/assests/settingsScene/NeonSoundEffects.png" />
+                                    <Image url="@../assests/settingsScene/NeonSoundEffects.png" />
                                  </image>
                                  <GridPane.margin>
                                     <Insets bottom="10.0" />
@@ -106,7 +106,7 @@
                            <children>
                               <ImageView fx:id="continueGameIcon" fitHeight="102.0" fitWidth="441.0" onMouseClicked="#continueButtonOnClick" onMouseEntered="#continueIconOnMouseEntered" onMouseExited="#continueIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../view/assests/settingsScene/Back.png" />
+                                    <Image url="@../assests/settingsScene/Back.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="175.0" top="16.0" />
@@ -114,7 +114,7 @@
                               </ImageView>
                               <ImageView fx:id="exitSettingsIcon" fitHeight="129.0" fitWidth="421.0" onMouseClicked="#exitButtonOnClick" onMouseEntered="#exitIconOnMouseEntered" onMouseExited="#exitIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../view/assests/settingsScene/Exit.png" />
+                                    <Image url="@../assests/settingsScene/Exit.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets top="16.0" />

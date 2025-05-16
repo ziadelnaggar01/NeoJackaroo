@@ -26,7 +26,7 @@ public class SceneConfig {
             howToPlayScene  = FXMLLoader.load(getClass().getResource("/view/HowToPlayScreen/Scene.fxml"));
             playerNameScene = FXMLLoader.load(getClass().getResource("/view/PlayerName/Scene.fxml"));
             gameScene       = FXMLLoader.load(getClass().getResource("/view/BoardScene.fxml"));
-            settingsScene   = FXMLLoader.load(getClass().getResource("/settingsView/SettingsScene.fxml"));
+            settingsScene   = FXMLLoader.load(getClass().getResource("/view/settingsMenu/SettingsScene.fxml"));
             exceptionScene  = FXMLLoader.load(getClass().getResource("/view/exception/ExceptionScene .fxml"));
         } catch (IOException e) {
             e.printStackTrace();

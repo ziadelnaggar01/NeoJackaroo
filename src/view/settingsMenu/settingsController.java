@@ -1,4 +1,4 @@
-package settingsView;
+package view.settingsMenu;
 import java.io.IOException;
 
 import controller.GenericController;
