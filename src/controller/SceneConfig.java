@@ -2,6 +2,8 @@ package controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import view.BoardController;
+
 import java.io.IOException;
 
 public class SceneConfig {
@@ -17,6 +19,7 @@ public class SceneConfig {
     private Parent gameScene;
     private Parent exceptionScene;
     private boolean inGame = false;
+    private BoardController gameController;
 
     // Private constructor: load all FXML here
     private SceneConfig() {
@@ -25,9 +28,13 @@ public class SceneConfig {
             endScene        = FXMLLoader.load(getClass().getResource("/view/endScreen/Scene.fxml"));
             howToPlayScene  = FXMLLoader.load(getClass().getResource("/view/HowToPlayScreen/Scene.fxml"));
             playerNameScene = FXMLLoader.load(getClass().getResource("/view/PlayerName/Scene.fxml"));
-            gameScene       = FXMLLoader.load(getClass().getResource("/view/BoardScene.fxml"));
             settingsScene   = FXMLLoader.load(getClass().getResource("/view/settingsMenu/SettingsScene.fxml"));
             exceptionScene  = FXMLLoader.load(getClass().getResource("/view/exception/ExceptionScene .fxml"));
+            
+            // Load Game Scene and controller
+            FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("/view/BoardScene.fxml"));
+            gameScene = gameLoader.load();
+            gameController = gameLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
             // You may want to throw a runtime exception here if any scene fails to load
@@ -56,4 +63,8 @@ public class SceneConfig {
 	public void setInGame(boolean inGame) {
 		this.inGame = inGame;
 	}
+	
+	public void setPlayerName(String name) {
+		gameController.assignNames(name);
+	  }
 }

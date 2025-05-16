@@ -489,7 +489,7 @@ public class BoardController {
 			// Funny / Meme-worthy
 			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "NullPointer", "NotABot"));
 
-	private void assignNames(String playerName) {
+	public void assignNames(String playerName) {
 		Collections.shuffle(cpuNames);
 		CPU1Name.setText(cpuNames.get(0));
 		CPU2Name.setText(cpuNames.get(1));
