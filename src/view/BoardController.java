@@ -27,8 +27,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import controller.GenericController;
@@ -663,5 +665,29 @@ public class BoardController {
 		card.setOnMouseClicked(null);
 
 	}
+	
+	
+//-------------------------------------------------------------------------------------
+	// Hover over description feature
+	private final Map<String, String> description = new HashMap<String, String>() {{
+	    put("1", "Fields one of your marbles onto the track or moves one marble 1 step");
+	    put("2", "Moves one of your marbles 2 steps");
+	    put("3", "Moves one of your marbles 3 steps");
+	    put("4", "Moves one of your marbles 4 steps backwards");
+	    put("5", "Moves any marble 5 steps, if you move an opponent's mable, it does'nt enter a safe zone");
+	    put("6", "Moves one of your marbles 6 steps");
+	    put("7", "Moves of your marbles 7 steps or moves 2 marbles a total of 7 steps");
+	    put("8", "Moves of your marbles 8 steps");
+	    put("9", "Moves of your marbles 9 steps");
+	    put("10", "Moves of your marbles 10 steps or discards a random card from the next player and skips his turn");
+	    put("11", "Moves one of your marbles 11 steps or swaps one of your marbles with another");
+	    put("12", "Moves of your marbles 12 steps or discards a random card from a random player and skips his turn");
+	    put("13", "Fields one of your marbles onto the track or moves one marble 13 steps destroying all marbles in it's path");
+	    put("14", "Sends an opponent marble back to his home zone");
+	    put("15", "Sends one of you marbles to a random empty safe cell");
+	}};
+	
+	
+	
 
 }
