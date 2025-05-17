@@ -21,6 +21,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.Node;
 import javafx.util.Duration;
 import javafx.scene.Parent;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +38,12 @@ import controller.SoundManager;
 //import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
 
 import model.Colour;
+import model.card.Card;
+import model.card.standard.Standard;
+import model.card.standard.Suit;
+import model.card.wild.Burner;
+import model.card.wild.Saver;
+import model.card.wild.Wild;
 import model.player.CPU;
 import model.player.Marble;
 import model.player.Player;
@@ -52,6 +60,15 @@ public class BoardController {
 	@FXML
 	private final List<ImageView> cards = new ArrayList<>();
 
+	private String selectedCardID;
+	@FXML
+	private ImageView playerCard1;
+	@FXML
+	private ImageView playerCard2;
+	@FXML
+	private ImageView playerCard3;
+	@FXML
+	private ImageView playerCard4;
 	@FXML
 	private AnchorPane animationPane;
 	// Deck position (e.g., center of the board or anywhere you like)
@@ -75,23 +92,83 @@ public class BoardController {
 	private GridPane D;
 
 	@FXML
-	public void initialize() {
+	public void initialize() throws IOException {
 		// Load the marble image
 		Set_Your_Track();
 		Set_movable_marbles();
 		Set_safe_zone();
-		
+		Game g = new Game("shit");
+		set_ALL_Hand(g.getPlayers());
 		// destroy_it(movableMarbles.get(0), 1);
 		// swap(movableMarbles.get(0), movableMarbles.get(4));
 		// destroy_it(movableMarbles.get(0));
 		// move_backword(movableMarbles.get(0), 99, 10);
 		// Trap(movableMarbles.get(0), 2);
+
 	}
+
+	public void set_ALL_Hand(ArrayList<Player> players) {
+	    String basePathRoot = "/view/assests/deck/";
+
+	    int i = 0; 
+	    Player player = players.get(i);
+
+	    for (int j = 0; j < 4; j++) {
+	        String basePath = basePathRoot;
+	        Card curCard = player.getHand().get(j);
+
+	        if (curCard instanceof Standard) {
+	            Standard card = (Standard) curCard;
+	            int rank = card.getRank();
+	            Suit suit = card.getSuit();
+
+	            switch (suit) {
+	                case CLUB:
+	                    basePath += "club";
+	                    break;
+	                case DIAMOND:
+	                    basePath += "diamond";
+	                    break;
+	                case SPADE:
+	                    basePath += "spade";
+	                    break;
+	                case HEART:
+	                    basePath += "heart";
+	                    break;
+	            }
+
+	            basePath += rank + ".png";
+
+	        } else if (curCard instanceof Wild) {
+	            if (curCard instanceof Burner) {
+	                basePath += "burner.jpg";
+	            } else if (curCard instanceof Saver) {
+	                basePath += "saver.jpg";
+	            }
+	        }
+	        Image cardImage = new Image(getClass().getResourceAsStream(basePath));
+
+	        switch (j) {
+	            case 0:
+	                playerCard1.setImage(cardImage);
+	                break;
+	            case 1:
+	                playerCard2.setImage(cardImage);
+	                break;
+	            case 2:
+	                playerCard3.setImage(cardImage);
+	                break;
+	            case 3:
+	                playerCard4.setImage(cardImage);
+	                break;
+	        }
+	    }
+	}
+
 
 	private void Set_safe_zone() {
 		for (Node node : animationPane.getChildren()) {
-			if (node instanceof Circle && node.getId() != null
-					&& node.getId().startsWith("safe")) {
+			if (node instanceof Circle && node.getId() != null && node.getId().startsWith("safe")) {
 				((Circle) node).setFill(Color.TRANSPARENT);
 			}
 		}
@@ -127,13 +204,11 @@ public class BoardController {
 		double by = b.getLayoutY();
 
 		// Create transitions for each marble
-		TranslateTransition moveA = new TranslateTransition(
-				Duration.millis(1000), a);
+		TranslateTransition moveA = new TranslateTransition(Duration.millis(1000), a);
 		moveA.setByX(bx - ax);
 		moveA.setByY(by - ay);
 
-		TranslateTransition moveB = new TranslateTransition(
-				Duration.millis(1000), b);
+		TranslateTransition moveB = new TranslateTransition(Duration.millis(1000), b);
 		moveB.setByX(ax - bx);
 		moveB.setByY(ay - by);
 
@@ -205,14 +280,10 @@ public class BoardController {
 
 	private void Set_movable_marbles() { // add ArrayList<Player> players as
 											// parameter
-		Image blueMarble = new Image(getClass().getResourceAsStream(
-				"/view/assests/scene/BlueMarble.png"));
-		Image greenMarble = new Image(getClass().getResourceAsStream(
-				"/view/assests/scene/GreenMarble.png"));
-		Image yellowMarble = new Image(getClass().getResourceAsStream(
-				"/view/assests/scene/YellowMarble.png"));
-		Image redMarble = new Image(getClass().getResourceAsStream(
-				"/view/assests/scene/RedMarble.png"));
+		Image blueMarble = new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png"));
+		Image greenMarble = new Image(getClass().getResourceAsStream("/view/assests/scene/GreenMarble.png"));
+		Image yellowMarble = new Image(getClass().getResourceAsStream("/view/assests/scene/YellowMarble.png"));
+		Image redMarble = new Image(getClass().getResourceAsStream("/view/assests/scene/RedMarble.png"));
 		for (Node node : animationPane.getChildren()) {
 			if (node instanceof Circle) {
 				Circle circle = (Circle) node;
@@ -242,10 +313,8 @@ public class BoardController {
 					movableMarbles.add(circle);
 				}
 
-				if (circle.getId().charAt(1) == 'A'
-						|| circle.getId().charAt(1) == 'B'
-						|| circle.getId().charAt(1) == 'C'
-						|| circle.getId().charAt(1) == 'D') {
+				if (circle.getId().charAt(1) == 'A' || circle.getId().charAt(1) == 'B'
+						|| circle.getId().charAt(1) == 'C' || circle.getId().charAt(1) == 'D') {
 					circle.setFill(Color.TRANSPARENT);
 					circle.setStroke(Color.TRANSPARENT);
 				}
@@ -266,8 +335,7 @@ public class BoardController {
 				track.add(circle); // Add to your track list
 			} else {
 				// Debugging: If the circle doesn't exist, print a warning
-				System.out.println("Warning: Circle with fx:id m" + i
-						+ " not found.");
+				System.out.println("Warning: Circle with fx:id m" + i + " not found.");
 			}
 		}
 	}
@@ -277,12 +345,10 @@ public class BoardController {
 		double circle2Radius = circle2.getRadius();
 		double scaleFactor = circle2Radius / circle1Radius;
 
-		ScaleTransition scaleTransition = new ScaleTransition(
-				Duration.seconds(1.5), circle1);
+		ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1.5), circle1);
 		scaleTransition.setToX(scaleFactor);
 		scaleTransition.setToY(scaleFactor);
-		scaleTransition
-				.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
+		scaleTransition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
 
 		return scaleTransition;
 	}
@@ -296,8 +362,7 @@ public class BoardController {
 		double targetY = y.getLayoutY();
 
 		// Create translation animation
-		TranslateTransition move = new TranslateTransition(
-				Duration.millis(1500), x); // match duration
+		TranslateTransition move = new TranslateTransition(Duration.millis(1500), x); // match duration
 		move.setToX(targetX - x.getLayoutX());
 		move.setToY(targetY - x.getLayoutY());
 
@@ -324,14 +389,12 @@ public class BoardController {
 		AudioClip sound = null;
 		try {
 			// Play trap sound
-			URL soundurl = getClass().getResource(
-					"/view/assests/sound/bonk.wav");
+			URL soundurl = getClass().getResource("/view/assests/sound/bonk.wav");
 			if (soundurl != null) {
 				sound = new AudioClip(soundurl.toString());
 				sound.play();
 			} else {
-				System.out
-						.println("Sound file not found at /view/assests/sound/trap.mp3");
+				System.out.println("Sound file not found at /view/assests/sound/trap.mp3");
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to play sound:");
@@ -365,14 +428,12 @@ public class BoardController {
 		// Play sound
 		try {
 			// Corrected path and renamed variable to soundurl
-			URL soundurl = getClass().getResource(
-					"/view/assests/sound/destroy.mp3");
+			URL soundurl = getClass().getResource("/view/assests/sound/destroy.mp3");
 			if (soundurl != null) {
 				AudioClip sound = new AudioClip(soundurl.toString());
 				sound.play();
 			} else {
-				System.out
-						.println("Sound file not found at /view/assets/sound/destroy.mp3");
+				System.out.println("Sound file not found at /view/assets/sound/destroy.mp3");
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to play sound:");
@@ -381,16 +442,13 @@ public class BoardController {
 		move_to_base(c, where);
 	}
 
-	private void moveThroughPath(Circle marble, int st, int steps,
-			List<Circle> pathNodes) {
+	private void moveThroughPath(Circle marble, int st, int steps, List<Circle> pathNodes) {
 		// Set marble image
-		Image image = new Image(getClass().getResourceAsStream(
-				"/view/assests/scene/BlueMarble.png"));
+		Image image = new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png"));
 		marble.setFill(new ImagePattern(image));
 
 		// Create the resize transition but don't play it yet
-		ScaleTransition resizeTransition = smoothlyResize(marble,
-				pathNodes.get(0));
+		ScaleTransition resizeTransition = smoothlyResize(marble, pathNodes.get(0));
 
 		// Create list of TranslateTransitions for moving the marble
 		List<TranslateTransition> transitions = new ArrayList<>();
@@ -403,8 +461,7 @@ public class BoardController {
 			double targetX = target.getLayoutX() - startX;
 			double targetY = target.getLayoutY() - startY;
 
-			TranslateTransition transition = new TranslateTransition(
-					Duration.seconds(0.3), marble);
+			TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), marble);
 			transition.setToX(targetX);
 			transition.setToY(targetY);
 			transition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
@@ -510,8 +567,7 @@ public class BoardController {
 			// Serious / Intellectual
 			"Turing", "AdaNova", "Hypatia", "NeuroLynx", "Euler",
 			// Funny / Meme-worthy
-			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "NullPointer",
-			"NotABot"));
+			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "NullPointer", "NotABot"));
 
 	public void assignNames(String playerName) {
 		Collections.shuffle(cpuNames);
@@ -566,50 +622,46 @@ public class BoardController {
 
 	// ----------------------------------------------------------
 	// Cards methods
-	private String selectedCardID;
-	@FXML private ImageView playerCard1;
-    @FXML private ImageView playerCard2;
-    @FXML private ImageView playerCard3;
-    @FXML private ImageView playerCard4;
-    
-    
-    //A method given a hand of a player, initializes the on mouse click function of each card
-    //the on mouse click allows selection of only 1 card and updates the ID of selected card accordingly, while providing animation
-    private void setupCardSelection(ArrayList<ImageView> cards) {
-        for (ImageView card : cards) {
-            card.setOnMouseClicked(event -> {
-                for (ImageView c : cards) {
-                    boolean isSelected = (c == card);
-                    selectCard(c, isSelected);
-                    if (isSelected) {
-                        selectedCardID = c.getId();  // Set the fx:id
-                        // Optional: Debug output
-                        System.out.println("Selected card ID: " + selectedCardID);
-                    }
-                }
-            });
-        }
-    }
-    private void selectCard(ImageView card, boolean select) {
-        TranslateTransition tt = new TranslateTransition(Duration.millis(150), card);
-        tt.setToY(select ? -15 : 0); // Move up if selected, reset if not
-        tt.play();
 
-        if (select) {
-            DropShadow glow = new DropShadow();
-            glow.setRadius(20);
-            glow.setSpread(0.7);
-            glow.setColor(Color.CORNFLOWERBLUE);  // You can pick any glow color
-            card.setEffect(glow);
-        } else {
-            card.setEffect(null); // Remove the glow effect
-        }
-    }
-	private void disableCardSelection(ImageView card){//called when a card is played/sent to firepit
-	    card.setOnMouseClicked(null);
+	// A method given a hand of a player, initializes the on mouse click function of
+	// each card
+	// the on mouse click allows selection of only 1 card and updates the ID of
+	// selected card accordingly, while providing animation
+	private void setupCardSelection(ArrayList<ImageView> cards) {
+		for (ImageView card : cards) {
+			card.setOnMouseClicked(event -> {
+				for (ImageView c : cards) {
+					boolean isSelected = (c == card);
+					selectCard(c, isSelected);
+					if (isSelected) {
+						selectedCardID = c.getId(); // Set the fx:id
+						// Optional: Debug output
+						System.out.println("Selected card ID: " + selectedCardID);
+					}
+				}
+			});
+		}
+	}
+
+	private void selectCard(ImageView card, boolean select) {
+		TranslateTransition tt = new TranslateTransition(Duration.millis(150), card);
+		tt.setToY(select ? -15 : 0); // Move up if selected, reset if not
+		tt.play();
+
+		if (select) {
+			DropShadow glow = new DropShadow();
+			glow.setRadius(20);
+			glow.setSpread(0.7);
+			glow.setColor(Color.CORNFLOWERBLUE); // You can pick any glow color
+			card.setEffect(glow);
+		} else {
+			card.setEffect(null); // Remove the glow effect
+		}
+	}
+
+	private void disableCardSelection(ImageView card) {// called when a card is played/sent to firepit
+		card.setOnMouseClicked(null);
 
 	}
-	
-	
 
 }
