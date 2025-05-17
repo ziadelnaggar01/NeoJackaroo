@@ -523,7 +523,7 @@ public class BoardController {
 
 	@FXML
 	private void settingsIconOnMouseEntered() {
-		GenericController.buttonGlowON(settingsIcon, Color.BLUE, 1000);
+		GenericController.buttonGlowON(settingsIcon, Color.CYAN, 25);
 	}
 
 	// Method for Mouse Exited event

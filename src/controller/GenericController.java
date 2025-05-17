@@ -46,7 +46,7 @@ public final class GenericController {
 
 	public static void buttonGlowON(ImageView image, Color color, int radius) {
 		DropShadow shadow = new DropShadow();
-		shadow.setColor(Color.RED);
+		shadow.setColor(color);
 		shadow.setRadius(radius);
 		image.setEffect(shadow);
 	}

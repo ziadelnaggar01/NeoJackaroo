@@ -280,13 +280,29 @@
          <children>
             <ImageView fx:id="settingsIcon" fitHeight="87.0" fitWidth="97.0" layoutX="302.0" layoutY="120.0" onMouseClicked="#openSettings" onMouseEntered="#settingsIconOnMouseEntered" onMouseExited="#settingsIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@assests/scene/NeonSettings.png" />
+                  <Image url="@assests/scene/cyanSettings.png" />
                </image>
             </ImageView>
-            <Button graphicTextGap="5.0" layoutX="32.0" layoutY="132.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="63.0" prefWidth="186.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textFill="#0039e3" textOverrun="WORD_ELLIPSIS">
+            <Button graphicTextGap="5.0" layoutX="32.0" layoutY="132.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="63.0" prefWidth="186.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="Orbitron Bold" size="26.0" />
                </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="0.6325757413199454">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="0.75" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.10000000149011612" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
             </Button>
          </children>
       </AnchorPane>
