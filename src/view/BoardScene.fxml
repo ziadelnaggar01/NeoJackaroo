@@ -102,7 +102,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fx:id="playerA1" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                  <ImageView fx:id="playerCard1" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
                         <Image url="@assests/deck/2.png" />
                      </image>
@@ -110,7 +110,7 @@
                         <Insets left="100.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="pkayerA2" fitHeight="130.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
+                  <ImageView fx:id="playerCard2" fitHeight="130.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
                      <image>
                         <Image url="@assests/deck/2.png" />
                      </image>
@@ -118,7 +118,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="pkayerA4" fitHeight="128.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerCard4" fitHeight="128.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Clovers_5_white.png" />
                      </image>
@@ -126,7 +126,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="pkayerA3" fitHeight="124.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerCard3" fitHeight="124.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Clovers_10_white.png" />
                      </image>
