@@ -786,15 +786,9 @@ public class BoardController {
 
 				} else if (event.getButton() == MouseButton.SECONDARY) {
 					// Get the existing controller loaded via SceneConfig
-					Image image = card.getImage();
-
-					String cardID =  image.impl_getUrl(); // This returns the path/URL, which is null xD
-					cardID=card.getId();
-					
-					System.out.println(cardID);
 					view.description.Controller controller = SceneConfig
 							.getInstance().getDescriptionController();
-					controller.showCardDescription(cardID, event);
+					controller.showCardDescription(event,card,currentPlayerIndex,game);
 				}
 			});
 		}
@@ -808,8 +802,8 @@ public class BoardController {
 
 		if (select) {
 			DropShadow glow = new DropShadow();
-			glow.setRadius(20);
-			glow.setSpread(0.7);
+			glow.setRadius(15);
+			glow.setSpread(0.4);
 			glow.setColor(Color.CORNFLOWERBLUE); // You can pick any glow color
 			card.setEffect(glow);
 		} else {
@@ -818,7 +812,7 @@ public class BoardController {
 	}
 
 	private void disableCardSelection(ImageView card) {// called when a card is
-														// // played/sent to
+														// played/sent to
 														// firepit
 		card.setOnMouseClicked(null);
 	}

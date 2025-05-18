@@ -6,6 +6,7 @@ import java.util.Map;
 import controller.GenericController;
 import controller.SceneConfig;
 import controller.SoundManager;
+import engine.Game;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -53,15 +54,18 @@ public class Controller {
 		}
 	};
 
-	public void showCardDescription(String cardID, MouseEvent event) {//card ID is the card's path
+	public void showCardDescription(MouseEvent event, ImageView card,
+			int currentPlayerIndex, Game game) {// card ID is the card's path
 		SoundManager.getInstance().playSound("button_click");
 		Parent root = SceneConfig.getInstance().getDescriptionScene();
 
 		// update description according to card selected
-		int rank = Integer.parseInt(GenericController.extractCardRank(cardID));
+		int rank = GenericController
+				.getCardRank(card, currentPlayerIndex, game);
+		System.out.println(rank);
 		descriptionLabelID.setText(descriptions.get(rank));
 
-		GenericController.switchScene(event,root);
+		GenericController.switchScene(event, root);
 
 	}
 
@@ -71,7 +75,7 @@ public class Controller {
 	private void OkIconOnMouseClicked(MouseEvent event) {
 		SoundManager.getInstance().playSound("button_click");
 		Parent root = SceneConfig.getInstance().getGameScene();
-		GenericController.switchScene(event,root);
+		GenericController.switchScene(event, root);
 	}
 
 	@FXML
