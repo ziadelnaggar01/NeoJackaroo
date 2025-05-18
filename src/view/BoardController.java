@@ -775,28 +775,35 @@ public class BoardController {
 		for (ImageView card : cards) {
 			card.setOnMouseClicked(event -> {
 				if (event.getButton() == MouseButton.PRIMARY) {
-					// Left-click: select the card
-					for (ImageView c : cards) {
-						boolean isSelected = (c == card);
-						selectCard(c, isSelected);
-						if (isSelected) {
-							selectedCardID = c.getId();
-							System.out.println("Selected card ID: "
-									+ selectedCardID);
+					boolean alreadySelected = selectedCardID != null && selectedCardID.equals(card.getId());
+
+					if (alreadySelected) {
+						// Deselect all cards
+						for (ImageView c : cards) {
+							selectCard(c, false);
+						}
+						selectedCardID = null;
+						System.out.println("Deselected card.");
+					} else {
+						// Select this card and deselect others
+						for (ImageView c : cards) {
+							boolean isSelected = (c == card);
+							selectCard(c, isSelected);
+							if (isSelected) {
+								selectedCardID = c.getId();
+								System.out.println("Selected card ID: " + selectedCardID);
+							}
 						}
 					}
-					// Right-click: show description
-
 				} else if (event.getButton() == MouseButton.SECONDARY) {
-					// Get the existing controller loaded via SceneConfig
+					// Right-click: show description
 					view.description.Controller controller = SceneConfig
 							.getInstance().getDescriptionController();
-					controller.showCardDescription(event,card,currentPlayerIndex,game);
+					controller.showCardDescription(event, card, currentPlayerIndex, game);
 				}
 			});
 		}
 	}
-
 	private void selectCard(ImageView card, boolean select) {
 		TranslateTransition tt = new TranslateTransition(Duration.millis(150),
 				card);
