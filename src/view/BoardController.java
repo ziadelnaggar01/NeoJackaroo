@@ -125,7 +125,6 @@ public class BoardController {
 		game = new Game("PlayerName");
 		 // use a valid name
 		set_ALL_Hand(game.getPlayers());
-
 		ArrayList<ImageView> gg = new ArrayList<>();
 		gg.add(playerCard1);
 		gg.add(playerCard2);
@@ -187,12 +186,16 @@ public class BoardController {
 		{
 		case '1':
 			card = Cur_Player.getHand().get(0);
+			break;
 		case '2':
 			card = Cur_Player.getHand().get(1);
+			break;
 		case '3':
 			card = Cur_Player.getHand().get(2);
+			break;
 		case '4':
 			card = Cur_Player.getHand().get(3);
+			break;
 		default:
 			card = null;
 		}
