@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -276,7 +277,7 @@
             <Insets top="80.0" />
          </padding>
       </VBox>
-      <AnchorPane layoutX="1501.0" layoutY="-108.0" prefHeight="200.0" prefWidth="423.0">
+      <AnchorPane layoutX="1501.0" layoutY="-108.0" prefHeight="270.0" prefWidth="423.0">
          <children>
             <ImageView fx:id="settingsIcon" fitHeight="87.0" fitWidth="97.0" layoutX="302.0" layoutY="120.0" onMouseClicked="#openSettings" onMouseEntered="#settingsIconOnMouseEntered" onMouseExited="#settingsIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -304,6 +305,73 @@
                   </LinearGradient>
                </textFill>
             </Button>
+            <AnchorPane fx:id="splitDistanceAnchorPane" layoutX="2.0" layoutY="109.0">
+               <children>
+                  <ImageView fitHeight="176.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/Pop%20Up%20Menu.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="32.0" layoutY="2.0" text="Choose your split" textFill="#00b8ff">
+                     <font>
+                        <Font name="Orbitron Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Slider fx:id="splitDistanceSlider" layoutX="61.0" layoutY="54.0" majorTickUnit="1.0" max="6.0" min="1.0" minHeight="-Infinity" minorTickCount="0" onMouseDragged="#onSplitDistanceSliderChanged" prefHeight="10.0" prefWidth="137.0" stylesheets="@style.css" value="1.0" />
+                  <Label fx:id="splitDistanceLabel1" layoutX="47.0" layoutY="80.0" text="1">
+                     <font>
+                        <Font name="Orbitron Bold" size="21.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color green="0.874365508556366" blue="1.0" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+                  <Label fx:id="splitDistanceLabel2" layoutX="190.0" layoutY="80.0" text="6">
+                     <font>
+                        <Font name="Orbitron Bold" size="21.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color green="0.874365508556366" blue="1.0" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+                  <ImageView fx:id="splitDistanceOkButton" fitHeight="28.0" fitWidth="124.0" layoutX="4.0" layoutY="128.0" onMouseClicked="#splitDistanceOkButtonOnClick" onMouseEntered="#splitDistanceOkButtonOnMouseEntered" onMouseExited="#splitDistanceOkButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/buttons/Ok.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="splitDistanceCancelButton" fitHeight="44.0" fitWidth="124.0" layoutX="128.0" layoutY="128.0" onMouseClicked="#splitDistanceCancelButtonOnClick" onMouseEntered="#splitDistanceCancelButtonOnMouseEntered" onMouseExited="#splitDistanceCancelButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/buttons/Cancel.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-7.0" layoutY="-130.0" prefHeight="259.0" prefWidth="423.0">

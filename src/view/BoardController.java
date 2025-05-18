@@ -7,6 +7,7 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,7 +23,6 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,7 +33,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import controller.GenericController;
 import controller.SceneConfig;
 import controller.SoundManager;
@@ -51,9 +50,11 @@ import model.player.CPU;
 import model.player.Marble;
 import model.player.Player;
 import engine.Game;
+import engine.board.Board;
 import exception.GameException;
 import exception.InvalidCardException;
 import exception.InvalidMarbleException;
+
 
 public class BoardController {
 
@@ -827,7 +828,67 @@ public class BoardController {
 		card.setOnMouseClicked(null);
 	}
 
+//-----------------------------------------------------------------
+	//Split distance feature
+	private Board board;
 	
 	
+	@FXML
+	private AnchorPane splitDistanceAnchorPane;
+	@FXML
+	private ImageView splitDistanceOkButton;
+	@FXML
+	private ImageView splitDistanceCancelButton;
+	@FXML
+	private Slider splitDistanceSlider;
+	@FXML
+	private Label splitDistanceLabel1;
+	@FXML
+	private Label splitDistanceLabel2;
+	
+	@FXML
+	private void splitDistanceOkButtonOnMouseEntered() {
+		GenericController.buttonGlowON(splitDistanceOkButton, Color.CYAN, 25);
+	}
 
+	@FXML
+	private void splitDistanceOkButtonOnMouseExited() {
+		GenericController.buttonGlowOFF(splitDistanceOkButton);
+	} 
+	
+	@FXML
+	private void splitDistanceOkButtonOnClick() {
+		SoundManager.getInstance().playSound("button_click");
+		board.setSplitDistance(Integer.parseInt(splitDistanceLabel1.getText()));
+		splitDistanceAnchorPane.setVisible(false);
+	}
+	
+	
+	@FXML
+	private void splitDistanceCancelButtonOnMouseEntered() {
+		GenericController.buttonGlowON(splitDistanceCancelButton, Color.CYAN, 25);
+	}
+
+	@FXML
+	private void splitDistanceCancelButtonOnMouseExited() {
+		GenericController.buttonGlowOFF(splitDistanceCancelButton);
+	} 
+	
+	@FXML
+	private void splitDistanceCancelButtonOnClick() {
+		SoundManager.getInstance().playSound("button_click");
+		splitDistanceAnchorPane.setVisible(false);
+	}
+	
+	@FXML
+	private void onSplitDistanceSliderChanged() {
+	    int label1Val = (int) splitDistanceSlider.getValue();
+	    int label2Val = 7 - label1Val;
+
+	    splitDistanceLabel1.setText(String.valueOf(label1Val));
+	    splitDistanceLabel2.setText(String.valueOf(label2Val));
+	}
+
+	
+	
 }

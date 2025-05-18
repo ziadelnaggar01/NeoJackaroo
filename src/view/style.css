@@ -17,3 +17,21 @@
     -fx-text-fill: #111184;
     -fx-effect: dropshadow(gaussian, #111184, 24, 0.8, 0, 0);
 }
+.slider .track {
+    -fx-background-color: linear-gradient(to right, #00ffff, #00e6e6);
+    -fx-background-radius: 5;
+    -fx-pref-height: 4px; /* Thickness */
+    -fx-effect: dropshadow(gaussian, #00ffff, 5, 0.3, 0, 0);
+}
+
+/* Neon thumb (draggable handle) */
+.slider .thumb {
+    -fx-background-color: #00ffff;
+    -fx-background-radius: 50%;
+    -fx-pref-width: 14px;
+    -fx-pref-height: 14px;
+    -fx-effect: dropshadow(gaussian, #00ffff, 10, 0.5, 0, 0);
+    -fx-border-width: 2;
+    
+}
+
