@@ -35,7 +35,7 @@ public class Player {
 		this.selectedMarbles = new ArrayList<>();
 		
 		// Create 4 marbles with the same colour as the player
-		for(int i=0; i<4; i++)
+		for(int i=0; i<4; i++) // 0
 			marbles.add(new Marble(colour));
 		
 		this.selectedCard = null;

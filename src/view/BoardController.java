@@ -50,9 +50,27 @@ import model.player.CPU;
 import model.player.Marble;
 import model.player.Player;
 import engine.Game;
+import exception.GameException;
+import exception.InvalidCardException;
+import exception.InvalidMarbleException;
 
 public class BoardController {
 
+	private Game game;
+	private ArrayList<Player> players;
+
+	@FXML
+	private Label nextPlayerLabel;
+	@FXML
+	private Label currentPlayerLabel;
+	@FXML
+	private Label CPU1Name;
+	@FXML
+	private Label CPU2Name;
+	@FXML
+	private Label CPU3Name;
+	@FXML
+	private Label userName;
 	// Store selected marbles globally or in your controller class
 	private final Set<Circle> selectedMarbles = new HashSet<>();
 
@@ -82,6 +100,9 @@ public class BoardController {
 	List<Circle> movableMarbles = new ArrayList<>();
 	@FXML
 	List<List<Circle>> safeZone = new ArrayList<>();
+	
+	
+	Map<Circle, Circle> cur_pos = new HashMap<>();
 	@FXML
 	ImageView firepit;
 	@FXML
@@ -93,20 +114,150 @@ public class BoardController {
 	@FXML
 	private GridPane D;
 
+	int currentPlayerIndex = 0;
 	@FXML
 	public void initialize() throws IOException {
-		// Load the marble image
 		Set_Your_Track();
 		Set_movable_marbles();
 		Set_safe_zone();
-		Game g = new Game("shit");
-		set_ALL_Hand(g.getPlayers());
-		// destroy_it(movableMarbles.get(0), 1);
-		// swap(movableMarbles.get(0), movableMarbles.get(4));
-		// destroy_it(movableMarbles.get(0));
-		// move_backword(movableMarbles.get(0), 99, 10);
-		// Trap(movableMarbles.get(0), 2);
 
+		game = new Game("PlayerName");
+		 // use a valid name
+		set_ALL_Hand(game.getPlayers());
+
+		ArrayList<ImageView> gg = new ArrayList<>();
+		gg.add(playerCard1);
+		gg.add(playerCard2);
+		gg.add(playerCard3);
+		gg.add(playerCard4);
+		setupCardSelection(gg);
+
+		continueGameLoop();
+	}
+	private void continueGameLoop( ) {
+		if (game.checkWin() != null) {
+			System.out.println("Game over. Winner: " + game.checkWin());
+			return;
+		}
+
+		Colour curPlayer = game.getActivePlayerColour();
+		ArrayList<Player> players = game.getPlayers();
+		 currentPlayerIndex = GetIndex(players, curPlayer);
+
+		if (!game.canPlayTurn()) {
+			// Handle "cannot play" case with a popup
+			System.out.println("Player cannot play. Skipping turn.");
+			game.endPlayerTurn();
+		//	Platform.runLater(this::continueGameLoop);  // Schedule next loop
+			return;
+		}else
+		{
+			if (currentPlayerIndex == 0) {
+				
+				System.out.println("Waiting for player to click Play.");
+			//	userClickedPlay = false;
+			} else {
+				// AI/other players
+				System.out.println("AI is playing...");
+				try {
+					game.playPlayerTurn();
+				} catch (GameException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			//	game.advanceTurn();
+			//	Platform.runLater(this::continueGameLoop); // Proceed after turn
+			}
+		}
+
+		
+	}
+
+	@FXML
+	private void onPlayClicked() {
+		if (currentPlayerIndex != 0) return; 
+		System.out.println("User selected marbles:");
+		for (Circle marble : selectedMarbles) {
+			System.out.println("Marble ID: " + marble.getId());
+		}
+		Player Cur_Player = game.getPlayers().get(currentPlayerIndex);
+		Card card;
+		switch(selectedCardID.charAt(7))
+		{
+		case '1':
+			card = Cur_Player.getHand().get(0);
+		case '2':
+			card = Cur_Player.getHand().get(1);
+		case '3':
+			card = Cur_Player.getHand().get(2);
+		case '4':
+			card = Cur_Player.getHand().get(3);
+		default:
+			card = null;
+		}
+		
+		try {
+			Cur_Player.selectCard(card);
+			for (Circle marble : selectedMarbles) {
+					Circle where_Iam =cur_pos.get(marble);
+					Marble cur_m = null;
+					switch(where_Iam.getId().charAt(1))
+					{
+					case 'A': // homecell
+						cur_m = Cur_Player.getMarbles().get((where_Iam.getId().charAt(2) - '0')-1);
+						break;
+					case 'a': // safezone
+						cur_m = game.getBoard()
+			             .getSafeZones()
+			             .get(0)
+			             .getCells()
+			             .get((where_Iam.getId().charAt(2) - '0') - 1)
+			             .getMarble();
+						break;
+					default: // track
+						String num_st = "";
+						for(int i = 1;i< where_Iam.getId().length();i++)
+							num_st += where_Iam.getId().charAt(2);
+						int num = Integer.parseInt(num_st);
+						cur_m = game.getBoard().getTrack().get(num).getMarble();
+					}
+					
+				try
+				{
+					Cur_Player.selectMarble(cur_m);
+				}
+				catch(InvalidMarbleException e)
+				{
+					
+				}
+			}
+		} catch (InvalidCardException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			game.playPlayerTurn();
+		} catch (InvalidCardException e) {
+	       e.getMessage();
+		}catch(InvalidMarbleException e)
+		{
+			e.getMessage();
+		} catch (GameException e) {
+			e.getMessage();
+		}
+		//continueGameLoop(); // Resume loop after player's action
+	}
+	
+	public int GetIndex(ArrayList<Player> y,Colour col)
+	{
+		for(int i = 0;i<4;i++)
+		{
+			if(y.get(i).getColour() == col)
+			return i;
+		}
+		return -1;
 	}
 
 	public void set_ALL_Hand(ArrayList<Player> players) {
@@ -155,7 +306,7 @@ public class BoardController {
 	                playerCard1.setImage(cardImage);
 	                break;
 	            case 1:
-	                playerCard2.setImage(cardImage);
+	                playerCard2.setImage(cardImage);    
 	                break;
 	            case 2:
 	                playerCard3.setImage(cardImage);
@@ -187,15 +338,6 @@ public class BoardController {
 			selectedMarbles.add(clickedMarble);
 			clickedMarble.setEffect(new DropShadow(15, Color.YELLOW));
 		}
-	}
-
-	@FXML
-	private void onPlayClicked() {
-		System.out.println("User selected marbles:");
-		for (Circle marble : selectedMarbles) {
-			System.out.println("Marble ID: " + marble.getId());
-		}
-		// Here you can process the selected marbles as needed
 	}
 
 	private void swap(Circle a, Circle b) {
@@ -313,6 +455,7 @@ public class BoardController {
 					circle.setFill(new ImagePattern(marbleImage));
 					circle.setStroke(Color.TRANSPARENT);
 					movableMarbles.add(circle);
+					cur_pos.put(circle,circle); //set on track
 				}
 
 				if (circle.getId().charAt(1) == 'A' || circle.getId().charAt(1) == 'B'
@@ -358,7 +501,7 @@ public class BoardController {
 	public void move_from_to(Circle x, Circle y) {
 		// Smoothly resize x to match y
 		smoothlyResize(x, y).play();
-
+		cur_pos.put(x, y); // set the new position of your marble
 		// Compute the target position
 		double targetX = y.getLayoutX();
 		double targetY = y.getLayoutY();
@@ -458,8 +601,10 @@ public class BoardController {
 		double startX = marble.getLayoutX();
 		double startY = marble.getLayoutY();
 
+		Circle New_Pos = null;
 		for (int i = st; i < st + steps; i++) {
 			Circle target = (Circle) pathNodes.get((i % 100));
+			New_Pos = target;
 			double targetX = target.getLayoutX() - startX;
 			double targetY = target.getLayoutY() - startY;
 
@@ -470,6 +615,7 @@ public class BoardController {
 			transitions.add(transition);
 		}
 
+		cur_pos.put(marble, New_Pos); // set the new position of the marble to be in a new location
 		SequentialTransition movementSequence = new SequentialTransition();
 		movementSequence.getChildren().addAll(transitions);
 
@@ -478,8 +624,6 @@ public class BoardController {
 		masterSequence.getChildren().addAll(resizeTransition, movementSequence);
 
 		masterSequence.setOnFinished(e -> {
-			movableMarbles.remove(marble);
-			movableMarbles.add(pathNodes.get(pathNodes.size() - 1));
 			System.out.println("Smooth and accurate movement finished.");
 		});
 
@@ -548,22 +692,6 @@ public class BoardController {
 	// Setting up names & set current and next player
 
 	// you need to initialize these values, get players from game
-	private Game game;
-	private ArrayList<Player> players;
-
-	@FXML
-	private Label nextPlayerLabel;
-	@FXML
-	private Label currentPlayerLabel;
-	@FXML
-	private Label CPU1Name;
-	@FXML
-	private Label CPU2Name;
-	@FXML
-	private Label CPU3Name;
-	@FXML
-	private Label userName;
-
 	private ArrayList<String> cpuNames = new ArrayList<>(Arrays.asList(
 
 			// Serious / Intellectual
