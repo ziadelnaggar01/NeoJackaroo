@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class settingsController {
+public class Controller {
 
 	// audio related
 

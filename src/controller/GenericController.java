@@ -54,4 +54,17 @@ public final class GenericController {
 	public static void buttonGlowOFF(ImageView image) {
 		image.setEffect(null);
 	}
+	
+	
+	public static String extractCardRank(String ID){
+		String rank="";
+		for (int i=0;i<ID.length();i++){
+			char c=ID.charAt(i);
+			if (c>='0'&&c<='9'){// assumption: numbers only used to represent rank 
+				rank+=c;
+			}
+		}
+		return rank;
+	}
+	
 }

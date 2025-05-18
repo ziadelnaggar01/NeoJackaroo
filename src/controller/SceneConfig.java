@@ -18,8 +18,13 @@ public class SceneConfig {
     private Parent playerNameScene;
     private Parent gameScene;
     private Parent exceptionScene;
+    private Parent descriptionScene;
+
     private boolean inGame = false;
     private BoardController gameController;
+    private view.description.Controller descriptionController;
+
+    
 
     // Private constructor: load all FXML here
     private SceneConfig() {
@@ -28,13 +33,21 @@ public class SceneConfig {
             endScene        = FXMLLoader.load(getClass().getResource("/view/endScreen/Scene.fxml"));
             howToPlayScene  = FXMLLoader.load(getClass().getResource("/view/HowToPlayScreen/Scene.fxml"));
             playerNameScene = FXMLLoader.load(getClass().getResource("/view/PlayerName/Scene.fxml"));
-            settingsScene   = FXMLLoader.load(getClass().getResource("/view/settingsMenu/SettingsScene.fxml"));
-            exceptionScene  = FXMLLoader.load(getClass().getResource("/view/exception/ExceptionScene .fxml"));
+            settingsScene   = FXMLLoader.load(getClass().getResource("/view/settingsMenu/Scene.fxml"));
+            exceptionScene  = FXMLLoader.load(getClass().getResource("/view/exception/Scene.fxml"));
+
             
             // Load Game Scene and controller
             FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("/view/BoardScene.fxml"));
             gameScene = gameLoader.load();
             gameController = gameLoader.getController();
+            
+            
+            //load Description scene and controller
+            FXMLLoader descriptionLoader = new FXMLLoader(getClass().getResource("/view/description/Scene.fxml"));
+            descriptionScene = descriptionLoader.load();
+            descriptionController = descriptionLoader.getController();
+            
         } catch (IOException e) {
             e.printStackTrace();
             // You may want to throw a runtime exception here if any scene fails to load
@@ -54,6 +67,8 @@ public class SceneConfig {
     public Parent getGameScene()       { return gameScene; }
 	public Parent getSettingsScene() { return settingsScene; }
 	public Parent getExceptionScene() { return exceptionScene; }
+	public Parent getDescriptionScene() { return descriptionScene; }
+
 
 
 	public boolean isInGame() {
@@ -67,4 +82,8 @@ public class SceneConfig {
 	public void setPlayerName(String name) {
 		gameController.assignNames(name);
 	  }
+	
+	public view.description.Controller getDescriptionController() {
+	    return descriptionController;
+	}
 }

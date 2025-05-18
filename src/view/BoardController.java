@@ -21,6 +21,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.Node;
 import javafx.util.Duration;
 import javafx.scene.Parent;
+import javafx.scene.input.MouseButton;
 
 import java.io.IOException;
 import java.net.URL;
@@ -130,7 +131,7 @@ public class BoardController {
 		gg.add(playerCard2);
 		gg.add(playerCard3);
 		gg.add(playerCard4);
-		setupCardSelection(gg);
+		setupCards(gg);
 
 		continueGameLoop();
 	}
@@ -753,28 +754,55 @@ public class BoardController {
 	// ----------------------------------------------------------
 	// Cards methods
 
-	// A method given a hand of a player, initializes the on mouse click function of
+	public void createCards() {
+		ArrayList<ImageView> list = new ArrayList<>();
+		list.add(playerCard1);
+		list.add(playerCard2);
+		list.add(playerCard3);
+		list.add(playerCard4);
+		setupCards(list);
+	}
+
+	// A method given a hand of a player, initializes the on mouse click
+	// function of
 	// each card
 	// the on mouse click allows selection of only 1 card and updates the ID of
 	// selected card accordingly, while providing animation
-	private void setupCardSelection(ArrayList<ImageView> cards) {
+	private void setupCards(ArrayList<ImageView> cards) {
 		for (ImageView card : cards) {
 			card.setOnMouseClicked(event -> {
-				for (ImageView c : cards) {
-					boolean isSelected = (c == card);
-					selectCard(c, isSelected);
-					if (isSelected) {
-						selectedCardID = c.getId(); // Set the fx:id
-						// Optional: Debug output
-						System.out.println("Selected card ID: " + selectedCardID);
+				if (event.getButton() == MouseButton.PRIMARY) {
+					// Left-click: select the card
+					for (ImageView c : cards) {
+						boolean isSelected = (c == card);
+						selectCard(c, isSelected);
+						if (isSelected) {
+							selectedCardID = c.getId();
+							System.out.println("Selected card ID: "
+									+ selectedCardID);
+						}
 					}
+					// Right-click: show description
+
+				} else if (event.getButton() == MouseButton.SECONDARY) {
+					// Get the existing controller loaded via SceneConfig
+					Image image = card.getImage();
+
+					String cardID =  image.impl_getUrl(); // This returns the path/URL, which is null xD
+					cardID=card.getId();
+					
+					System.out.println(cardID);
+					view.description.Controller controller = SceneConfig
+							.getInstance().getDescriptionController();
+					controller.showCardDescription(cardID, event);
 				}
 			});
 		}
 	}
 
 	private void selectCard(ImageView card, boolean select) {
-		TranslateTransition tt = new TranslateTransition(Duration.millis(150), card);
+		TranslateTransition tt = new TranslateTransition(Duration.millis(150),
+				card);
 		tt.setToY(select ? -15 : 0); // Move up if selected, reset if not
 		tt.play();
 
@@ -789,32 +817,12 @@ public class BoardController {
 		}
 	}
 
-	private void disableCardSelection(ImageView card) {// called when a card is played/sent to firepit
+	private void disableCardSelection(ImageView card) {// called when a card is
+														// // played/sent to
+														// firepit
 		card.setOnMouseClicked(null);
-
 	}
-	
-	
-//-------------------------------------------------------------------------------------
-	// Hover over description feature
-	private final Map<String, String> description = new HashMap<String, String>() {{
-	    put("1", "Fields one of your marbles onto the track or moves one marble 1 step");
-	    put("2", "Moves one of your marbles 2 steps");
-	    put("3", "Moves one of your marbles 3 steps");
-	    put("4", "Moves one of your marbles 4 steps backwards");
-	    put("5", "Moves any marble 5 steps, if you move an opponent's mable, it does'nt enter a safe zone");
-	    put("6", "Moves one of your marbles 6 steps");
-	    put("7", "Moves of your marbles 7 steps or moves 2 marbles a total of 7 steps");
-	    put("8", "Moves of your marbles 8 steps");
-	    put("9", "Moves of your marbles 9 steps");
-	    put("10", "Moves of your marbles 10 steps or discards a random card from the next player and skips his turn");
-	    put("11", "Moves one of your marbles 11 steps or swaps one of your marbles with another");
-	    put("12", "Moves of your marbles 12 steps or discards a random card from a random player and skips his turn");
-	    put("13", "Fields one of your marbles onto the track or moves one marble 13 steps destroying all marbles in it's path");
-	    put("14", "Sends an opponent marble back to his home zone");
-	    put("15", "Sends one of you marbles to a random empty safe cell");
-	}};
-	
+
 	
 	
 
