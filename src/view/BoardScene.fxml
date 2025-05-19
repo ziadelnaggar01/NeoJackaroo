@@ -52,7 +52,7 @@
                <children>
                   <ImageView fx:id="playerB1" fitHeight="107.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="100.0" />
@@ -60,7 +60,7 @@
                   </ImageView>
                   <ImageView fx:id="playerB2" fitHeight="110.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
                      <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="10.0" />
@@ -68,7 +68,7 @@
                   </ImageView>
                   <ImageView fx:id="playerB4" fitHeight="115.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="10.0" />
@@ -76,7 +76,7 @@
                   </ImageView>
                   <ImageView fx:id="playerB3" fitHeight="118.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
                      <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="100.0" />
@@ -178,7 +178,7 @@
                <children>
                         <ImageView fx:id="playerC1" fitHeight="115.0" fitWidth="71.0" preserveRatio="true" rotate="-90.0">
                             <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="50.0" top="120.0" />
@@ -186,7 +186,7 @@
                         </ImageView>
                         <ImageView fx:id="playerC4" fitHeight="123.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets right="100.0" />
@@ -194,7 +194,7 @@
                         </ImageView>
                         <ImageView fx:id="playerC3" fitHeight="116.0" fitWidth="73.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
                             <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="50.0" />
@@ -202,7 +202,7 @@
                         </ImageView>
                         <ImageView fx:id="playerC2" fitHeight="110.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
                             <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets right="100.0" top="120.0" />
@@ -235,7 +235,7 @@
                <children>
                   <ImageView fx:id="playerD1" fitHeight="124.0" fitWidth="72.0" preserveRatio="true" rotate="-90.0">
                      <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="50.0" />
@@ -243,7 +243,7 @@
                   </ImageView>
                   <ImageView fx:id="playerD4" fitHeight="104.0" fitWidth="76.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="30.0" right="150.0" />
@@ -251,7 +251,7 @@
                   </ImageView>
                   <ImageView fx:id="playerD3" fitHeight="109.0" fitWidth="76.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
                      <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="50.0" />
@@ -259,7 +259,7 @@
                   </ImageView>
                   <ImageView fx:id="playerD2" fitHeight="123.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
                      <image>
-                        <Image url="@assests/deck/backk.jpg" />
+                        <Image url="@assests/deck/Final%20Back.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="30.0" />
