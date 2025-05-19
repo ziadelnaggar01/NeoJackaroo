@@ -3,7 +3,6 @@ package controller;
 import engine.Game;
 import model.card.Card;
 import model.card.standard.Standard;
-import model.card.standard.Suit;
 import model.card.wild.Burner;
 import model.card.wild.Saver;
 import model.card.wild.Wild;
@@ -15,7 +14,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 
@@ -65,9 +63,7 @@ public final class GenericController {
 		image.setEffect(null);
 	}
 
-	public static int getCardRank(ImageView image, int currentPlayerIndex,
-			Game game) {
-
+	public static int getCardRank(ImageView image, int currentPlayerIndex, Game game) {
 		Player Cur_Player = game.getPlayers().get(currentPlayerIndex);
 		Card card;
 		String selectedCardID = image.getId();
@@ -95,11 +91,9 @@ public final class GenericController {
 
 		} else if (card instanceof Wild) {
 			if (card instanceof Burner) {
-				Burner card1 = (Burner) card;
 				int rank = 14;
 				return rank;
 			} else if (card instanceof Saver) {
-				Saver card1 = (Saver) card;
 				int rank = 15;
 				return rank;
 			}

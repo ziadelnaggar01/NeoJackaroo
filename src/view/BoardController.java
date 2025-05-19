@@ -93,9 +93,8 @@ public class BoardController {
 	private ImageView playerCard4;
 	@FXML
 	private AnchorPane animationPane;
-	// Deck position (e.g., center of the board or anywhere you like)
-	private final double deckX = 448;
-	private final double deckY = 396;
+
+	
 	@FXML
 	List<Circle> track = new ArrayList<>();
 	@FXML
@@ -670,22 +669,6 @@ public class BoardController {
 		// }
 	}
 
-	private void distributeCards() {
-		// for (int i = 0; i < cards.size(); i++) {
-		// ImageView card = cards.get(i);
-		// double targetX = targetPositions[i][0];
-		// double targetY = targetPositions[i][1];
-		//
-		// TranslateTransition transition = new
-		// TranslateTransition(Duration.seconds(0.5), card);
-		// transition.setToX(targetX - deckX);
-		// transition.setToY(targetY - deckY);
-		// transition.setDelay(Duration.seconds(i * 0.3)); // Staggered
-		// animation
-		// transition .setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
-		// transition.play();
-		// }
-	}
 
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// Code for settings
