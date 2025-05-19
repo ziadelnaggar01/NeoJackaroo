@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -58,8 +59,6 @@ import engine.Game;
 import engine.board.Board;
 import engine.board.SafeZone;
 import exception.GameException;
-import exception.InvalidCardException;
-import exception.InvalidMarbleException;
 
 public class BoardController {
 
@@ -177,6 +176,19 @@ public class BoardController {
 			Platform.runLater(this::continueGameLoop); // Next turn
 		}
 	}
+	public ImageView getImageSource(String x)
+	{
+		if(playerCard1.getId().equals(x))
+			return playerCard1;
+		if(playerCard2.getId().equals(x))
+			return playerCard2;
+		if(playerCard3.getId().equals(x))
+			return playerCard3;
+		if(playerCard4.getId().equals(x))
+			return playerCard4;
+		return null;
+		
+	}
 
 	@FXML
 	private void onPlayClicked() throws Exception {
@@ -261,9 +273,12 @@ public class BoardController {
 			}
 
 			// play according to selected cards and selected marbles
-
+            
 			curPlayer.play();
-
+            // Do your action depends on your card
+			
+			action(getImageSource(selectedCardID),selectedMarbles);
+			
 			game.endPlayerTurn();
 			Platform.runLater(this::continueGameLoop); // Continue loop after user plays
 
@@ -274,7 +289,57 @@ public class BoardController {
 			deselectAllMarbles(); // deselect animation
 		}
 	}
+	
+	public void action(ImageView selectedCard,Set<Circle> selectedMarbless)
+	{
+		int rank = GenericController.getCardRank(selectedCard,0, game);
+		switch(rank)
+		{
+		case 13:
+		case 1:
+			// select anyone from the Home Cell and send it to base
+			// I want to know which Marble in Home Cell
+			try {
 
+				int Num = 6;
+				Circle CurMarble = null;
+				for (Map.Entry<Circle, Circle> entry : marbleToCellMap.entrySet()) {
+				    Circle marble = entry.getKey();
+				    Circle cell = entry.getValue();
+	                System.out.println(marble.getId() + "   " + cell.getId());
+				   if(cell.getId().charAt(1) == 'A')
+				   { 
+					   // Home Cell
+					   if((cell.getId().charAt(2) - '0') < Num)
+					   {
+						Num =(cell.getId().charAt(2) - '0');
+						CurMarble = marble;
+					   }
+				   }
+			  }
+				//System.out.println(CurMarble.getId() + " " + Num );
+				moveToBase(CurMarble);
+				game.fieldMarble();
+			} catch(Exception e)
+			{
+				System.out.println(e.getMessage());
+			}
+			break;
+		case 7:
+			break;
+		case 11: // jack
+			Iterator<Circle> iterator = selectedMarbles.iterator();
+			List<Circle> firstTwo = new ArrayList<>();
+			swap(firstTwo.get(0),firstTwo.get(1));
+			break;
+		default: // standard
+			Circle CurMarble = selectedMarbles.iterator().next();
+			String positionString = marbleToCellMap.get(CurMarble).getId().substring(1);
+			System.out.println(positionString);
+			int num = Integer.parseInt(positionString);
+			moveThroughPath(CurMarble,num,rank,track);
+		}
+	}
 	private void deselectAllMarbles() {
 		for (Circle x : movableMarbles) {
 			if (selectedMarbles.contains(x)) {
@@ -487,6 +552,10 @@ public class BoardController {
 			b.setTranslateY(0);
 		});
 
+		Circle to = marbleToCellMap.get(a);
+		Circle too = marbleToCellMap.get(b);
+		marbleToCellMap.put(a, too);
+		marbleToCellMap.put(b, to);
 		// Play both at the same time
 		ParallelTransition swapAnim = new ParallelTransition(moveA, moveB);
 		swapAnim.play();
@@ -594,7 +663,30 @@ public class BoardController {
 
 		move.play();
 	}
-
+	public void moveToBase(Circle x)
+	{
+		char To = x.getId().charAt(4);
+		String targetId = "#m";
+		if(To == 'A')
+			targetId += 0;
+		else if(To == 'B')
+			targetId  +=  25;
+		else if(To == 'C')
+		{
+			targetId += 50;
+		}else
+		{
+			targetId += 75;
+		}
+		System.out.println(targetId);
+		// Find the destination circle
+		Circle y = (Circle) animationPane.lookup(targetId);
+		if (y != null) {
+			move_from_to(x, y);
+		} else {
+			System.out.println("Destination circle not found: " + targetId);
+		}
+	}
 	public void Trap(Circle x, int where) {
 		// Make it grow big
 		ScaleTransition growBig = new ScaleTransition(Duration.millis(1000), x);
@@ -618,20 +710,19 @@ public class BoardController {
 
 		// After growing big, move to base
 		growBig.setOnFinished(e -> {
-			move_to_base(x, where);
+			moveToHome(x, where);
 		});
 
 		growBig.play();
 	}
 
-	public void move_to_base(Circle x, int where) {
+	public void moveToHome(Circle x, int where) {
 		// Extract label char from x's ID, like 'A' from "moveA"
 		char To = x.getId().charAt(4);
 		String targetId = "#m" + To + where;
-
+		System.out.println(targetId);
 		// Find the destination circle
 		Circle y = (Circle) animationPane.lookup(targetId);
-
 		if (y != null) {
 			move_from_to(x, y);
 		} else {
@@ -654,14 +745,10 @@ public class BoardController {
 			System.out.println("Failed to play sound:");
 			e.printStackTrace();
 		}
-		move_to_base(c, where);
+		moveToHome(c, where);
 	}
 
 	private void moveThroughPath(Circle marble, int st, int steps, List<Circle> pathNodes) {
-		// Set marble image
-		Image image = new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png"));
-		marble.setFill(new ImagePattern(image));
-
 		// Create the resize transition but don't play it yet
 		ScaleTransition resizeTransition = smoothlyResize(marble, pathNodes.get(0));
 
@@ -672,7 +759,7 @@ public class BoardController {
 		double startY = marble.getLayoutY();
 
 		Circle New_Pos = null;
-		for (int i = st; i < st + steps; i++) {
+		for (int i = st; i <= st + steps; i++) {
 			Circle target = (Circle) pathNodes.get((i % 100));
 			New_Pos = target;
 			double targetX = target.getLayoutX() - startX;

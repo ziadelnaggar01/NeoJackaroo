@@ -243,6 +243,7 @@ public class Game implements GameManager {
 			throw new CannotFieldException("You can’t summon what doesn’t exist, no marbles to field!");
 		} else {
 			board.sendToBase(x); // throws
+			System.out.println("I fielded");
 			players.get(currentPlayerIndex).getMarbles().remove(0);
 		}
 	}
