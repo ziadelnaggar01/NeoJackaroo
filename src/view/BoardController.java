@@ -284,7 +284,10 @@ public class BoardController {
 		}
 	}
 
-	
+	@FXML private Label basePlayer1;
+	@FXML private Label basePlayer2;
+	@FXML private Label basePlayer3;
+	@FXML private Label basePlayer4;
 	// Link colours to back-end
 	private void assignColours() {
 		ArrayList<SafeZone> safeZones = game.getBoard().getSafeZones();
@@ -338,6 +341,32 @@ public class BoardController {
 				}
 			}
 		}
+		
+		// Map each label to its player’s color
+		Label[] bases = { basePlayer1, basePlayer2, basePlayer3, basePlayer4 };
+	    for (int i = 0; i < colourOrderArrayList.size() && i < bases.length; i++) {
+	        Colour colour = colourOrderArrayList.get(i);
+	        Color textFill;
+
+	        switch (colour) {
+	            case RED:
+	                textFill = Color.RED;
+	                break;
+	            case BLUE:
+	                textFill = Color.CYAN;
+	                break;
+	            case GREEN:
+	                textFill = Color.GREEN;
+	                break;
+	            case YELLOW:
+	                textFill = Color.YELLOW;
+	                break;
+	            default:
+	                textFill = Color.BLACK;  // fallback
+	        }
+
+	        bases[i].setTextFill(textFill);
+	    }
 	}
 
 	public int getIndex(ArrayList<Player> y, Colour col) {

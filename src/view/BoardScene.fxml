@@ -578,8 +578,28 @@
             <Circle fx:id="safeD4" fill="DODGERBLUE" layoutX="525.0" layoutY="695.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="moveA1" fill="#fdfeff" layoutX="99.0" layoutY="856.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="moveB1" fill="#fdfeff" layoutX="99.0" layoutY="118.0" onMouseClicked="#setupMarbleSelection" radius="38.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label fx:id="basePlayer1" layoutX="91.0" layoutY="423.0" text="B" underline="true">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="basePlayer2" layoutX="615.0" layoutY="91.0" text="B" underline="true">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="basePlayer3" layoutX="950.0" layoutY="616.0" text="B" underline="true">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="basePlayer4" layoutX="427.0" layoutY="952.0" text="B" underline="true">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <Pane fx:id="animationLayer" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Pane fx:id="animationLayer" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
