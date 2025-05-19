@@ -88,6 +88,12 @@ public class BoardController {
 	private Label CPU3Name;
 	@FXML
 	private Label userName;
+	
+	@FXML private ImageView playerB1, playerB2, playerB3, playerB4;
+	@FXML private ImageView playerC1, playerC2, playerC3, playerC4;
+	@FXML private ImageView playerD1, playerD2, playerD3, playerD4;
+	
+	private ImageView[][] cpuCards;
 
 
 	// Store selected marbles globally or in your controller class
@@ -142,14 +148,34 @@ public class BoardController {
 
 		setTrack();
 		setSafeZones();
-		// assignColours();
+		assignColours();
 		setHand();
 
 		splitDistanceAnchorPane.setVisible(false);
 		createCards();
+		
+        cpuCards = new ImageView[][] 
+        {
+            {playerB1, playerB2, playerB3, playerB4},
+            {playerC1, playerC2, playerC3, playerC4},
+            {playerD1, playerD2, playerD3, playerD4}
+        };
 
 		continueGameLoop();
 	}
+	
+
+	public void updateCpuHands() {
+        List<Player> players = game.getPlayers();
+        for (int i = 1; i <= 3; i++) {
+            Player cpu = players.get(i);
+            int handSize = cpu.getHand().size();
+            for (int j = 0; j < 4; j++) 
+            {
+                cpuCards[i - 1][j].setVisible(j < handSize);
+            }
+        }
+    }
 	
 	public void Change_Track() {
 	    // Initialize 4x4 list
