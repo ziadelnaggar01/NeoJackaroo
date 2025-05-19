@@ -86,6 +86,8 @@ public class BoardController {
 	@FXML
 	private final List<ImageView> cards = new ArrayList<>();
 
+	private ImageView selectedCardImageView;
+	
 	private String selectedCardID;
 	@FXML
 	private ImageView playerCard1;
@@ -172,6 +174,7 @@ public class BoardController {
 			} catch (GameException e) {
 				e.printStackTrace();
 			}
+			
 			game.endPlayerTurn();
 			Platform.runLater(this::continueGameLoop); // Next turn
 		}
@@ -196,7 +199,6 @@ public class BoardController {
 		Player curPlayer = game.getPlayers().get(0);
 
 		try {
-
 			// Link card selected from GUI to back end
 			Card card;
 			if (selectedCardID != null) { // if the card is null, go straight away to play(), which will throw an
@@ -278,16 +280,17 @@ public class BoardController {
             // Do your action depends on your card
 			
 			action(getImageSource(selectedCardID),selectedMarbles);
-			
+			sendToPit(selectedCardImageView);
 			game.endPlayerTurn();
 			Platform.runLater(this::continueGameLoop); // Continue loop after user plays
-
+			
 		} catch (Exception e) {
 			view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
 			exceptionController.exceptionPopUp(e, animationPane);
 			game.deselectAll(); // deselct from back-end
 			deselectAllMarbles(); // deselect animation
 		}
+		
 	}
 	
 	public void action(ImageView selectedCard,Set<Circle> selectedMarbless)
@@ -927,6 +930,7 @@ public class BoardController {
 							selectCard(c, false);
 						}
 						selectedCardID = null;
+						selectedCardImageView=null;
 						System.out.println("Deselected card.");
 					} else {
 						// Select this card and deselect others
@@ -943,6 +947,7 @@ public class BoardController {
 									// card
 									splitDistanceAnchorPane.setVisible(false);
 								selectedCardID = c.getId();
+								selectedCardImageView=c;
 								System.out.println("Selected card ID: " + selectedCardID);
 							}
 						}
