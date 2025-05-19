@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.image.ImageView;
 import view.BoardController;
 
 import java.io.IOException;
@@ -114,4 +115,9 @@ public class SceneConfig {
 	public view.exception.Controller getExceptionController() {
 		return exceptionController;
 	}
+	
+	public void discardCard(ImageView selectedCard){
+		gameController.sendToPit(selectedCard);
+	}
+	
 }

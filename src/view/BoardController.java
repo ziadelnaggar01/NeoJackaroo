@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
@@ -28,6 +29,7 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import controller.GenericController;
 import controller.SceneConfig;
 import controller.SoundManager;
@@ -87,7 +90,7 @@ public class BoardController {
 	private final List<ImageView> cards = new ArrayList<>();
 
 	private ImageView selectedCardImageView;
-	
+
 	private String selectedCardID;
 	@FXML
 	private ImageView playerCard1;
@@ -100,7 +103,6 @@ public class BoardController {
 	@FXML
 	private AnchorPane animationPane;
 
-	
 	@FXML
 	List<Circle> track = new ArrayList<>();
 	@FXML
@@ -125,16 +127,13 @@ public class BoardController {
 	@FXML
 	public void initialize() throws IOException {
 		game = new Game("PlayerName");
-		players=game.getPlayers();
-		
-		
+		players = game.getPlayers();
+
 		setTrack();
 		setSafeZones();
-		assignColours();
+		// assignColours();
 		setHand();
-		
 
-		
 		splitDistanceAnchorPane.setVisible(false);
 		createCards();
 
@@ -156,8 +155,8 @@ public class BoardController {
 		currentPlayerIndex = getIndex(players, curPlayer);
 
 		if (!game.canPlayTurn()) {
-			
-			//skip animation
+
+			// skip animation
 			System.out.println("Player cannot play. Skipping turn.");
 			game.endPlayerTurn();
 			Platform.runLater(this::continueGameLoop); // Go to next player
@@ -166,7 +165,8 @@ public class BoardController {
 
 		if (currentPlayerIndex == 0) {
 			System.out.println("Waiting for player to click Play.");
-			// Wait until user clicks play button (onPlayClicked will call continueGameLoop)
+			// Wait until user clicks play button (onPlayClicked will call
+			// continueGameLoop)
 		} else {
 			System.out.println("AI is playing...");
 			try {
@@ -174,23 +174,23 @@ public class BoardController {
 			} catch (GameException e) {
 				e.printStackTrace();
 			}
-			
+
 			game.endPlayerTurn();
 			Platform.runLater(this::continueGameLoop); // Next turn
 		}
 	}
-	public ImageView getImageSource(String x)
-	{
-		if(playerCard1.getId().equals(x))
+
+	public ImageView getImageSource(String x) {
+		if (playerCard1.getId().equals(x))
 			return playerCard1;
-		if(playerCard2.getId().equals(x))
+		if (playerCard2.getId().equals(x))
 			return playerCard2;
-		if(playerCard3.getId().equals(x))
+		if (playerCard3.getId().equals(x))
 			return playerCard3;
-		if(playerCard4.getId().equals(x))
+		if (playerCard4.getId().equals(x))
 			return playerCard4;
 		return null;
-		
+
 	}
 
 	@FXML
@@ -201,7 +201,9 @@ public class BoardController {
 		try {
 			// Link card selected from GUI to back end
 			Card card;
-			if (selectedCardID != null) { // if the card is null, go straight away to play(), which will throw an
+			if (selectedCardID != null) { // if the card is null, go straight
+											// away to play(), which will throw
+											// an
 											// exception
 				switch (selectedCardID.charAt(selectedCardID.length() - 1)) {
 				case '1':
@@ -229,26 +231,38 @@ public class BoardController {
 				switch (cellPositionOfMarble.getId().charAt(1)) {
 				case 'A': // home cell (m+player+number), player would be A
 					if (game.getPlayers().get(0).getMarbles().size() != 0) {
-						curMarble = game.getPlayers().get(0).getMarbles()
+						curMarble = game
+								.getPlayers()
+								.get(0)
+								.getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
 					break;
 				case 'B':
 					if (game.getPlayers().get(0).getMarbles().size() != 0) {
-						curMarble = game.getPlayers().get(1).getMarbles()
+						curMarble = game
+								.getPlayers()
+								.get(1)
+								.getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
 					break;
 				case 'C':
 					if (game.getPlayers().get(0).getMarbles().size() != 0) {
-						curMarble = game.getPlayers().get(2).getMarbles()
+						curMarble = game
+								.getPlayers()
+								.get(2)
+								.getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 
 					}
 					break;
 				case 'D':
 					if (game.getPlayers().get(0).getMarbles().size() != 0) {
-						curMarble = game.getPlayers().get(3).getMarbles()
+						curMarble = game
+								.getPlayers()
+								.get(3)
+								.getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
 					break;
@@ -262,12 +276,15 @@ public class BoardController {
 							break;
 						}
 					}
-					curMarble = playerSafeZone.getCells().get((cellPositionOfMarble.getId().charAt(2) - '0') - 1)
+					curMarble = playerSafeZone
+							.getCells()
+							.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1)
 							.getMarble();
 					break;
 				default: // marble is on track
 					// get cell number from id (m+number)
-					String positionString = cellPositionOfMarble.getId().substring(1);
+					String positionString = cellPositionOfMarble.getId()
+							.substring(1);
 					int num = Integer.parseInt(positionString);
 					curMarble = game.getBoard().getTrack().get(num).getMarble();
 				}
@@ -275,29 +292,30 @@ public class BoardController {
 			}
 
 			// play according to selected cards and selected marbles
-            
+
 			curPlayer.play();
-            // Do your action depends on your card
-			
-			action(getImageSource(selectedCardID),selectedMarbles);
+			// Do your action depends on your card
+
+			action(getImageSource(selectedCardID), selectedMarbles);
 			sendToPit(selectedCardImageView);
 			game.endPlayerTurn();
-			Platform.runLater(this::continueGameLoop); // Continue loop after user plays
-			
+			Platform.runLater(this::continueGameLoop); // Continue loop after
+														// user plays
+
 		} catch (Exception e) {
-			view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
-			exceptionController.exceptionPopUp(e, animationPane);
+			view.exception.Controller exceptionController = SceneConfig
+					.getInstance().getExceptionController();
+			exceptionController.exceptionPopUp(e, animationPane,
+					selectedCardImageView);
 			game.deselectAll(); // deselct from back-end
 			deselectAllMarbles(); // deselect animation
 		}
-		
+
 	}
-	
-	public void action(ImageView selectedCard,Set<Circle> selectedMarbless)
-	{
-		int rank = GenericController.getCardRank(selectedCard,0, game);
-		switch(rank)
-		{
+
+	public void action(ImageView selectedCard, Set<Circle> selectedMarbless) {
+		int rank = GenericController.getCardRank(selectedCard, 0, game);
+		switch (rank) {
 		case 13:
 		case 1:
 			// select anyone from the Home Cell and send it to base
@@ -306,25 +324,23 @@ public class BoardController {
 
 				int Num = 6;
 				Circle CurMarble = null;
-				for (Map.Entry<Circle, Circle> entry : marbleToCellMap.entrySet()) {
-				    Circle marble = entry.getKey();
-				    Circle cell = entry.getValue();
-	                System.out.println(marble.getId() + "   " + cell.getId());
-				   if(cell.getId().charAt(1) == 'A')
-				   { 
-					   // Home Cell
-					   if((cell.getId().charAt(2) - '0') < Num)
-					   {
-						Num =(cell.getId().charAt(2) - '0');
-						CurMarble = marble;
-					   }
-				   }
-			  }
-				//System.out.println(CurMarble.getId() + " " + Num );
+				for (Map.Entry<Circle, Circle> entry : marbleToCellMap
+						.entrySet()) {
+					Circle marble = entry.getKey();
+					Circle cell = entry.getValue();
+					System.out.println(marble.getId() + "   " + cell.getId());
+					if (cell.getId().charAt(1) == 'A') {
+						// Home Cell
+						if ((cell.getId().charAt(2) - '0') < Num) {
+							Num = (cell.getId().charAt(2) - '0');
+							CurMarble = marble;
+						}
+					}
+				}
+				// System.out.println(CurMarble.getId() + " " + Num );
 				moveToBase(CurMarble);
 				game.fieldMarble();
-			} catch(Exception e)
-			{
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 			break;
@@ -333,16 +349,18 @@ public class BoardController {
 		case 11: // jack
 			Iterator<Circle> iterator = selectedMarbles.iterator();
 			List<Circle> firstTwo = new ArrayList<>();
-			swap(firstTwo.get(0),firstTwo.get(1));
+			swap(firstTwo.get(0), firstTwo.get(1));
 			break;
 		default: // standard
 			Circle CurMarble = selectedMarbles.iterator().next();
-			String positionString = marbleToCellMap.get(CurMarble).getId().substring(1);
+			String positionString = marbleToCellMap.get(CurMarble).getId()
+					.substring(1);
 			System.out.println(positionString);
 			int num = Integer.parseInt(positionString);
-			moveThroughPath(CurMarble,num,rank,track);
+			moveThroughPath(CurMarble, num, rank, track);
 		}
 	}
+
 	private void deselectAllMarbles() {
 		for (Circle x : movableMarbles) {
 			if (selectedMarbles.contains(x)) {
@@ -352,90 +370,102 @@ public class BoardController {
 		}
 	}
 
-	@FXML private Label basePlayer1;
-	@FXML private Label basePlayer2;
-	@FXML private Label basePlayer3;
-	@FXML private Label basePlayer4;
+	@FXML
+	private Label basePlayer1;
+	@FXML
+	private Label basePlayer2;
+	@FXML
+	private Label basePlayer3;
+	@FXML
+	private Label basePlayer4;
+
 	// Link colours to back-end
-	private void assignColours() {
-		ArrayList<SafeZone> safeZones = game.getBoard().getSafeZones();
-
-		ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
-		for (SafeZone s : safeZones) {
-			colourOrderArrayList.add(s.getColour());
-		}
-
-		// Load marble images
-		Map<Colour, Image> marbleImages = new HashMap<>();
-		marbleImages.put(Colour.BLUE, new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png")));
-		marbleImages.put(Colour.GREEN,
-				new Image(getClass().getResourceAsStream("/view/assests/scene/GreenMarble.png")));
-		marbleImages.put(Colour.YELLOW,
-				new Image(getClass().getResourceAsStream("/view/assests/scene/YellowMarble.png")));
-		marbleImages.put(Colour.RED, new Image(getClass().getResourceAsStream("/view/assests/scene/RedMarble.png")));
-
-		for (Node node : animationPane.getChildren()) {
-			if (node instanceof Circle circle) {
-				String id = circle.getId();
-				if (id != null && id.startsWith("move") && id.length() > 5) {
-					char who = id.charAt(4);
-					int index = who - 'A'; // A->0, B->1, etc.
-
-					Image marbleImage = marbleImages.getOrDefault(
-							index >= 0 && index < colourOrderArrayList.size() ? colourOrderArrayList.get(index)
-									: Colour.BLUE, // fallback
-							marbleImages.get(Colour.BLUE));
-
-					circle.setFill(new ImagePattern(marbleImage));
-					circle.setStroke(Color.TRANSPARENT);
-					movableMarbles.add(circle);
-
-					String posId = "#m" + who + id.charAt(5);
-					Node mapNode = animationPane.lookup(posId);
-					if (mapNode instanceof Circle) {
-						marbleToCellMap.put(circle, (Circle) mapNode);
-					} else {
-						System.out.println("Could not find target circle for ID: " + posId);
-					}
-				}
-
-				// Reset fill for other circles marked A-D
-				if (circle.getId() != null && circle.getId().length() > 1) {
-					char playerChar = circle.getId().charAt(1);
-					if (playerChar == 'A' || playerChar == 'B' || playerChar == 'C' || playerChar == 'D') {
-						circle.setFill(Color.TRANSPARENT);
-						circle.setStroke(Color.TRANSPARENT);
-					}
-				}
-			}
-		}
-		
-		// Map each label to its player’s color
-		Label[] bases = { basePlayer1, basePlayer2, basePlayer3, basePlayer4 };
-	    for (int i = 0; i < colourOrderArrayList.size() && i < bases.length; i++) {
-	        Colour colour = colourOrderArrayList.get(i);
-	        Color textFill;
-
-	        switch (colour) {
-	            case RED:
-	                textFill = Color.RED;
-	                break;
-	            case BLUE:
-	                textFill = Color.CYAN;
-	                break;
-	            case GREEN:
-	                textFill = Color.GREEN;
-	                break;
-	            case YELLOW:
-	                textFill = Color.YELLOW;
-	                break;
-	            default:
-	                textFill = Color.BLACK;  // fallback
-	        }
-
-	        bases[i].setTextFill(textFill);
-	    }
-	}
+	// private void assignColours() {
+	// ArrayList<SafeZone> safeZones = game.getBoard().getSafeZones();
+	//
+	// ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
+	// for (SafeZone s : safeZones) {
+	// colourOrderArrayList.add(s.getColour());
+	// }
+	//
+	// // Load marble images
+	// Map<Colour, Image> marbleImages = new HashMap<>();
+	// marbleImages.put(Colour.BLUE, new
+	// Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png")));
+	// marbleImages.put(Colour.GREEN,
+	// new
+	// Image(getClass().getResourceAsStream("/view/assests/scene/GreenMarble.png")));
+	// marbleImages.put(Colour.YELLOW,
+	// new
+	// Image(getClass().getResourceAsStream("/view/assests/scene/YellowMarble.png")));
+	// marbleImages.put(Colour.RED, new
+	// Image(getClass().getResourceAsStream("/view/assests/scene/RedMarble.png")));
+	//
+	// for (Node node : animationPane.getChildren()) {
+	// if (node instanceof Circle circle) {
+	// String id = circle.getId();
+	// if (id != null && id.startsWith("move") && id.length() > 5) {
+	// char who = id.charAt(4);
+	// int index = who - 'A'; // A->0, B->1, etc.
+	//
+	// Image marbleImage = marbleImages.getOrDefault(
+	// index >= 0 && index < colourOrderArrayList.size() ?
+	// colourOrderArrayList.get(index)
+	// : Colour.BLUE, // fallback
+	// marbleImages.get(Colour.BLUE));
+	//
+	// circle.setFill(new ImagePattern(marbleImage));
+	// circle.setStroke(Color.TRANSPARENT);
+	// movableMarbles.add(circle);
+	//
+	// String posId = "#m" + who + id.charAt(5);
+	// Node mapNode = animationPane.lookup(posId);
+	// if (mapNode instanceof Circle) {
+	// marbleToCellMap.put(circle, (Circle) mapNode);
+	// } else {
+	// System.out.println("Could not find target circle for ID: " + posId);
+	// }
+	// }
+	//
+	// // Reset fill for other circles marked A-D
+	// if (circle.getId() != null && circle.getId().length() > 1) {
+	// char playerChar = circle.getId().charAt(1);
+	// if (playerChar == 'A' || playerChar == 'B' || playerChar == 'C' ||
+	// playerChar == 'D') {
+	// circle.setFill(Color.TRANSPARENT);
+	// circle.setStroke(Color.TRANSPARENT);
+	// }
+	// }
+	// }
+	// }
+	//
+	// // Map each label to its player’s color
+	// Label[] bases = { basePlayer1, basePlayer2, basePlayer3, basePlayer4 };
+	// for (int i = 0; i < colourOrderArrayList.size() && i < bases.length; i++)
+	// {
+	// Colour colour = colourOrderArrayList.get(i);
+	// Color textFill;
+	//
+	// switch (colour) {
+	// case RED:
+	// textFill = Color.RED;
+	// break;
+	// case BLUE:
+	// textFill = Color.CYAN;
+	// break;
+	// case GREEN:
+	// textFill = Color.GREEN;
+	// break;
+	// case YELLOW:
+	// textFill = Color.YELLOW;
+	// break;
+	// default:
+	// textFill = Color.BLACK; // fallback
+	// }
+	//
+	// bases[i].setTextFill(textFill);
+	// }
+	// }
 
 	public int getIndex(ArrayList<Player> y, Colour col) {
 		for (int i = 0; i < 4; i++) {
@@ -449,7 +479,7 @@ public class BoardController {
 		String basePathRoot = "/view/assests/deck/";
 		int i = 0;
 		Player player = players.get(i);
-		
+
 		for (int j = 0; j < 4; j++) {
 			String basePath = basePathRoot;
 			Card curCard = player.getHand().get(j);
@@ -483,7 +513,8 @@ public class BoardController {
 					basePath += "saver.jpg";
 				}
 			}
-			Image cardImage = new Image(getClass().getResourceAsStream(basePath));
+			Image cardImage = new Image(getClass()
+					.getResourceAsStream(basePath));
 
 			switch (j) {
 			case 0:
@@ -505,7 +536,8 @@ public class BoardController {
 
 	private void setSafeZones() {
 		for (Node node : animationPane.getChildren()) {
-			if (node instanceof Circle && node.getId() != null && node.getId().startsWith("safe")) {
+			if (node instanceof Circle && node.getId() != null
+					&& node.getId().startsWith("safe")) {
 				((Circle) node).setFill(Color.TRANSPARENT);
 			}
 		}
@@ -532,11 +564,13 @@ public class BoardController {
 		double by = b.getLayoutY();
 
 		// Create transitions for each marble
-		TranslateTransition moveA = new TranslateTransition(Duration.millis(1000), a);
+		TranslateTransition moveA = new TranslateTransition(
+				Duration.millis(1000), a);
 		moveA.setByX(bx - ax);
 		moveA.setByY(by - ay);
 
-		TranslateTransition moveB = new TranslateTransition(Duration.millis(1000), b);
+		TranslateTransition moveB = new TranslateTransition(
+				Duration.millis(1000), b);
 		moveB.setByX(ax - bx);
 		moveB.setByY(ay - by);
 
@@ -622,7 +656,8 @@ public class BoardController {
 				track.add(circle); // Add to your track list
 			} else {
 				// Debugging: If the circle doesn't exist, print a warning
-				System.out.println("Warning: Circle with fx:id m" + i + " not found.");
+				System.out.println("Warning: Circle with fx:id m" + i
+						+ " not found.");
 			}
 		}
 	}
@@ -632,10 +667,12 @@ public class BoardController {
 		double circle2Radius = circle2.getRadius();
 		double scaleFactor = circle2Radius / circle1Radius;
 
-		ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1.5), circle1);
+		ScaleTransition scaleTransition = new ScaleTransition(
+				Duration.seconds(1.5), circle1);
 		scaleTransition.setToX(scaleFactor);
 		scaleTransition.setToY(scaleFactor);
-		scaleTransition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
+		scaleTransition
+				.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
 
 		return scaleTransition;
 	}
@@ -649,7 +686,8 @@ public class BoardController {
 		double targetY = y.getLayoutY();
 
 		// Create translation animation
-		TranslateTransition move = new TranslateTransition(Duration.millis(1500), x); // match duration
+		TranslateTransition move = new TranslateTransition(
+				Duration.millis(1500), x); // match duration
 		move.setToX(targetX - x.getLayoutX());
 		move.setToY(targetY - x.getLayoutY());
 
@@ -666,19 +704,17 @@ public class BoardController {
 
 		move.play();
 	}
-	public void moveToBase(Circle x)
-	{
+
+	public void moveToBase(Circle x) {
 		char To = x.getId().charAt(4);
 		String targetId = "#m";
-		if(To == 'A')
+		if (To == 'A')
 			targetId += 0;
-		else if(To == 'B')
-			targetId  +=  25;
-		else if(To == 'C')
-		{
+		else if (To == 'B')
+			targetId += 25;
+		else if (To == 'C') {
 			targetId += 50;
-		}else
-		{
+		} else {
 			targetId += 75;
 		}
 		System.out.println(targetId);
@@ -690,6 +726,7 @@ public class BoardController {
 			System.out.println("Destination circle not found: " + targetId);
 		}
 	}
+
 	public void Trap(Circle x, int where) {
 		// Make it grow big
 		ScaleTransition growBig = new ScaleTransition(Duration.millis(1000), x);
@@ -699,12 +736,14 @@ public class BoardController {
 		AudioClip sound = null;
 		try {
 			// Play trap sound
-			URL soundurl = getClass().getResource("/view/assests/sound/bonk.wav");
+			URL soundurl = getClass().getResource(
+					"/view/assests/sound/bonk.wav");
 			if (soundurl != null) {
 				sound = new AudioClip(soundurl.toString());
 				sound.play();
 			} else {
-				System.out.println("Sound file not found at /view/assests/sound/trap.mp3");
+				System.out
+						.println("Sound file not found at /view/assests/sound/trap.mp3");
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to play sound:");
@@ -737,12 +776,14 @@ public class BoardController {
 		// Play sound
 		try {
 			// Corrected path and renamed variable to soundurl
-			URL soundurl = getClass().getResource("/view/assests/sound/destroy.mp3");
+			URL soundurl = getClass().getResource(
+					"/view/assests/sound/destroy.mp3");
 			if (soundurl != null) {
 				AudioClip sound = new AudioClip(soundurl.toString());
 				sound.play();
 			} else {
-				System.out.println("Sound file not found at /view/assets/sound/destroy.mp3");
+				System.out
+						.println("Sound file not found at /view/assets/sound/destroy.mp3");
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to play sound:");
@@ -751,9 +792,11 @@ public class BoardController {
 		moveToHome(c, where);
 	}
 
-	private void moveThroughPath(Circle marble, int st, int steps, List<Circle> pathNodes) {
+	private void moveThroughPath(Circle marble, int st, int steps,
+			List<Circle> pathNodes) {
 		// Create the resize transition but don't play it yet
-		ScaleTransition resizeTransition = smoothlyResize(marble, pathNodes.get(0));
+		ScaleTransition resizeTransition = smoothlyResize(marble,
+				pathNodes.get(0));
 
 		// Create list of TranslateTransitions for moving the marble
 		List<TranslateTransition> transitions = new ArrayList<>();
@@ -768,14 +811,16 @@ public class BoardController {
 			double targetX = target.getLayoutX() - startX;
 			double targetY = target.getLayoutY() - startY;
 
-			TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), marble);
+			TranslateTransition transition = new TranslateTransition(
+					Duration.seconds(0.3), marble);
 			transition.setToX(targetX);
 			transition.setToY(targetY);
 			transition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
 			transitions.add(transition);
 		}
 
-		marbleToCellMap.put(marble, New_Pos); // set the new position of the marble to
+		marbleToCellMap.put(marble, New_Pos); // set the new position of the
+												// marble to
 		// be in a new location
 		SequentialTransition movementSequence = new SequentialTransition();
 		movementSequence.getChildren().addAll(transitions);
@@ -803,7 +848,6 @@ public class BoardController {
 		// boardPane.getChildren().add(card);
 		// }
 	}
-
 
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// Code for settings
@@ -842,10 +886,10 @@ public class BoardController {
 			// Serious / Intellectual
 			"Turing", "AdaNova", "Hypatia", "NeuroLynx", "Euler",
 			// Funny / Meme-worthy
-			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "NullPointer", "NotABot"));
+			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "NullPointer",
+			"NotABot"));
 
-	
-	//Called from outside the class
+	// Called from outside the class
 	public void assignNames(String playerName) {
 		Collections.shuffle(cpuNames);
 		CPU1Name.setText(cpuNames.get(0));
@@ -869,7 +913,7 @@ public class BoardController {
 	// holder accordingly
 	private void setPlayerLabel(Label label, Colour colour) {
 		int cpuCount = 0;
-		
+
 		for (Player p : players) {
 			if (!(p instanceof CPU)) {
 				if (p.getColour() == colour) {
@@ -917,7 +961,8 @@ public class BoardController {
 		for (ImageView card : cards) {
 			card.setOnMouseClicked(event -> {
 				if (event.getButton() == MouseButton.PRIMARY) {
-					boolean alreadySelected = selectedCardID != null && selectedCardID.equals(card.getId());
+					boolean alreadySelected = selectedCardID != null
+							&& selectedCardID.equals(card.getId());
 
 					if (alreadySelected) {
 						// Deselect all cards
@@ -930,7 +975,7 @@ public class BoardController {
 							selectCard(c, false);
 						}
 						selectedCardID = null;
-						selectedCardImageView=null;
+						selectedCardImageView = null;
 						System.out.println("Deselected card.");
 					} else {
 						// Select this card and deselect others
@@ -940,29 +985,34 @@ public class BoardController {
 							if (isSelected) {
 								// if the selected card is a seven, make the
 								// controller visible
-								if (GenericController.getCardRank(c, currentPlayerIndex, game) == 7)
+								if (GenericController.getCardRank(c,
+										currentPlayerIndex, game) == 7)
 									splitDistanceAnchorPane.setVisible(true);
 								else
 									// deselected the 7 by clicking on another
 									// card
 									splitDistanceAnchorPane.setVisible(false);
 								selectedCardID = c.getId();
-								selectedCardImageView=c;
-								System.out.println("Selected card ID: " + selectedCardID);
+								selectedCardImageView = c;
+								System.out.println("Selected card ID: "
+										+ selectedCardID);
 							}
 						}
 					}
 				} else if (event.getButton() == MouseButton.SECONDARY) {
 					// Right-click: show description
-					view.description.Controller controller = SceneConfig.getInstance().getDescriptionController();
-					controller.showCardDescription(event, card, currentPlayerIndex, game);
+					view.description.Controller controller = SceneConfig
+							.getInstance().getDescriptionController();
+					controller.showCardDescription(event, card,
+							currentPlayerIndex, game);
 				}
 			});
 		}
 	}
 
 	private void selectCard(ImageView card, boolean select) {
-		TranslateTransition tt = new TranslateTransition(Duration.millis(150), card);
+		TranslateTransition tt = new TranslateTransition(Duration.millis(150),
+				card);
 		tt.setToY(select ? -15 : 0); // Move up if selected, reset if not
 		tt.play();
 
@@ -982,64 +1032,70 @@ public class BoardController {
 														// firepit
 		card.setOnMouseClicked(null);
 	}
-	
-	
+
 	/**
 	 * Animate moving a card from the player's hand to the firepit.
 	 *
-	 * @param cardView The ImageView in the player's hand that was clicked.
+	 * @param cardView
+	 *            The ImageView in the player's hand that was clicked.
 	 */
-	@FXML private Pane animationLayer;
-	@FXML private ImageView firepitImage;
+	@FXML
+	private Pane animationLayer;
+	@FXML
+	private ImageView firepitImage;
 
-	private void sendToPit(ImageView cardView) {
-	    // 1) Clone & size to match the original
-	    ImageView animCard = new ImageView(cardView.getImage());
-	    double cardW = cardView.getBoundsInParent().getWidth();
-	    double cardH = cardView.getBoundsInParent().getHeight();
-	    animCard.setFitWidth(cardW);
-	    animCard.setFitHeight(cardH);
-	    animCard.setPreserveRatio(true);
-	    // Copy rotation so the clone looks the same
-	    animCard.setRotate(cardView.getRotate());
+	public void sendToPit(ImageView cardView) {
+		// 1) Clone & size to match the original
+		ImageView animCard = new ImageView(cardView.getImage());
+		double cardW = cardView.getBoundsInParent().getWidth();
+		double cardH = cardView.getBoundsInParent().getHeight();
+		animCard.setFitWidth(cardW);
+		animCard.setFitHeight(cardH);
+		animCard.setPreserveRatio(true);
+		// Copy rotation so the clone looks the same
+		animCard.setRotate(cardView.getRotate());
 
-	    // 2) Compute the source center in animationLayer coordinates
-	    Bounds localSrcBounds = cardView.getBoundsInLocal();
-	    double srcCenterX = localSrcBounds.getMinX() + localSrcBounds.getWidth()  / 2;
-	    double srcCenterY = localSrcBounds.getMinY() + localSrcBounds.getHeight() / 2;
-	    // Map that center to scene, then to layer
-	    Point2D sceneSrcCenter = cardView.localToScene(srcCenterX, srcCenterY);
-	    Point2D start = animationLayer.sceneToLocal(sceneSrcCenter);
-	    // Position the clone so its center is at `start`
-	    animCard.setLayoutX(start.getX() - cardW/2);
-	    animCard.setLayoutY(start.getY() - cardH/2);
+		// 2) Compute the source center in animationLayer coordinates
+		Bounds localSrcBounds = cardView.getBoundsInLocal();
+		double srcCenterX = localSrcBounds.getMinX()
+				+ localSrcBounds.getWidth() / 2;
+		double srcCenterY = localSrcBounds.getMinY()
+				+ localSrcBounds.getHeight() / 2;
+		// Map that center to scene, then to layer
+		Point2D sceneSrcCenter = cardView.localToScene(srcCenterX, srcCenterY);
+		Point2D start = animationLayer.sceneToLocal(sceneSrcCenter);
+		// Position the clone so its center is at `start`
+		animCard.setLayoutX(start.getX() - cardW / 2);
+		animCard.setLayoutY(start.getY() - cardH / 2);
 
-	    // 3) Hide & disable original
-	    cardView.setVisible(false);
-	    cardView.setDisable(true);
+		// 3) Hide & disable original
+		cardView.setVisible(false);
+		cardView.setDisable(true);
 
-	    // 4) Add clone to the overlay
-	    animationLayer.getChildren().add(animCard);
+		// 4) Add clone to the overlay
+		animationLayer.getChildren().add(animCard);
 
-	    // 5) Compute the target (firepit) center same way
-	    Bounds pitLocal = firepitImage.getBoundsInLocal();
-	    double pitCenterX = pitLocal.getMinX() + pitLocal.getWidth()  / 2;
-	    double pitCenterY = pitLocal.getMinY() + pitLocal.getHeight() / 2;
-	    Point2D scenePitCenter = firepitImage.localToScene(pitCenterX, pitCenterY);
-	    Point2D target = animationLayer.sceneToLocal(scenePitCenter);
+		// 5) Compute the target (firepit) center same way
+		Bounds pitLocal = firepitImage.getBoundsInLocal();
+		double pitCenterX = pitLocal.getMinX() + pitLocal.getWidth() / 2;
+		double pitCenterY = pitLocal.getMinY() + pitLocal.getHeight() / 2;
+		Point2D scenePitCenter = firepitImage.localToScene(pitCenterX,
+				pitCenterY);
+		Point2D target = animationLayer.sceneToLocal(scenePitCenter);
 
-	    // 6) Calculate how far to move (so the clone’s center ends at `target`)
-	    double toX = target.getX() - start.getX();
-	    double toY = target.getY() - start.getY();
+		// 6) Calculate how far to move (so the clone’s center ends at `target`)
+		double toX = target.getX() - start.getX();
+		double toY = target.getY() - start.getY();
 
-	    // 7) Animate
-	    TranslateTransition tt = new TranslateTransition(Duration.millis(400), animCard);
-	    tt.setByX(toX);
-	    tt.setByY(toY);
-	    tt.setInterpolator(Interpolator.EASE_IN);
-	    tt.play();
+		// 7) Animate
+		TranslateTransition tt = new TranslateTransition(Duration.millis(400),
+				animCard);
+		tt.setByX(toX);
+		tt.setByY(toY);
+		tt.setInterpolator(Interpolator.EASE_IN);
+		tt.play();
 	}
-	
+
 	// -----------------------------------------------------------------
 	// Split distance feature
 	private Board board;
@@ -1079,6 +1135,23 @@ public class BoardController {
 
 		splitDistanceLabel1.setText(String.valueOf(label1Val));
 		splitDistanceLabel2.setText(String.valueOf(label2Val));
+	}
+
+	@FXML
+	private Button skipTurnButton;
+
+	@FXML
+	private void skipTurnButtonOnClick() {
+		if (selectedCardImageView == null) {
+			view.exception.Controller exceptionController = SceneConfig
+					.getInstance().getExceptionController();
+			exceptionController.exceptionPopUp(new Exception(
+					"Please select a card to field"), animationPane,
+					selectedCardImageView);
+		}
+		else {
+			SceneConfig.getInstance().discardCard(selectedCardImageView);
+		}
 	}
 
 }

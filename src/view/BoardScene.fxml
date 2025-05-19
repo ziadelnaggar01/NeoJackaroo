@@ -279,14 +279,14 @@
             <Insets top="80.0" />
          </padding>
       </VBox>
-      <AnchorPane layoutX="1501.0" layoutY="-108.0" prefHeight="270.0" prefWidth="423.0">
+      <AnchorPane layoutX="1501.0" layoutY="-104.0" prefHeight="270.0" prefWidth="423.0">
          <children>
             <ImageView fx:id="settingsIcon" fitHeight="87.0" fitWidth="97.0" layoutX="302.0" layoutY="120.0" onMouseClicked="#openSettings" onMouseEntered="#settingsIconOnMouseEntered" onMouseExited="#settingsIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assests/scene/cyanSettings.png" />
                </image>
             </ImageView>
-            <Button graphicTextGap="5.0" layoutX="32.0" layoutY="132.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="63.0" prefWidth="186.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textOverrun="WORD_ELLIPSIS">
+            <Button graphicTextGap="5.0" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="63.0" prefWidth="186.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="Orbitron Bold" size="26.0" />
                </font>
@@ -307,7 +307,28 @@
                   </LinearGradient>
                </textFill>
             </Button>
-            <AnchorPane fx:id="splitDistanceAnchorPane" layoutX="2.0" layoutY="109.0">
+            <Button fx:id="skipTurnButton" graphicTextGap="5.0" layoutX="14.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#skipTurnButtonOnClick" prefHeight="63.0" prefWidth="186.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Skip Turn" textOverrun="WORD_ELLIPSIS">
+               <font>
+                  <Font name="Orbitron Bold" size="26.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="0.6325757413199454">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="0.75" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.10000000149011612" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Button>
+            <AnchorPane fx:id="splitDistanceAnchorPane" layoutX="-7.0" layoutY="112.0">
                <children>
                   <ImageView fitHeight="176.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true">
                      <image>

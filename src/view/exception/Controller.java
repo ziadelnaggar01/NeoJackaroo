@@ -2,6 +2,7 @@ package view.exception;
 
 import controller.GenericController;
 import controller.SceneConfig;
+import controller.SoundManager;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,16 +14,45 @@ import javafx.stage.Stage;
 
 public class Controller {
 
+	private ImageView selectedCard;
+
 	// The exception pop up method must be called to update the exception scene
 	// before switching to the exception scene
-	//send a node to get the stage of the board scene
-	public void exceptionPopUp(Exception e, Node someNode) {
+	// send a node to get the stage of the board scene
+	public void exceptionPopUp(Exception e, Node someNode,
+			ImageView selectedCard) {
 		String msg = e.getMessage();
-	    exceptionMessageLabel.setText(msg);
+		exceptionMessageLabel.setText(msg);
+		Parent root = SceneConfig.getInstance().getExceptionScene();
+		Stage stage = (Stage) someNode.getScene().getWindow();
+		GenericController.switchScene(stage, root);
+		this.selectedCard = selectedCard;
+	}
 
-	    Parent root = SceneConfig.getInstance().getExceptionScene();
-	    Stage stage = (Stage) someNode.getScene().getWindow();
-	    GenericController.switchScene(stage, root);
+	@FXML
+	private ImageView discardCardButton;
+
+	@FXML
+	private void discardCardButtonOnClick(MouseEvent event) {
+		if (selectedCard == null) {
+			return;
+		}
+		SoundManager.getInstance().playSound("button_click");
+		Parent root = SceneConfig.getInstance().getGameScene();
+		GenericController.switchScene(event, root);
+
+		SceneConfig.getInstance().discardCard(selectedCard);
+
+	}
+
+	@FXML
+	private void discardCardButtonOnMouseExited() {
+		GenericController.buttonGlowOFF(discardCardButton);
+	}
+
+	@FXML
+	private void discardCardButtonOnMouseEntered() {
+		GenericController.buttonGlowON(discardCardButton, Color.PURPLE);
 	}
 
 	@FXML
