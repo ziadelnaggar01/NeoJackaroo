@@ -2,6 +2,7 @@ package view;
 
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
@@ -178,52 +179,47 @@ public class BoardController {
     }
 	
 	public void Change_Track() {
-	    // Initialize 4x4 list
-		System.out.println("Iam here");
-		List<List<Integer>> tot = new ArrayList<>();
-		for (int i = 0; i < 4; i++) {
-		    List<Integer> row = new ArrayList<>(Collections.nCopies(4, 0));
-		    tot.add(row);
-		}
+	    System.out.println("I am here");
 
+	    // Initialize 4x4 list to track marbles already placed
+	    List<List<Integer>> tot = new ArrayList<>();
+	    for (int i = 0; i < 4; i++) {
+	        List<Integer> row = new ArrayList<>(Collections.nCopies(4, 0));
+	        tot.add(row);
+	    }
+
+	    // Prepare colour order for indexing
 	    ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
 	    for (SafeZone s : game.getBoard().getSafeZones()) {
 	        colourOrderArrayList.add(s.getColour());
 	    }
 
 	    // Handle Track marbles
-	    boolean flag = false;
 	    for (int i = 0; i < 100; i++) {
 	        Cell cell = game.getBoard().getTrack().get(i);
-	        flag = false;
 	        Marble marble = cell.getMarble();
 	        if (marble != null) {
 	            Colour col = marble.getColour();
 	            for (int j = 0; j < 4; j++) {
-	                if (col == colourOrderArrayList.get(j)) {       	
+	                if (col == colourOrderArrayList.get(j)) {
 	                    List<Integer> playerPos = tot.get(j);
 	                    for (int k = 0; k < 4; k++) {
-	                    	
 	                        if (playerPos.get(k) == 0) {
 	                            playerPos.set(k, 1);
 	                            String newPos = "move" + (char) ('A' + j) + (k + 1);
 	                            Circle from = (Circle) animationPane.lookup("#" + newPos);
-	                            System.out.println("FUCK");
-	                            System.out.println(from.getId() + " " + track.get(i).getId());
-	                            if (from != null) {
-	                                move_from_to(from, track.get(i));
+	                            Circle to = (Circle) animationPane.lookup("#" + track.get(i).getId());
+
+	                            if (from != null && to != null) {
+	                                from.setLayoutX(to.getLayoutX());
+	                                from.setLayoutY(to.getLayoutY());
+	                                from.setRadius(to.getRadius()); // Resize from to match to
 	                            }
-	                            flag = true;
 	                            break;
 	                        }
 	                    }
-	                    if(flag)
-	                    {
-	                    	break;
-	                    }
+	                    break;
 	                }
-	                if(flag)
-	                	break;
 	            }
 	        }
 	    }
@@ -232,22 +228,19 @@ public class BoardController {
 	    for (int i = 0; i < 4; i++) {
 	        for (int j = 0; j < 4; j++) {
 	            Cell cell = game.getBoard().getSafeZones().get(i).getCells().get(j);
-	            if (cell.getMarble() != null) {
-	            	if(tot.get(i).get(j) == 0)
-	            	{
-	            		  tot.get(i).set(j, 1);
-	   	                String newPos = "move" + (char) ('A' + i) + (j + 1);
-	   	                String destId = "safe" + (char) ('A' + i) + (j + 1);
+	            if (cell.getMarble() != null && tot.get(i).get(j) == 0) {
+	                tot.get(i).set(j, 1);
+	                String newPos = "move" + (char) ('A' + i) + (j + 1);
+	                String destId = "safe" + (char) ('A' + i) + (j + 1);
 
-	   	                Circle from = (Circle) animationPane.lookup("#" + newPos);
-	   	                Circle to = (Circle) animationPane.lookup("#" + destId);
-	   	             System.out.println("FUCK");
-	   	             System.out.println(from.getId() + " " + to.getId());
-	   	                if (from != null && to != null) {
-	   	                    move_from_to(from, to);
-	   	                }
-	            	}
-	             
+	                Circle from = (Circle) animationPane.lookup("#" + newPos);
+	                Circle to = (Circle) animationPane.lookup("#" + destId);
+
+	                if (from != null && to != null) {
+	                    from.setLayoutX(to.getLayoutX());
+	                    from.setLayoutY(to.getLayoutY());
+	                    from.setRadius(to.getRadius()); // Resize from to match to
+	                }
 	            }
 	        }
 	    }
@@ -256,26 +249,25 @@ public class BoardController {
 	    for (int i = 0; i < 4; i++) {
 	        for (int j = 0; j < game.getPlayers().get(i).getMarbles().size(); j++) {
 	            Marble marble = game.getPlayers().get(i).getMarbles().get(j);
-	            if (marble != null) {
-	            	if(tot.get(i).get(j) == 0)
-	            	{
-	            		  tot.get(i).set(j, 1);
-	  	                String newPos = "move" + (char) ('A' + i) + (j + 1);
-	  	                String destId = "m" + (char) ('A' + i) + (j + 1);
+	            if (marble != null && tot.get(i).get(j) == 0) {
+	                tot.get(i).set(j, 1);
+	                String newPos = "move" + (char) ('A' + i) + (j + 1);
+	                String destId = "m" + (char) ('A' + i) + (j + 1);
 
-	  	                Circle from = (Circle) animationPane.lookup("#" + newPos);
-	  	                Circle to = (Circle) animationPane.lookup("#" + destId);
-	  	              System.out.println("FUCK");
-	  	              System.out.println(from.getId() + " " + to.getId());
-	  	                if (from != null && to != null) {
-	  	                    move_from_to(from, to);
-	  	                }
-	            	}
-	              
+	                Circle from = (Circle) animationPane.lookup("#" + newPos);
+	                Circle to = (Circle) animationPane.lookup("#" + destId);
+
+	                if (from != null && to != null) {
+	                    from.setLayoutX(to.getLayoutX());
+	                    from.setLayoutY(to.getLayoutY());
+	                    from.setRadius(to.getRadius()); // Resize from to match to
+	                }
 	            }
 	        }
 	    }
 	}
+
+
 
 	private void continueGameLoop() {
 		setCurrentPlayerLabel();
@@ -308,12 +300,20 @@ public class BoardController {
 			System.out.println("AI is playing...");
 			try {
 				game.playPlayerTurn();
+
+				PauseTransition delay = new PauseTransition(Duration.seconds(3));
+				delay.setOnFinished(event -> {
+				    Change_Track();
+				    game.endPlayerTurn();
+				    Platform.runLater(this::continueGameLoop);
+				});
+
+				delay.play();
+
+				
 			} catch (GameException e) {
 				e.printStackTrace();
 			}
-
-			game.endPlayerTurn();
-			Platform.runLater(this::continueGameLoop); // Next turn
 		}
 	}
 
@@ -420,13 +420,10 @@ public class BoardController {
 
 			curPlayer.play();
 			// Do your action depends on your card
-
-			action(getImageSource(selectedCardID), selectedMarbles);
+            Change_Track();
 			sendToPit(selectedCardImageView);
 			game.endPlayerTurn();
 			Platform.runLater(this::continueGameLoop); // Continue loop after
-														// user plays
-
 		} catch (Exception e) {
 			view.exception.Controller exceptionController = SceneConfig
 					.getInstance().getExceptionController();
