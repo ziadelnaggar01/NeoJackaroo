@@ -79,9 +79,6 @@ public abstract class Card {
 	{
 		Colour activePlayerColour = gameManager.getActivePlayerColour();
 		int numberOfMarbles = marbles.size();
-		System.out.println(activePlayerColour);
-		System.out.println(marbles.get(0).getColour());
-
 		for(int i=0; i<numberOfMarbles; i++)
 			if(!(marbles.get(i).getColour()==activePlayerColour))
 				return false;

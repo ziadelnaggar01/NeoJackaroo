@@ -174,10 +174,15 @@ public class Player {
 		// Check number of marbles selected is correct
 		if(!selectedCard.validateMarbleSize(selectedMarbles))
 			throw new InvalidMarbleException("Math is important, wrong number of marbles selected.");
+
+		
 		// Check color of marbles selected
 		if(!selectedCard.validateMarbleColours(selectedMarbles))
 			throw new InvalidMarbleException("Those marbles don’t match, maybe check your Trichromacy level?");
-		// Perform card action on marbles
+		// Perform card action on 
+
+
+		
 		selectedCard.act(selectedMarbles);
 	}
 	

@@ -103,12 +103,14 @@ public class SceneConfig {
 
 	public void setPlayerName(String name) {
 		gameController.assignNames(name);
+		gameController.setCurrentPlayerLabel();
+		gameController.setNextPlayerLabel();
 	}
 
 	public view.description.Controller getDescriptionController() {
 		return descriptionController;
 	}
-	
+
 	public view.exception.Controller getExceptionController() {
 		return exceptionController;
 	}

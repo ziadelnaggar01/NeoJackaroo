@@ -121,24 +121,26 @@ public class BoardController {
 	@FXML
 	public void initialize() throws IOException {
 		game = new Game("PlayerName");
-		Set_Your_Track();
+		players=game.getPlayers();
+		
+		
+		setTrack();
+		setSafeZones();
 		assignColours();
-		Set_safe_zone();
-		splitDistanceAnchorPane.setVisible(false);
+		setHand();
+		
 
-		// use a valid name
-		set_ALL_Hand(game.getPlayers());
-		ArrayList<ImageView> gg = new ArrayList<>();
-		gg.add(playerCard1);
-		gg.add(playerCard2);
-		gg.add(playerCard3);
-		gg.add(playerCard4);
-		setupCards(gg);
+		
+		splitDistanceAnchorPane.setVisible(false);
+		createCards();
+
 
 		continueGameLoop();
 	}
 
 	private void continueGameLoop() {
+		setCurrentPlayerLabel();
+		setNextPlayerLabel();
 		if (game.checkWin() != null) {
 			System.out.println("Game over. Winner: " + game.checkWin());
 			Parent root = SceneConfig.getInstance().getEndScene();
@@ -148,10 +150,11 @@ public class BoardController {
 		}
 
 		Colour curPlayer = game.getActivePlayerColour();
-		ArrayList<Player> players = game.getPlayers();
-		currentPlayerIndex = GetIndex(players, curPlayer);
+		currentPlayerIndex = getIndex(players, curPlayer);
 
 		if (!game.canPlayTurn()) {
+			
+			//skip animation
 			System.out.println("Player cannot play. Skipping turn.");
 			game.endPlayerTurn();
 			Platform.runLater(this::continueGameLoop); // Go to next player
@@ -256,7 +259,9 @@ public class BoardController {
 			}
 
 			// play according to selected cards and selected marbles
+
 			curPlayer.play();
+
 			game.endPlayerTurn();
 			Platform.runLater(this::continueGameLoop); // Continue loop after user plays
 
@@ -333,7 +338,7 @@ public class BoardController {
 		}
 	}
 
-	public int GetIndex(ArrayList<Player> y, Colour col) {
+	public int getIndex(ArrayList<Player> y, Colour col) {
 		for (int i = 0; i < 4; i++) {
 			if (y.get(i).getColour() == col)
 				return i;
@@ -341,12 +346,11 @@ public class BoardController {
 		return -1;
 	}
 
-	public void set_ALL_Hand(ArrayList<Player> players) {
+	public void setHand() {
 		String basePathRoot = "/view/assests/deck/";
-
 		int i = 0;
 		Player player = players.get(i);
-
+		
 		for (int j = 0; j < 4; j++) {
 			String basePath = basePathRoot;
 			Card curCard = player.getHand().get(j);
@@ -400,7 +404,7 @@ public class BoardController {
 
 	}
 
-	private void Set_safe_zone() {
+	private void setSafeZones() {
 		for (Node node : animationPane.getChildren()) {
 			if (node instanceof Circle && node.getId() != null && node.getId().startsWith("safe")) {
 				((Circle) node).setFill(Color.TRANSPARENT);
@@ -503,7 +507,7 @@ public class BoardController {
 		moveThroughPath(x, 0, path.size(), path);
 	}
 
-	private void Set_Your_Track() {
+	private void setTrack() {
 		for (int i = 0; i < 100; i++) {
 			Circle circle = (Circle) animationPane.lookup("#m" + i);
 
@@ -719,6 +723,8 @@ public class BoardController {
 			// Funny / Meme-worthy
 			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "NullPointer", "NotABot"));
 
+	
+	//Called from outside the class
 	public void assignNames(String playerName) {
 		Collections.shuffle(cpuNames);
 		CPU1Name.setText(cpuNames.get(0));
@@ -727,13 +733,12 @@ public class BoardController {
 		userName.setText(playerName);
 	}
 
-	private void setCurrentPlayerLabel() {
+	public void setCurrentPlayerLabel() {
 		Colour colour = game.getActivePlayerColour();
 		setPlayerLabel(currentPlayerLabel, colour);
-
 	}
 
-	private void setNextPlayerLabel() {
+	public void setNextPlayerLabel() {
 		Colour colour = game.getNextPlayerColour();
 		setPlayerLabel(nextPlayerLabel, colour);
 	}
@@ -743,7 +748,7 @@ public class BoardController {
 	// holder accordingly
 	private void setPlayerLabel(Label label, Colour colour) {
 		int cpuCount = 0;
-
+		
 		for (Player p : players) {
 			if (!(p instanceof CPU)) {
 				if (p.getColour() == colour) {
