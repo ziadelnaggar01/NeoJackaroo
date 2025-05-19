@@ -28,6 +28,7 @@ public class Controller {
 		Stage stage = (Stage) someNode.getScene().getWindow();
 		GenericController.switchScene(stage, root);
 		this.selectedCard = selectedCard;
+		this.game=game;
 	}
 
 	@FXML
