@@ -63,6 +63,7 @@ import model.player.Marble;
 import model.player.Player;
 import engine.Game;
 import engine.board.Board;
+import engine.board.Cell;
 import engine.board.SafeZone;
 import exception.CannotFieldException;
 import exception.GameException;
@@ -149,6 +150,106 @@ public class BoardController {
 
 		continueGameLoop();
 	}
+	
+	public void Change_Track() {
+	    // Initialize 4x4 list
+		System.out.println("Iam here");
+		List<List<Integer>> tot = new ArrayList<>();
+		for (int i = 0; i < 4; i++) {
+		    List<Integer> row = new ArrayList<>(Collections.nCopies(4, 0));
+		    tot.add(row);
+		}
+
+	    ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
+	    for (SafeZone s : game.getBoard().getSafeZones()) {
+	        colourOrderArrayList.add(s.getColour());
+	    }
+
+	    // Handle Track marbles
+	    boolean flag = false;
+	    for (int i = 0; i < 100; i++) {
+	        Cell cell = game.getBoard().getTrack().get(i);
+	        flag = false;
+	        Marble marble = cell.getMarble();
+	        if (marble != null) {
+	            Colour col = marble.getColour();
+	            for (int j = 0; j < 4; j++) {
+	                if (col == colourOrderArrayList.get(j)) {       	
+	                    List<Integer> playerPos = tot.get(j);
+	                    for (int k = 0; k < 4; k++) {
+	                    	
+	                        if (playerPos.get(k) == 0) {
+	                            playerPos.set(k, 1);
+	                            String newPos = "move" + (char) ('A' + j) + (k + 1);
+	                            Circle from = (Circle) animationPane.lookup("#" + newPos);
+	                            System.out.println("FUCK");
+	                            System.out.println(from.getId() + " " + track.get(i).getId());
+	                            if (from != null) {
+	                                move_from_to(from, track.get(i));
+	                            }
+	                            flag = true;
+	                            break;
+	                        }
+	                    }
+	                    if(flag)
+	                    {
+	                    	break;
+	                    }
+	                }
+	                if(flag)
+	                	break;
+	            }
+	        }
+	    }
+
+	    // Handle Safe Zone marbles
+	    for (int i = 0; i < 4; i++) {
+	        for (int j = 0; j < 4; j++) {
+	            Cell cell = game.getBoard().getSafeZones().get(i).getCells().get(j);
+	            if (cell.getMarble() != null) {
+	            	if(tot.get(i).get(j) == 0)
+	            	{
+	            		  tot.get(i).set(j, 1);
+	   	                String newPos = "move" + (char) ('A' + i) + (j + 1);
+	   	                String destId = "safe" + (char) ('A' + i) + (j + 1);
+
+	   	                Circle from = (Circle) animationPane.lookup("#" + newPos);
+	   	                Circle to = (Circle) animationPane.lookup("#" + destId);
+	   	             System.out.println("FUCK");
+	   	             System.out.println(from.getId() + " " + to.getId());
+	   	                if (from != null && to != null) {
+	   	                    move_from_to(from, to);
+	   	                }
+	            	}
+	             
+	            }
+	        }
+	    }
+
+	    // Handle Home Cell marbles
+	    for (int i = 0; i < 4; i++) {
+	        for (int j = 0; j < game.getPlayers().get(i).getMarbles().size(); j++) {
+	            Marble marble = game.getPlayers().get(i).getMarbles().get(j);
+	            if (marble != null) {
+	            	if(tot.get(i).get(j) == 0)
+	            	{
+	            		  tot.get(i).set(j, 1);
+	  	                String newPos = "move" + (char) ('A' + i) + (j + 1);
+	  	                String destId = "m" + (char) ('A' + i) + (j + 1);
+
+	  	                Circle from = (Circle) animationPane.lookup("#" + newPos);
+	  	                Circle to = (Circle) animationPane.lookup("#" + destId);
+	  	              System.out.println("FUCK");
+	  	              System.out.println(from.getId() + " " + to.getId());
+	  	                if (from != null && to != null) {
+	  	                    move_from_to(from, to);
+	  	                }
+	            	}
+	              
+	            }
+	        }
+	    }
+	}
 
 	private void continueGameLoop() {
 		setCurrentPlayerLabel();
@@ -171,7 +272,7 @@ public class BoardController {
 			game.endPlayerTurn();
 			Platform.runLater(this::continueGameLoop); // Go to next player
 			return;
-		}z
+		}
 
 		if (currentPlayerIndex == 0) {
 			System.out.println("Waiting for player to click Play.");
