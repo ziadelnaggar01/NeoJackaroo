@@ -3,6 +3,7 @@ package view.exception;
 import controller.GenericController;
 import controller.SceneConfig;
 import controller.SoundManager;
+import engine.Game;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -15,12 +16,12 @@ import javafx.stage.Stage;
 public class Controller {
 
 	private ImageView selectedCard;
-
+	private Game game;
 	// The exception pop up method must be called to update the exception scene
 	// before switching to the exception scene
 	// send a node to get the stage of the board scene
 	public void exceptionPopUp(Exception e, Node someNode,
-			ImageView selectedCard) {
+			ImageView selectedCard, Game game) {
 		String msg = e.getMessage();
 		exceptionMessageLabel.setText(msg);
 		Parent root = SceneConfig.getInstance().getExceptionScene();
@@ -42,6 +43,8 @@ public class Controller {
 		GenericController.switchScene(event, root);
 
 		SceneConfig.getInstance().discardCard(selectedCard);
+		game.endPlayerTurn();
+
 
 	}
 

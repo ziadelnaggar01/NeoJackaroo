@@ -379,93 +379,93 @@ public class BoardController {
 	@FXML
 	private Label basePlayer4;
 
-	// Link colours to back-end
-	private void assignColours() {
-	 ArrayList<SafeZone> safeZones = game.getBoard().getSafeZones();
-	
-	 ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
-	 for (SafeZone s : safeZones) {
-	 colourOrderArrayList.add(s.getColour());
-	 }
-	
-	 // Load marble images
-	 Map<Colour, Image> marbleImages = new HashMap<>();
-	 marbleImages.put(Colour.BLUE, new
-	 Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png")));
-	 marbleImages.put(Colour.GREEN,
-	 new
-	 Image(getClass().getResourceAsStream("/view/assests/scene/GreenMarble.png")));
-	 marbleImages.put(Colour.YELLOW,
-	 new
-	 Image(getClass().getResourceAsStream("/view/assests/scene/YellowMarble.png")));
-	 marbleImages.put(Colour.RED, new
-	 Image(getClass().getResourceAsStream("/view/assests/scene/RedMarble.png")));
-	
-	 for (Node node : animationPane.getChildren()) {
-	 if (node instanceof Circle circle) {
-	 String id = circle.getId();
-	 if (id != null && id.startsWith("move") && id.length() > 5) {
-	 char who = id.charAt(4);
-	 int index = who - 'A'; // A->0, B->1, etc.
-	
-	 Image marbleImage = marbleImages.getOrDefault(
-	 index >= 0 && index < colourOrderArrayList.size() ?
-	 colourOrderArrayList.get(index)
-	 : Colour.BLUE, // fallback
-	 marbleImages.get(Colour.BLUE));
-	
-	 circle.setFill(new ImagePattern(marbleImage));
-	 circle.setStroke(Color.TRANSPARENT);
-	 movableMarbles.add(circle);
-	
-	 String posId = "#m" + who + id.charAt(5);
-	 Node mapNode = animationPane.lookup(posId);
-	 if (mapNode instanceof Circle) {
-	 marbleToCellMap.put(circle, (Circle) mapNode);
-	 } else {
-	 System.out.println("Could not find target circle for ID: " + posId);
-	 }
-	 }
-	
-	 // Reset fill for other circles marked A-D
-	 if (circle.getId() != null && circle.getId().length() > 1) {
-	 char playerChar = circle.getId().charAt(1);
-	 if (playerChar == 'A' || playerChar == 'B' || playerChar == 'C' ||
-	 playerChar == 'D') {
-	 circle.setFill(Color.TRANSPARENT);
-	 circle.setStroke(Color.TRANSPARENT);
-	 }
-	 }
-	 }
-	 }
-	
-	 // Map each label to its player’s color
-	 Label[] bases = { basePlayer1, basePlayer2, basePlayer3, basePlayer4 };
-	 for (int i = 0; i < colourOrderArrayList.size() && i < bases.length; i++)
-	 {
-	 Colour colour = colourOrderArrayList.get(i);
-	 Color textFill;
-	
-	 switch (colour) {
-	 case RED:
-	 textFill = Color.RED;
-	 break;
-	 case BLUE:
-	 textFill = Color.CYAN;
-	 break;
-	 case GREEN:
-	 textFill = Color.GREEN;
-	 break;
-	 case YELLOW:
-	 textFill = Color.YELLOW;
-	 break;
-	 default:
-	 textFill = Color.BLACK; // fallback
-	 }
-	
-	 bases[i].setTextFill(textFill);
-	 }
-	 }
+//	// Link colours to back-end
+//	private void assignColours() {
+//	 ArrayList<SafeZone> safeZones = game.getBoard().getSafeZones();
+//	
+//	 ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
+//	 for (SafeZone s : safeZones) {
+//	 colourOrderArrayList.add(s.getColour());
+//	 }
+//	
+//	 // Load marble images
+//	 Map<Colour, Image> marbleImages = new HashMap<>();
+//	 marbleImages.put(Colour.BLUE, new
+//	 Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png")));
+//	 marbleImages.put(Colour.GREEN,
+//	 new
+//	 Image(getClass().getResourceAsStream("/view/assests/scene/GreenMarble.png")));
+//	 marbleImages.put(Colour.YELLOW,
+//	 new
+//	 Image(getClass().getResourceAsStream("/view/assests/scene/YellowMarble.png")));
+//	 marbleImages.put(Colour.RED, new
+//	 Image(getClass().getResourceAsStream("/view/assests/scene/RedMarble.png")));
+//	
+//	 for (Node node : animationPane.getChildren()) {
+//	 if (node instanceof Circle circle) {
+//	 String id = circle.getId();
+//	 if (id != null && id.startsWith("move") && id.length() > 5) {
+//	 char who = id.charAt(4);
+//	 int index = who - 'A'; // A->0, B->1, etc.
+//	
+//	 Image marbleImage = marbleImages.getOrDefault(
+//	 index >= 0 && index < colourOrderArrayList.size() ?
+//	 colourOrderArrayList.get(index)
+//	 : Colour.BLUE, // fallback
+//	 marbleImages.get(Colour.BLUE));
+//	
+//	 circle.setFill(new ImagePattern(marbleImage));
+//	 circle.setStroke(Color.TRANSPARENT);
+//	 movableMarbles.add(circle);
+//	
+//	 String posId = "#m" + who + id.charAt(5);
+//	 Node mapNode = animationPane.lookup(posId);
+//	 if (mapNode instanceof Circle) {
+//	 marbleToCellMap.put(circle, (Circle) mapNode);
+//	 } else {
+//	 System.out.println("Could not find target circle for ID: " + posId);
+//	 }
+//	 }
+//	
+//	 // Reset fill for other circles marked A-D
+//	 if (circle.getId() != null && circle.getId().length() > 1) {
+//	 char playerChar = circle.getId().charAt(1);
+//	 if (playerChar == 'A' || playerChar == 'B' || playerChar == 'C' ||
+//	 playerChar == 'D') {
+//	 circle.setFill(Color.TRANSPARENT);
+//	 circle.setStroke(Color.TRANSPARENT);
+//	 }
+//	 }
+//	 }
+//	 }
+//	
+//	 // Map each label to its player’s color
+//	 Label[] bases = { basePlayer1, basePlayer2, basePlayer3, basePlayer4 };
+//	 for (int i = 0; i < colourOrderArrayList.size() && i < bases.length; i++)
+//	 {
+//	 Colour colour = colourOrderArrayList.get(i);
+//	 Color textFill;
+//	
+//	 switch (colour) {
+//	 case RED:
+//	 textFill = Color.RED;
+//	 break;
+//	 case BLUE:
+//	 textFill = Color.CYAN;
+//	 break;
+//	 case GREEN:
+//	 textFill = Color.GREEN;
+//	 break;
+//	 case YELLOW:
+//	 textFill = Color.YELLOW;
+//	 break;
+//	 default:
+//	 textFill = Color.BLACK; // fallback
+//	 }
+//	
+//	 bases[i].setTextFill(textFill);
+//	 }
+//	 }
 
 	public int getIndex(ArrayList<Player> y, Colour col) {
 		for (int i = 0; i < 4; i++) {
@@ -1136,6 +1136,9 @@ public class BoardController {
 		splitDistanceLabel1.setText(String.valueOf(label1Val));
 		splitDistanceLabel2.setText(String.valueOf(label2Val));
 	}
+	
+	//-----------------------------------------------------------------
+	//
 
 	@FXML
 	private Button skipTurnButton;
@@ -1147,10 +1150,14 @@ public class BoardController {
 					.getInstance().getExceptionController();
 			exceptionController.exceptionPopUp(new Exception(
 					"Please select a card to field"), animationPane,
-					selectedCardImageView);
+					selectedCardImageView,game);
 		} else {
 			SceneConfig.getInstance().discardCard(selectedCardImageView);
+			game.endPlayerTurn();
 		}
 	}
+	
+	
+	
 
 }
