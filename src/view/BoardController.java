@@ -7,6 +7,8 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
@@ -15,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
@@ -133,7 +136,6 @@ public class BoardController {
 		
 		splitDistanceAnchorPane.setVisible(false);
 		createCards();
-
 
 		continueGameLoop();
 	}
@@ -859,7 +861,64 @@ public class BoardController {
 														// firepit
 		card.setOnMouseClicked(null);
 	}
+	
+	
+	/**
+	 * Animate moving a card from the player's hand to the firepit.
+	 *
+	 * @param cardView The ImageView in the player's hand that was clicked.
+	 */
+	@FXML private Pane animationLayer;
+	@FXML private ImageView firepitImage;
 
+	private void sendToPit(ImageView cardView) {
+	    // 1) Clone & size to match the original
+	    ImageView animCard = new ImageView(cardView.getImage());
+	    double cardW = cardView.getBoundsInParent().getWidth();
+	    double cardH = cardView.getBoundsInParent().getHeight();
+	    animCard.setFitWidth(cardW);
+	    animCard.setFitHeight(cardH);
+	    animCard.setPreserveRatio(true);
+	    // Copy rotation so the clone looks the same
+	    animCard.setRotate(cardView.getRotate());
+
+	    // 2) Compute the source center in animationLayer coordinates
+	    Bounds localSrcBounds = cardView.getBoundsInLocal();
+	    double srcCenterX = localSrcBounds.getMinX() + localSrcBounds.getWidth()  / 2;
+	    double srcCenterY = localSrcBounds.getMinY() + localSrcBounds.getHeight() / 2;
+	    // Map that center to scene, then to layer
+	    Point2D sceneSrcCenter = cardView.localToScene(srcCenterX, srcCenterY);
+	    Point2D start = animationLayer.sceneToLocal(sceneSrcCenter);
+	    // Position the clone so its center is at `start`
+	    animCard.setLayoutX(start.getX() - cardW/2);
+	    animCard.setLayoutY(start.getY() - cardH/2);
+
+	    // 3) Hide & disable original
+	    cardView.setVisible(false);
+	    cardView.setDisable(true);
+
+	    // 4) Add clone to the overlay
+	    animationLayer.getChildren().add(animCard);
+
+	    // 5) Compute the target (firepit) center same way
+	    Bounds pitLocal = firepitImage.getBoundsInLocal();
+	    double pitCenterX = pitLocal.getMinX() + pitLocal.getWidth()  / 2;
+	    double pitCenterY = pitLocal.getMinY() + pitLocal.getHeight() / 2;
+	    Point2D scenePitCenter = firepitImage.localToScene(pitCenterX, pitCenterY);
+	    Point2D target = animationLayer.sceneToLocal(scenePitCenter);
+
+	    // 6) Calculate how far to move (so the clone’s center ends at `target`)
+	    double toX = target.getX() - start.getX();
+	    double toY = target.getY() - start.getY();
+
+	    // 7) Animate
+	    TranslateTransition tt = new TranslateTransition(Duration.millis(400), animCard);
+	    tt.setByX(toX);
+	    tt.setByY(toY);
+	    tt.setInterpolator(Interpolator.EASE_IN);
+	    tt.play();
+	}
+	
 	// -----------------------------------------------------------------
 	// Split distance feature
 	private Board board;

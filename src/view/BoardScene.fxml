@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BoardController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BoardController">
    <children>
       <StackPane fx:id="boardPane" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -32,6 +33,7 @@
                   <Image url="@assests/scene/Board.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="firepitImage" fitHeight="170.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </StackPane>
       <VBox alignment="TOP_RIGHT" prefHeight="1080.0" prefWidth="408.0" spacing="400.0" translateY="200.0">
@@ -558,11 +560,6 @@
             <Circle fx:id="moveD2" fill="#fdfeff" layoutX="954.0" layoutY="856.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="moveD3" fill="#fdfeff" layoutX="864.0" layoutY="945.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="moveD4" fill="#fdfeff" layoutX="954.0" layoutY="945.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
-            <ImageView fx:id="firepit" fitHeight="130.0" fitWidth="95.0" layoutX="479.0" layoutY="474.0" opacity="0.03" pickOnBounds="true" preserveRatio="true" rotate="94.8">
-               <image>
-                  <Image url="@assests/deck/2.png" />
-               </image>
-            </ImageView>
             <Circle fx:id="safeA1" fill="DODGERBLUE" layoutX="130.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="safeA2" fill="DODGERBLUE" layoutX="205.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="safeA3" fill="DODGERBLUE" layoutX="288.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
@@ -583,5 +580,6 @@
             <Circle fx:id="moveB1" fill="#fdfeff" layoutX="99.0" layoutY="118.0" onMouseClicked="#setupMarbleSelection" radius="38.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </AnchorPane>
+      <Pane fx:id="animationLayer" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
