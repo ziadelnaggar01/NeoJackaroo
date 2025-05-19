@@ -77,6 +77,8 @@ public class BoardController {
 	private Label nextPlayerLabel;
 	@FXML
 	private Label currentPlayerLabel;
+
+	// Players Names
 	@FXML
 	private Label CPU1Name;
 	@FXML
@@ -85,6 +87,8 @@ public class BoardController {
 	private Label CPU3Name;
 	@FXML
 	private Label userName;
+
+
 	// Store selected marbles globally or in your controller class
 	private final Set<Circle> selectedMarbles = new HashSet<>();
 
@@ -105,6 +109,7 @@ public class BoardController {
 	private ImageView playerCard3;
 	@FXML
 	private ImageView playerCard4;
+
 	@FXML
 	private AnchorPane animationPane;
 
@@ -161,12 +166,12 @@ public class BoardController {
 
 		if (!game.canPlayTurn()) {
 
-			// skip animation
+			//skip animation
 			System.out.println("Player cannot play. Skipping turn.");
 			game.endPlayerTurn();
 			Platform.runLater(this::continueGameLoop); // Go to next player
 			return;
-		}
+		}z
 
 		if (currentPlayerIndex == 0) {
 			System.out.println("Waiting for player to click Play.");
@@ -185,18 +190,6 @@ public class BoardController {
 		}
 	}
 
-	public ImageView getImageSource(String x) {
-		if (playerCard1.getId().equals(x))
-			return playerCard1;
-		if (playerCard2.getId().equals(x))
-			return playerCard2;
-		if (playerCard3.getId().equals(x))
-			return playerCard3;
-		if (playerCard4.getId().equals(x))
-			return playerCard4;
-		return null;
-
-	}
 
 	@FXML
 	private void onPlayClicked() throws Exception {
@@ -472,6 +465,8 @@ public class BoardController {
 	 }
 	 }
 
+
+
 	public int getIndex(ArrayList<Player> y, Colour col) {
 		for (int i = 0; i < 4; i++) {
 			if (y.get(i).getColour() == col)
@@ -480,47 +475,13 @@ public class BoardController {
 		return -1;
 	}
 
+
 	public void setHand() {
-		String basePathRoot = "/view/assests/deck/";
 		int i = 0;
 		Player player = players.get(i);
-
 		for (int j = 0; j < 4; j++) {
-			String basePath = basePathRoot;
 			Card curCard = player.getHand().get(j);
-
-			if (curCard instanceof Standard) {
-				Standard card = (Standard) curCard;
-				int rank = card.getRank();
-				Suit suit = card.getSuit();
-
-				switch (suit) {
-				case CLUB:
-					basePath += "club";
-					break;
-				case DIAMOND:
-					basePath += "diamond";
-					break;
-				case SPADE:
-					basePath += "spade";
-					break;
-				case HEART:
-					basePath += "heart";
-					break;
-				}
-
-				basePath += rank + ".png";
-
-			} else if (curCard instanceof Wild) {
-				if (curCard instanceof Burner) {
-					basePath += "burner.jpg";
-				} else if (curCard instanceof Saver) {
-					basePath += "saver.jpg";
-				}
-			}
-			Image cardImage = new Image(getClass()
-					.getResourceAsStream(basePath));
-
+			Image cardImage = getCardImage(curCard);
 			switch (j) {
 			case 0:
 				playerCard1.setImage(cardImage);
@@ -537,6 +498,13 @@ public class BoardController {
 			}
 		}
 
+	}
+
+
+	private void updatePit()
+	{
+		ArrayList<Card> firePit = game.getFirePit();
+		firepitImage.setImage(getCardImage(firePit.getLast())); 
 	}
 
 	private void setSafeZones() {
@@ -656,8 +624,8 @@ public class BoardController {
 			if (circle != null) {
 				circle.setFill(Color.TRANSPARENT); // Make the fill transparent
 				circle.setStroke(Color.TRANSPARENT); // Optionally, make the
-														// stroke transparent
-														// too
+				// stroke transparent
+				// too
 				track.add(circle); // Add to your track list
 			} else {
 				// Debugging: If the circle doesn't exist, print a warning
@@ -841,23 +809,9 @@ public class BoardController {
 		masterSequence.play();
 	}
 
-	private void loadCards() {
-		// for (int i = 0; i < 4; i++) {
-		// ImageView card = new ImageView(new
-		// Image(getClass().getResource("assests/deck/Clovers_10_white.png").toExternalForm()));
-		// card.setFitWidth(80);
-		// card.setFitHeight(120);
-		// card.setLayoutX(deckX);
-		// card.setLayoutY(deckY);
-		// cards.add(card);
-		// boardPane.getChildren().add(card);
-		// }
-	}
 
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// Code for settings
-	public static boolean gamePaused = false;
-
 	@FXML
 	private ImageView settingsIcon;
 
@@ -875,7 +829,6 @@ public class BoardController {
 	@FXML
 	private void openSettings(MouseEvent event) {
 		SoundManager.getInstance().playSound("button_click");
-		gamePaused = true;// if opening settings from boardscene, pause the game
 		SceneConfig.getInstance().setInGame(true);
 		Parent root = SceneConfig.getInstance().getSettingsScene();
 		GenericController.switchScene(event, root);
@@ -972,8 +925,8 @@ public class BoardController {
 					if (alreadySelected) {
 						// Deselect all cards
 						if (splitDistanceAnchorPane.isVisible()) {// the seven
-																	// was
-																	// deselected
+							// was
+							// deselected
 							splitDistanceAnchorPane.setVisible(false);
 						}
 						for (ImageView c : cards) {
@@ -1033,8 +986,8 @@ public class BoardController {
 	}
 
 	private void disableCardSelection(ImageView card) {// called when a card is
-														// played/sent to
-														// firepit
+		// played/sent to
+		// firepit
 		card.setOnMouseClicked(null);
 	}
 
@@ -1062,10 +1015,8 @@ public class BoardController {
 
 		// 2) Compute the source center in animationLayer coordinates
 		Bounds localSrcBounds = cardView.getBoundsInLocal();
-		double srcCenterX = localSrcBounds.getMinX()
-				+ localSrcBounds.getWidth() / 2;
-		double srcCenterY = localSrcBounds.getMinY()
-				+ localSrcBounds.getHeight() / 2;
+		double srcCenterX = localSrcBounds.getMinX() + localSrcBounds.getWidth()  / 2;
+		double srcCenterY = localSrcBounds.getMinY() + localSrcBounds.getHeight() / 2;
 		// Map that center to scene, then to layer
 		Point2D sceneSrcCenter = cardView.localToScene(srcCenterX, srcCenterY);
 		Point2D start = animationLayer.sceneToLocal(sceneSrcCenter);
@@ -1082,10 +1033,9 @@ public class BoardController {
 
 		// 5) Compute the target (firepit) center same way
 		Bounds pitLocal = firepitImage.getBoundsInLocal();
-		double pitCenterX = pitLocal.getMinX() + pitLocal.getWidth() / 2;
+		double pitCenterX = pitLocal.getMinX() + pitLocal.getWidth()  / 2;
 		double pitCenterY = pitLocal.getMinY() + pitLocal.getHeight() / 2;
-		Point2D scenePitCenter = firepitImage.localToScene(pitCenterX,
-				pitCenterY);
+		Point2D scenePitCenter = firepitImage.localToScene(pitCenterX, pitCenterY);
 		Point2D target = animationLayer.sceneToLocal(scenePitCenter);
 
 		// 6) Calculate how far to move (so the clone’s center ends at `target`)
@@ -1093,8 +1043,7 @@ public class BoardController {
 		double toY = target.getY() - start.getY();
 
 		// 7) Animate
-		TranslateTransition tt = new TranslateTransition(Duration.millis(400),
-				animCard);
+		TranslateTransition tt = new TranslateTransition(Duration.millis(400), animCard);
 		tt.setByX(toX);
 		tt.setByY(toY);
 		tt.setInterpolator(Interpolator.EASE_IN);
@@ -1190,5 +1139,57 @@ public class BoardController {
 			}
 		}
 	}
+
+	// getters
+	public ImageView getImageSource(String x)
+	{
+		if(playerCard1.getId().equals(x))
+			return playerCard1;
+		if(playerCard2.getId().equals(x))
+			return playerCard2;
+		if(playerCard3.getId().equals(x))
+			return playerCard3;
+		if(playerCard4.getId().equals(x))
+			return playerCard4;
+		return null;
+
+	}
+
+	private Image getCardImage(Card curCard)
+	{
+		String basePath = "/view/assests/deck/";
+		if (curCard instanceof Standard) {
+			Standard card = (Standard) curCard;
+			int rank = card.getRank();
+			Suit suit = card.getSuit();
+
+			switch (suit) {
+			case CLUB:
+				basePath += "club";
+				break;
+			case DIAMOND:
+				basePath += "diamond";
+				break;
+			case SPADE:
+				basePath += "spade";
+				break;
+			case HEART:
+				basePath += "heart";
+				break;
+			}
+
+			basePath += rank + ".png";
+
+		} else if (curCard instanceof Wild) {
+			if (curCard instanceof Burner) {
+				basePath += "burner.jpg";
+			} else if (curCard instanceof Saver) {
+				basePath += "saver.jpg";
+			}
+		}
+		return new Image(getClass().getResourceAsStream(basePath));
+	}
+
+
 
 }

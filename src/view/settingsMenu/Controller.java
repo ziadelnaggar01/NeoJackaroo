@@ -5,7 +5,6 @@ import controller.GenericController;
 import controller.MusicManager;
 import controller.SceneConfig;
 import controller.SoundManager;
-import view.BoardController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -69,8 +68,7 @@ public class Controller {
 	}
 	@FXML
 	private void continueButtonOnClick(MouseEvent event) throws IOException {
-		SoundManager.getInstance().playSound("button_click");
-		BoardController.gamePaused=false;//return game 
+		SoundManager.getInstance().playSound("button_click"); 
 		Parent root;
 		if(SceneConfig.getInstance().isInGame())
 			root = SceneConfig.getInstance().getGameScene();
@@ -83,7 +81,6 @@ public class Controller {
 	private void exitButtonOnClick(MouseEvent event) throws IOException {
 		//Go back to start screen, no boardscene 
 		SoundManager.getInstance().playSound("button_click");
-		BoardController.gamePaused=false;//return game 
 		Parent root;
 		if(!SceneConfig.getInstance().isInGame())
 		{

@@ -33,7 +33,7 @@
                   <Image url="@assests/scene/Board.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="firepitImage" fitHeight="170.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="firepitImage" fitHeight="140.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </StackPane>
       <VBox alignment="TOP_RIGHT" prefHeight="1080.0" prefWidth="408.0" spacing="400.0" translateY="200.0">
