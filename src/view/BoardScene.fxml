@@ -312,7 +312,7 @@
                         <Image url="@assets/Pop%20Up%20Menu.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="32.0" layoutY="2.0" text="Choose your split" textFill="#00b8ff">
+                  <Label layoutX="32.0" layoutY="9.0" text="Choose your split" textFill="#00b8ff">
                      <font>
                         <Font name="Orbitron Bold" size="20.0" />
                      </font>
@@ -360,14 +360,9 @@
                         </LinearGradient>
                      </textFill>
                   </Label>
-                  <ImageView fx:id="splitDistanceOkButton" fitHeight="28.0" fitWidth="124.0" layoutX="4.0" layoutY="128.0" onMouseClicked="#splitDistanceOkButtonOnClick" onMouseEntered="#splitDistanceOkButtonOnMouseEntered" onMouseExited="#splitDistanceOkButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="splitDistanceOkButton" fitHeight="43.0" fitWidth="156.0" layoutX="52.0" layoutY="125.0" onMouseClicked="#splitDistanceOkButtonOnClick" onMouseEntered="#splitDistanceOkButtonOnMouseEntered" onMouseExited="#splitDistanceOkButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/buttons/Ok.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="splitDistanceCancelButton" fitHeight="44.0" fitWidth="124.0" layoutX="128.0" layoutY="128.0" onMouseClicked="#splitDistanceCancelButtonOnClick" onMouseEntered="#splitDistanceCancelButtonOnMouseEntered" onMouseExited="#splitDistanceCancelButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@assets/buttons/Cancel.png" />
                      </image>
                   </ImageView>
                </children>

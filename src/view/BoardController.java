@@ -121,6 +121,7 @@ public class BoardController {
 		Set_Your_Track();
 		Set_movable_marbles();
 		Set_safe_zone();
+		splitDistanceAnchorPane.setVisible(false);
 
 		game = new Game("PlayerName");
 		// use a valid name
@@ -141,7 +142,7 @@ public class BoardController {
 			return;
 		}
 
-		//while (game.checkWin() == null)
+		// while (game.checkWin() == null)
 		{
 			Colour curPlayer = game.getActivePlayerColour();
 			ArrayList<Player> players = game.getPlayers();
@@ -151,7 +152,8 @@ public class BoardController {
 				// Handle "cannot play" case with a popup
 				System.out.println("Player cannot play. Skipping turn.");
 				game.endPlayerTurn();
-				// Platform.runLater(this::continueGameLoop); // Schedule next loop
+				// Platform.runLater(this::continueGameLoop); // Schedule next
+				// loop
 				return;
 			} else {
 				if (currentPlayerIndex == 0) {
@@ -168,7 +170,8 @@ public class BoardController {
 						e.printStackTrace();
 					}
 					// game.advanceTurn();
-					// Platform.runLater(this::continueGameLoop); // Proceed after turn
+					// Platform.runLater(this::continueGameLoop); // Proceed
+					// after turn
 				}
 			}
 		}
@@ -210,11 +213,13 @@ public class BoardController {
 				Marble cur_m = null;
 				switch (where_Iam.getId().charAt(1)) {
 				case 'A': // homecell
-					cur_m = Cur_Player.getMarbles().get((where_Iam.getId().charAt(2) - '0') - 1);
+					cur_m = Cur_Player.getMarbles().get(
+							(where_Iam.getId().charAt(2) - '0') - 1);
 					break;
 				case 'a': // safezone
 					cur_m = game.getBoard().getSafeZones().get(0).getCells()
-							.get((where_Iam.getId().charAt(2) - '0') - 1).getMarble();
+							.get((where_Iam.getId().charAt(2) - '0') - 1)
+							.getMarble();
 					break;
 				default: // track
 					String num_st = "";
@@ -296,7 +301,8 @@ public class BoardController {
 					basePath += "saver.jpg";
 				}
 			}
-			Image cardImage = new Image(getClass().getResourceAsStream(basePath));
+			Image cardImage = new Image(getClass()
+					.getResourceAsStream(basePath));
 
 			switch (j) {
 			case 0:
@@ -317,7 +323,8 @@ public class BoardController {
 
 	private void Set_safe_zone() {
 		for (Node node : animationPane.getChildren()) {
-			if (node instanceof Circle && node.getId() != null && node.getId().startsWith("safe")) {
+			if (node instanceof Circle && node.getId() != null
+					&& node.getId().startsWith("safe")) {
 				((Circle) node).setFill(Color.TRANSPARENT);
 			}
 		}
@@ -344,11 +351,13 @@ public class BoardController {
 		double by = b.getLayoutY();
 
 		// Create transitions for each marble
-		TranslateTransition moveA = new TranslateTransition(Duration.millis(1000), a);
+		TranslateTransition moveA = new TranslateTransition(
+				Duration.millis(1000), a);
 		moveA.setByX(bx - ax);
 		moveA.setByY(by - ay);
 
-		TranslateTransition moveB = new TranslateTransition(Duration.millis(1000), b);
+		TranslateTransition moveB = new TranslateTransition(
+				Duration.millis(1000), b);
 		moveB.setByX(ax - bx);
 		moveB.setByY(ay - by);
 
@@ -420,10 +429,14 @@ public class BoardController {
 
 	private void Set_movable_marbles() { // add ArrayList<Player> players as
 											// parameter
-		Image blueMarble = new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png"));
-		Image greenMarble = new Image(getClass().getResourceAsStream("/view/assests/scene/GreenMarble.png"));
-		Image yellowMarble = new Image(getClass().getResourceAsStream("/view/assests/scene/YellowMarble.png"));
-		Image redMarble = new Image(getClass().getResourceAsStream("/view/assests/scene/RedMarble.png"));
+		Image blueMarble = new Image(getClass().getResourceAsStream(
+				"/view/assests/scene/BlueMarble.png"));
+		Image greenMarble = new Image(getClass().getResourceAsStream(
+				"/view/assests/scene/GreenMarble.png"));
+		Image yellowMarble = new Image(getClass().getResourceAsStream(
+				"/view/assests/scene/YellowMarble.png"));
+		Image redMarble = new Image(getClass().getResourceAsStream(
+				"/view/assests/scene/RedMarble.png"));
 		for (Node node : animationPane.getChildren()) {
 			if (node instanceof Circle) {
 				Circle circle = (Circle) node;
@@ -457,13 +470,17 @@ public class BoardController {
 					if (mapNode instanceof Circle) {
 						cur_pos.put(circle, (Circle) mapNode);
 					} else {
-						System.out.println("Could not find target circle for ID: " + posId);
+						System.out
+								.println("Could not find target circle for ID: "
+										+ posId);
 					}
 					// set on track
 				}
 
-				if (circle.getId().charAt(1) == 'A' || circle.getId().charAt(1) == 'B'
-						|| circle.getId().charAt(1) == 'C' || circle.getId().charAt(1) == 'D') {
+				if (circle.getId().charAt(1) == 'A'
+						|| circle.getId().charAt(1) == 'B'
+						|| circle.getId().charAt(1) == 'C'
+						|| circle.getId().charAt(1) == 'D') {
 					circle.setFill(Color.TRANSPARENT);
 					circle.setStroke(Color.TRANSPARENT);
 				}
@@ -484,7 +501,8 @@ public class BoardController {
 				track.add(circle); // Add to your track list
 			} else {
 				// Debugging: If the circle doesn't exist, print a warning
-				System.out.println("Warning: Circle with fx:id m" + i + " not found.");
+				System.out.println("Warning: Circle with fx:id m" + i
+						+ " not found.");
 			}
 		}
 	}
@@ -494,10 +512,12 @@ public class BoardController {
 		double circle2Radius = circle2.getRadius();
 		double scaleFactor = circle2Radius / circle1Radius;
 
-		ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1.5), circle1);
+		ScaleTransition scaleTransition = new ScaleTransition(
+				Duration.seconds(1.5), circle1);
 		scaleTransition.setToX(scaleFactor);
 		scaleTransition.setToY(scaleFactor);
-		scaleTransition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
+		scaleTransition
+				.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
 
 		return scaleTransition;
 	}
@@ -511,7 +531,8 @@ public class BoardController {
 		double targetY = y.getLayoutY();
 
 		// Create translation animation
-		TranslateTransition move = new TranslateTransition(Duration.millis(1500), x); // match duration
+		TranslateTransition move = new TranslateTransition(
+				Duration.millis(1500), x); // match duration
 		move.setToX(targetX - x.getLayoutX());
 		move.setToY(targetY - x.getLayoutY());
 
@@ -538,12 +559,14 @@ public class BoardController {
 		AudioClip sound = null;
 		try {
 			// Play trap sound
-			URL soundurl = getClass().getResource("/view/assests/sound/bonk.wav");
+			URL soundurl = getClass().getResource(
+					"/view/assests/sound/bonk.wav");
 			if (soundurl != null) {
 				sound = new AudioClip(soundurl.toString());
 				sound.play();
 			} else {
-				System.out.println("Sound file not found at /view/assests/sound/trap.mp3");
+				System.out
+						.println("Sound file not found at /view/assests/sound/trap.mp3");
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to play sound:");
@@ -577,12 +600,14 @@ public class BoardController {
 		// Play sound
 		try {
 			// Corrected path and renamed variable to soundurl
-			URL soundurl = getClass().getResource("/view/assests/sound/destroy.mp3");
+			URL soundurl = getClass().getResource(
+					"/view/assests/sound/destroy.mp3");
 			if (soundurl != null) {
 				AudioClip sound = new AudioClip(soundurl.toString());
 				sound.play();
 			} else {
-				System.out.println("Sound file not found at /view/assets/sound/destroy.mp3");
+				System.out
+						.println("Sound file not found at /view/assets/sound/destroy.mp3");
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to play sound:");
@@ -591,13 +616,16 @@ public class BoardController {
 		move_to_base(c, where);
 	}
 
-	private void moveThroughPath(Circle marble, int st, int steps, List<Circle> pathNodes) {
+	private void moveThroughPath(Circle marble, int st, int steps,
+			List<Circle> pathNodes) {
 		// Set marble image
-		Image image = new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png"));
+		Image image = new Image(getClass().getResourceAsStream(
+				"/view/assests/scene/BlueMarble.png"));
 		marble.setFill(new ImagePattern(image));
 
 		// Create the resize transition but don't play it yet
-		ScaleTransition resizeTransition = smoothlyResize(marble, pathNodes.get(0));
+		ScaleTransition resizeTransition = smoothlyResize(marble,
+				pathNodes.get(0));
 
 		// Create list of TranslateTransitions for moving the marble
 		List<TranslateTransition> transitions = new ArrayList<>();
@@ -612,14 +640,16 @@ public class BoardController {
 			double targetX = target.getLayoutX() - startX;
 			double targetY = target.getLayoutY() - startY;
 
-			TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), marble);
+			TranslateTransition transition = new TranslateTransition(
+					Duration.seconds(0.3), marble);
 			transition.setToX(targetX);
 			transition.setToY(targetY);
 			transition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
 			transitions.add(transition);
 		}
 
-		cur_pos.put(marble, New_Pos); // set the new position of the marble to be in a new location
+		cur_pos.put(marble, New_Pos); // set the new position of the marble to
+										// be in a new location
 		SequentialTransition movementSequence = new SequentialTransition();
 		movementSequence.getChildren().addAll(transitions);
 
@@ -701,7 +731,8 @@ public class BoardController {
 			// Serious / Intellectual
 			"Turing", "AdaNova", "Hypatia", "NeuroLynx", "Euler",
 			// Funny / Meme-worthy
-			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "NullPointer", "NotABot"));
+			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "NullPointer",
+			"NotABot"));
 
 	public void assignNames(String playerName) {
 		Collections.shuffle(cpuNames);
@@ -775,10 +806,16 @@ public class BoardController {
 		for (ImageView card : cards) {
 			card.setOnMouseClicked(event -> {
 				if (event.getButton() == MouseButton.PRIMARY) {
-					boolean alreadySelected = selectedCardID != null && selectedCardID.equals(card.getId());
+					boolean alreadySelected = selectedCardID != null
+							&& selectedCardID.equals(card.getId());
 
 					if (alreadySelected) {
 						// Deselect all cards
+						if (splitDistanceAnchorPane.isVisible()) {// the seven
+																	// was
+																	// deselected
+							splitDistanceAnchorPane.setVisible(false);
+						}
 						for (ImageView c : cards) {
 							selectCard(c, false);
 						}
@@ -790,22 +827,35 @@ public class BoardController {
 							boolean isSelected = (c == card);
 							selectCard(c, isSelected);
 							if (isSelected) {
+								// if the selected card is a seven, make the
+								// controller visible
+								if (GenericController.getCardRank(c,
+										currentPlayerIndex, game) == 7)
+									splitDistanceAnchorPane.setVisible(true);
+								else
+									// deselected the 7 by clicking on another
+									// card
+									splitDistanceAnchorPane.setVisible(false);
 								selectedCardID = c.getId();
-								System.out.println("Selected card ID: " + selectedCardID);
+								System.out.println("Selected card ID: "
+										+ selectedCardID);
 							}
 						}
 					}
 				} else if (event.getButton() == MouseButton.SECONDARY) {
 					// Right-click: show description
-					view.description.Controller controller = SceneConfig.getInstance().getDescriptionController();
-					controller.showCardDescription(event, card, currentPlayerIndex, game);
+					view.description.Controller controller = SceneConfig
+							.getInstance().getDescriptionController();
+					controller.showCardDescription(event, card,
+							currentPlayerIndex, game);
 				}
 			});
 		}
 	}
 
 	private void selectCard(ImageView card, boolean select) {
-		TranslateTransition tt = new TranslateTransition(Duration.millis(150), card);
+		TranslateTransition tt = new TranslateTransition(Duration.millis(150),
+				card);
 		tt.setToY(select ? -15 : 0); // Move up if selected, reset if not
 		tt.play();
 
@@ -826,7 +876,7 @@ public class BoardController {
 		card.setOnMouseClicked(null);
 	}
 
-//-----------------------------------------------------------------
+	// -----------------------------------------------------------------
 	// Split distance feature
 	private Board board;
 
@@ -834,8 +884,6 @@ public class BoardController {
 	private AnchorPane splitDistanceAnchorPane;
 	@FXML
 	private ImageView splitDistanceOkButton;
-	@FXML
-	private ImageView splitDistanceCancelButton;
 	@FXML
 	private Slider splitDistanceSlider;
 	@FXML
@@ -857,22 +905,6 @@ public class BoardController {
 	private void splitDistanceOkButtonOnClick() {
 		SoundManager.getInstance().playSound("button_click");
 		board.setSplitDistance(Integer.parseInt(splitDistanceLabel1.getText()));
-		splitDistanceAnchorPane.setVisible(false);
-	}
-
-	@FXML
-	private void splitDistanceCancelButtonOnMouseEntered() {
-		GenericController.buttonGlowON(splitDistanceCancelButton, Color.CYAN, 25);
-	}
-
-	@FXML
-	private void splitDistanceCancelButtonOnMouseExited() {
-		GenericController.buttonGlowOFF(splitDistanceCancelButton);
-	}
-
-	@FXML
-	private void splitDistanceCancelButtonOnClick() {
-		SoundManager.getInstance().playSound("button_click");
 		splitDistanceAnchorPane.setVisible(false);
 	}
 
