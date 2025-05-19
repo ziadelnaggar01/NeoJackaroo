@@ -5,6 +5,7 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -137,45 +138,35 @@ public class BoardController {
 	}
 
 	private void continueGameLoop() {
-		if (game.checkWin() != null) {
-			System.out.println("Game over. Winner: " + game.checkWin());
-			return;
-		}
+	    if (game.checkWin() != null) {
+	        System.out.println("Game over. Winner: " + game.checkWin());
+	        return;
+	    }
 
-		// while (game.checkWin() == null)
-		{
-			Colour curPlayer = game.getActivePlayerColour();
-			ArrayList<Player> players = game.getPlayers();
-			currentPlayerIndex = GetIndex(players, curPlayer);
+	    Colour curPlayer = game.getActivePlayerColour();
+	    ArrayList<Player> players = game.getPlayers();
+	    currentPlayerIndex = GetIndex(players, curPlayer);
 
-			if (!game.canPlayTurn()) {
-				// Handle "cannot play" case with a popup
-				System.out.println("Player cannot play. Skipping turn.");
-				game.endPlayerTurn();
-				// Platform.runLater(this::continueGameLoop); // Schedule next
-				// loop
-				return;
-			} else {
-				if (currentPlayerIndex == 0) {
+	    if (!game.canPlayTurn()) {
+	        System.out.println("Player cannot play. Skipping turn.");
+	        game.endPlayerTurn();
+	        Platform.runLater(this::continueGameLoop); // Go to next player
+	        return;
+	    }
 
-					System.out.println("Waiting for player to click Play.");
-					// userClickedPlay = false;
-				} else {
-					// AI/other players
-					System.out.println("AI is playing...");
-					try {
-						game.playPlayerTurn();
-					} catch (GameException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					// game.advanceTurn();
-					// Platform.runLater(this::continueGameLoop); // Proceed
-					// after turn
-				}
-			}
-		}
-
+	    if (currentPlayerIndex == 0) {
+	        System.out.println("Waiting for player to click Play.");
+	        // Wait until user clicks play button (onPlayClicked will call continueGameLoop)
+	    } else {
+	        System.out.println("AI is playing...");
+	        try {
+	            game.playPlayerTurn();
+	        } catch (GameException e) {
+	            e.printStackTrace();
+	        }
+	        game.endPlayerTurn();
+	        Platform.runLater(this::continueGameLoop); // Next turn
+	    }
 	}
 
 	@FXML
@@ -251,7 +242,8 @@ public class BoardController {
 		} catch (GameException e) {
 			e.getMessage();
 		}
-		// continueGameLoop(); // Resume loop after player's action
+		game.endPlayerTurn();
+	    Platform.runLater(this::continueGameLoop); // Continue loop after user plays
 	}
 
 	public int GetIndex(ArrayList<Player> y, Colour col) {
@@ -319,6 +311,7 @@ public class BoardController {
 				break;
 			}
 		}
+		
 	}
 
 	private void Set_safe_zone() {

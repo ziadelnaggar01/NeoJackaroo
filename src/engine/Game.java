@@ -171,14 +171,11 @@ public class Game implements GameManager {
 		Card x = players.get(currentPlayerIndex).getSelectedCard();
 	// WARNING: Null-check intentionally disabled to comply with public test cases.
 	// This could result in unintended behavior (e.g., adding null cards to the fire pit).
-//		if(x!=null)
-//		{
-//			players.get(currentPlayerIndex).getHand().remove(x); // remove from hand directly
-//			firePit.add(x);
-//		}
+		if(x!=null)
+		{
 			players.get(currentPlayerIndex).getHand().remove(x); // remove from hand directly
 			firePit.add(x);
-	    
+		}
 		deselectAll();
 		currentPlayerIndex++;
 		currentPlayerIndex %= 4;
@@ -216,19 +213,15 @@ public class Game implements GameManager {
 		return x;
 	}
 	
-	public void sendHome(Marble marble)
-	{
-		int idx = 0;
-		for(int i = 0;i<4;i++)
-		{
-			if(players.get(i).getColour() == marble.getColour())
-			{
-				idx = i;
-				break;
-			}
-		}
-		players.get(idx).regainMarble(marble);
-	}
+	 @Override
+	    public void sendHome(Marble marble) {
+	        for (Player player : players) {
+	            if (player.getColour() == marble.getColour()) {
+	                player.regainMarble(marble);
+	                break;
+	            }
+	        }
+	    }
 	
 	/**
 	 * Fields a marble from the current player's collection to their Base Cell on the board.
