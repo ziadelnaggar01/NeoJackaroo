@@ -359,7 +359,7 @@ public class BoardController {
 			postAnimationDelay.play();
 		}
 	}
-	
+
 	private void updateBoard()
 	{
 		Change_Track();
@@ -1008,7 +1008,7 @@ public class BoardController {
 	private Button skipTurnButton;
 
 	@FXML
-	private void skipTurnButtonOnClick() {
+	private void skipTurnButtonOnClick() throws Exception{
 		if (selectedCardImageView == null) {
 			view.exception.Controller exceptionController = SceneConfig
 					.getInstance().getExceptionController();
@@ -1016,6 +1016,31 @@ public class BoardController {
 					"Please select a card to field"), animationPane,
 					selectedCardImageView, game);
 		} else {
+			// Link card selected from GUI to back end
+			Card card = null;
+			Player curPlayer = game.getPlayers().get(0);
+			if (selectedCardID != null) { // if the card is null, go straight
+				// away to play(), which will throw
+				// an
+				// exception
+				switch (selectedCardID.charAt(selectedCardID.length() - 1)) {
+				case '1':
+					card = curPlayer.getHand().get(0);
+					break;
+				case '2':
+					card = curPlayer.getHand().get(1);
+					break;
+				case '3':
+					card = curPlayer.getHand().get(2);
+					break;
+				case '4':
+					card = curPlayer.getHand().get(3);
+					break;
+				default:
+					card = null;
+				}
+				curPlayer.selectCard(card);
+			}
 			game.endPlayerTurn();
 			updateBoard();
 			deselectAllMarbles();
