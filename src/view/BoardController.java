@@ -109,6 +109,7 @@ public class BoardController {
 	private ImageView playerCard3;
 	@FXML
 	private ImageView playerCard4;
+	private ImageView[] playerHand;
 
 	@FXML
 	private AnchorPane animationPane;
@@ -138,27 +139,29 @@ public class BoardController {
 	public void initialize() throws IOException {
 		game = new Game("PlayerName");
 		players = game.getPlayers();
-
-		setTrack();
-		setSafeZones();
-		assignColours();
-		setHand();
-
-		splitDistanceAnchorPane.setVisible(false);
-		createCards();
-
+		
 		cpuCards = new ImageView[][] 
 				{
 			{playerB1, playerB2, playerB3, playerB4},
 			{playerC1, playerC2, playerC3, playerC4},
 			{playerD1, playerD2, playerD3, playerD4}
 				};
+				
+		playerHand = new ImageView[] {playerCard1, playerCard2, playerCard3, playerCard4};
 
-				continueGameLoop();
+		setTrack();
+		setSafeZones();
+		assignColours();
+		updatePlayerHand();
+
+		splitDistanceAnchorPane.setVisible(false);
+		createCards();
+
+		continueGameLoop();
 	}
 
 
-	public void updateCpuHands() {
+	public void updateCpuHand() {
 		List<Player> players = game.getPlayers();
 		for (int i = 1; i <= 3; i++) {
 			Player cpu = players.get(i);
@@ -167,6 +170,24 @@ public class BoardController {
 			{
 				cpuCards[i - 1][j].setVisible(j < handSize);
 			}
+		}
+	}
+	
+	public void updatePlayerHand() {
+		ArrayList<Card> hand = players.get(0).getHand();
+		int i = 0;
+		for(; i<hand.size(); i++)
+		{
+			Card curCard = hand.get(i);
+			Image cardImage = getCardImage(curCard);
+			playerHand[i].setVisible(true);
+			playerHand[i].setDisable(false);
+			playerHand[i].setImage(cardImage);
+		}
+		for(; i<4; i++)
+		{
+			playerHand[i].setVisible(false);
+			playerHand[i].setDisable(true);
 		}
 	}
 
@@ -318,7 +339,8 @@ public class BoardController {
 				Change_Track(); // Animate the board update
 				game.endPlayerTurn();
 				updatePit();
-				updateCpuHands();
+				updateCpuHand();
+				updatePlayerHand();
 				PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
 				postAnimationDelay.setOnFinished(e -> {
 					Platform.runLater(this::continueGameLoop);
@@ -332,7 +354,8 @@ public class BoardController {
 			ee.printStackTrace();
 			game.endPlayerTurn();
 			PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
-			updateCpuHands();
+			updateCpuHand();
+			updatePlayerHand();
 			postAnimationDelay.setOnFinished(e -> {
 				Platform.runLater(this::continueGameLoop);
 			});
@@ -584,31 +607,6 @@ public class BoardController {
 				return i;
 		}
 		return -1;
-	}
-
-
-	public void setHand() {
-		int i = 0;
-		Player player = players.get(i);
-		for (int j = 0; j < player.getHand().size(); j++) {
-			Card curCard = player.getHand().get(j);
-			Image cardImage = getCardImage(curCard);
-			switch (j) {
-			case 0:
-				playerCard1.setImage(cardImage);
-				break;
-			case 1:
-				playerCard2.setImage(cardImage);
-				break;
-			case 2:
-				playerCard3.setImage(cardImage);
-				break;
-			case 3:
-				playerCard4.setImage(cardImage);
-				break;
-			}
-		}
-
 	}
 
 
@@ -896,12 +894,6 @@ public class BoardController {
 		} else {
 			card.setEffect(null); // Remove the glow effect
 		}
-	}
-
-	private void disableCardSelection(ImageView card) {// called when a card is
-		// played/sent to
-		// firepit
-		card.setOnMouseClicked(null);
 	}
 
 	/**
