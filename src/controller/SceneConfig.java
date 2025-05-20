@@ -50,9 +50,10 @@ public class SceneConfig {
 			exceptionScene = exceptionLoader.load();
 			exceptionController = exceptionLoader.getController();
 
-		} catch (IOException e) {
+		} 
+		catch (IOException e) 
+		{
 			e.printStackTrace();
-			// You may want to throw a runtime exception here if any scene fails to load
 		}
 	}
 
@@ -106,6 +107,20 @@ public class SceneConfig {
 		gameController.assignNames(name);
 		gameController.setCurrentPlayerLabel();
 		gameController.setNextPlayerLabel();
+	}
+	
+	public void createNewGame()
+	{
+		try
+		{
+		FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("/view/BoardScene.fxml"));
+		gameScene = gameLoader.load();
+		gameController = gameLoader.getController();
+		}
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public view.description.Controller getDescriptionController() {

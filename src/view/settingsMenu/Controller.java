@@ -89,5 +89,6 @@ public class Controller {
 		}
 		root = SceneConfig.getInstance().getStartScene();
 		GenericController.switchScene(event, root);
+		SceneConfig.getInstance().createNewGame();
 	}
 }
