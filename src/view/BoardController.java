@@ -617,6 +617,7 @@ public class BoardController {
 
 	private void updatePit()
 	{
+	    if (game.getFirePit().isEmpty()) return;
 		ArrayList<Card> firePit = game.getFirePit();
 		firepitImage.setImage(getCardImage(firePit.getLast())); 
 	}
@@ -1052,34 +1053,50 @@ public class BoardController {
 		}
 	}
 
-
 	@FXML
 	private void fieldMarbleShortcut(KeyEvent event) {
-		if (currentPlayerIndex == 0) {
-			SoundManager.getInstance().playSound("button_click");
-			if (event.getCode() == KeyCode.F) {
-				ArrayList<Marble> homeMarbles = players.get(0).getMarbles();
-				for (int i = 0; i < homeMarbles.size(); i++) {
-					if (homeMarbles.get(i) != null) {
-
-						try {
-							game.fieldMarble();
-							moveToBase((Circle) animationPane.lookup("#mA" + i));
-						} catch (Exception e) {
-							view.exception.Controller exceptionController = SceneConfig
-									.getInstance().getExceptionController();
-							exceptionController.exceptionPopUp(e,
-									animationPane, selectedCardImageView, game);
-						}
-						return;
-					}
-
+		SoundManager.getInstance().playSound("button_click");
+		ArrayList<Marble> homeMarbles = players.get(currentPlayerIndex).getMarbles();
+		
+		int Num = 6;
+		Circle CurMarble = null;
+		for (Map.Entry<Circle, Circle> entry : marbleToCellMap.entrySet()) {
+			Circle marble = entry.getKey();
+			Circle cell = entry.getValue();
+			System.out.println(marble.getId() + "   " + cell.getId());
+			if (cell.getId().charAt(1) == 'A') {
+				// Home Cell
+				if ((cell.getId().charAt(2) - '0') < Num) {
+					Num = (cell.getId().charAt(2) - '0');
+					CurMarble = marble;
 				}
-				view.exception.Controller exceptionController = SceneConfig
-						.getInstance().getExceptionController();
-				exceptionController.exceptionPopUp(new Exception("No marbles to field"),
-						animationPane, selectedCardImageView, game);
 			}
+		}
+
+		if (currentPlayerIndex == 0 && event.getCode() == KeyCode.F) {
+			for (int i = 0; i < homeMarbles.size(); i++) {
+				if (homeMarbles.get(i) != null) {
+					try 
+					{
+						game.fieldMarble();
+						game.endPlayerTurn();
+						updateBoard();
+						deselectAllMarbles();
+					    PauseTransition delay = new PauseTransition(Duration.seconds(2));
+					    delay.setOnFinished(ae -> Platform.runLater(this::continueGameLoop));
+					    delay.play();
+
+					} 
+					catch (Exception e) 
+					{
+						view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
+						exceptionController.exceptionPopUp(e, animationPane,selectedCardImageView, game);
+					}
+					return;
+				}
+			}
+			view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
+			exceptionController.exceptionPopUp(new Exception("No marbles to field"), animationPane,selectedCardImageView, game);
 		}
 	}
 
