@@ -1,10 +1,8 @@
 package view;
 
 import javafx.animation.Interpolator;
-import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
-import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -23,7 +21,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -34,19 +31,16 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import controller.GenericController;
-import controller.MusicManager;
 import controller.SceneConfig;
 import controller.SoundManager;
 
@@ -66,9 +60,7 @@ import engine.Game;
 import engine.board.Board;
 import engine.board.Cell;
 import engine.board.SafeZone;
-import exception.CannotFieldException;
 import exception.GameException;
-import exception.IllegalDestroyException;
 
 public class BoardController {
 
@@ -477,6 +469,7 @@ public class BoardController {
 	}
 
 
+	// Used in onPlayClicked
 	private void deselectAllMarbles() {
 		for (Circle x : movableMarbles) {
 			if (selectedMarbles.contains(x)) {
@@ -584,7 +577,7 @@ public class BoardController {
 	 }
 
 
-
+	// needed in continueGameLoop
 	public int getIndex(ArrayList<Player> y, Colour col) {
 		for (int i = 0; i < 4; i++) {
 			if (y.get(i).getColour() == col)
@@ -645,94 +638,6 @@ public class BoardController {
 			selectedMarbles.add(clickedMarble);
 			clickedMarble.setEffect(new DropShadow(15, Color.YELLOW));
 		}
-	}
-
-	private void swap(Circle a, Circle b) {
-		// Get original positions
-		double ax = a.getLayoutX();
-		double ay = a.getLayoutY();
-		double bx = b.getLayoutX();
-		double by = b.getLayoutY();
-
-		// Create transitions for each marble
-		TranslateTransition moveA = new TranslateTransition(
-				Duration.millis(1000), a);
-		moveA.setByX(bx - ax);
-		moveA.setByY(by - ay);
-
-		TranslateTransition moveB = new TranslateTransition(
-				Duration.millis(1000), b);
-		moveB.setByX(ax - bx);
-		moveB.setByY(ay - by);
-
-		// After animation, reset positions and clear transforms
-		moveA.setOnFinished(e -> {
-			a.setLayoutX(bx);
-			a.setLayoutY(by);
-			a.setTranslateX(0);
-			a.setTranslateY(0);
-		});
-
-		moveB.setOnFinished(e -> {
-			b.setLayoutX(ax);
-			b.setLayoutY(ay);
-			b.setTranslateX(0);
-			b.setTranslateY(0);
-		});
-
-		Circle to = marbleToCellMap.get(a);
-		Circle too = marbleToCellMap.get(b);
-		marbleToCellMap.put(a, too);
-		marbleToCellMap.put(b, to);
-		// Play both at the same time
-		ParallelTransition swapAnim = new ParallelTransition(moveA, moveB);
-		swapAnim.play();
-	}
-
-	private void move_backword(Circle x, int st, int steps) {
-		List<Circle> path = new ArrayList<>();
-		for (int i = steps - 1; i >= 0; i--) {
-			st = (st - 1 + 100) % 100;
-			String targetId = "#m" + st;
-			Circle y = (Circle) animationPane.lookup(targetId);
-			if (y != null)
-				path.add(y);
-			else
-				System.out.println("Missing circle at: " + targetId);
-		}
-		moveThroughPath(x, 0, path.size(), path);
-	}
-
-	private void to_safe_zone(Circle x, int st, int where) {
-		int entry = 98;
-		char To = x.getId().charAt(4);
-		if (To == 'B')
-			entry = 23;
-		else if (To == 'C')
-			entry = 48;
-		else if (To == 'D')
-			entry = 73;
-
-		List<Circle> path = new ArrayList<>();
-
-		for (int i = st + 1; i <= st + entry + 1; i++) {
-			String targetId = "#m" + (i % 100);
-			Circle y = (Circle) animationPane.lookup(targetId);
-			if (y != null)
-				path.add(y);
-			else
-				System.out.println("Missing circle at: " + targetId);
-		}
-
-		for (int i = 1; i <= where; i++) {
-			String Idd = "#safe" + To + i;
-			Circle yy = (Circle) animationPane.lookup(Idd);
-			if (yy != null)
-				path.add(yy);
-			else
-				System.out.println("Missing safe zone circle: " + Idd);
-		}
-		moveThroughPath(x, 0, path.size(), path);
 	}
 
 	private void setTrack() {
@@ -817,116 +722,6 @@ public class BoardController {
 			System.out.println("Destination circle not found: " + targetId);
 		}
 	}
-
-	public void Trap(Circle x, int where) {
-		// Make it grow big
-		ScaleTransition growBig = new ScaleTransition(Duration.millis(1000), x);
-		growBig.setToX(3.0);
-		growBig.setToY(3.0);
-		growBig.setInterpolator(Interpolator.EASE_OUT);
-		AudioClip sound = null;
-		try {
-			// Play trap sound
-			URL soundurl = getClass().getResource(
-					"/view/assests/sound/bonk.wav");
-			if (soundurl != null) {
-				sound = new AudioClip(soundurl.toString());
-				sound.play();
-			} else {
-				System.out
-						.println("Sound file not found at /view/assests/sound/trap.mp3");
-			}
-		} catch (Exception e) {
-			System.out.println("Failed to play sound:");
-			e.printStackTrace();
-		}
-
-		// After growing big, move to base
-		growBig.setOnFinished(e -> {
-			moveToHome(x, where);
-		});
-
-		growBig.play();
-	}
-
-	public void moveToHome(Circle x, int where) {
-		// Extract label char from x's ID, like 'A' from "moveA"
-		char To = x.getId().charAt(4);
-		String targetId = "#m" + To + where;
-		System.out.println(targetId);
-		// Find the destination circle
-		Circle y = (Circle) animationPane.lookup(targetId);
-		if (y != null) {
-			move_from_to(x, y);
-		} else {
-			System.out.println("Destination circle not found: " + targetId);
-		}
-	}
-
-	public void destroy_it(Circle c, int where) {
-		// Play sound
-		try {
-			// Corrected path and renamed variable to soundurl
-			URL soundurl = getClass().getResource(
-					"/view/assests/sound/destroy.mp3");
-			if (soundurl != null) {
-				AudioClip sound = new AudioClip(soundurl.toString());
-				sound.play();
-			} else {
-				System.out
-						.println("Sound file not found at /view/assets/sound/destroy.mp3");
-			}
-		} catch (Exception e) {
-			System.out.println("Failed to play sound:");
-			e.printStackTrace();
-		}
-		moveToHome(c, where);
-	}
-
-	private void moveThroughPath(Circle marble, int st, int steps,
-			List<Circle> pathNodes) {
-		// Create the resize transition but don't play it yet
-		ScaleTransition resizeTransition = smoothlyResize(marble,
-				pathNodes.get(0));
-
-		// Create list of TranslateTransitions for moving the marble
-		List<TranslateTransition> transitions = new ArrayList<>();
-
-		double startX = marble.getLayoutX();
-		double startY = marble.getLayoutY();
-
-		Circle New_Pos = null;
-		for (int i = st; i <= st + steps; i++) {
-			Circle target = (Circle) pathNodes.get((i % 100));
-			New_Pos = target;
-			double targetX = target.getLayoutX() - startX;
-			double targetY = target.getLayoutY() - startY;
-
-			TranslateTransition transition = new TranslateTransition(
-					Duration.seconds(0.3), marble);
-			transition.setToX(targetX);
-			transition.setToY(targetY);
-			transition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
-			transitions.add(transition);
-		}
-
-		marbleToCellMap.put(marble, New_Pos); // set the new position of the
-												// marble to
-		// be in a new location
-		SequentialTransition movementSequence = new SequentialTransition();
-		movementSequence.getChildren().addAll(transitions);
-
-		// Now create a master sequence: first resize, then move
-		SequentialTransition masterSequence = new SequentialTransition();
-		masterSequence.getChildren().addAll(resizeTransition, movementSequence);
-
-		masterSequence.setOnFinished(e -> {
-			System.out.println("Smooth and accurate movement finished.");
-		});
-
-		masterSequence.play();
-	}
-
 
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// Code for settings
