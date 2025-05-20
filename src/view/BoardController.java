@@ -139,25 +139,25 @@ public class BoardController {
 	public void initialize() throws IOException {
 		game = new Game("PlayerName");
 		players = game.getPlayers();
-		
+
 		cpuCards = new ImageView[][] 
 				{
 			{playerB1, playerB2, playerB3, playerB4},
 			{playerC1, playerC2, playerC3, playerC4},
 			{playerD1, playerD2, playerD3, playerD4}
 				};
-				
-		playerHand = new ImageView[] {playerCard1, playerCard2, playerCard3, playerCard4};
 
-		setTrack();
-		setSafeZones();
-		assignColours();
-		updatePlayerHand();
+				playerHand = new ImageView[] {playerCard1, playerCard2, playerCard3, playerCard4};
 
-		splitDistanceAnchorPane.setVisible(false);
-		createCards();
+				setTrack();
+				setSafeZones();
+				assignColours();
+				updatePlayerHand();
 
-		continueGameLoop();
+				splitDistanceAnchorPane.setVisible(false);
+				createCards();
+
+				continueGameLoop();
 	}
 
 
@@ -172,7 +172,7 @@ public class BoardController {
 			}
 		}
 	}
-	
+
 	public void updatePlayerHand() {
 		ArrayList<Card> hand = players.get(0).getHand();
 		int i = 0;
@@ -336,11 +336,8 @@ public class BoardController {
 			// Wait before showing animation or calling Change_Track
 			PauseTransition delay = new PauseTransition(Duration.seconds(2)); 
 			delay.setOnFinished(event -> {
-				Change_Track(); // Animate the board update
 				game.endPlayerTurn();
-				updatePit();
-				updateCpuHand();
-				updatePlayerHand();
+				updateBoard();
 				PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
 				postAnimationDelay.setOnFinished(e -> {
 					Platform.runLater(this::continueGameLoop);
@@ -361,6 +358,14 @@ public class BoardController {
 			});
 			postAnimationDelay.play();
 		}
+	}
+	
+	private void updateBoard()
+	{
+		Change_Track();
+		updatePit();
+		updateCpuHand();
+		updatePlayerHand();
 	}
 
 
@@ -1012,9 +1017,11 @@ public class BoardController {
 					selectedCardImageView, game);
 		} else {
 			SceneConfig.getInstance().discardCard(selectedCardImageView);
+
 			game.endPlayerTurn();
 		}
 	}
+
 
 	@FXML
 	private void fieldMarbleShortcut(KeyEvent event) {
@@ -1036,6 +1043,7 @@ public class BoardController {
 						}
 						return;
 					}
+
 				}
 				view.exception.Controller exceptionController = SceneConfig
 						.getInstance().getExceptionController();
