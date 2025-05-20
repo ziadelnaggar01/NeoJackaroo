@@ -478,7 +478,7 @@ public class BoardController {
 			game.endPlayerTurn();
 			PauseTransition delay = new PauseTransition(Duration.seconds(2));
 			delay.setOnFinished(event -> {
-				updatePit();
+				updateBoard();
 				deselectAllMarbles();
 				Platform.runLater(this::continueGameLoop);
 			});
@@ -1016,9 +1016,14 @@ public class BoardController {
 					"Please select a card to field"), animationPane,
 					selectedCardImageView, game);
 		} else {
-			SceneConfig.getInstance().discardCard(selectedCardImageView);
-
 			game.endPlayerTurn();
+			updateBoard();
+			deselectAllMarbles();
+			PauseTransition delay = new PauseTransition(Duration.seconds(2));
+			delay.setOnFinished(event -> {
+				Platform.runLater(this::continueGameLoop);
+			});
+			delay.play();
 		}
 	}
 
