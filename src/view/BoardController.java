@@ -179,8 +179,6 @@ public class BoardController {
     }
 	
 	public void Change_Track() {
-	    System.out.println("I am here");
-
 	    // Initialize 4x4 list to track marbles already placed
 	    List<List<Integer>> tot = new ArrayList<>();
 	    for (int i = 0; i < 4; i++) {
@@ -192,8 +190,9 @@ public class BoardController {
 	    ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
 	    for (SafeZone s : game.getBoard().getSafeZones()) {
 	        colourOrderArrayList.add(s.getColour());
+	        //System.out.println(s.getColour().toString()); // check if he uses the colour correctly or not
 	    }
-
+	
 	    // Handle Track marbles
 	    for (int i = 0; i < 100; i++) {
 	        Cell cell = game.getBoard().getTrack().get(i);
@@ -201,6 +200,7 @@ public class BoardController {
 	        if (marble != null) {
 	            Colour col = marble.getColour();
 	            for (int j = 0; j < 4; j++) {
+	            	
 	                if (col == colourOrderArrayList.get(j)) {
 	                    List<Integer> playerPos = tot.get(j);
 	                    for (int k = 0; k < 4; k++) {
@@ -211,6 +211,7 @@ public class BoardController {
 	                            Circle to = (Circle) animationPane.lookup("#" + track.get(i).getId());
 
 	                            if (from != null && to != null) {
+	                            	marbleToCellMap.put(from, to);
 	                                from.setLayoutX(to.getLayoutX());
 	                                from.setLayoutY(to.getLayoutY());
 	                                from.setRadius(to.getRadius()); // Resize from to match to
@@ -237,6 +238,7 @@ public class BoardController {
 	                Circle to = (Circle) animationPane.lookup("#" + destId);
 
 	                if (from != null && to != null) {
+	                	marbleToCellMap.put(from, to);
 	                    from.setLayoutX(to.getLayoutX());
 	                    from.setLayoutY(to.getLayoutY());
 	                    from.setRadius(to.getRadius()); // Resize from to match to
@@ -258,6 +260,7 @@ public class BoardController {
 	                Circle to = (Circle) animationPane.lookup("#" + destId);
 
 	                if (from != null && to != null) {
+	                	marbleToCellMap.put(from, to);
 	                    from.setLayoutX(to.getLayoutX());
 	                    from.setLayoutY(to.getLayoutY());
 	                    from.setRadius(to.getRadius()); // Resize from to match to
@@ -270,52 +273,81 @@ public class BoardController {
 
 
 	private void continueGameLoop() {
-		setCurrentPlayerLabel();
-		setNextPlayerLabel();
-		if (game.checkWin() != null) {
-			System.out.println("Game over. Winner: " + game.checkWin());
-			Parent root = SceneConfig.getInstance().getEndScene();
-			Node someNode = animationPane;
-			Stage stage = (Stage) someNode.getScene().getWindow();
-			GenericController.switchScene(stage, root);
-		}
+	    setCurrentPlayerLabel();
+	    setNextPlayerLabel();
+	    
+	    if (game.checkWin() != null) {
+	        System.out.println("Game over. Winner: " + game.checkWin());
+	        Parent root = SceneConfig.getInstance().getEndScene();
+	        Stage stage = (Stage) animationPane.getScene().getWindow();
+	        GenericController.switchScene(stage, root);
+	        return;
+	    }
 
-		Colour curPlayer = game.getActivePlayerColour();
-		currentPlayerIndex = getIndex(players, curPlayer);
+	    Colour curPlayer = game.getActivePlayerColour();
+	    currentPlayerIndex = getIndex(players, curPlayer);
+	    System.out.println("Active player abn algazmha ahoooo: " + currentPlayerIndex);
 
-		if (!game.canPlayTurn()) {
+	    if (!game.canPlayTurn()) {
+	        System.out.println(currentPlayerIndex+ " cannot play. Skipping turn.");
+	        // Wait before showing animation or calling Change_Track
+	        PauseTransition delay = new PauseTransition(Duration.seconds(2)); 
+	        delay.setOnFinished(event -> {
+	           
+	            // add popup you got hacked ..... skip
+	            PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
+	            postAnimationDelay.setOnFinished(e -> {
+	            	game.endPlayerTurn();
+	                Platform.runLater(this::continueGameLoop);
+	            });
+	            postAnimationDelay.play();
+	        });
+	        delay.play();
+	        return;
+	    }
 
-			//skip animation
-			System.out.println("Player cannot play. Skipping turn.");
-			game.endPlayerTurn();
-			Platform.runLater(this::continueGameLoop); // Go to next player
-			return;
-		}
-
-		if (currentPlayerIndex == 0) {
-			System.out.println("Waiting for player to click Play.");
-			// Wait until user clicks play button (onPlayClicked will call
-			// continueGameLoop)
-		} else {
-			System.out.println("AI is playing...");
-			try {
-				game.playPlayerTurn();
-
-				PauseTransition delay = new PauseTransition(Duration.seconds(3));
-				delay.setOnFinished(event -> {
-				    Change_Track();
-				    game.endPlayerTurn();
-				    Platform.runLater(this::continueGameLoop);
-				});
-
-				delay.play();
-
-				
-			} catch (GameException e) {
-				e.printStackTrace();
-			}
-		}
+	    if (currentPlayerIndex == 0) {
+	        System.out.println("Waiting for player to click Play.");
+	        // Human player: wait for button click
+	    } else {
+	        System.out.println("AI is playing...");
+	        playAITurnWithDelay();
+	    }
 	}
+
+	private void playAITurnWithDelay() {
+	    try {
+	        game.playPlayerTurn(); // AI chooses move immediately
+	      
+	        
+	        // Wait before showing animation or calling Change_Track
+	        PauseTransition delay = new PauseTransition(Duration.seconds(2)); 
+	        delay.setOnFinished(event -> {
+	            Change_Track(); // Animate the board update
+	            game.endPlayerTurn();
+	            updatePit();
+	            updateCpuHands();
+	            PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
+	            postAnimationDelay.setOnFinished(e -> {
+	                Platform.runLater(this::continueGameLoop);
+	            });
+	            postAnimationDelay.play();
+	        });
+
+	        delay.play();
+
+	    } catch (GameException ee) {
+	        ee.printStackTrace();
+	        game.endPlayerTurn();
+	        PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
+	        updateCpuHands();
+            postAnimationDelay.setOnFinished(e -> {
+                Platform.runLater(this::continueGameLoop);
+            });
+            postAnimationDelay.play();
+	    }
+	}
+
 
 
 	@FXML
@@ -325,7 +357,7 @@ public class BoardController {
 
 		try {
 			// Link card selected from GUI to back end
-			Card card;
+			Card card = null;
 			if (selectedCardID != null) { // if the card is null, go straight
 											// away to play(), which will throw
 											// an
@@ -348,6 +380,8 @@ public class BoardController {
 				}
 				curPlayer.selectCard(card);
 			}
+			
+			System.out.println(card.getName()); // here
 
 			// Link marbles selected by player to back-end
 			for (Circle marble : selectedMarbles) {
@@ -418,12 +452,18 @@ public class BoardController {
 
 			// play according to selected cards and selected marbles
 
-			curPlayer.play();
-			// Do your action depends on your card
-            Change_Track();
-			sendToPit(selectedCardImageView);
-			game.endPlayerTurn();
-			Platform.runLater(this::continueGameLoop); // Continue loop after
+			game.playPlayerTurn();
+	        Change_Track(); // Animate human move
+	        sendToPit(selectedCardImageView); // Optional visual logic
+	        game.endPlayerTurn();
+	        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+	        delay.setOnFinished(event -> {
+	        	updatePit();
+	            deselectAllMarbles();
+	            Platform.runLater(this::continueGameLoop);
+	        });
+	        delay.play();
+	        
 		} catch (Exception e) {
 			view.exception.Controller exceptionController = SceneConfig
 					.getInstance().getExceptionController();
@@ -431,57 +471,11 @@ public class BoardController {
 					selectedCardImageView, game);
 			game.deselectAll(); // deselct from back-end
 			deselectAllMarbles(); // deselect animation
+			 Platform.runLater(this::continueGameLoop);
 		}
 
 	}
 
-	public void action(ImageView selectedCard, Set<Circle> selectedMarbless) {
-		int rank = GenericController.getCardRank(selectedCard, 0, game);
-		switch (rank) {
-		case 13:
-		case 1:
-			// select anyone from the Home Cell and send it to base
-			// I want to know which Marble in Home Cell
-			try {
-
-				int Num = 6;
-				Circle CurMarble = null;
-				for (Map.Entry<Circle, Circle> entry : marbleToCellMap
-						.entrySet()) {
-					Circle marble = entry.getKey();
-					Circle cell = entry.getValue();
-					System.out.println(marble.getId() + "   " + cell.getId());
-					if (cell.getId().charAt(1) == 'A') {
-						// Home Cell
-						if ((cell.getId().charAt(2) - '0') < Num) {
-							Num = (cell.getId().charAt(2) - '0');
-							CurMarble = marble;
-						}
-					}
-				}
-				// System.out.println(CurMarble.getId() + " " + Num );
-				moveToBase(CurMarble);
-				game.fieldMarble();
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-			break;
-		case 7:
-			break;
-		case 11: // jack
-			Iterator<Circle> iterator = selectedMarbles.iterator();
-			List<Circle> firstTwo = new ArrayList<>();
-			swap(firstTwo.get(0), firstTwo.get(1));
-			break;
-		default: // standard
-			Circle CurMarble = selectedMarbles.iterator().next();
-			String positionString = marbleToCellMap.get(CurMarble).getId()
-					.substring(1);
-			System.out.println(positionString);
-			int num = Integer.parseInt(positionString);
-			moveThroughPath(CurMarble, num, rank, track);
-		}
-	}
 
 	private void deselectAllMarbles() {
 		for (Circle x : movableMarbles) {
@@ -603,7 +597,7 @@ public class BoardController {
 	public void setHand() {
 		int i = 0;
 		Player player = players.get(i);
-		for (int j = 0; j < 4; j++) {
+		for (int j = 0; j < player.getHand().size(); j++) {
 			Card curCard = player.getHand().get(j);
 			Image cardImage = getCardImage(curCard);
 			switch (j) {
@@ -968,7 +962,7 @@ public class BoardController {
 			// Serious / Intellectual
 			"Turing", "AdaNova", "Hypatia", "NeuroLynx", "Euler",
 			// Funny / Meme-worthy
-			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "NullPointer",
+			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "Meow",
 			"NotABot"));
 
 	// Called from outside the class
