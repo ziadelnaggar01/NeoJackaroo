@@ -44,7 +44,7 @@ public class MusicManager {
 			mediaPlayer.setVolume(volume);
 		}
 	}
-	
+
 	public double getVolume() {
 		return this.volume;
 	}

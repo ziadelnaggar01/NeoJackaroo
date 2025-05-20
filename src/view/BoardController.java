@@ -81,11 +81,11 @@ public class BoardController {
 	private Label CPU3Name;
 	@FXML
 	private Label userName;
-	
+
 	@FXML private ImageView playerB1, playerB2, playerB3, playerB4;
 	@FXML private ImageView playerC1, playerC2, playerC3, playerC4;
 	@FXML private ImageView playerD1, playerD2, playerD3, playerD4;
-	
+
 	private ImageView[][] cpuCards;
 
 
@@ -146,198 +146,198 @@ public class BoardController {
 
 		splitDistanceAnchorPane.setVisible(false);
 		createCards();
-		
-        cpuCards = new ImageView[][] 
-        {
-            {playerB1, playerB2, playerB3, playerB4},
-            {playerC1, playerC2, playerC3, playerC4},
-            {playerD1, playerD2, playerD3, playerD4}
-        };
 
-		continueGameLoop();
+		cpuCards = new ImageView[][] 
+				{
+			{playerB1, playerB2, playerB3, playerB4},
+			{playerC1, playerC2, playerC3, playerC4},
+			{playerD1, playerD2, playerD3, playerD4}
+				};
+
+				continueGameLoop();
 	}
-	
+
 
 	public void updateCpuHands() {
-        List<Player> players = game.getPlayers();
-        for (int i = 1; i <= 3; i++) {
-            Player cpu = players.get(i);
-            int handSize = cpu.getHand().size();
-            for (int j = 0; j < 4; j++) 
-            {
-                cpuCards[i - 1][j].setVisible(j < handSize);
-            }
-        }
-    }
-	
+		List<Player> players = game.getPlayers();
+		for (int i = 1; i <= 3; i++) {
+			Player cpu = players.get(i);
+			int handSize = cpu.getHand().size();
+			for (int j = 0; j < 4; j++) 
+			{
+				cpuCards[i - 1][j].setVisible(j < handSize);
+			}
+		}
+	}
+
 	public void Change_Track() {
-	    // Initialize 4x4 list to track marbles already placed
-	    List<List<Integer>> tot = new ArrayList<>();
-	    for (int i = 0; i < 4; i++) {
-	        List<Integer> row = new ArrayList<>(Collections.nCopies(4, 0));
-	        tot.add(row);
-	    }
+		// Initialize 4x4 list to track marbles already placed
+		List<List<Integer>> tot = new ArrayList<>();
+		for (int i = 0; i < 4; i++) {
+			List<Integer> row = new ArrayList<>(Collections.nCopies(4, 0));
+			tot.add(row);
+		}
 
-	    // Prepare colour order for indexing
-	    ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
-	    for (SafeZone s : game.getBoard().getSafeZones()) {
-	        colourOrderArrayList.add(s.getColour());
-	        //System.out.println(s.getColour().toString()); // check if he uses the colour correctly or not
-	    }
-	
-	    // Handle Track marbles
-	    for (int i = 0; i < 100; i++) {
-	        Cell cell = game.getBoard().getTrack().get(i);
-	        Marble marble = cell.getMarble();
-	        if (marble != null) {
-	            Colour col = marble.getColour();
-	            for (int j = 0; j < 4; j++) {
-	            	
-	                if (col == colourOrderArrayList.get(j)) {
-	                    List<Integer> playerPos = tot.get(j);
-	                    for (int k = 0; k < 4; k++) {
-	                        if (playerPos.get(k) == 0) {
-	                            playerPos.set(k, 1);
-	                            String newPos = "move" + (char) ('A' + j) + (k + 1);
-	                            Circle from = (Circle) animationPane.lookup("#" + newPos);
-	                            Circle to = (Circle) animationPane.lookup("#" + track.get(i).getId());
+		// Prepare colour order for indexing
+		ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
+		for (SafeZone s : game.getBoard().getSafeZones()) {
+			colourOrderArrayList.add(s.getColour());
+			//System.out.println(s.getColour().toString()); // check if he uses the colour correctly or not
+		}
 
-	                            if (from != null && to != null) {
-	                            	marbleToCellMap.put(from, to);
-	                                from.setLayoutX(to.getLayoutX());
-	                                from.setLayoutY(to.getLayoutY());
-	                                from.setRadius(to.getRadius()); // Resize from to match to
-	                            }
-	                            break;
-	                        }
-	                    }
-	                    break;
-	                }
-	            }
-	        }
-	    }
+		// Handle Track marbles
+		for (int i = 0; i < 100; i++) {
+			Cell cell = game.getBoard().getTrack().get(i);
+			Marble marble = cell.getMarble();
+			if (marble != null) {
+				Colour col = marble.getColour();
+				for (int j = 0; j < 4; j++) {
 
-	    // Handle Safe Zone marbles
-	    for (int i = 0; i < 4; i++) {
-	        for (int j = 0; j < 4; j++) {
-	            Cell cell = game.getBoard().getSafeZones().get(i).getCells().get(j);
-	            if (cell.getMarble() != null && tot.get(i).get(j) == 0) {
-	                tot.get(i).set(j, 1);
-	                String newPos = "move" + (char) ('A' + i) + (j + 1);
-	                String destId = "safe" + (char) ('A' + i) + (j + 1);
+					if (col == colourOrderArrayList.get(j)) {
+						List<Integer> playerPos = tot.get(j);
+						for (int k = 0; k < 4; k++) {
+							if (playerPos.get(k) == 0) {
+								playerPos.set(k, 1);
+								String newPos = "move" + (char) ('A' + j) + (k + 1);
+								Circle from = (Circle) animationPane.lookup("#" + newPos);
+								Circle to = (Circle) animationPane.lookup("#" + track.get(i).getId());
 
-	                Circle from = (Circle) animationPane.lookup("#" + newPos);
-	                Circle to = (Circle) animationPane.lookup("#" + destId);
+								if (from != null && to != null) {
+									marbleToCellMap.put(from, to);
+									from.setLayoutX(to.getLayoutX());
+									from.setLayoutY(to.getLayoutY());
+									from.setRadius(to.getRadius()); // Resize from to match to
+								}
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
+		}
 
-	                if (from != null && to != null) {
-	                	marbleToCellMap.put(from, to);
-	                    from.setLayoutX(to.getLayoutX());
-	                    from.setLayoutY(to.getLayoutY());
-	                    from.setRadius(to.getRadius()); // Resize from to match to
-	                }
-	            }
-	        }
-	    }
+		// Handle Safe Zone marbles
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				Cell cell = game.getBoard().getSafeZones().get(i).getCells().get(j);
+				if (cell.getMarble() != null && tot.get(i).get(j) == 0) {
+					tot.get(i).set(j, 1);
+					String newPos = "move" + (char) ('A' + i) + (j + 1);
+					String destId = "safe" + (char) ('A' + i) + (j + 1);
 
-	    // Handle Home Cell marbles
-	    for (int i = 0; i < 4; i++) {
-	        for (int j = 0; j < game.getPlayers().get(i).getMarbles().size(); j++) {
-	            Marble marble = game.getPlayers().get(i).getMarbles().get(j);
-	            if (marble != null && tot.get(i).get(j) == 0) {
-	                tot.get(i).set(j, 1);
-	                String newPos = "move" + (char) ('A' + i) + (j + 1);
-	                String destId = "m" + (char) ('A' + i) + (j + 1);
+					Circle from = (Circle) animationPane.lookup("#" + newPos);
+					Circle to = (Circle) animationPane.lookup("#" + destId);
 
-	                Circle from = (Circle) animationPane.lookup("#" + newPos);
-	                Circle to = (Circle) animationPane.lookup("#" + destId);
+					if (from != null && to != null) {
+						marbleToCellMap.put(from, to);
+						from.setLayoutX(to.getLayoutX());
+						from.setLayoutY(to.getLayoutY());
+						from.setRadius(to.getRadius()); // Resize from to match to
+					}
+				}
+			}
+		}
 
-	                if (from != null && to != null) {
-	                	marbleToCellMap.put(from, to);
-	                    from.setLayoutX(to.getLayoutX());
-	                    from.setLayoutY(to.getLayoutY());
-	                    from.setRadius(to.getRadius()); // Resize from to match to
-	                }
-	            }
-	        }
-	    }
+		// Handle Home Cell marbles
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < game.getPlayers().get(i).getMarbles().size(); j++) {
+				Marble marble = game.getPlayers().get(i).getMarbles().get(j);
+				if (marble != null && tot.get(i).get(j) == 0) {
+					tot.get(i).set(j, 1);
+					String newPos = "move" + (char) ('A' + i) + (j + 1);
+					String destId = "m" + (char) ('A' + i) + (j + 1);
+
+					Circle from = (Circle) animationPane.lookup("#" + newPos);
+					Circle to = (Circle) animationPane.lookup("#" + destId);
+
+					if (from != null && to != null) {
+						marbleToCellMap.put(from, to);
+						from.setLayoutX(to.getLayoutX());
+						from.setLayoutY(to.getLayoutY());
+						from.setRadius(to.getRadius()); // Resize from to match to
+					}
+				}
+			}
+		}
 	}
 
 
 
 	private void continueGameLoop() {
-	    setCurrentPlayerLabel();
-	    setNextPlayerLabel();
-	    
-	    if (game.checkWin() != null) {
-	        System.out.println("Game over. Winner: " + game.checkWin());
-	        Parent root = SceneConfig.getInstance().getEndScene();
-	        Stage stage = (Stage) animationPane.getScene().getWindow();
-	        GenericController.switchScene(stage, root);
-	        return;
-	    }
+		setCurrentPlayerLabel();
+		setNextPlayerLabel();
 
-	    Colour curPlayer = game.getActivePlayerColour();
-	    currentPlayerIndex = getIndex(players, curPlayer);
-	    System.out.println("Active player abn algazmha ahoooo: " + currentPlayerIndex);
+		if (game.checkWin() != null) {
+			System.out.println("Game over. Winner: " + game.checkWin());
+			Parent root = SceneConfig.getInstance().getEndScene();
+			Stage stage = (Stage) animationPane.getScene().getWindow();
+			GenericController.switchScene(stage, root);
+			return;
+		}
 
-	    if (!game.canPlayTurn()) {
-	        System.out.println(currentPlayerIndex+ " cannot play. Skipping turn.");
-	        // Wait before showing animation or calling Change_Track
-	        PauseTransition delay = new PauseTransition(Duration.seconds(2)); 
-	        delay.setOnFinished(event -> {
-	           
-	            // add popup you got hacked ..... skip
-	            PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
-	            postAnimationDelay.setOnFinished(e -> {
-	            	game.endPlayerTurn();
-	                Platform.runLater(this::continueGameLoop);
-	            });
-	            postAnimationDelay.play();
-	        });
-	        delay.play();
-	        return;
-	    }
+		Colour curPlayer = game.getActivePlayerColour();
+		currentPlayerIndex = getIndex(players, curPlayer);
+		System.out.println("Active player abn algazmha ahoooo: " + currentPlayerIndex);
 
-	    if (currentPlayerIndex == 0) {
-	        System.out.println("Waiting for player to click Play.");
-	        // Human player: wait for button click
-	    } else {
-	        System.out.println("AI is playing...");
-	        playAITurnWithDelay();
-	    }
+		if (!game.canPlayTurn()) {
+			System.out.println(currentPlayerIndex+ " cannot play. Skipping turn.");
+			// Wait before showing animation or calling Change_Track
+			PauseTransition delay = new PauseTransition(Duration.seconds(2)); 
+			delay.setOnFinished(event -> {
+
+				// add popup you got hacked ..... skip
+				PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
+				postAnimationDelay.setOnFinished(e -> {
+					game.endPlayerTurn();
+					Platform.runLater(this::continueGameLoop);
+				});
+				postAnimationDelay.play();
+			});
+			delay.play();
+			return;
+		}
+
+		if (currentPlayerIndex == 0) {
+			System.out.println("Waiting for player to click Play.");
+			// Human player: wait for button click
+		} else {
+			System.out.println("AI is playing...");
+			playAITurnWithDelay();
+		}
 	}
 
 	private void playAITurnWithDelay() {
-	    try {
-	        game.playPlayerTurn(); // AI chooses move immediately
-	      
-	        
-	        // Wait before showing animation or calling Change_Track
-	        PauseTransition delay = new PauseTransition(Duration.seconds(2)); 
-	        delay.setOnFinished(event -> {
-	            Change_Track(); // Animate the board update
-	            game.endPlayerTurn();
-	            updatePit();
-	            updateCpuHands();
-	            PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
-	            postAnimationDelay.setOnFinished(e -> {
-	                Platform.runLater(this::continueGameLoop);
-	            });
-	            postAnimationDelay.play();
-	        });
+		try {
+			game.playPlayerTurn(); // AI chooses move immediately
 
-	        delay.play();
 
-	    } catch (GameException ee) {
-	        ee.printStackTrace();
-	        game.endPlayerTurn();
-	        PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
-	        updateCpuHands();
-            postAnimationDelay.setOnFinished(e -> {
-                Platform.runLater(this::continueGameLoop);
-            });
-            postAnimationDelay.play();
-	    }
+			// Wait before showing animation or calling Change_Track
+			PauseTransition delay = new PauseTransition(Duration.seconds(2)); 
+			delay.setOnFinished(event -> {
+				Change_Track(); // Animate the board update
+				game.endPlayerTurn();
+				updatePit();
+				updateCpuHands();
+				PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
+				postAnimationDelay.setOnFinished(e -> {
+					Platform.runLater(this::continueGameLoop);
+				});
+				postAnimationDelay.play();
+			});
+
+			delay.play();
+
+		} catch (GameException ee) {
+			ee.printStackTrace();
+			game.endPlayerTurn();
+			PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
+			updateCpuHands();
+			postAnimationDelay.setOnFinished(e -> {
+				Platform.runLater(this::continueGameLoop);
+			});
+			postAnimationDelay.play();
+		}
 	}
 
 
@@ -351,9 +351,9 @@ public class BoardController {
 			// Link card selected from GUI to back end
 			Card card = null;
 			if (selectedCardID != null) { // if the card is null, go straight
-											// away to play(), which will throw
-											// an
-											// exception
+				// away to play(), which will throw
+				// an
+				// exception
 				switch (selectedCardID.charAt(selectedCardID.length() - 1)) {
 				case '1':
 					card = curPlayer.getHand().get(0);
@@ -372,7 +372,7 @@ public class BoardController {
 				}
 				curPlayer.selectCard(card);
 			}
-			
+
 			System.out.println(card.getName()); // here
 
 			// Link marbles selected by player to back-end
@@ -435,7 +435,7 @@ public class BoardController {
 				default: // marble is on track
 					// get cell number from id (m+number)
 					String positionString = cellPositionOfMarble.getId()
-							.substring(1);
+					.substring(1);
 					int num = Integer.parseInt(positionString);
 					curMarble = game.getBoard().getTrack().get(num).getMarble();
 				}
@@ -445,17 +445,17 @@ public class BoardController {
 			// play according to selected cards and selected marbles
 
 			game.playPlayerTurn();
-	        Change_Track(); // Animate human move
-	        sendToPit(selectedCardImageView); // Optional visual logic
-	        game.endPlayerTurn();
-	        PauseTransition delay = new PauseTransition(Duration.seconds(2));
-	        delay.setOnFinished(event -> {
-	        	updatePit();
-	            deselectAllMarbles();
-	            Platform.runLater(this::continueGameLoop);
-	        });
-	        delay.play();
-	        
+			Change_Track(); // Animate human move
+			sendToPit(selectedCardImageView); // Optional visual logic
+			game.endPlayerTurn();
+			PauseTransition delay = new PauseTransition(Duration.seconds(2));
+			delay.setOnFinished(event -> {
+				updatePit();
+				deselectAllMarbles();
+				Platform.runLater(this::continueGameLoop);
+			});
+			delay.play();
+
 		} catch (Exception e) {
 			view.exception.Controller exceptionController = SceneConfig
 					.getInstance().getExceptionController();
@@ -463,7 +463,7 @@ public class BoardController {
 					selectedCardImageView, game);
 			game.deselectAll(); // deselct from back-end
 			deselectAllMarbles(); // deselect animation
-			 Platform.runLater(this::continueGameLoop);
+			Platform.runLater(this::continueGameLoop);
 		}
 
 	}
@@ -490,91 +490,91 @@ public class BoardController {
 
 	// Link colours to back-end
 	private void assignColours() {
-	 ArrayList<SafeZone> safeZones = game.getBoard().getSafeZones();
-	
-	 ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
-	 for (SafeZone s : safeZones) {
-	 colourOrderArrayList.add(s.getColour());
-	 }
-	
-	 // Load marble images
-	 Map<Colour, Image> marbleImages = new HashMap<>();
-	 marbleImages.put(Colour.BLUE, new
-	 Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png")));
-	 marbleImages.put(Colour.GREEN,
-	 new
-	 Image(getClass().getResourceAsStream("/view/assests/scene/GreenMarble.png")));
-	 marbleImages.put(Colour.YELLOW,
-	 new
-	 Image(getClass().getResourceAsStream("/view/assests/scene/YellowMarble.png")));
-	 marbleImages.put(Colour.RED, new
-	 Image(getClass().getResourceAsStream("/view/assests/scene/RedMarble.png")));
-	
-	 for (Node node : animationPane.getChildren()) {
-	 if (node instanceof Circle circle) {
-	 String id = circle.getId();
-	 if (id != null && id.startsWith("move") && id.length() > 5) {
-	 char who = id.charAt(4);
-	 int index = who - 'A'; // A->0, B->1, etc.
-	
-	 Image marbleImage = marbleImages.getOrDefault(
-	 index >= 0 && index < colourOrderArrayList.size() ?
-	 colourOrderArrayList.get(index)
-	 : Colour.BLUE, // fallback
-	 marbleImages.get(Colour.BLUE));
-	
-	 circle.setFill(new ImagePattern(marbleImage));
-	 circle.setStroke(Color.TRANSPARENT);
-	 movableMarbles.add(circle);
-	
-	 String posId = "#m" + who + id.charAt(5);
-	 Node mapNode = animationPane.lookup(posId);
-	 if (mapNode instanceof Circle) {
-	 marbleToCellMap.put(circle, (Circle) mapNode);
-	 } else {
-	 System.out.println("Could not find target circle for ID: " + posId);
-	 }
-	 }
-	
-	 // Reset fill for other circles marked A-D
-	 if (circle.getId() != null && circle.getId().length() > 1) {
-	 char playerChar = circle.getId().charAt(1);
-	 if (playerChar == 'A' || playerChar == 'B' || playerChar == 'C' ||
-	 playerChar == 'D') {
-	 circle.setFill(Color.TRANSPARENT);
-	 circle.setStroke(Color.TRANSPARENT);
-	 }
-	 }
-	 }
-	 }
-	
-	 // Map each label to its player’s color
-	 Label[] bases = { basePlayer1, basePlayer2, basePlayer3, basePlayer4 };
-	 for (int i = 0; i < colourOrderArrayList.size() && i < bases.length; i++)
-	 {
-	 Colour colour = colourOrderArrayList.get(i);
-	 Color textFill;
-	
-	 switch (colour) {
-	 case RED:
-	 textFill = Color.RED;
-	 break;
-	 case BLUE:
-	 textFill = Color.CYAN;
-	 break;
-	 case GREEN:
-	 textFill = Color.GREEN;
-	 break;
-	 case YELLOW:
-	 textFill = Color.YELLOW;
-	 break;
-	 default:
-	 textFill = Color.BLACK; // fallback
-	 }
-	
-	 bases[i].setTextFill(textFill);
-	 }
-	 }
+		ArrayList<SafeZone> safeZones = game.getBoard().getSafeZones();
+
+		ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
+		for (SafeZone s : safeZones) {
+			colourOrderArrayList.add(s.getColour());
+		}
+
+		// Load marble images
+		Map<Colour, Image> marbleImages = new HashMap<>();
+		marbleImages.put(Colour.BLUE, new
+				Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png")));
+		marbleImages.put(Colour.GREEN,
+				new
+				Image(getClass().getResourceAsStream("/view/assests/scene/GreenMarble.png")));
+		marbleImages.put(Colour.YELLOW,
+				new
+				Image(getClass().getResourceAsStream("/view/assests/scene/YellowMarble.png")));
+		marbleImages.put(Colour.RED, new
+				Image(getClass().getResourceAsStream("/view/assests/scene/RedMarble.png")));
+
+		for (Node node : animationPane.getChildren()) {
+			if (node instanceof Circle circle) {
+				String id = circle.getId();
+				if (id != null && id.startsWith("move") && id.length() > 5) {
+					char who = id.charAt(4);
+					int index = who - 'A'; // A->0, B->1, etc.
+
+					Image marbleImage = marbleImages.getOrDefault(
+							index >= 0 && index < colourOrderArrayList.size() ?
+									colourOrderArrayList.get(index)
+									: Colour.BLUE, // fallback
+									marbleImages.get(Colour.BLUE));
+
+					circle.setFill(new ImagePattern(marbleImage));
+					circle.setStroke(Color.TRANSPARENT);
+					movableMarbles.add(circle);
+
+					String posId = "#m" + who + id.charAt(5);
+					Node mapNode = animationPane.lookup(posId);
+					if (mapNode instanceof Circle) {
+						marbleToCellMap.put(circle, (Circle) mapNode);
+					} else {
+						System.out.println("Could not find target circle for ID: " + posId);
+					}
+				}
+
+				// Reset fill for other circles marked A-D
+				if (circle.getId() != null && circle.getId().length() > 1) {
+					char playerChar = circle.getId().charAt(1);
+					if (playerChar == 'A' || playerChar == 'B' || playerChar == 'C' ||
+							playerChar == 'D') {
+						circle.setFill(Color.TRANSPARENT);
+						circle.setStroke(Color.TRANSPARENT);
+					}
+				}
+			}
+		}
+
+		// Map each label to its player’s color
+		Label[] bases = { basePlayer1, basePlayer2, basePlayer3, basePlayer4 };
+		for (int i = 0; i < colourOrderArrayList.size() && i < bases.length; i++)
+		{
+			Colour colour = colourOrderArrayList.get(i);
+			Color textFill;
+
+			switch (colour) {
+			case RED:
+				textFill = Color.RED;
+				break;
+			case BLUE:
+				textFill = Color.CYAN;
+				break;
+			case GREEN:
+				textFill = Color.GREEN;
+				break;
+			case YELLOW:
+				textFill = Color.YELLOW;
+				break;
+			default:
+				textFill = Color.BLACK; // fallback
+			}
+
+			bases[i].setTextFill(textFill);
+		}
+	}
 
 
 	// needed in continueGameLoop
@@ -668,7 +668,7 @@ public class BoardController {
 		scaleTransition.setToX(scaleFactor);
 		scaleTransition.setToY(scaleFactor);
 		scaleTransition
-				.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
+		.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
 
 		return scaleTransition;
 	}

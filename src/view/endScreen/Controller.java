@@ -13,25 +13,25 @@ import controller.SoundManager;
 public class Controller {
 	@FXML
 	private ImageView exitButton;
-	
+
 	@FXML
 	private Label winnerName;
-	
+
 	@FXML
 	private void exitButtonOnMouseEntered() {
 		GenericController.buttonGlowON(exitButton, Color.RED);
 	}
-	
+
 	// Method for Mouse Exited event
 	@FXML
 	private void exitButtonOnMouseExited() {
 		GenericController.buttonGlowOFF(exitButton);
 	}
-	
+
 	@FXML
 	private void closeGame(MouseEvent event) {
 		SoundManager.getInstance().playSound("button_click");
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+		stage.close();
 	}
 }

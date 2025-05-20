@@ -79,7 +79,7 @@ public class SoundManager {
 	{
 		this.volume = Math.max(0, Math.min(1, volume)); // Clamp between 0-1
 	}
-	
+
 	public double getVolume() {
 		return this.volume;
 	}

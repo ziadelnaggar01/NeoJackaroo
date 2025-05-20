@@ -22,28 +22,28 @@ public class Controller {
 	private Slider musicSlider;
 	@FXML
 	private Slider sfxSlider;
-//---------------------------------------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------------------------------------
 	// buttons related
 
 	@FXML
 	private ImageView exitSettingsIcon;
 	@FXML
 	private ImageView continueGameIcon;
-	
+
 	public void initialize() {
-        // Bind volume slider to music player
+		// Bind volume slider to music player
 		MusicManager musicPlayer = MusicManager.getInstance();
 		musicSlider.setValue(musicPlayer.getVolume());
 		musicSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            musicPlayer.setVolume(newVal.doubleValue());
-        });
-		
-        SoundManager soundManager = SoundManager.getInstance();
-        sfxSlider.setValue(soundManager.getVolume());
-        sfxSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            soundManager.setVolume(newVal.doubleValue());
-        });
-    }
+			musicPlayer.setVolume(newVal.doubleValue());
+		});
+
+		SoundManager soundManager = SoundManager.getInstance();
+		sfxSlider.setValue(soundManager.getVolume());
+		sfxSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+			soundManager.setVolume(newVal.doubleValue());
+		});
+	}
 
 	@FXML
 	private void exitIconOnMouseEntered() {
@@ -76,7 +76,7 @@ public class Controller {
 			root = SceneConfig.getInstance().getStartScene();
 		GenericController.switchScene(event, root);
 	}
-	
+
 	@FXML
 	private void exitButtonOnClick(MouseEvent event) throws IOException {
 		//Go back to start screen, no boardscene 
@@ -85,7 +85,7 @@ public class Controller {
 		if(!SceneConfig.getInstance().isInGame())
 		{
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-	        stage.close();
+			stage.close();
 		}
 		root = SceneConfig.getInstance().getStartScene();
 		GenericController.switchScene(event, root);

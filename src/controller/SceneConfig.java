@@ -115,9 +115,9 @@ public class SceneConfig {
 	public view.exception.Controller getExceptionController() {
 		return exceptionController;
 	}
-	
+
 	public void discardCard(ImageView selectedCard){
 		gameController.sendToPit(selectedCard);
 	}
-	
+
 }
