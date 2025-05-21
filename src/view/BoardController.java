@@ -222,23 +222,30 @@ public class BoardController {
 		}
 		// Handle Safe Zone marbles
 		for (int i = 0; i < 4; i++) {
+			
 			for (int j = 0; j < 4; j++) {
 				Cell cell = game.getBoard().getSafeZones().get(i).getCells().get(j);
-				if (cell.getMarble() != null && tot.get(i).get(j) == 0) {
-					tot.get(i).set(j, 1);
-					String newPos = "move" + (char) ('A' + i) + (j + 1);
-					String destId = "safe" + (char) ('A' + i) + (j + 1);
+				if (cell.getMarble() != null) {
+				for(int k = 0;k<4;k++)
+				{
+					if(tot.get(i).get(k) == 0)
+					{
+						tot.get(i).set(k, 1);
+						String newPos = "move" + (char) ('A' + i) + (k + 1);
+						String destId = "safe" + (char) ('A' + i) + (j + 1);
+						Circle from = (Circle) animationPane.lookup("#" + newPos);
+						Circle to = (Circle) animationPane.lookup("#" + destId);
 
-					Circle from = (Circle) animationPane.lookup("#" + newPos);
-					Circle to = (Circle) animationPane.lookup("#" + destId);
-
-					if (from != null && to != null) {
-						marbleToCellMap.put(from, to);
-						from.setLayoutX(to.getLayoutX());
-						from.setLayoutY(to.getLayoutY());
-						from.setRadius(to.getRadius()); // Resize from to match to
+						if (from != null && to != null) {
+							marbleToCellMap.put(from, to);
+							from.setLayoutX(to.getLayoutX());
+							from.setLayoutY(to.getLayoutY());
+							from.setRadius(to.getRadius()); // Resize from to match to
+						}
+						break;
 					}
 				}
+			}
 			}
 		}
 
@@ -432,6 +439,7 @@ public class BoardController {
 							break;
 						}
 					}
+					System.out.println(cellPositionOfMarble.getId());
 					curMarble = playerSafeZone.getCells().get((cellPositionOfMarble.getId().charAt(5) - '0') - 1)
 							.getMarble();
 					break;
