@@ -1078,9 +1078,7 @@ public class BoardController {
 					try 
 					{
 						game.fieldMarble();
-						game.endPlayerTurn();
 						updateBoard();
-						deselectAllMarbles();
 					    PauseTransition delay = new PauseTransition(Duration.seconds(2));
 					    delay.setOnFinished(ae -> Platform.runLater(this::continueGameLoop));
 					    delay.play();

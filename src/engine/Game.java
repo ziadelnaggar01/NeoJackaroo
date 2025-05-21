@@ -148,7 +148,7 @@ public class Game implements GameManager {
 	 */
 	public boolean canPlayTurn() {
 		int x = players.get(currentPlayerIndex).getHand().size();
-		if (x >= 4 - turn)
+		if (x == 4 - turn)
 			return true;
 		return false;
 	}
