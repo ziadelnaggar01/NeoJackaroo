@@ -517,6 +517,15 @@ public class BoardController {
 	private Label basePlayer3;
 	@FXML
 	private Label basePlayer4;
+	
+	@FXML
+	private Label colorPlayer1;
+	@FXML
+	private Label colorPlayer2;
+	@FXML
+	private Label colorPlayer3;
+	@FXML
+	private Label colorPlayer4;
 
 	// Link colours to back-end
 	private void assignColours() {
@@ -580,6 +589,7 @@ public class BoardController {
 
 		// Map each label to its player’s color
 		Label[] bases = { basePlayer1, basePlayer2, basePlayer3, basePlayer4 };
+		Label[] indicators = { colorPlayer1, colorPlayer2, colorPlayer3, colorPlayer4 };
 		for (int i = 0; i < colourOrderArrayList.size() && i < bases.length; i++)
 		{
 			Colour colour = colourOrderArrayList.get(i);
@@ -603,6 +613,7 @@ public class BoardController {
 			}
 
 			bases[i].setTextFill(textFill);
+			indicators[i].setTextFill(textFill);
 		}
 	}
 

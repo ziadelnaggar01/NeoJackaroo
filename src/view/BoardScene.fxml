@@ -91,6 +91,13 @@
                      <GridPane.margin>
                         <Insets left="20.0" />
                      </GridPane.margin>
+                     <graphic>
+                        <Label fx:id="colorPlayer2" text="❖">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                     </graphic>
                   </Label>
                </children>
             </GridPane>
@@ -160,6 +167,13 @@
                            </stops>
                         </LinearGradient>
                      </textFill>
+                     <graphic>
+                        <Label fx:id="colorPlayer1" text="❖" textFill="RED">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                     </graphic>
                   </Label>
                </children>
             </GridPane>
@@ -219,6 +233,13 @@
                            <opaqueInsets>
                               <Insets right="10.0" />
                            </opaqueInsets>
+                           <graphic>
+                              <Label fx:id="colorPlayer3" text="❖">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                              </Label>
+                           </graphic>
                         </Label>
                      </children>
                   </AnchorPane>
@@ -271,6 +292,13 @@
                      <font>
                         <Font name="Orbitron Bold" size="30.0" />
                      </font>
+                     <graphic>
+                        <Label fx:id="colorPlayer4" text="❖">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                     </graphic>
                   </Label>
                </children>
             </GridPane>
