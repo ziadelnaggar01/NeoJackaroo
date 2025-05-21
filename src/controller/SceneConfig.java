@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
+import model.Colour;
 import view.BoardController;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class SceneConfig {
 
 	private boolean inGame = false;
 	private BoardController gameController;
+	private view.endScreen.Controller endScreenController;
 	private view.description.Controller descriptionController;
 	private view.exception.Controller exceptionController;
 
@@ -30,7 +32,6 @@ public class SceneConfig {
 	private SceneConfig() {
 		try {
 			startScene = FXMLLoader.load(getClass().getResource("/view/startMenu/Scene.fxml"));
-			endScene = FXMLLoader.load(getClass().getResource("/view/endScreen/Scene.fxml"));
 			howToPlayScene = FXMLLoader.load(getClass().getResource("/view/HowToPlayScreen/Scene.fxml"));
 			playerNameScene = FXMLLoader.load(getClass().getResource("/view/PlayerName/Scene.fxml"));
 			settingsScene = FXMLLoader.load(getClass().getResource("/view/settingsMenu/Scene.fxml"));
@@ -49,7 +50,11 @@ public class SceneConfig {
 			FXMLLoader exceptionLoader = new FXMLLoader(getClass().getResource("/view/exception/Scene.fxml"));
 			exceptionScene = exceptionLoader.load();
 			exceptionController = exceptionLoader.getController();
-
+			
+			// Load End Screen and controller
+			FXMLLoader endScreenLoader = new FXMLLoader(getClass().getResource("/view/endScreen/Scene.fxml"));
+			endScene = endScreenLoader.load();
+			endScreenController = endScreenLoader.getController();
 		} 
 		catch (IOException e) 
 		{
@@ -107,6 +112,11 @@ public class SceneConfig {
 		gameController.assignNames(name);
 		gameController.setCurrentPlayerLabel();
 		gameController.setNextPlayerLabel();
+	}
+	
+	public void setWinnerName(Colour winner)
+	{
+		endScreenController.updateWinner(winner);
 	}
 	
 	public void createNewGame()

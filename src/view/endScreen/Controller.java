@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.Colour;
 import controller.GenericController;
 import controller.SoundManager;
 
@@ -26,6 +27,28 @@ public class Controller {
 	@FXML
 	private void exitButtonOnMouseExited() {
 		GenericController.buttonGlowOFF(exitButton);
+	}
+	
+	public void updateWinner(Colour winner)
+	{
+		String winnerColor = " Player Won!!";
+		switch (winner) {
+		case RED:
+			winnerColor = "Red" +winnerColor;
+			break;
+		case BLUE:
+			winnerColor = "Blue" +winnerColor;
+			break;
+		case GREEN:
+			winnerColor = "Green" +winnerColor;
+			break;
+		case YELLOW:
+			winnerColor = "Yellow" +winnerColor;
+			break;
+		default:
+			winnerColor = "Game Over";
+		}
+		winnerName.setText(winnerColor);
 	}
 
 	@FXML

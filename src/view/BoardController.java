@@ -57,7 +57,6 @@ import model.player.CPU;
 import model.player.Marble;
 import model.player.Player;
 import engine.Game;
-import engine.board.Board;
 import engine.board.Cell;
 import engine.board.SafeZone;
 import exception.GameException;
@@ -283,6 +282,7 @@ public class BoardController {
 		setNextPlayerLabel();
 
 		if (game.checkWin() != null) {
+			SceneConfig.getInstance().setWinnerName(game.checkWin());
 			System.out.println("Game over. Winner: " + game.checkWin());
 			Parent root = SceneConfig.getInstance().getEndScene();
 			Stage stage = (Stage) animationPane.getScene().getWindow();
