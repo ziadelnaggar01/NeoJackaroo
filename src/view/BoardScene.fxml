@@ -52,7 +52,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="playerB1" fitHeight="107.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                  <ImageView fx:id="playerB1" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -60,7 +60,7 @@
                         <Insets left="100.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB2" fitHeight="110.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
+                  <ImageView fx:id="playerB2" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
                      <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -68,7 +68,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB4" fitHeight="115.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerB4" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -76,7 +76,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB3" fitHeight="118.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerB3" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -183,8 +183,8 @@
          <children>
             <GridPane fx:id="C" hgap="25.0" prefHeight="259.0" prefWidth="319.0" translateY="75.0" vgap="100.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="163.9999755859375" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.2000732421875" minWidth="10.0" prefWidth="242.4000244140625" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="195.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.2000732421875" minWidth="10.0" prefWidth="211.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -192,7 +192,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                        <ImageView fx:id="playerC1" fitHeight="115.0" fitWidth="71.0" preserveRatio="true" rotate="-90.0">
+                        <ImageView fx:id="playerC1" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0">
                             <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -200,7 +200,7 @@
                         <Insets left="50.0" top="120.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerC4" fitHeight="123.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <ImageView fx:id="playerC4" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -208,7 +208,7 @@
                         <Insets right="100.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerC3" fitHeight="116.0" fitWidth="73.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
+                        <ImageView fx:id="playerC3" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
                             <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -216,7 +216,7 @@
                         <Insets left="50.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerC2" fitHeight="110.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
+                        <ImageView fx:id="playerC2" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
                             <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -226,7 +226,7 @@
                         </ImageView>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label fx:id="CPU2Name" alignment="CENTER_RIGHT" layoutX="-29.0" layoutY="31.0" prefHeight="54.0" prefWidth="260.0" text="Balabizo" textFill="#00daff">
+                        <Label fx:id="CPU2Name" alignment="CENTER_RIGHT" layoutX="-29.0" layoutY="31.0" prefHeight="54.0" prefWidth="196.0" text="Balabizo" textFill="#00daff">
                            <font>
                               <Font name="Orbitron Bold" size="30.0" />
                            </font>
@@ -244,11 +244,14 @@
                      </children>
                   </AnchorPane>
                </children>
+               <VBox.margin>
+                  <Insets top="35.0" />
+               </VBox.margin>
             </GridPane>
             <GridPane fx:id="D" hgap="25.0" prefHeight="259.0" prefWidth="121.0" vgap="25.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="140.0000244140625" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.8000732421875" minWidth="10.0" prefWidth="267.1999755859375" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="175.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.8000732421875" minWidth="10.0" prefWidth="231.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="160.1999755859375" minHeight="0.0" prefHeight="121.80001220703124" vgrow="SOMETIMES" />
@@ -256,7 +259,7 @@
                   <RowConstraints maxHeight="234.8" minHeight="10.0" prefHeight="112.99998779296877" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fx:id="playerD1" fitHeight="124.0" fitWidth="72.0" preserveRatio="true" rotate="-90.0">
+                  <ImageView fx:id="playerD1" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0">
                      <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -264,7 +267,7 @@
                         <Insets left="50.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerD4" fitHeight="104.0" fitWidth="76.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerD4" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -272,7 +275,7 @@
                         <Insets left="30.0" right="150.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerD3" fitHeight="109.0" fitWidth="76.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerD3" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
@@ -280,7 +283,7 @@
                         <Insets left="50.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerD2" fitHeight="123.0" fitWidth="70.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
+                  <ImageView fx:id="playerD2" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
                      <image>
                         <Image url="@assests/deck/Final%20Back.png" />
                      </image>
