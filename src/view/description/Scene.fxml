@@ -24,7 +24,7 @@
                   <Image url="@../assets/Pop%20Up%20Menu.png" />
                </image>
             </ImageView>
-            <Label fx:id="descriptionLabelID" prefHeight="255.0" prefWidth="1400.0" text="Fields one of your marbles onto the track or moves one marble 13 steps destroying all marbles in it's path" wrapText="true">
+            <Label fx:id="descriptionLabelID" prefHeight="413.0" prefWidth="1400.0" text="Fields one of your marbles onto the track or moves one marble 13 steps destroying all marbles in it's path" wrapText="true">
                <font>
                   <Font name="Orbitron Bold" size="60.0" />
                </font>
