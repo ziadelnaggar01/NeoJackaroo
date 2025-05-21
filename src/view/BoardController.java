@@ -182,6 +182,7 @@ public class BoardController {
 			playerHand[i].setVisible(false);
 			playerHand[i].setDisable(true);
 		}
+		deselectAllCards(playerHand);
 	}
 
 	public void Change_Track() {
@@ -397,7 +398,7 @@ public class BoardController {
 				curPlayer.selectCard(card);
 			}
 
-			//System.out.println(card.getName()); // here
+			// System.out.println(card.getName()); // here
 
 			// Link marbles selected by player to back-end
 			for (Circle marble : selectedMarbles) {
@@ -868,6 +869,17 @@ public class BoardController {
 			card.setEffect(glow);
 		} else {
 			card.setEffect(null); // Remove the glow effect
+		}
+	}
+
+	private void deselectAllCards(ImageView[] cards) {
+		for (ImageView card : cards) {
+			TranslateTransition tt = new TranslateTransition(Duration.millis(150), card);
+			tt.setToY(0); // Move up if selected, reset if not
+			tt.play();
+			card.setEffect(null);
+			selectedCardID=null;
+			selectedCardImageView=null;
 		}
 	}
 
