@@ -39,9 +39,9 @@
                               <Image url="@../assets/buttons/Exit.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="okButton" fitHeight="150.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="backButton" fitHeight="104.0" fitWidth="448.0" onMouseClicked="#onBackButtonClicked" onMouseEntered="#backButtonOnMouseEntered" onMouseExited="#backButtonOnMouseExited" pickOnBounds="true">
                            <image>
-                              <Image url="@../assets/buttons/Ok.png" />
+                              <Image url="@../assets/buttons/Back.png" />
                            </image>
                         </ImageView>
                      </children>
