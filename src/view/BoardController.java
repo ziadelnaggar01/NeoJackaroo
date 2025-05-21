@@ -396,9 +396,9 @@ public class BoardController {
 				}
 				curPlayer.selectCard(card);
 			}
-   
-			System.out.println(card.getName()); // her
-			System.out.println(selectedMarbles.size());
+
+			//System.out.println(card.getName()); // here
+
 			// Link marbles selected by player to back-end
 			for (Circle marble : selectedMarbles) {
 				Circle cellPositionOfMarble = marbleToCellMap.get(marble);
