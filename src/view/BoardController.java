@@ -963,7 +963,6 @@ public class BoardController {
 
 	// -----------------------------------------------------------------
 	// Split distance feature
-	private Board board;
 
 	@FXML
 	private AnchorPane splitDistanceAnchorPane;
@@ -989,7 +988,7 @@ public class BoardController {
 	@FXML
 	private void splitDistanceOkButtonOnClick() {
 		SoundManager.getInstance().playSound("button_click");
-		board.setSplitDistance(Integer.parseInt(splitDistanceLabel1.getText()));
+		game.getBoard().setSplitDistance(Integer.parseInt(splitDistanceLabel1.getText()));
 		splitDistanceAnchorPane.setVisible(false);
 	}
 
