@@ -199,6 +199,48 @@ public class BoardController {
 			// System.out.println(s.getColour().toString()); // check if he uses the colour
 			// correctly or not
 		}
+		// Handle Home Cell marbles
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < game.getPlayers().get(i).getMarbles().size(); j++) {
+				Marble marble = game.getPlayers().get(i).getMarbles().get(j);
+				if (marble != null && tot.get(i).get(j) == 0) {
+					tot.get(i).set(j, 1);
+					String newPos = "move" + (char) ('A' + i) + (j + 1);
+					String destId = "m" + (char) ('A' + i) + (j + 1);
+
+					Circle from = (Circle) animationPane.lookup("#" + newPos);
+					Circle to = (Circle) animationPane.lookup("#" + destId);
+
+					if (from != null && to != null) {
+						marbleToCellMap.put(from, to);
+						from.setLayoutX(to.getLayoutX());
+						from.setLayoutY(to.getLayoutY());
+						from.setRadius(to.getRadius()); // Resize from to match to
+					}
+				}
+			}
+		}
+		// Handle Safe Zone marbles
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				Cell cell = game.getBoard().getSafeZones().get(i).getCells().get(j);
+				if (cell.getMarble() != null && tot.get(i).get(j) == 0) {
+					tot.get(i).set(j, 1);
+					String newPos = "move" + (char) ('A' + i) + (j + 1);
+					String destId = "safe" + (char) ('A' + i) + (j + 1);
+
+					Circle from = (Circle) animationPane.lookup("#" + newPos);
+					Circle to = (Circle) animationPane.lookup("#" + destId);
+
+					if (from != null && to != null) {
+						marbleToCellMap.put(from, to);
+						from.setLayoutX(to.getLayoutX());
+						from.setLayoutY(to.getLayoutY());
+						from.setRadius(to.getRadius()); // Resize from to match to
+					}
+				}
+			}
+		}
 
 		// Handle Track marbles
 		for (int i = 0; i < 100; i++) {
@@ -227,50 +269,6 @@ public class BoardController {
 							}
 						}
 						break;
-					}
-				}
-			}
-		}
-
-		// Handle Safe Zone marbles
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				Cell cell = game.getBoard().getSafeZones().get(i).getCells().get(j);
-				if (cell.getMarble() != null && tot.get(i).get(j) == 0) {
-					tot.get(i).set(j, 1);
-					String newPos = "move" + (char) ('A' + i) + (j + 1);
-					String destId = "safe" + (char) ('A' + i) + (j + 1);
-
-					Circle from = (Circle) animationPane.lookup("#" + newPos);
-					Circle to = (Circle) animationPane.lookup("#" + destId);
-
-					if (from != null && to != null) {
-						marbleToCellMap.put(from, to);
-						from.setLayoutX(to.getLayoutX());
-						from.setLayoutY(to.getLayoutY());
-						from.setRadius(to.getRadius()); // Resize from to match to
-					}
-				}
-			}
-		}
-
-		// Handle Home Cell marbles
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < game.getPlayers().get(i).getMarbles().size(); j++) {
-				Marble marble = game.getPlayers().get(i).getMarbles().get(j);
-				if (marble != null && tot.get(i).get(j) == 0) {
-					tot.get(i).set(j, 1);
-					String newPos = "move" + (char) ('A' + i) + (j + 1);
-					String destId = "m" + (char) ('A' + i) + (j + 1);
-
-					Circle from = (Circle) animationPane.lookup("#" + newPos);
-					Circle to = (Circle) animationPane.lookup("#" + destId);
-
-					if (from != null && to != null) {
-						marbleToCellMap.put(from, to);
-						from.setLayoutX(to.getLayoutX());
-						from.setLayoutY(to.getLayoutY());
-						from.setRadius(to.getRadius()); // Resize from to match to
 					}
 				}
 			}
@@ -391,9 +389,9 @@ public class BoardController {
 				}
 				curPlayer.selectCard(card);
 			}
-
-			System.out.println(card.getName()); // here
-
+   
+			System.out.println(card.getName()); // her
+			System.out.println(selectedMarbles.size());
 			// Link marbles selected by player to back-end
 			for (Circle marble : selectedMarbles) {
 				Circle cellPositionOfMarble = marbleToCellMap.get(marble);
@@ -434,7 +432,7 @@ public class BoardController {
 							break;
 						}
 					}
-					curMarble = playerSafeZone.getCells().get((cellPositionOfMarble.getId().charAt(2) - '0') - 1)
+					curMarble = playerSafeZone.getCells().get((cellPositionOfMarble.getId().charAt(5) - '0') - 1)
 							.getMarble();
 					break;
 				default: // marble is on track
