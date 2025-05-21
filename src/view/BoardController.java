@@ -792,7 +792,7 @@ public class BoardController {
 		for (Player p : players) {
 			if (!(p instanceof CPU)) {
 				if (p.getColour() == colour) {
-					currentPlayerLabel.setText(userName.getText());
+					label.setText(userName.getText());
 					return;
 				}
 			} else {
