@@ -412,20 +412,20 @@ public class BoardController {
 					}
 					break;
 				case 'B':
-					if (game.getPlayers().get(0).getMarbles().size() != 0) {
+					if (game.getPlayers().get(1).getMarbles().size() != 0) {
 						curMarble = game.getPlayers().get(1).getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
 					break;
 				case 'C':
-					if (game.getPlayers().get(0).getMarbles().size() != 0) {
+					if (game.getPlayers().get(2).getMarbles().size() != 0) {
 						curMarble = game.getPlayers().get(2).getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 
 					}
 					break;
 				case 'D':
-					if (game.getPlayers().get(0).getMarbles().size() != 0) {
+					if (game.getPlayers().get(3).getMarbles().size() != 0) {
 						curMarble = game.getPlayers().get(3).getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
