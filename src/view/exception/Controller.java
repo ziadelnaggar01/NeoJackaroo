@@ -32,34 +32,6 @@ public class Controller {
 	}
 
 	@FXML
-	private ImageView discardCardButton;
-
-	@FXML
-	private void discardCardButtonOnClick(MouseEvent event) {
-		if (selectedCard == null) {
-			return;
-		}
-		SoundManager.getInstance().playSound("button_click");
-		Parent root = SceneConfig.getInstance().getGameScene();
-		GenericController.switchScene(event, root);
-
-		SceneConfig.getInstance().discardCard(selectedCard);
-		game.endPlayerTurn();
-
-
-	}
-
-	@FXML
-	private void discardCardButtonOnMouseExited() {
-		GenericController.buttonGlowOFF(discardCardButton);
-	}
-
-	@FXML
-	private void discardCardButtonOnMouseEntered() {
-		GenericController.buttonGlowON(discardCardButton, Color.PURPLE);
-	}
-
-	@FXML
 	private ImageView okExceptionButton;
 
 	@FXML

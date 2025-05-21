@@ -123,19 +123,14 @@
                               </LinearGradient>
                            </textFill>
                         </Label>
-                        <AnchorPane prefHeight="86.0" prefWidth="997.0">
+                        <AnchorPane prefHeight="83.0" prefWidth="1181.0">
                            <VBox.margin>
                               <Insets bottom="50.0" left="400.0" />
                            </VBox.margin>
                            <children>
-                              <ImageView fx:id="okExceptionButton" fitHeight="85.0" fitWidth="400.0" layoutX="-237.0" layoutY="-2.0" onMouseClicked="#okExceptionButtonOnClick" onMouseEntered="#okButtonOnMouseEntered" onMouseExited="#okbuttonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="okExceptionButton" fitHeight="85.0" fitWidth="400.0" layoutX="10.0" layoutY="1.0" onMouseClicked="#okExceptionButtonOnClick" onMouseEntered="#okButtonOnMouseEntered" onMouseExited="#okbuttonOnMouseExited" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="1.0">
                                  <image>
                                     <Image url="@../assets/buttons/Ok.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="discardCardButton" fitHeight="125.0" fitWidth="369.0" layoutX="276.0" layoutY="-2.0" onMouseClicked="#discardCardButtonOnClick" onMouseEntered="#discardCardButtonOnMouseEntered" onMouseExited="#discardCardButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../assests/settingsScene/Exit.png" />
                                  </image>
                               </ImageView>
                            </children>
