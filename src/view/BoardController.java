@@ -374,7 +374,9 @@ public class BoardController {
 	private void onPlayClicked() throws Exception {
 		ArrayList<SafeZone> safeZones = game.getBoard().getSafeZones();
 		Player curPlayer = game.getPlayers().get(0);
-
+		if(game.getActivePlayerColour()!=curPlayer.getColour())
+			return;
+		
 		try {
 			// Link card selected from GUI to back end
 			Card card = null;
@@ -1009,6 +1011,8 @@ public class BoardController {
 
 	@FXML
 	private void skipTurnButtonOnClick() throws Exception{
+		if(game.getActivePlayerColour()!=game.getPlayers().get(0).getColour())
+			return;
 		if (selectedCardImageView == null) {
 			view.exception.Controller exceptionController = SceneConfig
 					.getInstance().getExceptionController();
