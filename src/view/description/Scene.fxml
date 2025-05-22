@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.description.Controller">
+   <children>
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" layoutX="100.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assests/scene/Background.png" />
+         </image>
+      </ImageView>
+      <StackPane layoutX="412.0" layoutY="213.0" prefHeight="400.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="1074.0" fitWidth="1680.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/Pop%20Up%20Menu.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="descriptionLabelID" prefHeight="413.0" prefWidth="1400.0" text="Fields one of your marbles onto the track or moves one marble 13 steps destroying all marbles in it's path" wrapText="true">
+               <font>
+                  <Font name="Orbitron Bold" size="60.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="0.9666666388511658" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <AnchorPane prefHeight="725.0" prefWidth="1920.0">
+               <children>
+                  <ImageView fx:id="descriptionOkButton" fitHeight="269.0" fitWidth="718.0" layoutX="597.0" layoutY="840.0" onMouseClicked="#OkIconOnMouseClicked" onMouseEntered="#OkIconOnMouseEntered" onMouseExited="#OkIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/buttons/Ok.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="541.0" layoutY="69.0" text="Card Description">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color green="0.9666666388511658" blue="1.0" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color green="0.7833333611488342" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <font>
+                        <Font name="Orbitron Bold" size="95.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

@@ -11,7 +11,7 @@ import model.card.Card;
 /** Represents a CPU player, a subclass of Player. */
 
 public class CPU extends Player {
-	private final BoardManager boardManager; // The current board instance, initialized by the Game class, wrapped as
+	public final BoardManager boardManager; // The current board instance, initialized by the Game class, wrapped as
 												// the interface BoardManager, cannot be changed once initialized
 
 	public CPU(String name, Colour colour, BoardManager boardManager) {

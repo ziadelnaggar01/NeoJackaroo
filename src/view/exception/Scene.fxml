@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.exception.Controller">
+   <children>
+      <ImageView fitHeight="1080.0" fitWidth="1920.0">
+         <image>
+            <Image url="@../assests/settingsScene/Background.png" />
+         </image>
+      </ImageView>
+      <StackPane prefHeight="1080.0" prefWidth="1920.0">
+         <children>
+            <ImageView fitHeight="812.0" fitWidth="1213.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/Pop%20Up%20Menu.png" />
+               </image>
+            </ImageView>
+            <Group>
+               <children>
+                  <VBox prefHeight="760.0" prefWidth="1198.0">
+                     <children>
+                        <ImageView fitHeight="195.0" fitWidth="205.0" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets left="505.0" />
+                           </VBox.margin>
+                           <image>
+                              <Image url="@../assests/scene/NeonErrorSymbol.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="exceptionMessageLabel" prefHeight="474.0" prefWidth="1080.0" text="Those marbles don’t match, maybe check your Trichromacy level?" wrapText="true">
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="60.0" right="30.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Orbitron Bold" size="55.0" />
+                           </font>
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color green="0.8666666746139526" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Label>
+                        <ImageView fx:id="okExceptionButton" fitHeight="85.0" fitWidth="400.0" onMouseClicked="#okExceptionButtonOnClick" onMouseEntered="#okButtonOnMouseEntered" onMouseExited="#okbuttonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="400.0" />
+                           </VBox.margin>
+                           <image>
+                              <Image url="@../assets/buttons/Ok.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+               </children>
+            </Group>
+         </children>
+         <StackPane.margin>
+            <Insets bottom="25.0" />
+         </StackPane.margin>
+      </StackPane>
+      <StackPane layoutX="10.0" layoutY="10.0" prefHeight="1080.0" prefWidth="1920.0">
+         <children>
+            <ImageView fitHeight="812.0" fitWidth="1213.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/Pop%20Up%20Menu.png" />
+               </image>
+            </ImageView>
+            <Group>
+               <children>
+                  <VBox prefHeight="760.0" prefWidth="1198.0">
+                     <children>
+                        <ImageView fitHeight="195.0" fitWidth="205.0" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets left="505.0" />
+                           </VBox.margin>
+                           <image>
+                              <Image url="@../assests/scene/NeonErrorSymbol.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="exceptionMessageLabel" prefHeight="474.0" prefWidth="1080.0" text="Those marbles don’t match, maybe check your Trichromacy level?" wrapText="true">
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="60.0" right="30.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Orbitron Bold" size="55.0" />
+                           </font>
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color green="0.8666666746139526" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Label>
+                        <AnchorPane prefHeight="83.0" prefWidth="1181.0">
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="400.0" />
+                           </VBox.margin>
+                           <children>
+                              <ImageView fx:id="okExceptionButton" fitHeight="85.0" fitWidth="400.0" layoutX="10.0" layoutY="1.0" onMouseClicked="#okExceptionButtonOnClick" onMouseEntered="#okButtonOnMouseEntered" onMouseExited="#okbuttonOnMouseExited" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="1.0">
+                                 <image>
+                                    <Image url="@../assets/buttons/Ok.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </Group>
+         </children>
+      </StackPane>
+   </children>
+</StackPane>
