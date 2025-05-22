@@ -87,6 +87,10 @@ public class Controller {
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			stage.close();
 		}
+		MusicManager.getInstance().stop();
+		MusicManager.getInstance().playMusic(
+				"/view/assets/audio/Digital Voyage - Twin Musicom.mp3");
+		;
 		root = SceneConfig.getInstance().getStartScene();
 		GenericController.switchScene(event, root);
 		SceneConfig.getInstance().createNewGame();

@@ -43,8 +43,8 @@
          <children>
             <GridPane fx:id="B" layoutY="150.0" prefHeight="289.0" prefWidth="408.0" translateY="-75.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.59999694824216" minWidth="10.0" prefWidth="215.20001220703125" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.3333465576172" minWidth="10.0" prefWidth="192.79998779296875" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.59999694824216" minWidth="10.0" prefWidth="227.19996337890626" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.3333465576172" minWidth="10.0" prefWidth="180.80003662109374" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -65,7 +65,7 @@
                         <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets right="20.0" top="30.0" />
+                        <Insets right="40.0" top="30.0" />
                      </GridPane.margin>
                   </ImageView>
                   <ImageView fx:id="playerB4" fitHeight="184.0" fitWidth="178.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -84,12 +84,12 @@
                         <Insets left="40.0" top="30.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <Label fx:id="CPU1Name" prefHeight="54.0" prefWidth="270.0" text="Euler" textFill="#00ffed" GridPane.rowIndex="1">
+                  <Label fx:id="CPU1Name" prefHeight="54.0" prefWidth="273.0" text="Euler" textFill="#00ffed" GridPane.rowIndex="1">
                      <font>
                         <Font name="Orbitron Bold" size="30.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets left="5.0" />
+                        <Insets />
                      </GridPane.margin>
                      <graphic>
                         <Label fx:id="colorPlayer2" text="❖">

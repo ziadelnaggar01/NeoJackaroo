@@ -1,5 +1,6 @@
 package view;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
@@ -43,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import view.endScreen.Controller;
 import controller.GenericController;
 import controller.SceneConfig;
 import controller.SoundManager;
@@ -298,16 +300,45 @@ public class BoardController {
 		}
 	}
 
+
 	private void continueGameLoop() {
 		setCurrentPlayerLabel();
 		setNextPlayerLabel();
 
 		if (game.checkWin() != null) {
-			SceneConfig.getInstance().setWinnerName(game.checkWin());
-			System.out.println("Game over. Winner: " + game.checkWin());
-			Parent root = SceneConfig.getInstance().getEndScene();
-			Stage stage = (Stage) animationPane.getScene().getWindow();
-			GenericController.switchScene(stage, root);
+			SceneConfig.getInstance().setWinnerName(game.checkWin(),players.get(0).getColour());
+			Controller controller = SceneConfig.getInstance()
+					.getEndScreenController();
+			
+			//controller.setUpEndScreen();
+
+			// Play the first sound
+			SoundManager.getInstance().playSoundOnce("/view/assets/audio/GameOverVoiceOver.mp3");
+
+			// Schedule the second sound to play 1 second later
+			PauseTransition delay = new PauseTransition(Duration.seconds(1));
+			delay.setOnFinished(event -> {
+				SoundManager.getInstance().playSoundOnce("/view/assets/audio/GameOverSoundEffect.mp3");
+			});
+			delay.play();
+
+			// Fade out the current pane
+			FadeTransition fadeOut = new FadeTransition(Duration.millis(2000),
+					animationPane);
+			fadeOut.setFromValue(1.0);
+			fadeOut.setToValue(0.0);
+			fadeOut.setOnFinished(e -> {
+				Parent root = SceneConfig.getInstance().getEndScene();
+			
+
+				controller.updateWinner(game.checkWin(),players.get(0).getColour());
+				controller.playFadeIn();
+
+				Stage stage = (Stage) animationPane.getScene().getWindow();
+				stage.getScene().setRoot(root);
+			});
+
+			fadeOut.play();
 			return;
 		}
 
@@ -662,7 +693,6 @@ public class BoardController {
 
 		}
 	}
-	
 
 	// needed in continueGameLoop
 	public int getIndex(ArrayList<Player> y, Colour col) {
@@ -673,14 +703,12 @@ public class BoardController {
 		return -1;
 	}
 
-	
 	private void updatePit() {
 		if (game.getFirePit().isEmpty())
 			return;
 		ArrayList<Card> firePit = game.getFirePit();
 		firepitImage.setImage(getCardImage(firePit.get(firePit.size() - 1)));
 	}
-	
 
 	private void setSafeZones() {
 		for (Node node : animationPane.getChildren()) {
@@ -848,12 +876,12 @@ public class BoardController {
 	// given the colour and assigns the given label to the name of the colour
 	// holder accordingly
 	private void setPlayerLabel(Label label, Colour colour) {
-		
+
 		Color textFill;
 		Glow glow = new Glow(0.3);
 		DropShadow neonEffect = new DropShadow();
 
-		//get appropriate filling for label 
+		// get appropriate filling for label
 		switch (colour) {
 		case RED:
 			textFill = Color.web("#FF1C3A"); // Neon red
@@ -876,12 +904,12 @@ public class BoardController {
 			neonEffect.setColor(textFill);
 
 		}
-		
-		//assign fillings based on colour in backend
+
+		// assign fillings based on colour in backend
 		label.setTextFill(textFill);
 		label.setEffect(new Blend(BlendMode.ADD, neonEffect, glow));
-		
-		//assign names based on entered and randomly distributed in frontend
+
+		// assign names based on entered and randomly distributed in frontend
 		int cpuCount = 0;
 		for (Player p : players) {
 			if (!(p instanceof CPU)) {

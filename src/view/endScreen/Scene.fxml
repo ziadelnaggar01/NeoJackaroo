@@ -4,15 +4,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.endScreen.Controller">
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.endScreen.Controller">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0">
          <image>
@@ -27,47 +26,12 @@
                   <Image url="@../assets/Pop%20Up%20Menu.png" />
                </image>
             </ImageView>
-            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1418.0">
-               <bottom>
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fx:id="exitButton" fitHeight="600.0" fitWidth="450.0" onMouseClicked="#closeGame" onMouseEntered="#exitButtonOnMouseEntered" onMouseExited="#exitButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <image>
-                              <Image url="@../assets/buttons/Exit.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="backButton" fitHeight="104.0" fitWidth="448.0" onMouseClicked="#onBackButtonClicked" onMouseEntered="#backButtonOnMouseEntered" onMouseExited="#backButtonOnMouseExited" pickOnBounds="true">
-                           <image>
-                              <Image url="@../assets/buttons/Back.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <BorderPane.margin>
-                        <Insets bottom="50.0" left="175.0" />
-                     </BorderPane.margin>
-                  </HBox>
-               </bottom>
-               <top>
-                  <ImageView fitHeight="294.0" fitWidth="435.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@../assets/celebrate.gif" />
-                     </image>
-                     <BorderPane.margin>
-                        <Insets top="75.0" />
-                     </BorderPane.margin>
-                  </ImageView>
-               </top>
-               <center>
-                  <Label fx:id="winnerName" prefHeight="212.0" prefWidth="1306.0" style="-fx-alignment: center;" text="You Won!!!" textAlignment="CENTER" BorderPane.alignment="CENTER">
+            <AnchorPane>
+               <children>
+                  <Label fx:id="winnerName" layoutX="294.0" layoutY="345.0" prefHeight="212.0" prefWidth="1319.0" style="-fx-alignment: center;" text="You Won!!!" textAlignment="CENTER">
                      <font>
                         <Font name="Orbitron Bold" size="120.0" />
                      </font>
-                     <BorderPane.margin>
-                        <Insets bottom="150.0" />
-                     </BorderPane.margin>
                      <textFill>
                         <LinearGradient endX="1.0" endY="1.0">
                            <stops>
@@ -85,8 +49,50 @@
                         </LinearGradient>
                      </textFill>
                   </Label>
-               </center>
-            </BorderPane>
+                  <ImageView fx:id="happyGif" fitHeight="294.0" fitWidth="465.0" layoutX="760.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/celebrate.gif" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="backButton" fitHeight="101.0" fitWidth="426.0" layoutX="1065.0" layoutY="825.0" onMouseClicked="#onBackButtonClicked" onMouseEntered="#backButtonOnMouseEntered" onMouseExited="#backButtonOnMouseExited" pickOnBounds="true">
+                     <image>
+                        <Image url="@../assets/buttons/Back.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="exitButton" fitHeight="600.0" fitWidth="450.0" layoutX="442.0" layoutY="819.0" onMouseClicked="#closeGame" onMouseEntered="#exitButtonOnMouseEntered" onMouseExited="#exitButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/buttons/Exit.png" />
+                     </image>
+                  </ImageView>
+                  <StackPane fx:id="sadGifContainer" layoutX="744.0" layoutY="136.0" />
+                  <Label fx:id="wisdomLabel" layoutX="288.0" layoutY="523.0" prefHeight="212.0" prefWidth="1319.0" style="-fx-alignment: center;" text="They say losing builds character. You’re practically a philosopher now." textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Orbitron Bold" size="41.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color green="0.7666666507720947" blue="1.0" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+                  <ImageView fx:id="sadGif" fitHeight="217.0" fitWidth="310.0" layoutX="856.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../Desktop/CryingEmoji.gif" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
          </children>
          <StackPane.margin>
             <Insets bottom="25.0" />

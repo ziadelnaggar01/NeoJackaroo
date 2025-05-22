@@ -7,15 +7,19 @@ import model.card.wild.Burner;
 import model.card.wild.Saver;
 import model.card.wild.Wild;
 import model.player.Player;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 public final class GenericController {
 
@@ -63,7 +67,8 @@ public final class GenericController {
 		image.setEffect(null);
 	}
 
-	public static int getCardRank(ImageView image, int currentPlayerIndex, Game game) {
+	public static int getCardRank(ImageView image, int currentPlayerIndex,
+			Game game) {
 		Player Cur_Player = game.getPlayers().get(currentPlayerIndex);
 		Card card;
 		String selectedCardID = image.getId();
@@ -100,4 +105,35 @@ public final class GenericController {
 		}
 		return -1;
 	}
+
+	public static void applyGlowingEffect(Label label) {
+		DropShadow dropShadow = new DropShadow();
+		dropShadow.setRadius(5);
+		dropShadow.setSpread(0.5);
+		label.setEffect(dropShadow);
+
+		Color[] colors = { Color.web("#FF00FF"), // Neon Magenta
+				Color.web("#39FF14"), // Electric Green
+				Color.web("#00FFFF"), // Neon Cyan
+				Color.web("#FF3131"), // Hot Neon Red
+				Color.web("#FFD700"), // Bright Gold/Yellow
+				Color.web("#8A2BE2"), // Electric Purple
+				Color.web("#00BFFF"), // Deep Sky Blue
+				Color.web("#FF1493") // Deep Pink
+		};
+
+		Timeline timeline = new Timeline();
+		for (int i = 0; i < colors.length; i++) {
+			final Color color = colors[i];
+			timeline.getKeyFrames().add(
+					new KeyFrame(Duration.seconds(i * 0.3), e -> {
+						label.setTextFill(color);
+						dropShadow.setColor(color);
+					}));
+		}
+
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.play();
+	}
+
 }

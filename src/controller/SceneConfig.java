@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import model.Colour;
 import view.BoardController;
+import view.endScreen.Controller;
 
 import java.io.IOException;
 
@@ -114,10 +115,15 @@ public class SceneConfig {
 		gameController.setNextPlayerLabel();
 	}
 	
-	public void setWinnerName(Colour winner)
+	public void setWinnerName(Colour winner,Colour userColour)
 	{
-		endScreenController.updateWinner(winner);
+		endScreenController.updateWinner(winner,userColour);
 	}
+	
+	public Controller getEndScreenController(){
+		return endScreenController;
+	}
+	
 	
 	public void createNewGame()
 	{
