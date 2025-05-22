@@ -4,6 +4,7 @@ import controller.GenericController;
 import controller.SceneConfig;
 import controller.SoundManager;
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;
@@ -66,6 +67,7 @@ public class Controller {
 	// Method for Mouse Entered event
 	@FXML
 	private void startButtonOnMouseEntered() {
+		
 		GenericController.buttonGlowON(startButton, Color.RED);
 	}
 

@@ -319,7 +319,7 @@
                   <Image url="@assests/scene/neonSettingsIcon.png" />
                </image>
             </ImageView>
-            <Button graphicTextGap="5.0" layoutX="-29.0" layoutY="113.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="64.0" prefWidth="170.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="playButton" graphicTextGap="5.0" layoutX="-29.0" layoutY="113.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="64.0" prefWidth="170.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="Orbitron Bold" size="26.0" />
                </font>
@@ -340,7 +340,7 @@
                   </LinearGradient>
                </textFill>
             </Button>
-            <Button fx:id="skipTurnButton" graphicTextGap="5.0" layoutX="152.0" layoutY="113.0" mnemonicParsing="false" onMouseClicked="#skipTurnButtonOnClick" prefHeight="64.0" prefWidth="180.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Skip Turn" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="skipTurnButton" graphicTextGap="5.0" layoutX="152.0" layoutY="113.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="180.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Skip Turn" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="Orbitron Bold" size="26.0" />
                </font>

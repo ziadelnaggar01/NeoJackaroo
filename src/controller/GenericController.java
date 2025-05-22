@@ -9,6 +9,7 @@ import model.card.wild.Wild;
 import model.player.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,11 +19,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public final class GenericController {
-
+	
+	
 	// Private constructor to prevent instantiation
 	private GenericController() {
 	}
@@ -135,5 +138,7 @@ public final class GenericController {
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
 	}
+
+
 
 }

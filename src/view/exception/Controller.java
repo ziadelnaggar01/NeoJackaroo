@@ -4,9 +4,11 @@ import controller.GenericController;
 import controller.SceneConfig;
 import engine.Game;
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -44,8 +46,10 @@ public class Controller {
 		GenericController.buttonGlowOFF(okExceptionButton);
 	}
 
+	
 	@FXML
 	private void okButtonOnMouseEntered() {
+
 		GenericController.buttonGlowON(okExceptionButton, Color.PURPLE);
 	}
 

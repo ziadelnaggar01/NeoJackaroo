@@ -12,9 +12,11 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -29,6 +31,10 @@ import controller.SceneConfig;
 import controller.SoundManager;
 
 public class Controller {
+
+	Image pointerImage = new Image(getClass().getResource("/view/assets/PurpleHand.png").toExternalForm());
+	ImageCursor pointerCursor = new ImageCursor(pointerImage, 5, 2); // hotspot at tip
+	
 	@FXML
 	private ImageView exitButton;
 
@@ -102,6 +108,8 @@ public class Controller {
 
 	@FXML
 	private void exitButtonOnMouseEntered() {
+		exitButton.setOnMouseEntered(e -> exitButton.setCursor(pointerCursor));
+
 		GenericController.buttonGlowON(exitButton, Color.RED);
 	}
 
@@ -113,6 +121,8 @@ public class Controller {
 
 	@FXML
 	private void backButtonOnMouseEntered() {
+		backButton.setOnMouseEntered(e -> backButton.setCursor(pointerCursor));
+
 		GenericController.buttonGlowON(backButton, Color.YELLOW);
 	}
 

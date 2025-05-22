@@ -5,9 +5,11 @@ import controller.MusicManager;
 import controller.SceneConfig;
 import controller.SoundManager;
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -35,41 +37,44 @@ public class Controller {
 	@FXML
 	private void switchSceneToGame(MouseEvent event) throws Exception {
 		SoundManager.getInstance().playSound("button_click");
-		if(nameTextField.getText().equals(""))
+		if (nameTextField.getText().equals(""))
 			popUpLabel.setText("Please enter a name!");
-		else
-		{
+		else {
 			Parent root = SceneConfig.getInstance().getGameScene();
 			SceneConfig.getInstance().setPlayerName(nameTextField.getText());
 			GenericController.switchScene(event, root);
-			MusicManager.getInstance().playMusic("/view/assets/audio/Vibe.mp3"); 
+			MusicManager.getInstance().playMusic("/view/assets/audio/Vibe.mp3");
 		}
 	}
 
 	@FXML
-	private void keyboardSwitchSceneToGame(KeyEvent  event) throws Exception {
+	private void keyboardSwitchSceneToGame(KeyEvent event) throws Exception {
 		SoundManager.getInstance().playSound("button_click");
-		if (event.getCode() == KeyCode.ENTER)
-		{
-			if(nameTextField.getText().equals(""))
+		if (event.getCode() == KeyCode.ENTER) {
+			if (nameTextField.getText().equals(""))
 				popUpLabel.setText("Please enter a name!");
-			else
-			{
+			else {
 				Parent root = SceneConfig.getInstance().getGameScene();
-				SceneConfig.getInstance().setPlayerName(nameTextField.getText());
+				SceneConfig.getInstance()
+						.setPlayerName(nameTextField.getText());
 				GenericController.switchScene(event, root);
-				MusicManager.getInstance().playMusic("/view/assets/audio/Vibe.mp3"); 
+				MusicManager.getInstance().playMusic(
+						"/view/assets/audio/Vibe.mp3");
 			}
 		}
 	}
 
+														// tip
+
 	@FXML
 	private void okButtonOnMouseEntered() {
+
 		GenericController.buttonGlowON(okButton, Color.PURPLE);
 	}
 
 	@FXML
 	private void cancelButtonOnMouseEntered() {
+		
 		GenericController.buttonGlowON(cancelButton, Color.CYAN);
 	}
 

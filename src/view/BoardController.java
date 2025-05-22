@@ -29,6 +29,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.util.Duration;
 import javafx.scene.Parent;
@@ -67,6 +69,11 @@ import engine.board.SafeZone;
 import exception.GameException;
 
 public class BoardController {
+	Image pointerImage = new Image(getClass().getResource(
+			"/view/assets/PurpleHand.png").toExternalForm());
+	ImageCursor pointerCursor = new ImageCursor(pointerImage, 5, 2); // hotspot
+																		// at
+																		// tip
 
 	private Game game;
 	private ArrayList<Player> players;
@@ -143,6 +150,7 @@ public class BoardController {
 
 	@FXML
 	public void initialize() throws IOException {
+
 		game = new Game("PlayerName");
 		players = game.getPlayers();
 
@@ -300,25 +308,27 @@ public class BoardController {
 		}
 	}
 
-
 	private void continueGameLoop() {
 		setCurrentPlayerLabel();
 		setNextPlayerLabel();
 
 		if (game.checkWin() != null) {
-			SceneConfig.getInstance().setWinnerName(game.checkWin(),players.get(0).getColour());
+			SceneConfig.getInstance().setWinnerName(game.checkWin(),
+					players.get(0).getColour());
 			Controller controller = SceneConfig.getInstance()
 					.getEndScreenController();
-			
-			//controller.setUpEndScreen();
+
+			// controller.setUpEndScreen();
 
 			// Play the first sound
-			SoundManager.getInstance().playSoundOnce("/view/assets/audio/GameOverVoiceOver.mp3");
+			SoundManager.getInstance().playSoundOnce(
+					"/view/assets/audio/GameOverVoiceOver.mp3");
 
 			// Schedule the second sound to play 1 second later
 			PauseTransition delay = new PauseTransition(Duration.seconds(1));
 			delay.setOnFinished(event -> {
-				SoundManager.getInstance().playSoundOnce("/view/assets/audio/GameOverSoundEffect.mp3");
+				SoundManager.getInstance().playSoundOnce(
+						"/view/assets/audio/GameOverSoundEffect.mp3");
 			});
 			delay.play();
 
@@ -329,9 +339,9 @@ public class BoardController {
 			fadeOut.setToValue(0.0);
 			fadeOut.setOnFinished(e -> {
 				Parent root = SceneConfig.getInstance().getEndScene();
-			
 
-				controller.updateWinner(game.checkWin(),players.get(0).getColour());
+				controller.updateWinner(game.checkWin(), players.get(0)
+						.getColour());
 				controller.playFadeIn();
 
 				Stage stage = (Stage) animationPane.getScene().getWindow();
@@ -954,8 +964,11 @@ public class BoardController {
 	// each card
 	// the on mouse click allows selection of only 1 card and updates the ID of
 	// selected card accordingly, while providing animation
+
 	private void setupCards(ArrayList<ImageView> cards) {
 		for (ImageView card : cards) {
+			card.setOnMouseEntered(e -> card.setCursor(pointerCursor));
+
 			card.setOnMouseClicked(event -> {
 				if (event.getButton() == MouseButton.PRIMARY) {
 					boolean alreadySelected = selectedCardID != null
@@ -1115,6 +1128,7 @@ public class BoardController {
 
 	@FXML
 	private void splitDistanceOkButtonOnMouseEntered() {
+
 		GenericController.buttonGlowON(splitDistanceOkButton, Color.CYAN, 25);
 	}
 
@@ -1293,5 +1307,8 @@ public class BoardController {
 		}
 		return new Image(getClass().getResourceAsStream(basePath));
 	}
+
+	@FXML
+	private Button playButton;
 
 }

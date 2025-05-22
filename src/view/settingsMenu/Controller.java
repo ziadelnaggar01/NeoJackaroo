@@ -6,9 +6,11 @@ import controller.MusicManager;
 import controller.SceneConfig;
 import controller.SoundManager;
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -30,6 +32,8 @@ public class Controller {
 	@FXML
 	private ImageView continueGameIcon;
 
+	
+	
 	public void initialize() {
 		// Bind volume slider to music player
 		MusicManager musicPlayer = MusicManager.getInstance();
@@ -47,6 +51,7 @@ public class Controller {
 
 	@FXML
 	private void exitIconOnMouseEntered() {
+
 		GenericController.buttonGlowON(exitSettingsIcon, Color.RED);
 	}
 
@@ -58,6 +63,7 @@ public class Controller {
 
 	@FXML
 	private void continueIconOnMouseEntered() {
+
 		GenericController.buttonGlowON(continueGameIcon, Color.GREEN);
 	}
 

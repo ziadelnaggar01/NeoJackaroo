@@ -8,14 +8,18 @@ import controller.SceneConfig;
 import controller.SoundManager;
 import engine.Game;
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 
 public class Controller {
+	
+	
 
 	@FXML
 	private Label descriptionLabelID;
@@ -76,6 +80,7 @@ public class Controller {
 
 	@FXML
 	private void OkIconOnMouseEntered() {
+
 		GenericController.buttonGlowON(descriptionOkButton, Color.CYAN, 25);
 	}
 
