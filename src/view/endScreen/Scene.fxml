@@ -88,7 +88,7 @@
                   </Label>
                   <ImageView fx:id="sadGif" fitHeight="217.0" fitWidth="310.0" layoutX="856.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../Desktop/CryingEmoji.gif" />
+                        <Image url="@../assets/CryingEmoji.gif" />
                      </image>
                   </ImageView>
                </children>
