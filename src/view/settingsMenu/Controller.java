@@ -1,4 +1,5 @@
 package view.settingsMenu;
+
 import java.io.IOException;
 
 import controller.GenericController;
@@ -6,11 +7,9 @@ import controller.MusicManager;
 import controller.SceneConfig;
 import controller.SoundManager;
 import javafx.fxml.FXML;
-import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -24,7 +23,7 @@ public class Controller {
 	private Slider musicSlider;
 	@FXML
 	private Slider sfxSlider;
-	//---------------------------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------------------------
 	// buttons related
 
 	@FXML
@@ -32,8 +31,6 @@ public class Controller {
 	@FXML
 	private ImageView continueGameIcon;
 
-	
-	
 	public void initialize() {
 		// Bind volume slider to music player
 		MusicManager musicPlayer = MusicManager.getInstance();
@@ -72,11 +69,12 @@ public class Controller {
 	private void continueIconOnMouseExited() {
 		GenericController.buttonGlowOFF(continueGameIcon);
 	}
+
 	@FXML
 	private void continueButtonOnClick(MouseEvent event) throws IOException {
-		SoundManager.getInstance().playSound("button_click"); 
+		SoundManager.getInstance().playSound("button_click");
 		Parent root;
-		if(SceneConfig.getInstance().isInGame())
+		if (SceneConfig.getInstance().isInGame())
 			root = SceneConfig.getInstance().getGameScene();
 		else
 			root = SceneConfig.getInstance().getStartScene();
@@ -85,12 +83,12 @@ public class Controller {
 
 	@FXML
 	private void exitButtonOnClick(MouseEvent event) throws IOException {
-		//Go back to start screen, no boardscene 
+		// Go back to start screen, no boardscene
 		SoundManager.getInstance().playSound("button_click");
 		Parent root;
-		if(!SceneConfig.getInstance().isInGame())
-		{
-			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		if (!SceneConfig.getInstance().isInGame()) {
+			Stage stage = (Stage) ((Node) event.getSource()).getScene()
+					.getWindow();
 			stage.close();
 		}
 		MusicManager.getInstance().stop();

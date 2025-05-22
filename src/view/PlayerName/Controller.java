@@ -1,15 +1,14 @@
 package view.PlayerName;
 
 import controller.GenericController;
+
 import controller.MusicManager;
 import controller.SceneConfig;
 import controller.SoundManager;
 import javafx.fxml.FXML;
-import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;

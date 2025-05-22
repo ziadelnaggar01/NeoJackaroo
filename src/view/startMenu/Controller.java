@@ -1,10 +1,10 @@
 package view.startMenu;
 
 import controller.GenericController;
+
 import controller.SceneConfig;
 import controller.SoundManager;
 import javafx.fxml.FXML;
-import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;
@@ -15,8 +15,7 @@ import javafx.scene.input.MouseEvent;
 
 public class Controller {
 
-	public static void initalizeStage(Stage primaryStage) throws Exception
-	{
+	public static void initalizeStage(Stage primaryStage) throws Exception {
 		int initialWidth = 1920;
 		int initialHeight = 1080;
 
@@ -26,37 +25,37 @@ public class Controller {
 		primaryStage.setFullScreenExitHint("");
 
 		// Intercept maximize button click to enter fullscreen
-		primaryStage.maximizedProperty().addListener((obs, wasMaximized, isMaximized) -> {
-			if (isMaximized) {
-				primaryStage.setFullScreen(true); // Enter fullscreen
-			}
-		});
+		primaryStage.maximizedProperty().addListener(
+				(obs, wasMaximized, isMaximized) -> {
+					if (isMaximized) {
+						primaryStage.setFullScreen(true); // Enter fullscreen
+					}
+				});
 
 		// Reset to fixed size when exiting fullscreen
-		primaryStage.fullScreenProperty().addListener((obs, wasFull, isFull) -> {
-			if (isFull) 
-			{
-				// entering full-screen → remove constraints
-				primaryStage.setMinWidth(0);
-				primaryStage.setMinHeight(0);
-				primaryStage.setMaxWidth(Double.MAX_VALUE);
-				primaryStage.setMaxHeight(Double.MAX_VALUE);
-			} 
-			else  
-			{
-				// Restore fixed constraints and size
-				primaryStage.setMinWidth(initialWidth);
-				primaryStage.setMinHeight(initialHeight);
-				primaryStage.setMaxWidth(initialWidth);
-				primaryStage.setMaxHeight(initialHeight);
-				primaryStage.setWidth(initialWidth);
-				primaryStage.setHeight(initialHeight);
-			}
-		});
+		primaryStage.fullScreenProperty().addListener(
+				(obs, wasFull, isFull) -> {
+					if (isFull) {
+						// entering full-screen → remove constraints
+						primaryStage.setMinWidth(0);
+						primaryStage.setMinHeight(0);
+						primaryStage.setMaxWidth(Double.MAX_VALUE);
+						primaryStage.setMaxHeight(Double.MAX_VALUE);
+					} else {
+						// Restore fixed constraints and size
+						primaryStage.setMinWidth(initialWidth);
+						primaryStage.setMinHeight(initialHeight);
+						primaryStage.setMaxWidth(initialWidth);
+						primaryStage.setMaxHeight(initialHeight);
+						primaryStage.setWidth(initialWidth);
+						primaryStage.setHeight(initialHeight);
+					}
+				});
 	}
 
 	@FXML
-	private ImageView startButton;  // This should match the fx:id in Scene Builder
+	private ImageView startButton; // This should match the fx:id in Scene
+									// Builder
 	@FXML
 	private ImageView settingsButton;
 	@FXML
@@ -67,7 +66,7 @@ public class Controller {
 	// Method for Mouse Entered event
 	@FXML
 	private void startButtonOnMouseEntered() {
-		
+
 		GenericController.buttonGlowON(startButton, Color.RED);
 	}
 
@@ -109,8 +108,6 @@ public class Controller {
 	private void exitButtonOnMouseExited() {
 		GenericController.buttonGlowOFF(exitButton);
 	}
-
-
 
 	@FXML
 	private void switchSceneToNameEntry(MouseEvent event) throws Exception {
