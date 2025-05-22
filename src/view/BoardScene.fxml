@@ -43,8 +43,8 @@
          <children>
             <GridPane fx:id="B" layoutY="150.0" prefHeight="289.0" prefWidth="408.0" translateY="-75.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.59999694824216" minWidth="10.0" prefWidth="269.59999694824216" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.3333465576172" minWidth="10.0" prefWidth="138.40000305175784" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.59999694824216" minWidth="10.0" prefWidth="215.20001220703125" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.3333465576172" minWidth="10.0" prefWidth="192.79998779296875" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -52,44 +52,44 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="playerB1" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                  <ImageView fx:id="playerB1" fitHeight="184.0" fitWidth="178.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="100.0" />
+                        <Insets left="40.0" top="30.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB2" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
+                  <ImageView fx:id="playerB2" fitHeight="184.0" fitWidth="178.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
                      <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="10.0" />
+                        <Insets right="20.0" top="30.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB4" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerB4" fitHeight="184.0" fitWidth="178.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="10.0" />
+                        <Insets right="20.0" top="30.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB3" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerB3" fitHeight="184.0" fitWidth="178.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
                      <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="100.0" />
+                        <Insets left="40.0" top="30.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <Label fx:id="CPU1Name" prefHeight="38.0" prefWidth="293.0" text="Euler" textFill="#00b7ff" GridPane.rowIndex="1">
+                  <Label fx:id="CPU1Name" prefHeight="54.0" prefWidth="270.0" text="Euler" textFill="#00ffed" GridPane.rowIndex="1">
                      <font>
                         <Font name="Orbitron Bold" size="30.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets left="20.0" />
+                        <Insets left="5.0" />
                      </GridPane.margin>
                      <graphic>
                         <Label fx:id="colorPlayer2" text="❖">
@@ -149,7 +149,7 @@
                         <Font name="Orbitron Bold" size="36.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets left="20.0" />
+                        <Insets left="5.0" />
                      </GridPane.margin>
                      <textFill>
                         <LinearGradient endX="1.0" endY="1.0">
@@ -183,42 +183,42 @@
          <children>
             <GridPane fx:id="C" hgap="25.0" prefHeight="259.0" prefWidth="319.0" translateY="75.0" vgap="100.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="195.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.2000732421875" minWidth="10.0" prefWidth="211.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="171.199951171875" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.2000732421875" minWidth="10.0" prefWidth="236.000048828125" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="39.79999999999998" minHeight="0.0" prefHeight="30.799999999999983" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="32.79999999999998" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                        <ImageView fx:id="playerC1" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0">
+                        <ImageView fx:id="playerC1" fitHeight="184.0" fitWidth="178.0" preserveRatio="true" rotate="90.0">
                             <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="50.0" top="120.0" />
+                        <Insets left="20.0" top="120.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerC4" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <ImageView fx:id="playerC4" fitHeight="184.0" fitWidth="178.0" preserveRatio="true" rotate="90.0" styleClass="neon-card" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
                         <Insets right="100.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerC3" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
+                        <ImageView fx:id="playerC3" fitHeight="184.0" fitWidth="178.0" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
                             <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="50.0" />
+                        <Insets left="20.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerC2" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
+                        <ImageView fx:id="playerC2" fitHeight="184.0" fitWidth="178.0" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
                             <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
                         <Insets right="100.0" top="120.0" />
@@ -226,20 +226,18 @@
                         </ImageView>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label fx:id="CPU2Name" alignment="CENTER_RIGHT" layoutX="-29.0" layoutY="31.0" prefHeight="54.0" prefWidth="196.0" text="Balabizo" textFill="#00daff">
+                        <Label fx:id="CPU2Name" alignment="CENTER" layoutX="-53.0" layoutY="28.0" prefHeight="54.0" prefWidth="275.0" text="Balabizo" textFill="#00ffed">
                            <font>
                               <Font name="Orbitron Bold" size="30.0" />
                            </font>
                            <opaqueInsets>
                               <Insets right="10.0" />
                            </opaqueInsets>
-                           <graphic>
-                              <Label fx:id="colorPlayer3" text="❖">
-                                 <font>
-                                    <Font size="36.0" />
-                                 </font>
-                              </Label>
-                           </graphic>
+                        </Label>
+                        <Label fx:id="colorPlayer3" layoutX="-42.0" layoutY="31.0" text="❖">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
                         </Label>
                      </children>
                   </AnchorPane>
@@ -250,8 +248,8 @@
             </GridPane>
             <GridPane fx:id="D" hgap="25.0" prefHeight="259.0" prefWidth="121.0" vgap="25.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="175.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.8000732421875" minWidth="10.0" prefWidth="231.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="133.599951171875" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.40009765624995" minWidth="10.0" prefWidth="273.60004882812495" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="160.1999755859375" minHeight="0.0" prefHeight="121.80001220703124" vgrow="SOMETIMES" />
@@ -259,49 +257,53 @@
                   <RowConstraints maxHeight="234.8" minHeight="10.0" prefHeight="112.99998779296877" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fx:id="playerD1" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0">
+                  <ImageView fx:id="playerD1" fitHeight="184.0" fitWidth="178.0" preserveRatio="true" rotate="90.0">
                      <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="50.0" />
+                        <Insets />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerD4" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerD4" fitHeight="184.0" fitWidth="178.0" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="30.0" right="150.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerD3" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerD3" fitHeight="184.0" fitWidth="178.0" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
                      <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="50.0" />
+                        <Insets />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerD2" fitHeight="125.0" fitWidth="95.0" preserveRatio="true" rotate="-90.0" GridPane.columnIndex="1">
+                  <ImageView fx:id="playerD2" fitHeight="184.0" fitWidth="178.0" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
                      <image>
-                        <Image url="@assests/deck/Final%20Back.png" />
+                        <Image url="@assests/deck/NeonBack1.png" />
                      </image>
                      <GridPane.margin>
                         <Insets left="30.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <Label fx:id="CPU3Name" alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="260.0" text="Hamoksha" textFill="#00f6ff" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="CPU3Name" alignment="CENTER" prefHeight="38.0" prefWidth="268.0" text="Hamoksha" textFill="#00ffed" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="Orbitron Bold" size="30.0" />
                      </font>
-                     <graphic>
-                        <Label fx:id="colorPlayer4" text="❖">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                        </Label>
-                     </graphic>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="colorPlayer4" text="❖" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
                   </Label>
                </children>
             </GridPane>
@@ -312,12 +314,12 @@
       </VBox>
       <AnchorPane layoutX="1501.0" layoutY="-104.0" prefHeight="270.0" prefWidth="423.0">
          <children>
-            <ImageView fx:id="settingsIcon" fitHeight="87.0" fitWidth="97.0" layoutX="302.0" layoutY="120.0" onMouseClicked="#openSettings" onMouseEntered="#settingsIconOnMouseEntered" onMouseExited="#settingsIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="settingsIcon" fitHeight="116.0" fitWidth="104.0" layoutX="329.0" layoutY="94.0" onMouseClicked="#openSettings" onMouseEntered="#settingsIconOnMouseEntered" onMouseExited="#settingsIconOnMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@assests/scene/cyanSettings.png" />
+                  <Image url="@assests/scene/neonSettingsIcon.png" />
                </image>
             </ImageView>
-            <Button graphicTextGap="5.0" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="63.0" prefWidth="186.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textOverrun="WORD_ELLIPSIS">
+            <Button graphicTextGap="5.0" layoutX="-29.0" layoutY="113.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="64.0" prefWidth="170.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Play" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="Orbitron Bold" size="26.0" />
                </font>
@@ -338,7 +340,7 @@
                   </LinearGradient>
                </textFill>
             </Button>
-            <Button fx:id="skipTurnButton" graphicTextGap="5.0" layoutX="14.0" layoutY="192.0" mnemonicParsing="false" onMouseClicked="#skipTurnButtonOnClick" prefHeight="63.0" prefWidth="186.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Skip Turn" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="skipTurnButton" graphicTextGap="5.0" layoutX="152.0" layoutY="113.0" mnemonicParsing="false" onMouseClicked="#skipTurnButtonOnClick" prefHeight="64.0" prefWidth="180.0" style="-fx-background-color: white; -fx-cursor: POINTER;" styleClass="play-button" stylesheets="@style.css" text="Skip Turn" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="Orbitron Bold" size="26.0" />
                </font>
@@ -359,43 +361,22 @@
                   </LinearGradient>
                </textFill>
             </Button>
-            <AnchorPane fx:id="splitDistanceAnchorPane" layoutX="-7.0" layoutY="112.0">
+            <AnchorPane fx:id="splitDistanceAnchorPane" layoutX="-7.0" layoutY="101.0" prefHeight="212.0" prefWidth="359.0">
                <children>
-                  <ImageView fitHeight="176.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="259.0" fitWidth="381.0" layoutX="-37.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/Pop%20Up%20Menu.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="32.0" layoutY="9.0" text="Choose your split" textFill="#00b8ff">
+                  <Label layoutX="20.0" layoutY="22.0" text="Choose your split" textFill="#00b0ff">
                      <font>
-                        <Font name="Orbitron Bold" size="20.0" />
+                        <Font name="Orbitron Bold" size="27.0" />
                      </font>
                   </Label>
-                  <Slider fx:id="splitDistanceSlider" layoutX="61.0" layoutY="54.0" majorTickUnit="1.0" max="6.0" min="1.0" minHeight="-Infinity" minorTickCount="0" onMouseClicked="#onSplitDistanceSliderChanged" onMouseDragged="#onSplitDistanceSliderChanged" prefHeight="10.0" prefWidth="137.0" stylesheets="@style.css" value="1.0" />
-                  <Label fx:id="splitDistanceLabel1" layoutX="47.0" layoutY="80.0" text="1">
+                  <Slider fx:id="splitDistanceSlider" layoutX="47.0" layoutY="94.0" majorTickUnit="1.0" max="6.0" min="1.0" minHeight="-Infinity" minorTickCount="0" onMouseClicked="#onSplitDistanceSliderChanged" onMouseDragged="#onSplitDistanceSliderChanged" prefHeight="13.0" prefWidth="221.0" stylesheets="@style.css" value="1.0" />
+                  <Label fx:id="splitDistanceLabel1" layoutX="33.0" layoutY="123.0" prefHeight="38.0" prefWidth="17.0" text="1">
                      <font>
-                        <Font name="Orbitron Bold" size="21.0" />
-                     </font>
-                     <textFill>
-                        <LinearGradient endX="1.0" endY="1.0">
-                           <stops>
-                              <Stop>
-                                 <color>
-                                    <Color green="0.874365508556366" blue="1.0" />
-                                 </color>
-                              </Stop>
-                              <Stop offset="1.0">
-                                 <color>
-                                    <Color red="1.0" green="1.0" blue="1.0" />
-                                 </color>
-                              </Stop>
-                           </stops>
-                        </LinearGradient>
-                     </textFill>
-                  </Label>
-                  <Label fx:id="splitDistanceLabel2" layoutX="190.0" layoutY="80.0" text="6">
-                     <font>
-                        <Font name="Orbitron Bold" size="21.0" />
+                        <Font name="Orbitron Bold" size="30.0" />
                      </font>
                      <textFill>
                         <LinearGradient endX="1.0" endY="1.0">
@@ -414,7 +395,28 @@
                         </LinearGradient>
                      </textFill>
                   </Label>
-                  <ImageView fx:id="splitDistanceOkButton" fitHeight="43.0" fitWidth="156.0" layoutX="52.0" layoutY="125.0" onMouseClicked="#splitDistanceOkButtonOnClick" onMouseEntered="#splitDistanceOkButtonOnMouseEntered" onMouseExited="#splitDistanceOkButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                  <Label fx:id="splitDistanceLabel2" layoutX="266.0" layoutY="120.0" prefHeight="43.0" prefWidth="28.0" text="6">
+                     <font>
+                        <Font name="Orbitron Bold" size="30.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color green="0.874365508556366" blue="1.0" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+                  <ImageView fx:id="splitDistanceOkButton" fitHeight="86.0" fitWidth="216.0" layoutX="49.0" layoutY="178.0" onMouseClicked="#splitDistanceOkButtonOnClick" onMouseEntered="#splitDistanceOkButtonOnMouseEntered" onMouseExited="#splitDistanceOkButtonOnMouseExited" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/buttons/Ok.png" />
                      </image>
@@ -425,14 +427,14 @@
       </AnchorPane>
       <AnchorPane layoutX="-7.0" layoutY="-130.0" prefHeight="259.0" prefWidth="423.0">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="259.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="116.0" fitWidth="126.0" layoutX="276.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assests/scene/PurpleNeonArrow.png" />
                </image>
             </ImageView>
-            <Label fx:id="nextPlayerLabel" alignment="CENTER" layoutX="240.0" layoutY="166.0" prefHeight="43.0" prefWidth="180.0" text="CPU 1">
+            <Label fx:id="nextPlayerLabel" alignment="CENTER" layoutX="244.0" layoutY="142.0" prefHeight="43.0" prefWidth="180.0" text="CPU 1">
                <font>
-                  <Font name="System Bold Italic" size="26.0" />
+                  <Font name="Orbitron Bold" size="26.0" />
                </font>
                <textFill>
                   <LinearGradient endX="1.0" endY="1.0">
@@ -451,26 +453,26 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <ImageView fitHeight="87.0" fitWidth="119.0" layoutX="54.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="76.0" fitWidth="80.0" layoutX="58.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assests/scene/NeonBlueClick.png" />
                </image>
             </ImageView>
-            <Label fx:id="currentPlayerLabel" alignment="CENTER" layoutX="3.0" layoutY="160.0" prefHeight="43.0" prefWidth="198.0" text="Player">
+            <Label fx:id="currentPlayerLabel" alignment="CENTER" layoutX="-2.0" layoutY="137.0" prefHeight="43.0" prefWidth="198.0" text="Player">
                <font>
-                  <Font name="System Bold Italic" size="26.0" />
+                  <Font name="Orbitron Bold" size="26.0" />
                </font>
                <textFill>
                   <LinearGradient endX="1.0" endY="1.0">
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="0.08483430743217468" green="0.6736842393875122" blue="0.5461000800132751" />
+                              <Color red="1.0" green="1.0" blue="1.0" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="1.0" green="1.0" blue="1.0" />
+                              <Color green="0.7833333611488342" blue="1.0" />
                            </color>
                         </Stop>
                      </stops>
@@ -479,7 +481,6 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
       <AnchorPane fx:id="animationPane" layoutX="433.0" prefHeight="1090.0" prefWidth="1062.0">
          <children>
             <Circle fx:id="m10" fill="DODGERBLUE" layoutX="413.0" layoutY="480.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
@@ -598,22 +599,22 @@
             <Circle fx:id="m96" fill="DODGERBLUE" layoutX="99.0" layoutY="594.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="m97" fill="DODGERBLUE" layoutX="62.0" layoutY="594.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="m98" fill="DODGERBLUE" layoutX="62.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeA1" fill="DODGERBLUE" layoutX="130.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeA2" fill="DODGERBLUE" layoutX="205.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeA3" fill="DODGERBLUE" layoutX="288.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeA4" fill="DODGERBLUE" layoutX="377.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeB1" fill="DODGERBLUE" layoutX="531.0" layoutY="143.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeB2" fill="DODGERBLUE" layoutX="531.0" layoutY="223.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeB3" fill="DODGERBLUE" layoutX="531.0" layoutY="302.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeB4" fill="DODGERBLUE" layoutX="531.0" layoutY="394.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeC1" fill="DODGERBLUE" layoutX="925.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeC2" fill="DODGERBLUE" layoutX="846.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeC3" fill="DODGERBLUE" layoutX="763.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeC4" fill="DODGERBLUE" layoutX="675.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeD1" fill="DODGERBLUE" layoutX="525.0" layoutY="939.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeD2" fill="DODGERBLUE" layoutX="525.0" layoutY="858.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeD3" fill="DODGERBLUE" layoutX="525.0" layoutY="778.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="safeD4" fill="DODGERBLUE" layoutX="525.0" layoutY="695.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="safeA1" fill="DODGERBLUE" layoutX="130.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeA2" fill="DODGERBLUE" layoutX="205.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeA3" fill="DODGERBLUE" layoutX="288.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeA4" fill="DODGERBLUE" layoutX="377.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeB1" fill="DODGERBLUE" layoutX="531.0" layoutY="143.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeB2" fill="DODGERBLUE" layoutX="531.0" layoutY="223.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeB3" fill="DODGERBLUE" layoutX="531.0" layoutY="302.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeB4" fill="DODGERBLUE" layoutX="531.0" layoutY="394.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeC1" fill="DODGERBLUE" layoutX="925.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeC2" fill="DODGERBLUE" layoutX="846.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeC3" fill="DODGERBLUE" layoutX="763.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeC4" fill="DODGERBLUE" layoutX="675.0" layoutY="539.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeD1" fill="DODGERBLUE" layoutX="525.0" layoutY="939.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeD2" fill="DODGERBLUE" layoutX="525.0" layoutY="858.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeD3" fill="DODGERBLUE" layoutX="525.0" layoutY="778.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="safeD4" fill="DODGERBLUE" layoutX="525.0" layoutY="695.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
             <Circle fx:id="moveB2" fill="#fdfeff" layoutX="186.0" layoutY="118.0" onMouseClicked="#setupMarbleSelection" radius="38.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="moveA4" fill="#fdfeff" layoutX="186.0" layoutY="945.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="moveB3" fill="#fdfeff" layoutX="99.0" layoutY="200.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
@@ -630,24 +631,24 @@
             <Circle fx:id="moveC3" fill="#fdfeff" layoutX="864.0" layoutY="200.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="moveC1" fill="#fdfeff" layoutX="864.0" layoutY="118.0" onMouseClicked="#setupMarbleSelection" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="moveB1" fill="#fdfeff" layoutX="99.0" layoutY="118.0" onMouseClicked="#setupMarbleSelection" radius="38.0" stroke="BLACK" strokeType="INSIDE" />
-            <Label fx:id="basePlayer1" layoutX="91.0" layoutY="423.0" text="B" underline="true">
+            <Label fx:id="basePlayer1" layoutX="91.0" layoutY="423.0" text="B">
                <font>
-                  <Font size="25.0" />
+                  <Font name="Orbitron Bold" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="basePlayer2" layoutX="615.0" layoutY="91.0" text="B" underline="true">
+            <Label fx:id="basePlayer2" layoutX="615.0" layoutY="91.0" text="B">
                <font>
-                  <Font size="25.0" />
+                  <Font name="Orbitron Bold" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="basePlayer3" layoutX="950.0" layoutY="616.0" text="B" underline="true">
+            <Label fx:id="basePlayer3" layoutX="950.0" layoutY="616.0" text="B">
                <font>
-                  <Font size="25.0" />
+                  <Font name="Orbitron Bold" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="basePlayer4" layoutX="427.0" layoutY="952.0" text="B" underline="true">
+            <Label fx:id="basePlayer4" layoutX="427.0" layoutY="952.0" text="B">
                <font>
-                  <Font size="25.0" />
+                  <Font name="Orbitron Bold" size="20.0" />
                </font>
             </Label>
          </children>

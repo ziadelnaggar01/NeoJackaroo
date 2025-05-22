@@ -31,3 +31,44 @@
   -fx-font-size: 68px;     /* your chosen size */
   -fx-font-family: Verdana, Arial, sans-serif;
 }
+.neon-title {
+    -fx-fill: #00ffff;
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #00ffff, 2, 0.3, 0, 0);
+}
+
+.neon-subtitle {
+    -fx-fill: #ff66ff;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #ff66ff, 1.8, 0.2, 0, 0);
+}
+
+.neon-body {
+    -fx-fill: #22abdd;
+    -fx-font-size: 20px;
+    -fx-effect: dropshadow(gaussian, #22abdd, 1.5, 0.15, 0, 0);
+}
+
+/* --- SCROLLPANE CUSTOMIZATION --- */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #0d0d0d;
+}
+
+.scroll-pane .scroll-bar:vertical,
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #00ffff;
+    -fx-background-insets: 2;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, #00ffff, 10, 0.7, 0, 0);
+}

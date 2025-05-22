@@ -1,0 +1,14 @@
+.neon-textfield {
+    -fx-background-color: transparent;
+    -fx-text-fill: #00ffff; /* Bright white neon-like text */
+    -fx-font-size: 40px; /* Bigger text */
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian,#00ffff, 20, 0.7, 0, 0); /* Neon white glow */
+    
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+
+    -fx-background-insets: 0;
+    -fx-padding: 10px 20px; /* More breathing room */
+}

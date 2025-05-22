@@ -2,7 +2,6 @@ package view.exception;
 
 import controller.GenericController;
 import controller.SceneConfig;
-import controller.SoundManager;
 import engine.Game;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -15,8 +14,7 @@ import javafx.stage.Stage;
 
 public class Controller {
 
-	private ImageView selectedCard;
-	private Game game;
+
 	// The exception pop up method must be called to update the exception scene
 	// before switching to the exception scene
 	// send a node to get the stage of the board scene
@@ -27,8 +25,6 @@ public class Controller {
 		Parent root = SceneConfig.getInstance().getExceptionScene();
 		Stage stage = (Stage) someNode.getScene().getWindow();
 		GenericController.switchScene(stage, root);
-		this.selectedCard = selectedCard;
-		this.game=game;
 	}
 
 	@FXML

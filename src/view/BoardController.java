@@ -11,7 +11,10 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -141,10 +144,13 @@ public class BoardController {
 		game = new Game("PlayerName");
 		players = game.getPlayers();
 
-		cpuCards = new ImageView[][] { { playerB1, playerB2, playerB3, playerB4 },
-				{ playerC1, playerC2, playerC3, playerC4 }, { playerD1, playerD2, playerD3, playerD4 } };
+		cpuCards = new ImageView[][] {
+				{ playerB1, playerB2, playerB3, playerB4 },
+				{ playerC1, playerC2, playerC3, playerC4 },
+				{ playerD1, playerD2, playerD3, playerD4 } };
 
-		playerHand = new ImageView[] { playerCard1, playerCard2, playerCard3, playerCard4 };
+		playerHand = new ImageView[] { playerCard1, playerCard2, playerCard3,
+				playerCard4 };
 
 		setTrack();
 		setSafeZones();
@@ -197,7 +203,8 @@ public class BoardController {
 		ArrayList<Colour> colourOrderArrayList = new ArrayList<>();
 		for (SafeZone s : game.getBoard().getSafeZones()) {
 			colourOrderArrayList.add(s.getColour());
-			// System.out.println(s.getColour().toString()); // check if he uses the colour
+			// System.out.println(s.getColour().toString()); // check if he uses
+			// the colour
 			// correctly or not
 		}
 		// Handle Home Cell marbles
@@ -216,37 +223,40 @@ public class BoardController {
 						marbleToCellMap.put(from, to);
 						from.setLayoutX(to.getLayoutX());
 						from.setLayoutY(to.getLayoutY());
-						from.setRadius(to.getRadius()); // Resize from to match to
+						from.setRadius(to.getRadius()); // Resize from to match
+														// to
 					}
 				}
 			}
 		}
 		// Handle Safe Zone marbles
 		for (int i = 0; i < 4; i++) {
-			
-			for (int j = 0; j < 4; j++) {
-				Cell cell = game.getBoard().getSafeZones().get(i).getCells().get(j);
-				if (cell.getMarble() != null) {
-				for(int k = 0;k<4;k++)
-				{
-					if(tot.get(i).get(k) == 0)
-					{
-						tot.get(i).set(k, 1);
-						String newPos = "move" + (char) ('A' + i) + (k + 1);
-						String destId = "safe" + (char) ('A' + i) + (j + 1);
-						Circle from = (Circle) animationPane.lookup("#" + newPos);
-						Circle to = (Circle) animationPane.lookup("#" + destId);
 
-						if (from != null && to != null) {
-							marbleToCellMap.put(from, to);
-							from.setLayoutX(to.getLayoutX());
-							from.setLayoutY(to.getLayoutY());
-							from.setRadius(to.getRadius()); // Resize from to match to
+			for (int j = 0; j < 4; j++) {
+				Cell cell = game.getBoard().getSafeZones().get(i).getCells()
+						.get(j);
+				if (cell.getMarble() != null) {
+					for (int k = 0; k < 4; k++) {
+						if (tot.get(i).get(k) == 0) {
+							tot.get(i).set(k, 1);
+							String newPos = "move" + (char) ('A' + i) + (k + 1);
+							String destId = "safe" + (char) ('A' + i) + (j + 1);
+							Circle from = (Circle) animationPane.lookup("#"
+									+ newPos);
+							Circle to = (Circle) animationPane.lookup("#"
+									+ destId);
+
+							if (from != null && to != null) {
+								marbleToCellMap.put(from, to);
+								from.setLayoutX(to.getLayoutX());
+								from.setLayoutY(to.getLayoutY());
+								from.setRadius(to.getRadius()); // Resize from
+																// to match to
+							}
+							break;
 						}
-						break;
 					}
 				}
-			}
 			}
 		}
 
@@ -263,15 +273,20 @@ public class BoardController {
 						for (int k = 0; k < 4; k++) {
 							if (playerPos.get(k) == 0) {
 								playerPos.set(k, 1);
-								String newPos = "move" + (char) ('A' + j) + (k + 1);
-								Circle from = (Circle) animationPane.lookup("#" + newPos);
-								Circle to = (Circle) animationPane.lookup("#" + track.get(i).getId());
+								String newPos = "move" + (char) ('A' + j)
+										+ (k + 1);
+								Circle from = (Circle) animationPane.lookup("#"
+										+ newPos);
+								Circle to = (Circle) animationPane.lookup("#"
+										+ track.get(i).getId());
 
 								if (from != null && to != null) {
 									marbleToCellMap.put(from, to);
 									from.setLayoutX(to.getLayoutX());
 									from.setLayoutY(to.getLayoutY());
-									from.setRadius(to.getRadius()); // Resize from to match to
+									from.setRadius(to.getRadius()); // Resize
+																	// from to
+																	// match to
 								}
 								break;
 							}
@@ -298,16 +313,19 @@ public class BoardController {
 
 		Colour curPlayer = game.getActivePlayerColour();
 		currentPlayerIndex = getIndex(players, curPlayer);
-		System.out.println("Active player abn algazmha ahoooo: " + currentPlayerIndex);
+		System.out.println("Active player abn algazmha ahoooo: "
+				+ currentPlayerIndex);
 
 		if (!game.canPlayTurn()) {
-			System.out.println(currentPlayerIndex + " cannot play. Skipping turn.");
+			System.out.println(currentPlayerIndex
+					+ " cannot play. Skipping turn.");
 			// Wait before showing animation or calling Change_Track
 			PauseTransition delay = new PauseTransition(Duration.seconds(2));
 			delay.setOnFinished(event -> {
 
 				// add popup you got hacked ..... skip
-				PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
+				PauseTransition postAnimationDelay = new PauseTransition(
+						Duration.seconds(2));
 				postAnimationDelay.setOnFinished(e -> {
 					game.endPlayerTurn();
 					Platform.runLater(this::continueGameLoop);
@@ -336,7 +354,8 @@ public class BoardController {
 			delay.setOnFinished(event -> {
 				game.endPlayerTurn();
 				updateBoard();
-				PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
+				PauseTransition postAnimationDelay = new PauseTransition(
+						Duration.seconds(2));
 				postAnimationDelay.setOnFinished(e -> {
 					Platform.runLater(this::continueGameLoop);
 				});
@@ -348,7 +367,8 @@ public class BoardController {
 		} catch (GameException ee) {
 			ee.printStackTrace();
 			game.endPlayerTurn();
-			PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
+			PauseTransition postAnimationDelay = new PauseTransition(
+					Duration.seconds(2));
 			updateCpuHand();
 			updatePlayerHand();
 			postAnimationDelay.setOnFinished(e -> {
@@ -407,26 +427,38 @@ public class BoardController {
 				switch (cellPositionOfMarble.getId().charAt(1)) {
 				case 'A': // home cell (m+player+number), player would be A
 					if (game.getPlayers().get(0).getMarbles().size() != 0) {
-						curMarble = game.getPlayers().get(0).getMarbles()
+						curMarble = game
+								.getPlayers()
+								.get(0)
+								.getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
 					break;
 				case 'B':
 					if (game.getPlayers().get(1).getMarbles().size() != 0) {
-						curMarble = game.getPlayers().get(1).getMarbles()
+						curMarble = game
+								.getPlayers()
+								.get(1)
+								.getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
 					break;
 				case 'C':
 					if (game.getPlayers().get(2).getMarbles().size() != 0) {
-						curMarble = game.getPlayers().get(2).getMarbles()
+						curMarble = game
+								.getPlayers()
+								.get(2)
+								.getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 
 					}
 					break;
 				case 'D':
 					if (game.getPlayers().get(3).getMarbles().size() != 0) {
-						curMarble = game.getPlayers().get(3).getMarbles()
+						curMarble = game
+								.getPlayers()
+								.get(3)
+								.getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
 					break;
@@ -441,12 +473,15 @@ public class BoardController {
 						}
 					}
 					System.out.println(cellPositionOfMarble.getId());
-					curMarble = playerSafeZone.getCells().get((cellPositionOfMarble.getId().charAt(5) - '0') - 1)
+					curMarble = playerSafeZone
+							.getCells()
+							.get((cellPositionOfMarble.getId().charAt(5) - '0') - 1)
 							.getMarble();
 					break;
 				default: // marble is on track
 					// get cell number from id (m+number)
-					String positionString = cellPositionOfMarble.getId().substring(1);
+					String positionString = cellPositionOfMarble.getId()
+							.substring(1);
 					int num = Integer.parseInt(positionString);
 					curMarble = game.getBoard().getTrack().get(num).getMarble();
 				}
@@ -468,8 +503,10 @@ public class BoardController {
 			delay.play();
 
 		} catch (Exception e) {
-			view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
-			exceptionController.exceptionPopUp(e, animationPane, selectedCardImageView, game);
+			view.exception.Controller exceptionController = SceneConfig
+					.getInstance().getExceptionController();
+			exceptionController.exceptionPopUp(e, animationPane,
+					selectedCardImageView, game);
 			game.deselectAll(); // deselct from back-end
 			deselectAllMarbles(); // deselect animation
 			Platform.runLater(this::continueGameLoop);
@@ -516,24 +553,34 @@ public class BoardController {
 
 		// Load marble images
 		Map<Colour, Image> marbleImages = new HashMap<>();
-		marbleImages.put(Colour.BLUE, new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png")));
-		marbleImages.put(Colour.GREEN,
-				new Image(getClass().getResourceAsStream("/view/assests/scene/GreenMarble.png")));
-		marbleImages.put(Colour.YELLOW,
-				new Image(getClass().getResourceAsStream("/view/assests/scene/YellowMarble.png")));
-		marbleImages.put(Colour.RED, new Image(getClass().getResourceAsStream("/view/assests/scene/RedMarble.png")));
+		marbleImages.put(
+				Colour.BLUE,
+				new Image(getClass().getResourceAsStream(
+						"/view/assests/scene/BlueMarble.png")));
+		marbleImages.put(Colour.GREEN, new Image(getClass()
+				.getResourceAsStream("/view/assests/scene/GreenMarble.png")));
+		marbleImages.put(Colour.YELLOW, new Image(getClass()
+				.getResourceAsStream("/view/assests/scene/YellowMarble.png")));
+		marbleImages.put(
+				Colour.RED,
+				new Image(getClass().getResourceAsStream(
+						"/view/assests/scene/RedMarble.png")));
 
 		for (Node node : animationPane.getChildren()) {
-			if (node instanceof Circle circle) {
+			if (node instanceof Circle) {
+				Circle circle = (Circle) node;
 				String id = circle.getId();
 				if (id != null && id.startsWith("move") && id.length() > 5) {
 					char who = id.charAt(4);
 					int index = who - 'A'; // A->0, B->1, etc.
 
-					Image marbleImage = marbleImages.getOrDefault(
-							index >= 0 && index < colourOrderArrayList.size() ? colourOrderArrayList.get(index)
-									: Colour.BLUE, // fallback
-							marbleImages.get(Colour.BLUE));
+					Image marbleImage = marbleImages
+							.getOrDefault(
+									index >= 0
+											&& index < colourOrderArrayList
+													.size() ? colourOrderArrayList
+											.get(index) : Colour.BLUE, // fallback
+									marbleImages.get(Colour.BLUE));
 
 					circle.setFill(new ImagePattern(marbleImage));
 					circle.setStroke(Color.TRANSPARENT);
@@ -544,14 +591,17 @@ public class BoardController {
 					if (mapNode instanceof Circle) {
 						marbleToCellMap.put(circle, (Circle) mapNode);
 					} else {
-						System.out.println("Could not find target circle for ID: " + posId);
+						System.out
+								.println("Could not find target circle for ID: "
+										+ posId);
 					}
 				}
 
 				// Reset fill for other circles marked A-D
 				if (circle.getId() != null && circle.getId().length() > 1) {
 					char playerChar = circle.getId().charAt(1);
-					if (playerChar == 'A' || playerChar == 'B' || playerChar == 'C' || playerChar == 'D') {
+					if (playerChar == 'A' || playerChar == 'B'
+							|| playerChar == 'C' || playerChar == 'D') {
 						circle.setFill(Color.TRANSPARENT);
 						circle.setStroke(Color.TRANSPARENT);
 					}
@@ -561,32 +611,58 @@ public class BoardController {
 
 		// Map each label to its player’s color
 		Label[] bases = { basePlayer1, basePlayer2, basePlayer3, basePlayer4 };
-		Label[] indicators = { colorPlayer1, colorPlayer2, colorPlayer3, colorPlayer4 };
+		Label[] indicators = { colorPlayer1, colorPlayer2, colorPlayer3,
+				colorPlayer4 };
 		for (int i = 0; i < colourOrderArrayList.size() && i < bases.length; i++) {
 			Colour colour = colourOrderArrayList.get(i);
 			Color textFill;
+			Glow glow = new Glow(0.3);
+			DropShadow neonEffect = new DropShadow();
 
 			switch (colour) {
 			case RED:
-				textFill = Color.RED;
+				textFill = Color.web("#FF1C3A"); // Neon red
+				neonEffect.setColor(textFill);
 				break;
 			case BLUE:
-				textFill = Color.CYAN;
+				textFill = Color.web("#00FFFF"); // Bright cyan
+				neonEffect.setColor(textFill);
 				break;
 			case GREEN:
-				textFill = Color.GREEN;
+				textFill = Color.web("#32CD32"); // Neon green
+				neonEffect.setColor(textFill);
 				break;
 			case YELLOW:
-				textFill = Color.YELLOW;
+				textFill = Color.web("#FFA000"); // Orange yellow
+				neonEffect.setColor(textFill);
 				break;
 			default:
-				textFill = Color.BLACK; // fallback
+				textFill = Color.web("#CCCCCC"); // Soft gray fallback
+				neonEffect.setColor(textFill);
+
 			}
 
 			bases[i].setTextFill(textFill);
+			bases[i].setEffect(new Blend(BlendMode.ADD, neonEffect, glow));
 			indicators[i].setTextFill(textFill);
+			indicators[i].setEffect(new Blend(BlendMode.ADD, neonEffect, glow));
+			if (i == 0) {
+				userName.setTextFill(textFill);
+				userName.setEffect(new Blend(BlendMode.ADD, neonEffect, glow));
+			} else if (i == 1) {
+				CPU1Name.setTextFill(textFill);
+				CPU1Name.setEffect(new Blend(BlendMode.ADD, neonEffect, glow));
+			} else if (i == 2) {
+				CPU2Name.setTextFill(textFill);
+				CPU2Name.setEffect(new Blend(BlendMode.ADD, neonEffect, glow));
+			} else {
+				CPU3Name.setTextFill(textFill);
+				CPU3Name.setEffect(new Blend(BlendMode.ADD, neonEffect, glow));
+			}
+
 		}
 	}
+	
 
 	// needed in continueGameLoop
 	public int getIndex(ArrayList<Player> y, Colour col) {
@@ -597,16 +673,19 @@ public class BoardController {
 		return -1;
 	}
 
+	
 	private void updatePit() {
 		if (game.getFirePit().isEmpty())
 			return;
 		ArrayList<Card> firePit = game.getFirePit();
-		firepitImage.setImage(getCardImage(firePit.getLast()));
+		firepitImage.setImage(getCardImage(firePit.get(firePit.size() - 1)));
 	}
+	
 
 	private void setSafeZones() {
 		for (Node node : animationPane.getChildren()) {
-			if (node instanceof Circle && node.getId() != null && node.getId().startsWith("safe")) {
+			if (node instanceof Circle && node.getId() != null
+					&& node.getId().startsWith("safe")) {
 				((Circle) node).setFill(Color.TRANSPARENT);
 			}
 		}
@@ -637,7 +716,8 @@ public class BoardController {
 				track.add(circle); // Add to your track list
 			} else {
 				// Debugging: If the circle doesn't exist, print a warning
-				System.out.println("Warning: Circle with fx:id m" + i + " not found.");
+				System.out.println("Warning: Circle with fx:id m" + i
+						+ " not found.");
 			}
 		}
 	}
@@ -647,10 +727,12 @@ public class BoardController {
 		double circle2Radius = circle2.getRadius();
 		double scaleFactor = circle2Radius / circle1Radius;
 
-		ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1.5), circle1);
+		ScaleTransition scaleTransition = new ScaleTransition(
+				Duration.seconds(1.5), circle1);
 		scaleTransition.setToX(scaleFactor);
 		scaleTransition.setToY(scaleFactor);
-		scaleTransition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
+		scaleTransition
+				.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
 
 		return scaleTransition;
 	}
@@ -664,7 +746,8 @@ public class BoardController {
 		double targetY = y.getLayoutY();
 
 		// Create translation animation
-		TranslateTransition move = new TranslateTransition(Duration.millis(1500), x); // match duration
+		TranslateTransition move = new TranslateTransition(
+				Duration.millis(1500), x); // match duration
 		move.setToX(targetX - x.getLayoutX());
 		move.setToY(targetY - x.getLayoutY());
 
@@ -711,7 +794,7 @@ public class BoardController {
 
 	@FXML
 	private void settingsIconOnMouseEntered() {
-		GenericController.buttonGlowON(settingsIcon, Color.CYAN, 25);
+		GenericController.buttonGlowON(settingsIcon, Color.PURPLE, 25);
 	}
 
 	// Method for Mouse Exited event
@@ -733,12 +816,14 @@ public class BoardController {
 	// Setting up names & set current and next player
 
 	// you need to initialize these values, get players from game
-	private ArrayList<String> cpuNames = new ArrayList<>(Arrays.asList(
+	private ArrayList<String> cpuNames = new ArrayList<>(
+			Arrays.asList(
 
-			// Serious / Intellectual
-			"Turing", "AdaNova", "Hypatia", "NeuroLynx", "Euler",
-			// Funny / Meme-worthy
-			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "Meow", "NotABot"));
+					// Serious / Intellectual
+					"Turing", "AdaNova", "Hypatia", "NeuroLynx", "Euler",
+					// Funny / Meme-worthy
+					"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "Meow",
+					"NotABot"));
 
 	// Called from outside the class
 	public void assignNames(String playerName) {
@@ -763,8 +848,41 @@ public class BoardController {
 	// given the colour and assigns the given label to the name of the colour
 	// holder accordingly
 	private void setPlayerLabel(Label label, Colour colour) {
-		int cpuCount = 0;
+		
+		Color textFill;
+		Glow glow = new Glow(0.3);
+		DropShadow neonEffect = new DropShadow();
 
+		//get appropriate filling for label 
+		switch (colour) {
+		case RED:
+			textFill = Color.web("#FF1C3A"); // Neon red
+			neonEffect.setColor(textFill);
+			break;
+		case BLUE:
+			textFill = Color.web("#00FFFF"); // Bright cyan
+			neonEffect.setColor(textFill);
+			break;
+		case GREEN:
+			textFill = Color.web("#32CD32"); // Neon green
+			neonEffect.setColor(textFill);
+			break;
+		case YELLOW:
+			textFill = Color.web("#FFA000"); // Orange yellow
+			neonEffect.setColor(textFill);
+			break;
+		default:
+			textFill = Color.web("#CCCCCC"); // Soft gray fallback
+			neonEffect.setColor(textFill);
+
+		}
+		
+		//assign fillings based on colour in backend
+		label.setTextFill(textFill);
+		label.setEffect(new Blend(BlendMode.ADD, neonEffect, glow));
+		
+		//assign names based on entered and randomly distributed in frontend
+		int cpuCount = 0;
 		for (Player p : players) {
 			if (!(p instanceof CPU)) {
 				if (p.getColour() == colour) {
@@ -812,7 +930,8 @@ public class BoardController {
 		for (ImageView card : cards) {
 			card.setOnMouseClicked(event -> {
 				if (event.getButton() == MouseButton.PRIMARY) {
-					boolean alreadySelected = selectedCardID != null && selectedCardID.equals(card.getId());
+					boolean alreadySelected = selectedCardID != null
+							&& selectedCardID.equals(card.getId());
 
 					if (alreadySelected) {
 						// Deselect all cards
@@ -835,7 +954,8 @@ public class BoardController {
 							if (isSelected) {
 								// if the selected card is a seven, make the
 								// controller visible
-								if (GenericController.getCardRank(c, currentPlayerIndex, game) == 7)
+								if (GenericController.getCardRank(c,
+										currentPlayerIndex, game) == 7)
 									splitDistanceAnchorPane.setVisible(true);
 								else
 									// deselected the 7 by clicking on another
@@ -843,21 +963,25 @@ public class BoardController {
 									splitDistanceAnchorPane.setVisible(false);
 								selectedCardID = c.getId();
 								selectedCardImageView = c;
-								System.out.println("Selected card ID: " + selectedCardID);
+								System.out.println("Selected card ID: "
+										+ selectedCardID);
 							}
 						}
 					}
 				} else if (event.getButton() == MouseButton.SECONDARY) {
 					// Right-click: show description
-					view.description.Controller controller = SceneConfig.getInstance().getDescriptionController();
-					controller.showCardDescription(event, card, currentPlayerIndex, game);
+					view.description.Controller controller = SceneConfig
+							.getInstance().getDescriptionController();
+					controller.showCardDescription(event, card,
+							currentPlayerIndex, game);
 				}
 			});
 		}
 	}
 
 	private void selectCard(ImageView card, boolean select) {
-		TranslateTransition tt = new TranslateTransition(Duration.millis(150), card);
+		TranslateTransition tt = new TranslateTransition(Duration.millis(150),
+				card);
 		tt.setToY(select ? -15 : 0); // Move up if selected, reset if not
 		tt.play();
 
@@ -874,19 +998,21 @@ public class BoardController {
 
 	private void deselectAllCards(ImageView[] cards) {
 		for (ImageView card : cards) {
-			TranslateTransition tt = new TranslateTransition(Duration.millis(150), card);
+			TranslateTransition tt = new TranslateTransition(
+					Duration.millis(150), card);
 			tt.setToY(0); // Move up if selected, reset if not
 			tt.play();
 			card.setEffect(null);
-			selectedCardID=null;
-			selectedCardImageView=null;
+			selectedCardID = null;
+			selectedCardImageView = null;
 		}
 	}
 
 	/**
 	 * Animate moving a card from the player's hand to the firepit.
 	 *
-	 * @param cardView The ImageView in the player's hand that was clicked.
+	 * @param cardView
+	 *            The ImageView in the player's hand that was clicked.
 	 */
 	@FXML
 	private Pane animationLayer;
@@ -906,8 +1032,10 @@ public class BoardController {
 
 		// 2) Compute the source center in animationLayer coordinates
 		Bounds localSrcBounds = cardView.getBoundsInLocal();
-		double srcCenterX = localSrcBounds.getMinX() + localSrcBounds.getWidth() / 2;
-		double srcCenterY = localSrcBounds.getMinY() + localSrcBounds.getHeight() / 2;
+		double srcCenterX = localSrcBounds.getMinX()
+				+ localSrcBounds.getWidth() / 2;
+		double srcCenterY = localSrcBounds.getMinY()
+				+ localSrcBounds.getHeight() / 2;
 		// Map that center to scene, then to layer
 		Point2D sceneSrcCenter = cardView.localToScene(srcCenterX, srcCenterY);
 		Point2D start = animationLayer.sceneToLocal(sceneSrcCenter);
@@ -926,7 +1054,8 @@ public class BoardController {
 		Bounds pitLocal = firepitImage.getBoundsInLocal();
 		double pitCenterX = pitLocal.getMinX() + pitLocal.getWidth() / 2;
 		double pitCenterY = pitLocal.getMinY() + pitLocal.getHeight() / 2;
-		Point2D scenePitCenter = firepitImage.localToScene(pitCenterX, pitCenterY);
+		Point2D scenePitCenter = firepitImage.localToScene(pitCenterX,
+				pitCenterY);
 		Point2D target = animationLayer.sceneToLocal(scenePitCenter);
 
 		// 6) Calculate how far to move (so the clone’s center ends at `target`)
@@ -934,7 +1063,8 @@ public class BoardController {
 		double toY = target.getY() - start.getY();
 
 		// 7) Animate
-		TranslateTransition tt = new TranslateTransition(Duration.millis(400), animCard);
+		TranslateTransition tt = new TranslateTransition(Duration.millis(400),
+				animCard);
 		tt.setByX(toX);
 		tt.setByY(toY);
 		tt.setInterpolator(Interpolator.EASE_IN);
@@ -968,7 +1098,8 @@ public class BoardController {
 	@FXML
 	private void splitDistanceOkButtonOnClick() {
 		SoundManager.getInstance().playSound("button_click");
-		game.getBoard().setSplitDistance(Integer.parseInt(splitDistanceLabel1.getText()));
+		game.getBoard().setSplitDistance(
+				Integer.parseInt(splitDistanceLabel1.getText()));
 		splitDistanceAnchorPane.setVisible(false);
 	}
 
@@ -989,13 +1120,17 @@ public class BoardController {
 
 	@FXML
 	private void skipTurnButtonOnClick() throws Exception {
-		if (game.getActivePlayerColour() != game.getPlayers().get(0).getColour())
+		if (game.getActivePlayerColour() != game.getPlayers().get(0)
+				.getColour())
 			return;
 		if (selectedCardImageView == null) {
-			view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
-			exceptionController.exceptionPopUp(
-					new Exception("You must first choose a card to sacrifice before you can pass the turn."),
-					animationPane, selectedCardImageView, game);
+			view.exception.Controller exceptionController = SceneConfig
+					.getInstance().getExceptionController();
+			exceptionController
+					.exceptionPopUp(
+							new Exception(
+									"You must first choose a card to sacrifice before you can pass the turn."),
+							animationPane, selectedCardImageView, game);
 		} else {
 			// Link card selected from GUI to back end
 			Card card = null;
@@ -1036,7 +1171,8 @@ public class BoardController {
 	@FXML
 	private void fieldMarbleShortcut(KeyEvent event) {
 		SoundManager.getInstance().playSound("button_click");
-		ArrayList<Marble> homeMarbles = players.get(currentPlayerIndex).getMarbles();
+		ArrayList<Marble> homeMarbles = players.get(currentPlayerIndex)
+				.getMarbles();
 
 		int Num = 6;
 		Circle CurMarble = null;
@@ -1059,20 +1195,25 @@ public class BoardController {
 					try {
 						game.fieldMarble();
 						updateBoard();
-						PauseTransition delay = new PauseTransition(Duration.seconds(2));
-						delay.setOnFinished(ae -> Platform.runLater(this::continueGameLoop));
+						PauseTransition delay = new PauseTransition(
+								Duration.seconds(2));
+						delay.setOnFinished(ae -> Platform
+								.runLater(this::continueGameLoop));
 						delay.play();
 
 					} catch (Exception e) {
-						view.exception.Controller exceptionController = SceneConfig.getInstance()
-								.getExceptionController();
-						exceptionController.exceptionPopUp(e, animationPane, selectedCardImageView, game);
+						view.exception.Controller exceptionController = SceneConfig
+								.getInstance().getExceptionController();
+						exceptionController.exceptionPopUp(e, animationPane,
+								selectedCardImageView, game);
 					}
 					return;
 				}
 			}
-			view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
-			exceptionController.exceptionPopUp(new Exception("No marbles to field"), animationPane,
+			view.exception.Controller exceptionController = SceneConfig
+					.getInstance().getExceptionController();
+			exceptionController.exceptionPopUp(new Exception(
+					"No marbles to field"), animationPane,
 					selectedCardImageView, game);
 		}
 	}

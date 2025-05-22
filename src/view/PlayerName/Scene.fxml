@@ -8,9 +8,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyboardSwitchSceneToGame" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PlayerName.Controller">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyboardSwitchSceneToGame" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PlayerName.Controller">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0">
          <image>
@@ -27,22 +30,38 @@
             </ImageView>
             <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0">
                <top>
-                  <Label fx:id="popUpLabel" text="Enter your name" textFill="#0a82af" BorderPane.alignment="CENTER">
+                  <Label fx:id="popUpLabel" opacity="0.74" text="Enter your name" BorderPane.alignment="CENTER">
                      <font>
-                        <Font name="Dubai Medium" size="70.0" />
+                        <Font name="Orbitron Bold" size="70.0" />
                      </font>
                      <BorderPane.margin>
                         <Insets top="50.0" />
                      </BorderPane.margin>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color green="0.935279130935669" blue="1.0" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
                   </Label>
                </top>
                <center>
-                  <TextField fx:id="nameTextField" alignment="CENTER" maxWidth="-Infinity" opacity="0.2" prefHeight="71.0" prefWidth="500.0" promptText="Type Here!" text="Player 1" BorderPane.alignment="TOP_CENTER">
+                  <TextField fx:id="nameTextField" alignment="CENTER" maxWidth="-Infinity" opacity="0.5" prefHeight="117.0" prefWidth="556.0" promptText="Type Here!" styleClass="neon-textfield" text="Player 1" BorderPane.alignment="TOP_CENTER">
                      <BorderPane.margin>
                         <Insets top="100.0" />
                      </BorderPane.margin>
                      <font>
-                        <Font size="43.0" />
+                        <Font name="Orbitron Bold" size="43.0" />
                      </font>
                   </TextField>
                </center>
