@@ -86,9 +86,9 @@
                         </LinearGradient>
                      </textFill>
                   </Label>
-                  <ImageView fx:id="sadGif" fitHeight="217.0" fitWidth="310.0" layoutX="856.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="sadGif" fitHeight="255.0" fitWidth="265.0" layoutX="838.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../assets/CryingEmoji.gif" />
+                        <Image url="@../assets/Disintegration.gif" />
                      </image>
                   </ImageView>
                </children>
