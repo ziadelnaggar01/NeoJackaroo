@@ -2,6 +2,7 @@ package view.splashScene;
 
 import controller.MusicManager;
 import controller.SceneConfig;
+import controller.SoundManager;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -39,6 +40,11 @@ public class Controller {
 			@Override
 			protected Void call() {
 				SceneConfig.getInstance(); // loads all scenes
+				SoundManager.getInstance().preloadSound("button_click", "/view/assets/audio/button click.mp3");
+				SoundManager.getInstance().preloadSound("Marble_Selection", "/view/assets/audio/Marble Selection.mp3");
+				SoundManager.getInstance().preloadSound("Card_Selection", "/view/assets/audio/Card Selection.mp3");
+				SoundManager.getInstance().preloadSound("errorSoundEffect", "/view/assests/sound/errorSoundEffect.mp3");
+				SoundManager.getInstance().preloadSound("skipTurnSound", "/view/assests/sound/skipTurnSound.mp3");
 				return null;
 			}
 		};
