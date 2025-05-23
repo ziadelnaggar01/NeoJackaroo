@@ -16,7 +16,7 @@
       </ImageView>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="80.0" fitWidth="74.0" onMouseClicked="#switchSceneToAbout" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0">
+            <ImageView fx:id="aboutIcon" fitHeight="80.0" fitWidth="74.0" onMouseClicked="#switchSceneToAbout" onMouseEntered="#aboutIconOnMouseEntered" onMouseExited="#aboutIconOnMouseExited" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0">
                <image>
                   <Image url="@../assets/buttons/i-button.png" />
                </image>

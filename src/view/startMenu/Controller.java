@@ -62,6 +62,8 @@ public class Controller {
 	private ImageView HWTButton;
 	@FXML
 	private ImageView exitButton;
+	@FXML
+	private ImageView aboutIcon;
 
 	// Method for Mouse Entered event
 	@FXML
@@ -107,6 +109,17 @@ public class Controller {
 	@FXML
 	private void exitButtonOnMouseExited() {
 		GenericController.buttonGlowOFF(exitButton);
+	}
+	
+	@FXML
+	private void aboutIconOnMouseEntered() {
+		GenericController.buttonGlowON(aboutIcon, Color.BLUE, 20);
+	}
+
+	// Method for Mouse Exited event
+	@FXML
+	private void aboutIconOnMouseExited() {
+		GenericController.buttonGlowOFF(aboutIcon);
 	}
 
 	@FXML
