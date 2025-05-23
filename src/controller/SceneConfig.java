@@ -22,6 +22,7 @@ public class SceneConfig {
 	private Parent gameScene;
 	private Parent exceptionScene;
 	private Parent descriptionScene;
+	private Parent aboutScene;
 
 	private boolean inGame = false;
 	private BoardController gameController;
@@ -36,6 +37,7 @@ public class SceneConfig {
 			howToPlayScene = FXMLLoader.load(getClass().getResource("/view/HowToPlayScreen/Scene.fxml"));
 			playerNameScene = FXMLLoader.load(getClass().getResource("/view/PlayerName/Scene.fxml"));
 			settingsScene = FXMLLoader.load(getClass().getResource("/view/settingsMenu/Scene.fxml"));
+			aboutScene = FXMLLoader.load(getClass().getResource("/view/aboutMenu/Scene.fxml"));
 
 			// Load Game Scene and controller
 			FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("/view/BoardScene.fxml"));
@@ -62,6 +64,7 @@ public class SceneConfig {
 			e.printStackTrace();
 		}
 	}
+	
 
 	/** Global accessor */
 	public static SceneConfig getInstance() {
@@ -99,6 +102,10 @@ public class SceneConfig {
 
 	public Parent getDescriptionScene() {
 		return descriptionScene;
+	}
+	
+	public Parent getAboutScene() {
+		return aboutScene;
 	}
 
 	public boolean isInGame() {

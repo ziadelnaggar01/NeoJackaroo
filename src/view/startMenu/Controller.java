@@ -137,4 +137,11 @@ public class Controller {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.close();
 	}
+	
+	@FXML
+	private void switchSceneToAbout(MouseEvent event) throws Exception {
+		SoundManager.getInstance().playSound("button_click");
+		Parent root = SceneConfig.getInstance().getAboutScene();
+		GenericController.switchScene(event, root);
+	}
 }
