@@ -2,13 +2,18 @@ package view;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -360,6 +365,35 @@ public class BoardController {
 		if (!game.canPlayTurn()) {
 			System.out.println(currentPlayerIndex
 					+ " cannot play. Skipping turn.");
+
+			// get grid Pane and stack Pane to be shown
+			GridPane skippedPlayerGridPane;
+			AnchorPane skippedPlayerStackPane;
+
+			switch (currentPlayerIndex) {
+			case 0:
+				skippedPlayerGridPane = A;
+				skippedPlayerStackPane = skippedPaneP1;
+				break;
+			case 1:
+				skippedPlayerGridPane = B;
+				skippedPlayerStackPane = skippedPaneP2;
+				break;
+			case 2:
+				skippedPlayerGridPane = C;
+				skippedPlayerStackPane = skippedPaneP3;
+				break;
+			case 3:
+				skippedPlayerGridPane = D;
+				skippedPlayerStackPane = skippedPaneP4;
+				break;
+			default:
+				skippedPlayerGridPane = null;
+				skippedPlayerStackPane = null;
+			}
+			System.out.println(currentPlayerIndex);
+			System.out.println(players.get(currentPlayerIndex).getColour());
+			visualizeSkippedTurn(skippedPlayerGridPane, skippedPlayerStackPane);
 			// Wait before showing animation or calling Change_Track
 			PauseTransition delay = new PauseTransition(Duration.seconds(2));
 			delay.setOnFinished(event -> {
@@ -1313,5 +1347,79 @@ public class BoardController {
 
 	@FXML
 	private Button playButton;
+
+	// ---------------------------------------------------------------
+	@FXML
+	private AnchorPane skippedPaneP1;
+	@FXML
+	private AnchorPane skippedPaneP2;
+	@FXML
+	private AnchorPane skippedPaneP3;
+	@FXML
+	private AnchorPane skippedPaneP4;
+
+	private void visualizeSkippedTurn(GridPane playerGrid,
+			AnchorPane overlayPane) {
+		SoundManager.getInstance().playSound("skipTurnSound");
+
+		// === 1. Shake Animation ===
+		TranslateTransition shake = new TranslateTransition(
+				Duration.millis(80), playerGrid);
+		shake.setFromX(-8);
+		shake.setToX(8);
+		shake.setCycleCount(6); // 3 full shakes
+		shake.setAutoReverse(true);
+		shake.play();
+
+		// === 2. Create Neon "SKIPPED" Label ===
+		Label skippedLabel = new Label("SKIPPED");
+		skippedLabel
+				.setStyle("-fx-text-fill: linear-gradient(to bottom, #222, #000);"
+						+ // Neon black theme
+						"-fx-font-size: 40px;"
+						+ // Increased font size
+						"-fx-font-weight: bold;"
+						+ "-fx-effect: dropshadow(gaussian, #FFFFFF, 8, 0.3, 0, 0);"
+						+ // Cyan glow
+						"-fx-background-color: transparent;");
+		skippedLabel.setOpacity(0); // Start invisible
+
+		overlayPane.getChildren().add(skippedLabel);
+		StackPane.setAlignment(skippedLabel, Pos.CENTER);
+
+		// === 3. Fade In and Out Animation ===
+		FadeTransition fadeIn = new FadeTransition(Duration.millis(300),
+				skippedLabel);
+		fadeIn.setFromValue(0);
+		fadeIn.setToValue(1);
+
+		PauseTransition stay = new PauseTransition(Duration.seconds(3.5));
+
+		FadeTransition fadeOut = new FadeTransition(Duration.millis(400),
+				skippedLabel);
+		fadeOut.setFromValue(1);
+		fadeOut.setToValue(0);
+
+		// === 4. Remove label after fade out ===
+		fadeOut.setOnFinished(e -> overlayPane.getChildren().remove(
+				skippedLabel));
+
+		// === 5. Temporarily dim the player grid ===
+		Timeline dim = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(
+				playerGrid.opacityProperty(), 1.0)), new KeyFrame(
+				Duration.seconds(0.25), new KeyValue(
+						playerGrid.opacityProperty(), 0.4)), // fade to dim
+				new KeyFrame(Duration.seconds(4), new KeyValue(
+						playerGrid.opacityProperty(), 0.4)), // stay dimmed
+				new KeyFrame(Duration.seconds(4.25), new KeyValue(
+						playerGrid.opacityProperty(), 1.0)) // fade back
+		);
+		dim.play();
+
+		// === 6. Play label animation sequence ===
+		SequentialTransition sequence = new SequentialTransition(fadeIn, stay,
+				fadeOut);
+		sequence.play();
+	}
 
 }

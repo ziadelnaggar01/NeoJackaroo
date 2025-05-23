@@ -113,7 +113,7 @@ public class Controller {
 	
 	@FXML
 	private void aboutIconOnMouseEntered() {
-		GenericController.buttonGlowON(aboutIcon, Color.BLUE, 20);
+		GenericController.buttonGlowON(aboutIcon, Color.BLUE, 40);
 	}
 
 	// Method for Mouse Exited event
