@@ -12,7 +12,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// 1) Load the splash screen FXML
-		Parent splashRoot  = FXMLLoader.load(getClass().getResource("/view/splashScene/Scene.fxml"));
+		Parent splashRoot = FXMLLoader.load(getClass().getResource("/view/splashScene/Scene.fxml"));
 		// 🔸 Attach scene to stage and display
 		Controller.initalizeStage(primaryStage);
 		primaryStage.setScene(new Scene(splashRoot));

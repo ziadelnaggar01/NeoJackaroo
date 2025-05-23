@@ -6,7 +6,6 @@ import java.util.Collections;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
-import javafx.animation.FillTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
