@@ -301,6 +301,23 @@ public class BoardController {
 			}
 		}
 	}
+	
+	private void disablePlayerButtons()
+	{
+		skipTurnButton.setDisable(true);
+		skipTurnButton.setOpacity(0.5);
+		playButton.setDisable(true);
+		playButton.setOpacity(0.5);
+	}
+	
+	private void enablePlayerButtons()
+	{
+		skipTurnButton.setDisable(false);
+		skipTurnButton.setOpacity(1);
+		playButton.setDisable(false);
+		playButton.setOpacity(1);
+	}
+
 
 	private void continueGameLoop() {
 		setCurrentPlayerLabel();
@@ -346,7 +363,11 @@ public class BoardController {
 
 		if (!game.canPlayTurn()) {
 			System.out.println(currentPlayerIndex + " cannot play. Skipping turn.");
-
+			if(currentPlayerIndex==0)
+			{
+				disablePlayerButtons();
+			}
+			
 			// get grid Pane and stack Pane to be shown
 			GridPane skippedPlayerGridPane;
 			AnchorPane skippedPlayerStackPane;
@@ -393,9 +414,11 @@ public class BoardController {
 
 		if (currentPlayerIndex == 0) {
 			System.out.println("Waiting for player to click Play.");
+			enablePlayerButtons();
 			// Human player: wait for button click
 		} else {
 			System.out.println("AI is playing...");
+			disablePlayerButtons();
 			playAITurnWithDelay();
 		}
 	}
