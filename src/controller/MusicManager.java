@@ -66,4 +66,7 @@ public class MusicManager {
 			mediaPlayer.play();
 		}
 	}
+	public MediaPlayer getMediaPlayer(){
+		return mediaPlayer;
+	}
 }
