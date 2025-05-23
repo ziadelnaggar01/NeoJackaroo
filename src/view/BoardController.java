@@ -310,7 +310,7 @@ public class BoardController {
 		playButton.setOpacity(0.5);
 	}
 	
-	private void enablePlayerButtons()
+	public void enablePlayerButtons()
 	{
 		skipTurnButton.setDisable(false);
 		skipTurnButton.setOpacity(1);
@@ -571,7 +571,8 @@ public class BoardController {
 			deselectAllMarbles(); // deselect animation
 			Platform.runLater(this::continueGameLoop);
 		}
-
+		
+		disablePlayerButtons();
 	}
 
 	// Used in onPlayClicked
@@ -1153,6 +1154,7 @@ public class BoardController {
 		if (game.getActivePlayerColour() != game.getPlayers().get(0).getColour())
 			return;
 		if (selectedCardImageView == null) {
+			SoundManager.getInstance().playSound("errorSoundEffect");
 			view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
 			exceptionController.exceptionPopUp(
 					new Exception("You must first choose a card to sacrifice before you can pass the turn."),
@@ -1192,6 +1194,7 @@ public class BoardController {
 			});
 			delay.play();
 		}
+		disablePlayerButtons();
 	}
 
 	@FXML

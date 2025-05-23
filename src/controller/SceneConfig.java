@@ -157,5 +157,9 @@ public class SceneConfig {
 	public void discardCard(ImageView selectedCard){
 		gameController.sendToPit(selectedCard);
 	}
+	
+	public void enablePlayerButtons(){
+		gameController.enablePlayerButtons();
+	}
 
 }

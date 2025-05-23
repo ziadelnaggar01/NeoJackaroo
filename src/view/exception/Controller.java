@@ -36,6 +36,7 @@ public class Controller {
 	@FXML
 	private void okExceptionButtonOnClick(MouseEvent event) {
 		Parent root = SceneConfig.getInstance().getGameScene();
+		SceneConfig.getInstance().enablePlayerButtons();
 		GenericController.switchScene(event, root);
 	}
 
