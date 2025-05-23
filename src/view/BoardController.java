@@ -544,6 +544,7 @@ public class BoardController {
 			delay.play();
 
 		} catch (Exception e) {
+			SoundManager.getInstance().playSound("errorSoundEffect");
 			view.exception.Controller exceptionController = SceneConfig
 					.getInstance().getExceptionController();
 			exceptionController.exceptionPopUp(e, animationPane,

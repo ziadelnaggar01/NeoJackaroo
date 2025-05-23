@@ -18,6 +18,8 @@ public class Main extends Application{
 		SoundManager.getInstance().preloadSound("button_click", "/view/assets/audio/button click.mp3");
 		SoundManager.getInstance().preloadSound("Marble_Selection", "/view/assets/audio/Marble Selection.mp3");
 		SoundManager.getInstance().preloadSound("Card_Selection", "/view/assets/audio/Card Selection.mp3");
+		SoundManager.getInstance().preloadSound("errorSoundEffect", "/view/assests/sound/errorSoundEffect.mp3");
+
 		primaryStage.show();
 	}
 
