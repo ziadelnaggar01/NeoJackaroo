@@ -972,6 +972,7 @@ public class BoardController {
 
 			card.setOnMouseClicked(event -> {
 				if (event.getButton() == MouseButton.PRIMARY) {
+					SoundManager.getInstance().playSound("Card_Selection");
 					boolean alreadySelected = selectedCardID != null
 							&& selectedCardID.equals(card.getId());
 
