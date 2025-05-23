@@ -16,6 +16,7 @@ public class Main extends Application{
 
 		MusicManager.getInstance().playMusic("/view/assets/audio/Digital Voyage - Twin Musicom.mp3"); 
 		SoundManager.getInstance().preloadSound("button_click", "/view/assets/audio/button click.mp3");
+		SoundManager.getInstance().preloadSound("Marble_Selection", "/view/assets/audio/Marble Selection.mp3");
 		primaryStage.show();
 	}
 

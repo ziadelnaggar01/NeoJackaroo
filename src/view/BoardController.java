@@ -731,6 +731,7 @@ public class BoardController {
 
 	@FXML
 	private void setupMarbleSelection(MouseEvent event) {
+		SoundManager.getInstance().playSound("Marble_Selection");
 		Circle clickedMarble = (Circle) event.getSource();
 		// toggle selection like in setupMarbleSelection method
 		if (selectedMarbles.contains(clickedMarble)) {
