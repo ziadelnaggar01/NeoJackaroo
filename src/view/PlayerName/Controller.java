@@ -36,11 +36,11 @@ public class Controller {
 	@FXML
 	private void switchSceneToGame(MouseEvent event) throws Exception {
 		SoundManager.getInstance().playSound("button_click");
-		if (nameTextField.getText().equals(""))
+		if (nameTextField.getText().trim().isEmpty())
 			popUpLabel.setText("Please enter a name!");
 		else {
 			Parent root = SceneConfig.getInstance().getGameScene();
-			SceneConfig.getInstance().setPlayerName(nameTextField.getText());
+			SceneConfig.getInstance().setPlayerName(nameTextField.getText().trim());
 			GenericController.switchScene(event, root);
 			MusicManager.getInstance().playMusic("/view/assets/audio/Vibe.mp3");
 		}
@@ -50,12 +50,12 @@ public class Controller {
 	private void keyboardSwitchSceneToGame(KeyEvent event) throws Exception {
 		SoundManager.getInstance().playSound("button_click");
 		if (event.getCode() == KeyCode.ENTER) {
-			if (nameTextField.getText().equals(""))
+			if (nameTextField.getText().trim().isEmpty())
 				popUpLabel.setText("Please enter a name!");
 			else {
 				Parent root = SceneConfig.getInstance().getGameScene();
 				SceneConfig.getInstance()
-						.setPlayerName(nameTextField.getText());
+						.setPlayerName(nameTextField.getText().trim());
 				GenericController.switchScene(event, root);
 				MusicManager.getInstance().playMusic(
 						"/view/assets/audio/Vibe.mp3");
