@@ -2,6 +2,7 @@ package engine.board;
 
 import java.util.ArrayList;
 
+import view.BoardController;
 import engine.GameManager;
 import exception.CannotFieldException;
 import exception.IllegalDestroyException;
@@ -425,6 +426,8 @@ public class Board implements BoardManager {
 			destroyMarble(marble);
 			targetCell.setTrap(false);
 			assignTrapCell();
+			
+			BoardController.incrementTotalTrapsIfPlayer(gameManager.getActivePlayerColour());
 		}
 
 	}

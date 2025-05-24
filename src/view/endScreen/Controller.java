@@ -11,16 +11,24 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Colour;
@@ -31,9 +39,12 @@ import controller.SoundManager;
 
 public class Controller {
 
-	Image pointerImage = new Image(getClass().getResource("/view/assets/PurpleHand.png").toExternalForm());
-	ImageCursor pointerCursor = new ImageCursor(pointerImage, 5, 2); // hotspot at tip
-	
+	Image pointerImage = new Image(getClass().getResource(
+			"/view/assets/PurpleHand.png").toExternalForm());
+	ImageCursor pointerCursor = new ImageCursor(pointerImage, 5, 2); // hotspot
+																		// at
+																		// tip
+
 	@FXML
 	private ImageView exitButton;
 
@@ -137,7 +148,6 @@ public class Controller {
 	}
 
 	public void updateWinner(Colour winner, Colour userColour) {
-
 		String winnerColor = " Player Won!!";
 		switch (winner) {
 		case RED:
@@ -169,18 +179,20 @@ public class Controller {
 
 			happyGif.setVisible(false);
 			Collections.shuffle(lossWisdom);
-			wisdom=lossWisdom.get(0);
+			wisdom = lossWisdom.get(0);
 
 		}
 		wisdomLabel.setText(wisdom);
-		TranslateTransition slide = new TranslateTransition(Duration.seconds(1), wisdomLabel);
+		TranslateTransition slide = new TranslateTransition(
+				Duration.seconds(1), wisdomLabel);
 		slide.setFromY(-100);
 		slide.setToY(0);
 		slide.setCycleCount(1);
 		slide.play();
-		
+
 		winnerName.setText(winnerColor);
-		ScaleTransition pulse = new ScaleTransition(Duration.seconds(1), winnerName);
+		ScaleTransition pulse = new ScaleTransition(Duration.seconds(1),
+				winnerName);
 		pulse.setFromX(1.0);
 		pulse.setToX(1.05);
 		pulse.setFromY(1.0);
@@ -205,4 +217,119 @@ public class Controller {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.close();
 	}
+
+	// statistics theme
+	private int time;
+	private int discards;
+	private int traps;
+	private int turns;
+	
+	@FXML private AnchorPane statisticsAnchorPane;
+	@FXML private ImageView statisticsImageView;
+
+	public void updateStatistics(int time, int discards, int traps, int turns) {
+		this.time = time;
+		this.turns = turns;
+		this.discards = discards;
+		this.traps = traps;
+	}
+
+	@FXML
+	private void statisticsImageViewOnMouseEntered() {
+		backButton.setOnMouseEntered(e -> statisticsImageView.setCursor(pointerCursor));
+		GenericController.buttonGlowON(statisticsImageView, Color.YELLOW);
+	}
+
+	@FXML
+	private void statisticsImageViewOnMouseExited() {
+		GenericController.buttonGlowOFF(statisticsImageView);
+	}
+
+	@FXML
+	private void statisticsImageViewOnMouseClicked() {
+		SoundManager.getInstance().playSound("button_click");
+		showStatistics();
+	}
+	
+	private void showStatistics() {
+	    // === Dim Background Overlay ===
+	    Region dimOverlay = new Region();
+	    dimOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6);");
+	    dimOverlay.setPrefSize(statisticsAnchorPane.getWidth(), statisticsAnchorPane.getHeight());
+
+	    // === Neon Popup ===
+	    VBox popup = new VBox(20);
+	    popup.setPadding(new Insets(30));
+	    popup.setAlignment(Pos.TOP_CENTER);
+	    popup.setStyle(
+	        "-fx-background-color: black;" +
+	        "-fx-border-color: #00ffff;" +
+	        "-fx-border-width: 3;" +
+	        "-fx-effect: dropshadow(gaussian, #00ffff, 30, 0.7, 0, 0);" +
+	        "-fx-background-radius: 12;" +
+	        "-fx-border-radius: 12;"
+	    );
+
+	    // === Title ===
+	    Label title = new Label("Game Review");
+	    title.setStyle(
+	        "-fx-text-fill: #00ffff;" +
+	        "-fx-font-size: 28px;" +
+	        "-fx-font-weight: bold;"
+	    );
+
+	    // === Stat rows ===
+	    VBox statsBox = new VBox(15);
+	    statsBox.setAlignment(Pos.CENTER_LEFT);
+	    statsBox.getChildren().addAll(
+	        createStatRow("/view/assets/timeIcon.png", "Time Elapsed: " + time + "s"),
+	        createStatRow("/view/assets/discardIcon.png", "Discards: " + discards),
+	        createStatRow("/view/assets/trapIcon.png", "Traps Hit: " + traps),
+	        createStatRow("/view/assets/turnsIcon.png", "Turns Taken: " + turns)
+	    );
+
+	    // === OK Button ===
+	    Button okButton = new Button("OK");
+	    okButton.setStyle(
+	        "-fx-text-fill: #00ffff;" +
+	        "-fx-font-size: 16px;" +
+	        "-fx-background-color: transparent;" +
+	        "-fx-border-color: #00ffff;" +
+	        "-fx-border-radius: 6;" +
+	        "-fx-border-width: 2;" +
+	        "-fx-cursor: hand;" +
+	        "-fx-padding: 6 20 6 20;"
+	    );
+	    okButton.setOnAction(e -> statisticsAnchorPane.getChildren().removeAll(dimOverlay, popup));
+
+	    // === Add all to popup ===
+	    popup.getChildren().addAll(title, statsBox, okButton);
+
+	    // === Center Popup ===
+	    popup.setLayoutX((statisticsAnchorPane.getWidth() - 400) / 2);
+	    popup.setLayoutY((statisticsAnchorPane.getHeight() - 350) / 2);
+	    popup.setPrefWidth(400);
+	    popup.setPrefHeight(350);
+
+	    // === Dismiss on overlay click ===
+	    dimOverlay.setOnMouseClicked(e -> statisticsAnchorPane.getChildren().removeAll(dimOverlay, popup));
+
+	    // === Add to AnchorPane ===
+	    statisticsAnchorPane.getChildren().addAll(dimOverlay, popup);
+	}
+
+	private HBox createStatRow(String iconPath, String text) {
+	    ImageView icon = new ImageView(new Image(getClass().getResourceAsStream(iconPath)));
+	    icon.setFitHeight(36);
+	    icon.setFitWidth(36);
+
+	    Label label = new Label(text);
+	    label.setStyle("-fx-text-fill: #00ffff; -fx-font-size: 18px;");
+
+	    HBox row = new HBox(15, icon, label);
+	    row.setAlignment(Pos.CENTER_LEFT);
+	    return row;
+	}
+
+
 }

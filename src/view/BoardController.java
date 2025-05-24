@@ -78,12 +78,12 @@ public class BoardController {
 	ImageCursor pointerCursor = new ImageCursor(pointerImage, 5, 2); // hotspot
 																		// at
 																		// tip
-	
+
 	Image sharpImage = new Image(getClass().getResource(
 			"/view/assets/Mouse Cursor.png").toExternalForm());
 	ImageCursor sharpCursor = new ImageCursor(sharpImage, 5, 2); // hotspot
-																		// at
-																		// tip
+																	// at
+																	// tip
 
 	private Game game;
 	private ArrayList<Player> players;
@@ -160,9 +160,18 @@ public class BoardController {
 
 	@FXML
 	public void initialize() throws IOException {
-
 		game = new Game("PlayerName");
 		players = game.getPlayers();
+		
+		// set up stats variables
+		totalTurns = 0;
+		totalTraps = 0;
+		totalDiscards = 0;
+		timeElapsedInSeconds = 0;
+		realPlayerColour=players.get(0).getColour();
+		startTimer();
+
+		
 
 		cpuCards = new ImageView[][] {
 				{ playerB1, playerB2, playerB3, playerB4 },
@@ -333,16 +342,22 @@ public class BoardController {
 	}
 
 	private void continueGameLoop() {
+
 		setCurrentPlayerLabel();
 		setNextPlayerLabel();
+		totalTurns++;
 
-		if (game.checkWin() != null) {
+		if (game.checkWin() != null) {// someone won
+			stopTimer();
+
 			SceneConfig.getInstance().setWinnerName(game.checkWin(),
 					players.get(0).getColour());
+
+			SceneConfig.getInstance().setStatistics(timeElapsedInSeconds,
+					totalDiscards, totalTraps, totalTurns);
+
 			Controller controller = SceneConfig.getInstance()
 					.getEndScreenController();
-
-			// controller.setUpEndScreen();
 
 			// Play the first sound
 			SoundManager.getInstance().playSoundOnce(
@@ -378,13 +393,11 @@ public class BoardController {
 
 		Colour curPlayer = game.getActivePlayerColour();
 		currentPlayerIndex = getIndex(players, curPlayer);
-		System.out.println("Active player abn algazmha ahoooo: "
-				+ currentPlayerIndex);
 
 		if (!game.canPlayTurn()) {
-			System.out.println(currentPlayerIndex
-					+ " cannot play. Skipping turn.");
+
 			if (currentPlayerIndex == 0) {
+				totalDiscards++;// increase total player discards
 				disablePlayerButtons();
 			}
 
@@ -413,8 +426,7 @@ public class BoardController {
 				skippedPlayerGridPane = null;
 				skippedPlayerStackPane = null;
 			}
-			System.out.println(currentPlayerIndex);
-			System.out.println(players.get(currentPlayerIndex).getColour());
+
 			visualizeSkippedTurn(skippedPlayerGridPane, skippedPlayerStackPane);
 			// Wait before showing animation or calling Change_Track
 			PauseTransition delay = new PauseTransition(Duration.seconds(2));
@@ -1449,5 +1461,39 @@ public class BoardController {
 		sequence.play();
 	}
 
+	// stats resources
+
+	private int totalTurns;
+	private static int totalTraps;
+	private int totalDiscards;
+	private int timeElapsedInSeconds;
+	private Timeline timer;
+
+	private static Colour realPlayerColour;
+	
+	private void startTimer() {
+		
+		
+		timeElapsedInSeconds = 0;
+
+		timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+			timeElapsedInSeconds++;
+			// Optional: update UI label here if needed
+			}));
+		timer.setCycleCount(Timeline.INDEFINITE);
+		timer.play();
+	}
+
+	private void stopTimer() {
+		if (timer != null) {
+			timer.stop();
+		}
+	}
+	
+	public static void incrementTotalTrapsIfPlayer(Colour colour){
+		if (colour==realPlayerColour);
+		 totalTraps++;
+	}
+	
 
 }

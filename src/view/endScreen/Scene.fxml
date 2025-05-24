@@ -91,6 +91,16 @@
                         <Image url="@../assets/Disintegration.gif" />
                      </image>
                   </ImageView>
+                  <AnchorPane fx:id="statisticsAnchorPane" layoutX="634.0" layoutY="321.0" prefHeight="425.0" prefWidth="525.0" />
+                  <StackPane layoutX="1439.0" layoutY="60.0">
+                     <children>
+                        <ImageView fx:id="statisticsImageView" fitHeight="171.0" fitWidth="176.0" onMouseClicked="#statisticsImageViewOnMouseClicked" onMouseEntered="#statisticsImageViewOnMouseEntered" onMouseExited="#statisticsImageViewOnMouseExited" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/statIcon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
                </children>
             </AnchorPane>
          </children>

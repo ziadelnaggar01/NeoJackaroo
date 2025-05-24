@@ -127,6 +127,11 @@ public class SceneConfig {
 		endScreenController.updateWinner(winner,userColour);
 	}
 	
+	public void setStatistics(int time, int discards, int traps, int turns)
+	{
+		endScreenController.updateStatistics(time,discards,traps,turns);
+	}
+	
 	public Controller getEndScreenController(){
 		return endScreenController;
 	}
