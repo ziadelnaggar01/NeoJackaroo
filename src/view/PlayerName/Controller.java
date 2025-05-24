@@ -5,7 +5,9 @@ import controller.GenericController;
 import controller.MusicManager;
 import controller.SceneConfig;
 import controller.SoundManager;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class Controller {
 
@@ -36,9 +39,10 @@ public class Controller {
 	@FXML
 	private void switchSceneToGame(MouseEvent event) throws Exception {
 		SoundManager.getInstance().playSound("button_click");
-		if (nameTextField.getText().trim().isEmpty())
+		if (nameTextField.getText().trim().isEmpty()) {
 			popUpLabel.setText("Please enter a name!");
-		else {
+			shakeNode(popUpLabel);
+		} else {
 			Parent root = SceneConfig.getInstance().getGameScene();
 			SceneConfig.getInstance().setPlayerName(nameTextField.getText().trim());
 			GenericController.switchScene(event, root);
@@ -50,20 +54,28 @@ public class Controller {
 	private void keyboardSwitchSceneToGame(KeyEvent event) throws Exception {
 		SoundManager.getInstance().playSound("button_click");
 		if (event.getCode() == KeyCode.ENTER) {
-			if (nameTextField.getText().trim().isEmpty())
+			if (nameTextField.getText().trim().isEmpty()) {
 				popUpLabel.setText("Please enter a name!");
-			else {
+				shakeNode(popUpLabel);
+			} else {
 				Parent root = SceneConfig.getInstance().getGameScene();
-				SceneConfig.getInstance()
-						.setPlayerName(nameTextField.getText().trim());
+				SceneConfig.getInstance().setPlayerName(nameTextField.getText().trim());
 				GenericController.switchScene(event, root);
-				MusicManager.getInstance().playMusic(
-						"/view/assets/audio/Vibe.mp3");
+				MusicManager.getInstance().playMusic("/view/assets/audio/Vibe.mp3");
 			}
 		}
 	}
 
-														// tip
+	// tip
+
+	private void shakeNode(Node node) {
+		TranslateTransition tt = new TranslateTransition(Duration.millis(50), node);
+		tt.setFromX(0);
+		tt.setByX(10);
+		tt.setCycleCount(6);
+		tt.setAutoReverse(true);
+		tt.play();
+	}
 
 	@FXML
 	private void okButtonOnMouseEntered() {
@@ -73,7 +85,7 @@ public class Controller {
 
 	@FXML
 	private void cancelButtonOnMouseEntered() {
-		
+
 		GenericController.buttonGlowON(cancelButton, Color.CYAN);
 	}
 
