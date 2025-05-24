@@ -4,7 +4,9 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
+import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
@@ -33,6 +35,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
@@ -186,6 +189,69 @@ public class BoardController {
 
 	public void updatePlayerHand() {
 		ArrayList<Card> hand = players.get(0).getHand();
+		if (hand.size() == 4) {
+	        Image backImage = new Image(getClass()
+	            .getResourceAsStream("/view/assests/deck/NeonBack2.png"));
+
+	        for (int i = 0; i < 4; i++) {
+				playerHand[i].setVisible(true);
+				playerHand[i].setDisable(false);
+	            final int idx = i;
+	            ImageView slot = playerHand[idx];
+
+	            // 1) reset transforms & make new Z + Y Rotates
+	            slot.getTransforms().clear();
+
+	            // pivot at center of slot
+	            double cx = slot.getFitWidth()  / 2;
+	            double cy = slot.getFitHeight() / 2;
+
+	            Rotate zRotate = new Rotate(90, cx, cy, 0, Rotate.Z_AXIS);
+	            Rotate yRotate = new Rotate(0,  cx, cy, 0, Rotate.Y_AXIS);
+
+	            slot.getTransforms().addAll(zRotate, yRotate);
+
+	            // 2) reset to back image, hidden/off‑scale
+	            slot.setImage(backImage);
+	            slot.setScaleX(0);
+	            slot.setScaleY(0);
+	            slot.setOpacity(0);
+
+	            // 3) deal‑in: scale + fade
+	            ScaleTransition st = new ScaleTransition(Duration.millis(1000), slot);
+	            st.setFromX(0); st.setToX(1);
+	            st.setFromY(0); st.setToY(1);
+
+	            FadeTransition ft = new FadeTransition(Duration.millis(1000), slot);
+	            ft.setFromValue(0); ft.setToValue(1);
+
+	            ParallelTransition dealIn = new ParallelTransition(st, ft);
+	            dealIn.setDelay(Duration.millis(idx * 100));
+
+	            // 4) pause before flip
+	            PauseTransition pause = new PauseTransition(Duration.millis(200 + idx * 50));
+
+	            // 5) first half flip: yRotate.angle 0→90
+	            Timeline flipOut = new Timeline(
+	                new KeyFrame(Duration.ZERO,           new KeyValue(yRotate.angleProperty(), 0,   Interpolator.EASE_IN)),
+	                new KeyFrame(Duration.millis(500),    new KeyValue(yRotate.angleProperty(), 90,  Interpolator.EASE_IN))
+	            );
+	            flipOut.setOnFinished(e -> slot.setImage(getCardImage(hand.get(idx))));
+
+	            // 6) second half flip: 90→0
+	            Timeline flipIn = new Timeline(
+	                new KeyFrame(Duration.ZERO,           new KeyValue(yRotate.angleProperty(), 90,  Interpolator.EASE_OUT)),
+	                new KeyFrame(Duration.millis(500),    new KeyValue(yRotate.angleProperty(), 0,   Interpolator.EASE_OUT))
+	            );
+
+	            SequentialTransition flip = new SequentialTransition(pause, flipOut, flipIn);
+	            flip.setDelay(Duration.millis(idx * 100 + 300));
+
+	            // 7) play deal‑in then flip
+	            new SequentialTransition(dealIn, flip).play();
+	        }
+	        return;
+	    }
 		int i = 0;
 		for (; i < hand.size(); i++) {
 			Card curCard = hand.get(i);
