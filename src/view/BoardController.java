@@ -187,71 +187,82 @@ public class BoardController {
 		}
 	}
 
+	private boolean newHand = true;
+
 	public void updatePlayerHand() {
 		ArrayList<Card> hand = players.get(0).getHand();
 		if (hand.size() == 4) {
-	        Image backImage = new Image(getClass()
-	            .getResourceAsStream("/view/assests/deck/NeonBack2.png"));
+			if (!newHand)
+				return;
+			newHand = false;
+			Image backImage = new Image(getClass().getResourceAsStream("/view/assests/deck/NeonBack2.png"));
 
-	        for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 4; i++) {
 				playerHand[i].setVisible(true);
 				playerHand[i].setDisable(false);
-	            final int idx = i;
-	            ImageView slot = playerHand[idx];
+				final int idx = i;
+				ImageView slot = playerHand[idx];
 
-	            // 1) reset transforms & make new Z + Y Rotates
-	            slot.getTransforms().clear();
+				// 1) reset transforms & make new Z + Y Rotates
+				slot.getTransforms().clear();
 
-	            // pivot at center of slot
-	            double cx = slot.getFitWidth()  / 2;
-	            double cy = slot.getFitHeight() / 2;
+				// pivot at center of slot
+				double cx = slot.getFitWidth() / 2;
+				double cy = slot.getFitHeight() / 2;
 
-	            Rotate zRotate = new Rotate(90, cx, cy, 0, Rotate.Z_AXIS);
-	            Rotate yRotate = new Rotate(0,  cx, cy, 0, Rotate.Y_AXIS);
+				Rotate zRotate = new Rotate(90, cx, cy, 0, Rotate.Z_AXIS);
+				Rotate yRotate = new Rotate(0, cx, cy, 0, Rotate.Y_AXIS);
 
-	            slot.getTransforms().addAll(zRotate, yRotate);
+				slot.getTransforms().addAll(zRotate, yRotate);
 
-	            // 2) reset to back image, hidden/off‑scale
-	            slot.setImage(backImage);
-	            slot.setScaleX(0);
-	            slot.setScaleY(0);
-	            slot.setOpacity(0);
+				// 2) reset to back image, hidden/off‑scale
+				slot.setImage(backImage);
+				slot.setScaleX(0);
+				slot.setScaleY(0);
+				slot.setOpacity(0);
 
-	            // 3) deal‑in: scale + fade
-	            ScaleTransition st = new ScaleTransition(Duration.millis(1000), slot);
-	            st.setFromX(0); st.setToX(1);
-	            st.setFromY(0); st.setToY(1);
+				// 3) deal‑in: scale + fade
+				ScaleTransition st = new ScaleTransition(Duration.millis(1000), slot);
+				st.setFromX(0);
+				st.setToX(1);
+				st.setFromY(0);
+				st.setToY(1);
 
-	            FadeTransition ft = new FadeTransition(Duration.millis(1000), slot);
-	            ft.setFromValue(0); ft.setToValue(1);
+				FadeTransition ft = new FadeTransition(Duration.millis(1000), slot);
+				ft.setFromValue(0);
+				ft.setToValue(1);
 
-	            ParallelTransition dealIn = new ParallelTransition(st, ft);
-	            dealIn.setDelay(Duration.millis(idx * 100));
+				ParallelTransition dealIn = new ParallelTransition(st, ft);
+				dealIn.setDelay(Duration.millis(idx * 100));
 
-	            // 4) pause before flip
-	            PauseTransition pause = new PauseTransition(Duration.millis(200 + idx * 50));
+				// 4) pause before flip
+				PauseTransition pause = new PauseTransition(Duration.millis(200 + idx * 50));
 
-	            // 5) first half flip: yRotate.angle 0→90
-	            Timeline flipOut = new Timeline(
-	                new KeyFrame(Duration.ZERO,           new KeyValue(yRotate.angleProperty(), 0,   Interpolator.EASE_IN)),
-	                new KeyFrame(Duration.millis(500),    new KeyValue(yRotate.angleProperty(), 90,  Interpolator.EASE_IN))
-	            );
-	            flipOut.setOnFinished(e -> slot.setImage(getCardImage(hand.get(idx))));
+				// 5) first half flip: yRotate.angle 0→90
+				Timeline flipOut = new Timeline(
+						new KeyFrame(Duration.ZERO, new KeyValue(yRotate.angleProperty(), 0, Interpolator.EASE_IN)),
+						new KeyFrame(Duration.millis(500),
+								new KeyValue(yRotate.angleProperty(), 90, Interpolator.EASE_IN)));
+				flipOut.setOnFinished(e -> slot.setImage(getCardImage(hand.get(idx))));
 
-	            // 6) second half flip: 90→0
-	            Timeline flipIn = new Timeline(
-	                new KeyFrame(Duration.ZERO,           new KeyValue(yRotate.angleProperty(), 90,  Interpolator.EASE_OUT)),
-	                new KeyFrame(Duration.millis(500),    new KeyValue(yRotate.angleProperty(), 0,   Interpolator.EASE_OUT))
-	            );
+				// 6) second half flip: 90→0
+				Timeline flipIn = new Timeline(
+						new KeyFrame(Duration.ZERO, new KeyValue(yRotate.angleProperty(), 90, Interpolator.EASE_OUT)),
+						new KeyFrame(Duration.millis(500),
+								new KeyValue(yRotate.angleProperty(), 0, Interpolator.EASE_OUT)));
 
-	            SequentialTransition flip = new SequentialTransition(pause, flipOut, flipIn);
-	            flip.setDelay(Duration.millis(idx * 100 + 300));
+				SequentialTransition flip = new SequentialTransition(pause, flipOut, flipIn);
+				flip.setDelay(Duration.millis(idx * 100 + 300));
 
-	            // 7) play deal‑in then flip
-	            new SequentialTransition(dealIn, flip).play();
-	        }
-	        return;
-	    }
+				// 7) play deal‑in then flip
+				new SequentialTransition(dealIn, flip).play();
+			}
+			return;
+		}
+		else
+		{
+			newHand=true;
+		}
 		int i = 0;
 		for (; i < hand.size(); i++) {
 			Card curCard = hand.get(i);
@@ -367,23 +378,20 @@ public class BoardController {
 			}
 		}
 	}
-	
-	private void disablePlayerButtons()
-	{
+
+	private void disablePlayerButtons() {
 		skipTurnButton.setDisable(true);
 		skipTurnButton.setOpacity(0.5);
 		playButton.setDisable(true);
 		playButton.setOpacity(0.5);
 	}
-	
-	public void enablePlayerButtons()
-	{
+
+	public void enablePlayerButtons() {
 		skipTurnButton.setDisable(false);
 		skipTurnButton.setOpacity(1);
 		playButton.setDisable(false);
 		playButton.setOpacity(1);
 	}
-
 
 	private void continueGameLoop() {
 		setCurrentPlayerLabel();
@@ -429,11 +437,10 @@ public class BoardController {
 
 		if (!game.canPlayTurn()) {
 			System.out.println(currentPlayerIndex + " cannot play. Skipping turn.");
-			if(currentPlayerIndex==0)
-			{
+			if (currentPlayerIndex == 0) {
 				disablePlayerButtons();
 			}
-			
+
 			// get grid Pane and stack Pane to be shown
 			GridPane skippedPlayerGridPane;
 			AnchorPane skippedPlayerStackPane;
@@ -637,7 +644,7 @@ public class BoardController {
 			deselectAllMarbles(); // deselect animation
 			Platform.runLater(this::continueGameLoop);
 		}
-		
+
 		disablePlayerButtons();
 	}
 
