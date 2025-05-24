@@ -112,6 +112,7 @@ public class Controller {
 	            });
 
 	            flash.play();
+	            MusicManager.getInstance().setVolume(0.75);
 	        } catch (Exception ex) {
 	            ex.printStackTrace();
 	        }
