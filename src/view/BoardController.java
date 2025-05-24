@@ -178,39 +178,37 @@ public class BoardController {
 
 	public void updateCpuHand() {
 		List<Player> players = game.getPlayers();
+		int handSize = players.get(0).getHand().size();
+		if(handSize==4 && newHand)
+		{
+	        for (int i = 0; i < 3; i++) {
+	            for (int j = 0; j < 4; j++) {
+	                ImageView slot = cpuCards[i][j];
+	                slot.setVisible(true);
+
+	                // start hidden/off‑scale
+	                slot.setScaleX(0);
+	                slot.setScaleY(0);
+	                slot.setOpacity(0);
+
+	                ScaleTransition st = new ScaleTransition(Duration.millis(1000), slot);
+	                st.setFromX(0); st.setToX(1);
+	                st.setFromY(0); st.setToY(1);
+
+	                FadeTransition ft = new FadeTransition(Duration.millis(1000), slot);
+	                ft.setFromValue(0); ft.setToValue(1);
+
+	                // no delay → truly simultaneous
+	                new ParallelTransition(st, ft).play();
+	            }
+	        }
+	        return;
+		}
 		for (int i = 1; i <= 3; i++) {
 			Player cpu = players.get(i);
-			int handSize = cpu.getHand().size();
-
+			handSize = cpu.getHand().size();
 			for (int j = 0; j < 4; j++) {
-				ImageView cardSlot = cpuCards[i - 1][j];
-				if (j < handSize) {
-					cardSlot.setVisible(true);
-
-					if (handSize == 4 && newHand) {
-						// start hidden
-						cardSlot.setScaleX(0);
-						cardSlot.setScaleY(0);
-						cardSlot.setOpacity(0);
-
-						// scale
-						ScaleTransition st = new ScaleTransition(Duration.millis(1000), cardSlot);
-						st.setFromX(0);
-						st.setToX(1);
-						st.setFromY(0);
-						st.setToY(1);
-
-						// fade
-						FadeTransition ft = new FadeTransition(Duration.millis(1000), cardSlot);
-						ft.setFromValue(0);
-						ft.setToValue(1);
-
-						// no delay → all cards animate together
-						new ParallelTransition(st, ft).play();
-					}
-				} else {
-					cardSlot.setVisible(false);
-				}
+				cpuCards[i - 1][j].setVisible(j < handSize);
 			}
 		}
 	}
