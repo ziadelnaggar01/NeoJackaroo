@@ -13,7 +13,7 @@ import exception.*;
 public interface BoardManager {
 	int getSplitDistance();
 
-	ArrayList<Cell> moveBy(Marble marble, int steps, boolean destroy) throws IllegalMovementException, IllegalDestroyException;
+	void moveBy(Marble marble, int steps, boolean destroy) throws IllegalMovementException, IllegalDestroyException;
 
 	void swap(Marble marble, Marble marble2) throws IllegalSwapException;
 
@@ -22,6 +22,6 @@ public interface BoardManager {
 	void sendToBase(Marble marble) throws CannotFieldException, IllegalDestroyException;
 
 	void sendToSafe(Marble marble) throws InvalidMarbleException;
-	public ArrayList<Cell> validateSteps(Marble marble, int steps) throws IllegalMovementException;
+
 	ArrayList<Marble> getActionableMarbles();
 }

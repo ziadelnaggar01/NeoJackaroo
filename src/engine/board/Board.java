@@ -176,7 +176,7 @@ public class Board implements BoardManager {
 	 *                                  </ul>
 	 */
 
-	public ArrayList<Cell> validateSteps(Marble marble, int steps) throws IllegalMovementException {
+	private ArrayList<Cell> validateSteps(Marble marble, int steps) throws IllegalMovementException {
 
 		// An alternative way to simplify the method is implementing a record in
 		// track
@@ -344,7 +344,7 @@ public class Board implements BoardManager {
 	 *                                  or land on a Safe Zone.
 	 */
 
-	public void validatePath(Marble marble, ArrayList<Cell> fullPath, boolean destroy)
+	private void validatePath(Marble marble, ArrayList<Cell> fullPath, boolean destroy)
 			throws IllegalMovementException {
 		Colour ownerColour = gameManager.getActivePlayerColour();
 
@@ -404,7 +404,7 @@ public class Board implements BoardManager {
 	 *                                 marble when it's not allowed)
 	 */
 
-	public void move(Marble marble, ArrayList<Cell> fullPath, boolean destroy) throws IllegalDestroyException {
+	private void move(Marble marble, ArrayList<Cell> fullPath, boolean destroy) throws IllegalDestroyException {
 		Cell currentCell = fullPath.get(0);
 		Cell targetCell = fullPath.get(fullPath.size() - 1);
 
@@ -446,7 +446,7 @@ public class Board implements BoardManager {
 	 *                              swap is attempted with a marble that is
 	 *                              positioned in its base cell.
 	 */
-	public void validateSwap(Marble marble1, Marble marble2) throws IllegalSwapException {
+	private void validateSwap(Marble marble1, Marble marble2) throws IllegalSwapException {
 		// No need to validate illegal colors since it is handled in the Player
 		// class.
 
@@ -569,18 +569,17 @@ public class Board implements BoardManager {
 	 *                                  movement is invalid.
 	 */
 	@Override
-	public ArrayList<Cell>  moveBy(Marble marble, int steps, boolean destroy)
+	public void moveBy(Marble marble, int steps, boolean destroy)
 			throws IllegalMovementException, IllegalDestroyException {
 		// Validate the steps and get the full path if valid
 		ArrayList<Cell> fullPath = validateSteps(marble, steps);
+
 		// Validate the path taken
 		validatePath(marble, fullPath, destroy);
+
 		// Perform the actual movement
 		move(marble, fullPath, destroy);
-		return fullPath;
 	}
-	
-	
 
 	/**
 	 * Swaps the positions of two marbles on the track.

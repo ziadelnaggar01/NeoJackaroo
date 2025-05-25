@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import engine.GameManager;
 import engine.board.BoardManager;
-import engine.board.Cell;
 import exception.ActionException;
 import exception.InvalidMarbleException;
 import model.player.Marble;
