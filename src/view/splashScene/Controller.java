@@ -93,7 +93,7 @@ public class Controller {
 
 	                // 3. Start background music with fade-in
 	                MusicManager.getInstance().playMusic("/view/assets/audio/Digital Voyage - Twin Musicom.mp3");
-	                MusicManager.getInstance().setVolume(0); // start silent
+	                MusicManager.getInstance().getMediaPlayer().setVolume(0); // start silent
 
 	                Timeline volumeUp = new Timeline(
 	                    new KeyFrame(Duration.seconds(0.5), new KeyValue(MusicManager.getInstance().getMediaPlayer().volumeProperty(), 0.75))
@@ -112,7 +112,6 @@ public class Controller {
 	            });
 
 	            flash.play();
-	            MusicManager.getInstance().setVolume(0.75);
 	        } catch (Exception ex) {
 	            ex.printStackTrace();
 	        }
