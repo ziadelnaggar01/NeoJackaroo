@@ -3,6 +3,7 @@ package view.endScreen;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -148,6 +149,9 @@ public class Controller {
 	}
 
 	public void updateWinner(Colour winner, Colour userColour) {
+
+		//winner = Colour.RED;
+
 		String winnerColor = " Player Won!!";
 		switch (winner) {
 		case RED:
@@ -223,9 +227,11 @@ public class Controller {
 	private int discards;
 	private int traps;
 	private int turns;
-	
-	@FXML private AnchorPane statisticsAnchorPane;
-	@FXML private ImageView statisticsImageView;
+
+	@FXML
+	private AnchorPane statisticsAnchorPane;
+	@FXML
+	private ImageView statisticsImageView;
 
 	public void updateStatistics(int time, int discards, int traps, int turns) {
 		this.time = time;
@@ -236,7 +242,8 @@ public class Controller {
 
 	@FXML
 	private void statisticsImageViewOnMouseEntered() {
-		backButton.setOnMouseEntered(e -> statisticsImageView.setCursor(pointerCursor));
+		backButton.setOnMouseEntered(e -> statisticsImageView
+				.setCursor(pointerCursor));
 		GenericController.buttonGlowON(statisticsImageView, Color.YELLOW);
 	}
 
@@ -250,86 +257,99 @@ public class Controller {
 		SoundManager.getInstance().playSound("button_click");
 		showStatistics();
 	}
-	
+
 	private void showStatistics() {
-	    // === Dim Background Overlay ===
-	    Region dimOverlay = new Region();
-	    dimOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6);");
-	    dimOverlay.setPrefSize(statisticsAnchorPane.getWidth(), statisticsAnchorPane.getHeight());
+		// === Dim Background Overlay ===
+		Region dimOverlay = new Region();
+		dimOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6);");
+		dimOverlay.setPrefSize(statisticsAnchorPane.getWidth(),
+				statisticsAnchorPane.getHeight());
 
-	    // === Neon Popup ===
-	    VBox popup = new VBox(20);
-	    popup.setPadding(new Insets(30));
-	    popup.setAlignment(Pos.TOP_CENTER);
-	    popup.setStyle(
-	        "-fx-background-color: black;" +
-	        "-fx-border-color: #00ffff;" +
-	        "-fx-border-width: 3;" +
-	        "-fx-effect: dropshadow(gaussian, #00ffff, 30, 0.7, 0, 0);" +
-	        "-fx-background-radius: 12;" +
-	        "-fx-border-radius: 12;"
-	    );
+		// === Neon Popup ===
+		VBox popup = new VBox(20);
+		popup.setPadding(new Insets(30));
+		popup.setAlignment(Pos.TOP_CENTER);
+		popup.setStyle("-fx-background-color: black;"
+				+ "-fx-border-color: #00ffff;" + "-fx-border-width: 3;"
+				+ "-fx-effect: dropshadow(gaussian, #00ffff, 30, 0.7, 0, 0);"
+				+ "-fx-background-radius: 12;" + "-fx-border-radius: 12;");
 
-	    // === Title ===
-	    Label title = new Label("Game Review");
-	    title.setStyle(
-	        "-fx-text-fill: #00ffff;" +
-	        "-fx-font-size: 28px;" +
-	        "-fx-font-weight: bold;"
-	    );
+		// === Title ===
+		Label title = new Label("Game Review");
+		title.setStyle("-fx-text-fill: #00ffff;" + "-fx-font-size: 28px;"
+				+ "-fx-font-weight: bold;");
 
-	    // === Stat rows ===
-	    VBox statsBox = new VBox(15);
-	    statsBox.setAlignment(Pos.CENTER_LEFT);
-	    statsBox.getChildren().addAll(
-	        createStatRow("/view/assets/timeIcon.png", "Time Elapsed: " + time + "s"),
-	        createStatRow("/view/assets/discardIcon.png", "Discards: " + discards),
-	        createStatRow("/view/assets/trapIcon.png", "Traps Hit: " + traps),
-	        createStatRow("/view/assets/turnsIcon.png", "Turns Taken: " + turns)
-	    );
+		// === Stat rows ===
+		VBox statsBox = new VBox(15);
+		statsBox.setAlignment(Pos.CENTER_LEFT);
 
-	    // === OK Button ===
-	    Button okButton = new Button("OK");
-	    okButton.setStyle(
-	        "-fx-text-fill: #00ffff;" +
-	        "-fx-font-size: 16px;" +
-	        "-fx-background-color: transparent;" +
-	        "-fx-border-color: #00ffff;" +
-	        "-fx-border-radius: 6;" +
-	        "-fx-border-width: 2;" +
-	        "-fx-cursor: hand;" +
-	        "-fx-padding: 6 20 6 20;"
-	    );
-	    okButton.setOnAction(e -> statisticsAnchorPane.getChildren().removeAll(dimOverlay, popup));
+		List<HBox> rows = Arrays.asList(
+				createStatRow("/view/assets/timeIcon.png", "Time Elapsed: "
+						+ time + "s"),
+				createStatRow("/view/assets/discardIcon.png", "Discards: "
+						+ discards),
+				createStatRow("/view/assets/trapIcon.png", "Traps Hit: "
+						+ traps),
+				createStatRow("/view/assets/turnsIcon.png", "Turns Taken: "
+						+ turns));
 
-	    // === Add all to popup ===
-	    popup.getChildren().addAll(title, statsBox, okButton);
+		statsBox.getChildren().addAll(rows);
 
-	    // === Center Popup ===
-	    popup.setLayoutX((statisticsAnchorPane.getWidth() - 400) / 2);
-	    popup.setLayoutY((statisticsAnchorPane.getHeight() - 350) / 2);
-	    popup.setPrefWidth(400);
-	    popup.setPrefHeight(350);
+		// Initially make rows transparent
+		for (HBox row : rows) {
+			row.setOpacity(0);
+		}
 
-	    // === Dismiss on overlay click ===
-	    dimOverlay.setOnMouseClicked(e -> statisticsAnchorPane.getChildren().removeAll(dimOverlay, popup));
+		// === OK Button ===
+		Button okButton = new Button("OK");
+		okButton.setStyle("-fx-text-fill: #00ffff;" + "-fx-font-size: 16px;"
+				+ "-fx-background-color: transparent;"
+				+ "-fx-border-color: #00ffff;" + "-fx-border-radius: 6;"
+				+ "-fx-border-width: 2;" + "-fx-cursor: hand;"
+				+ "-fx-padding: 6 20 6 20;");
+		okButton.setOnAction(e -> statisticsAnchorPane.getChildren().removeAll(
+				dimOverlay, popup));
 
-	    // === Add to AnchorPane ===
-	    statisticsAnchorPane.getChildren().addAll(dimOverlay, popup);
+		// === Add all to popup ===
+		popup.getChildren().addAll(title, statsBox, okButton);
+
+		// === Center Popup ===
+		popup.setLayoutX((statisticsAnchorPane.getWidth() - 400) / 2);
+		popup.setLayoutY((statisticsAnchorPane.getHeight() - 350) / 2);
+		popup.setPrefWidth(400);
+		popup.setPrefHeight(350);
+
+		// === Dismiss on overlay click ===
+		dimOverlay.setOnMouseClicked(e -> statisticsAnchorPane.getChildren()
+				.removeAll(dimOverlay, popup));
+
+		// === Add to AnchorPane ===
+		statisticsAnchorPane.getChildren().addAll(dimOverlay, popup);
+
+		// === Animate rows with fade-in ===
+		Duration baseDelay = Duration.millis(300);
+		for (int i = 0; i < rows.size(); i++) {
+			HBox row = rows.get(i);
+			FadeTransition ft = new FadeTransition(Duration.millis(500), row);
+			ft.setFromValue(0);
+			ft.setToValue(1);
+			ft.setDelay(baseDelay.multiply(i));
+			ft.play();
+		}
 	}
 
 	private HBox createStatRow(String iconPath, String text) {
-	    ImageView icon = new ImageView(new Image(getClass().getResourceAsStream(iconPath)));
-	    icon.setFitHeight(36);
-	    icon.setFitWidth(36);
+		ImageView icon = new ImageView(new Image(getClass()
+				.getResourceAsStream(iconPath)));
+		icon.setFitHeight(36);
+		icon.setFitWidth(36);
 
-	    Label label = new Label(text);
-	    label.setStyle("-fx-text-fill: #00ffff; -fx-font-size: 18px;");
+		Label label = new Label(text);
+		label.setStyle("-fx-text-fill: #00ffff; -fx-font-size: 18px;");
 
-	    HBox row = new HBox(15, icon, label);
-	    row.setAlignment(Pos.CENTER_LEFT);
-	    return row;
+		HBox row = new HBox(15, icon, label);
+		row.setAlignment(Pos.CENTER_LEFT);
+		return row;
 	}
-
 
 }
