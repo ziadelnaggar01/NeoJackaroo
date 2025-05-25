@@ -51,6 +51,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import view.endScreen.Controller;
@@ -212,6 +213,75 @@ public class BoardController {
 			}
 		}
 	}
+	
+	@FXML private Pane pitPane;
+	
+	private static final int MAX_PIT_CARDS = 102;  
+	private final Random rnd = new Random();
+	
+	/**
+	 * Clone the given card ImageView and animate it into the pit.
+	 * @param sourceSlot the ImageView in the player's hand
+	 */
+	private void sendToPit(ImageView sourceSlot) {
+	    // 1) Create the “ghost” card
+	    ImageView ghost = new ImageView(sourceSlot.getImage());
+	    ghost.setFitWidth(sourceSlot.getFitWidth());
+	    ghost.setFitHeight(sourceSlot.getFitHeight());
+	    ghost.setPreserveRatio(true);
+
+	    // 2) Copy any transforms (e.g. your Z/Y rotates):
+	    ghost.getTransforms().setAll(sourceSlot.getTransforms());
+
+	    // 3) Position it exactly over the source slot:
+	    Point2D start = sourceSlot.localToScene(0, 0);
+	    Point2D pitLocal = pitPane.sceneToLocal(start);
+	    ghost.setLayoutX(pitLocal.getX());
+	    ghost.setLayoutY(pitLocal.getY());
+
+	    // 4) Add to pitPane:
+	    pitPane.getChildren().add(ghost);
+
+	    // 5) Random final rotation & offset:
+	    double finalRotate = (rnd.nextDouble() * 20) - 90; // –30°…+30°
+//	    double offsX = (rnd.nextDouble() * 40) - 35;       // –10px…+10px
+//	    double offsY = (rnd.nextDouble() * 40) - 35;       // –10px…+10px
+	    double offsX = 0;       // –10px…+10px
+	    double offsY = 0;       // –10px…+10px
+	    // 6) Compute translation to center of pitPane + offset
+	    Bounds pitBounds = pitPane.getLayoutBounds();
+	    double targetX = (pitBounds.getWidth() / 2)-(sourceSlot.getFitWidth()/2)  + offsX;
+	    double targetY = (pitBounds.getHeight() / 2)-(sourceSlot.getFitHeight()/2) + offsY;
+
+	    // 7) Build the move + rotate + fade (optional) animation
+	    TranslateTransition tt = new TranslateTransition(Duration.millis(800), ghost);
+	    tt.setToX(targetX - pitLocal.getX());
+	    tt.setToY(targetY - pitLocal.getY());
+	    tt.setInterpolator(Interpolator.EASE_IN);
+
+	    RotateTransition rt = new RotateTransition(Duration.millis(800), ghost);
+	    rt.setByAngle(finalRotate);
+	    rt.setInterpolator(Interpolator.EASE_IN);
+
+//	    FadeTransition ft = new FadeTransition(Duration.millis(800), ghost);
+//	    ft.setFromValue(1);
+//	    ft.setToValue(0.8);
+//	    ParallelTransition toss = new ParallelTransition(tt, rt, ft);
+
+	    ParallelTransition toss = new ParallelTransition(tt, rt);
+	    toss.setOnFinished(e -> cleanupPitIfNeeded());
+	    toss.play();
+	}
+
+	/** Remove oldest ghosts if we’ve exceeded MAX_PIT_CARDS */
+	private void cleanupPitIfNeeded() {
+	    if (pitPane.getChildren().size() > MAX_PIT_CARDS) {
+	        // Remove the first N to bring us back under limit
+	        int toRemove = pitPane.getChildren().size() - MAX_PIT_CARDS;
+	        pitPane.getChildren().subList(0, toRemove).clear();
+	    }
+	}
+	
 
 	private boolean newHand = true;
 
@@ -287,6 +357,8 @@ public class BoardController {
 		} else {
 			newHand = true;
 		}
+		if(game.getActivePlayerColour()==players.get(1).getColour()&&selectedCardImageView!=null)
+			sendToPit(selectedCardImageView);
 		int i = 0;
 		for (; i < hand.size(); i++) {
 			Card curCard = hand.get(i);
@@ -298,6 +370,7 @@ public class BoardController {
 		for (; i < 4; i++) {
 			playerHand[i].setVisible(false);
 			playerHand[i].setDisable(true);
+			
 		}
 		deselectAllCards(playerHand);
 	}
@@ -650,7 +723,7 @@ public class BoardController {
 
 			game.playPlayerTurn();
 			Change_Track(); // Animate human move
-			sendToPit(selectedCardImageView); // Optional visual logic
+			// sendToPit(selectedCardImageView); // Optional visual logic
 			game.endPlayerTurn();
 			PauseTransition delay = new PauseTransition(Duration.seconds(2));
 			delay.setOnFinished(event -> {
@@ -816,12 +889,14 @@ public class BoardController {
 		}
 		return -1;
 	}
-
+	
+	@FXML
+	private ImageView firepitImage;
 	private void updatePit() {
-		if (game.getFirePit().isEmpty())
-			return;
-		ArrayList<Card> firePit = game.getFirePit();
-		firepitImage.setImage(getCardImage(firePit.get(firePit.size() - 1)));
+//		if (game.getFirePit().isEmpty())
+//			return;
+//		ArrayList<Card> firePit = game.getFirePit();
+//		firepitImage.setImage(getCardImage(firePit.get(firePit.size() - 1)));
 	}
 
 	private void setSafeZones() {
@@ -1139,64 +1214,6 @@ public class BoardController {
 			selectedCardID = null;
 			selectedCardImageView = null;
 		}
-	}
-
-	/**
-	 * Animate moving a card from the player's hand to the firepit.
-	 *
-	 * @param cardView The ImageView in the player's hand that was clicked.
-	 */
-	@FXML
-	private Pane animationLayer;
-	@FXML
-	private ImageView firepitImage;
-
-	public void sendToPit(ImageView cardView) {
-		// 1) Clone & size to match the original
-		ImageView animCard = new ImageView(cardView.getImage());
-		double cardW = cardView.getBoundsInParent().getWidth();
-		double cardH = cardView.getBoundsInParent().getHeight();
-		animCard.setFitWidth(cardW);
-		animCard.setFitHeight(cardH);
-		animCard.setPreserveRatio(true);
-		// Copy rotation so the clone looks the same
-		animCard.setRotate(cardView.getRotate());
-
-		// 2) Compute the source center in animationLayer coordinates
-		Bounds localSrcBounds = cardView.getBoundsInLocal();
-		double srcCenterX = localSrcBounds.getMinX() + localSrcBounds.getWidth() / 2;
-		double srcCenterY = localSrcBounds.getMinY() + localSrcBounds.getHeight() / 2;
-		// Map that center to scene, then to layer
-		Point2D sceneSrcCenter = cardView.localToScene(srcCenterX, srcCenterY);
-		Point2D start = animationLayer.sceneToLocal(sceneSrcCenter);
-		// Position the clone so its center is at `start`
-		animCard.setLayoutX(start.getX() - cardW / 2);
-		animCard.setLayoutY(start.getY() - cardH / 2);
-
-		// 3) Hide & disable original
-		cardView.setVisible(false);
-		cardView.setDisable(true);
-
-		// 4) Add clone to the overlay
-		animationLayer.getChildren().add(animCard);
-
-		// 5) Compute the target (firepit) center same way
-		Bounds pitLocal = firepitImage.getBoundsInLocal();
-		double pitCenterX = pitLocal.getMinX() + pitLocal.getWidth() / 2;
-		double pitCenterY = pitLocal.getMinY() + pitLocal.getHeight() / 2;
-		Point2D scenePitCenter = firepitImage.localToScene(pitCenterX, pitCenterY);
-		Point2D target = animationLayer.sceneToLocal(scenePitCenter);
-
-		// 6) Calculate how far to move (so the clone’s center ends at `target`)
-		double toX = target.getX() - start.getX();
-		double toY = target.getY() - start.getY();
-
-		// 7) Animate
-		TranslateTransition tt = new TranslateTransition(Duration.millis(400), animCard);
-		tt.setByX(toX);
-		tt.setByY(toY);
-		tt.setInterpolator(Interpolator.EASE_IN);
-		tt.play();
 	}
 
 	// -----------------------------------------------------------------
