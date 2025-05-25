@@ -51,6 +51,8 @@ public class Controller {
 		        SoundManager.getInstance().preloadSound("Card_Selection", "/view/assets/audio/Card Selection.mp3");
 		        SoundManager.getInstance().preloadSound("errorSoundEffect", "/view/assests/sound/errorSoundEffect.mp3");
 		        SoundManager.getInstance().preloadSound("skipTurnSound", "/view/assests/sound/skipTurnSound.mp3");
+		        SoundManager.getInstance().preloadSound("playCardSoundEffect", "/view/assests/sound/playCardSoundEffect.mp3");
+
 		        return null;
 		    }
 		};
