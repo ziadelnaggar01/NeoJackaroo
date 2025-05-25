@@ -1691,6 +1691,18 @@ public class BoardController {
 
 	public void visualizeTrap(Cell targetCell) {
 		// Animate the cell to change and then go back
+		ArrayList<Cell> track = game.getBoard().getTrack();
+		int pos = -1;
+		for (int i = 0; i < track.size(); i++) {
+			if (targetCell == track.get(i)) {
+				pos = i;
+				return;
+			}
+		}
+		// Get FXID of cell 
+		
+		// Animate cell 
+		
 
 		// Play Trap sound effect
 		SoundManager.getInstance().playSound("trapSoundEffect");
