@@ -2,7 +2,6 @@ package controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
 import model.Colour;
 import view.BoardController;
 import view.endScreen.Controller;
@@ -178,10 +177,6 @@ public class SceneConfig {
 
 	public view.exception.Controller getExceptionController() {
 		return exceptionController;
-	}
-
-	public void discardCard(ImageView selectedCard){
-		gameController.sendToPit(selectedCard);
 	}
 	
 	public void enablePlayerButtons(){

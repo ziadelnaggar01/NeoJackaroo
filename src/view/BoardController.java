@@ -4,7 +4,9 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
+import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
@@ -33,6 +35,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
@@ -48,6 +51,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import view.endScreen.Controller;
@@ -171,12 +175,25 @@ public class BoardController {
 		realPlayerColour=players.get(0).getColour();
 		startTimer();
 
-		
-
 		cpuCards = new ImageView[][] {
 				{ playerB1, playerB2, playerB3, playerB4 },
 				{ playerC1, playerC2, playerC3, playerC4 },
 				{ playerD1, playerD2, playerD3, playerD4 } };
+		for (int i = 0; i < 3; i++)
+			for (int j = 0; j < 4; j++) {
+				ImageView slot = cpuCards[i][j];
+
+				// 1) reset transforms & make new Z + Y Rotates
+				slot.getTransforms().clear();
+
+				// pivot at center of slot
+				double cx = slot.getFitWidth() / 2;
+				double cy = slot.getFitHeight() / 2;
+
+				Rotate zRotate = new Rotate(90, cx, cy, 0, Rotate.Z_AXIS);
+
+				slot.getTransforms().addAll(zRotate);
+			}
 
 		playerHand = new ImageView[] { playerCard1, playerCard2, playerCard3,
 				playerCard4 };
@@ -194,17 +211,258 @@ public class BoardController {
 
 	public void updateCpuHand() {
 		List<Player> players = game.getPlayers();
+		int handSize = players.get(0).getHand().size();
+		if (handSize == 4 && newHand) {
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 4; j++) {
+					ImageView slot = cpuCards[i][j];
+					slot.setVisible(true);
+
+					// start hidden/off‑scale
+					slot.setScaleX(0);
+					slot.setScaleY(0);
+					slot.setOpacity(0);
+
+					ScaleTransition st = new ScaleTransition(
+							Duration.millis(1000), slot);
+					st.setFromX(0);
+					st.setToX(1);
+					st.setFromY(0);
+					st.setToY(1);
+
+					FadeTransition ft = new FadeTransition(
+							Duration.millis(1000), slot);
+					ft.setFromValue(0);
+					ft.setToValue(1);
+
+					// no delay → truly simultaneous
+					new ParallelTransition(st, ft).play();
+				}
+			}
+			return;
+		}
 		for (int i = 1; i <= 3; i++) {
 			Player cpu = players.get(i);
-			int handSize = cpu.getHand().size();
+			handSize = cpu.getHand().size();
 			for (int j = 0; j < 4; j++) {
-				cpuCards[i - 1][j].setVisible(j < handSize);
+				ImageView slot = cpuCards[i - 1][j];
+				if (j < handSize) {
+					slot.setVisible(true); // keep it visible
+					slot.setOpacity(1.0);   // in case it was fading out before
+				} else if (slot.isVisible()) {
+					// If currently visible but should be hidden → animate fade-out
+					SoundManager.getInstance().playSound("playCardSoundEffect");
+
+					FadeTransition fadeOut = new FadeTransition(Duration.millis(400), slot);
+					fadeOut.setFromValue(1.0);
+					fadeOut.setToValue(0.0);
+					fadeOut.setOnFinished(e -> slot.setVisible(false));
+					fadeOut.play();
+				}
 			}
 		}
 	}
 
+	@FXML
+	private Pane pitPane;
+
+	private static final int MAX_PIT_CARDS = 102;
+	private final Random rnd = new Random();
+
+	/**
+	 * Clone the given card ImageView and animate it into the pit.
+	 * 
+	 * @param sourceSlot
+	 *            the ImageView in the player's hand
+	 */
+	private void sendToPit(ImageView sourceSlot) {
+		// 1) Create the “ghost” card
+		ImageView ghost = new ImageView(sourceSlot.getImage());
+		ghost.setFitWidth(sourceSlot.getFitWidth());
+		ghost.setFitHeight(sourceSlot.getFitHeight());
+		ghost.setPreserveRatio(true);
+
+		// 2) Copy any transforms (e.g. your Z/Y rotates):
+		ghost.getTransforms().setAll(sourceSlot.getTransforms());
+
+		// 3) Position it exactly over the source slot:
+		Point2D start = sourceSlot.localToScene(0, 0);
+		Point2D pitLocal = pitPane.sceneToLocal(start);
+		ghost.setLayoutX(pitLocal.getX());
+		ghost.setLayoutY(pitLocal.getY());
+
+		// 4) Add to pitPane and bring to front:
+		pitPane.getChildren().add(ghost);
+		ghost.toFront(); // Ensure it's on top of everything else
+
+		// 5) Random final rotation & offset:
+		double finalRotate = (rnd.nextDouble() * 20) - 90; // –90°…–70° roughly
+		double offsX = 0;
+		double offsY = 0;
+
+		// 6) Compute translation to center of pitPane + offset
+		Bounds pitBounds = pitPane.getLayoutBounds();
+		double targetX = (pitBounds.getWidth() / 2) - (sourceSlot.getFitWidth() / 2) + offsX;
+		double targetY = (pitBounds.getHeight() / 2) - (sourceSlot.getFitHeight() / 2) + offsY;
+
+		// 7) Build the move + rotate animation
+		TranslateTransition tt = new TranslateTransition(Duration.millis(800), ghost);
+		tt.setToX(targetX - pitLocal.getX());
+		tt.setToY(targetY - pitLocal.getY());
+		tt.setInterpolator(Interpolator.EASE_IN);
+
+		RotateTransition rt = new RotateTransition(Duration.millis(800), ghost);
+		rt.setByAngle(finalRotate);
+		rt.setInterpolator(Interpolator.EASE_IN);
+
+		ParallelTransition toss = new ParallelTransition(tt, rt);
+		toss.setOnFinished(e -> cleanupPitIfNeeded());
+		toss.play();
+		//Play sound 
+		SoundManager.getInstance().playSound("playCardSoundEffect");
+
+	}
+
+	/** Remove oldest ghosts if we’ve exceeded MAX_PIT_CARDS */
+	private void cleanupPitIfNeeded() {
+		if (pitPane.getChildren().size() > MAX_PIT_CARDS) {
+			// Remove the first N to bring us back under limit
+			int toRemove = pitPane.getChildren().size() - MAX_PIT_CARDS;
+			pitPane.getChildren().subList(0, toRemove).clear();
+		}
+	}
+	
+	@FXML
+	private ImageView firepitImage;
+
+	private void updatePit() {
+		if (game.getFirePit().isEmpty() || currentPlayerIndex == 0)
+			return;
+
+		ArrayList<Card> firePit = game.getFirePit();
+		Image newCardImage = getCardImage(firePit.get(firePit.size() - 1));
+
+		// Create a temporary overlay image
+		ImageView overlay = new ImageView(newCardImage);
+		overlay.setFitWidth(firepitImage.getFitWidth());
+		overlay.setFitHeight(firepitImage.getFitHeight());
+		overlay.setPreserveRatio(true);
+		overlay.setOpacity(0);
+
+		// Position the overlay exactly over the firepitImage
+		overlay.setLayoutX(firepitImage.getLayoutX());
+		overlay.setLayoutY(firepitImage.getLayoutY());
+
+		// Add the overlay on top of the pit
+		pitPane.getChildren().add(overlay);
+
+		// Fade in the new card
+		FadeTransition fadeIn = new FadeTransition(Duration.millis(600), overlay);
+		fadeIn.setFromValue(0);
+		fadeIn.setToValue(1);
+		fadeIn.setInterpolator(Interpolator.EASE_OUT);
+
+		fadeIn.setOnFinished(e -> {
+			// Replace the actual firepitImage and remove the overlay
+			firepitImage.setImage(newCardImage);
+			pitPane.getChildren().remove(overlay);
+
+			// Ensure firepitImage is on top again
+			pitPane.getChildren().remove(firepitImage);
+			pitPane.getChildren().add(firepitImage);
+		});
+
+		fadeIn.play();
+	}
+
+
+	private boolean newHand = true;
+
 	public void updatePlayerHand() {
 		ArrayList<Card> hand = players.get(0).getHand();
+		if (hand.size() == 4) {
+			if (!newHand)
+				return;
+			newHand = false;
+			Image backImage = new Image(getClass().getResourceAsStream(
+					"/view/assests/deck/NeonBack2.png"));
+
+			for (int i = 0; i < 4; i++) {
+				playerHand[i].setVisible(true);
+				playerHand[i].setDisable(false);
+				final int idx = i;
+				ImageView slot = playerHand[idx];
+
+				// 1) reset transforms & make new Z + Y Rotates
+				slot.getTransforms().clear();
+
+				// pivot at center of slot
+				double cx = slot.getFitWidth() / 2;
+				double cy = slot.getFitHeight() / 2;
+
+				Rotate zRotate = new Rotate(90, cx, cy, 0, Rotate.Z_AXIS);
+				Rotate yRotate = new Rotate(0, cx, cy, 0, Rotate.Y_AXIS);
+
+				slot.getTransforms().addAll(zRotate, yRotate);
+
+				// 2) reset to back image, hidden/off‑scale
+				slot.setImage(backImage);
+				slot.setScaleX(0);
+				slot.setScaleY(0);
+				slot.setOpacity(0);
+
+				// 3) deal‑in: scale + fade
+				ScaleTransition st = new ScaleTransition(Duration.millis(1000),
+						slot);
+				st.setFromX(0);
+				st.setToX(1);
+				st.setFromY(0);
+				st.setToY(1);
+
+				FadeTransition ft = new FadeTransition(Duration.millis(1000),
+						slot);
+				ft.setFromValue(0);
+				ft.setToValue(1);
+
+				ParallelTransition dealIn = new ParallelTransition(st, ft);
+				dealIn.setDelay(Duration.millis(idx * 100));
+
+				// 4) pause before flip
+				PauseTransition pause = new PauseTransition(
+						Duration.millis(200 + idx * 50));
+
+				// 5) first half flip: yRotate.angle 0→90
+				Timeline flipOut = new Timeline(new KeyFrame(Duration.ZERO,
+						new KeyValue(yRotate.angleProperty(), 0,
+								Interpolator.EASE_IN)), new KeyFrame(
+						Duration.millis(500), new KeyValue(
+								yRotate.angleProperty(), 90,
+								Interpolator.EASE_IN)));
+				flipOut.setOnFinished(e -> slot.setImage(getCardImage(hand
+						.get(idx))));
+
+				// 6) second half flip: 90→0
+				Timeline flipIn = new Timeline(new KeyFrame(Duration.ZERO,
+						new KeyValue(yRotate.angleProperty(), 90,
+								Interpolator.EASE_OUT)), new KeyFrame(
+						Duration.millis(500), new KeyValue(
+								yRotate.angleProperty(), 0,
+								Interpolator.EASE_OUT)));
+
+				SequentialTransition flip = new SequentialTransition(pause,
+						flipOut, flipIn);
+				flip.setDelay(Duration.millis(idx * 100 + 300));
+
+				// 7) play deal‑in then flip
+				new SequentialTransition(dealIn, flip).play();
+			}
+			return;
+		} else {
+			newHand = true;
+		}
+		if (game.getActivePlayerColour() == players.get(1).getColour()
+				&& selectedCardImageView != null)
+			sendToPit(selectedCardImageView);
 		int i = 0;
 		for (; i < hand.size(); i++) {
 			Card curCard = hand.get(i);
@@ -216,6 +474,7 @@ public class BoardController {
 		for (; i < 4; i++) {
 			playerHand[i].setVisible(false);
 			playerHand[i].setDisable(true);
+
 		}
 		deselectAllCards(playerHand);
 	}
@@ -603,7 +862,7 @@ public class BoardController {
 
 			game.playPlayerTurn();
 			Change_Track(); // Animate human move
-			sendToPit(selectedCardImageView); // Optional visual logic
+			// sendToPit(selectedCardImageView); // Optional visual logic
 			game.endPlayerTurn();
 			PauseTransition delay = new PauseTransition(Duration.seconds(2));
 			delay.setOnFinished(event -> {
@@ -785,12 +1044,7 @@ public class BoardController {
 		return -1;
 	}
 
-	private void updatePit() {
-		if (game.getFirePit().isEmpty())
-			return;
-		ArrayList<Card> firePit = game.getFirePit();
-		firepitImage.setImage(getCardImage(firePit.get(firePit.size() - 1)));
-	}
+	
 
 	private void setSafeZones() {
 		for (Node node : animationPane.getChildren()) {
@@ -1121,69 +1375,6 @@ public class BoardController {
 			selectedCardID = null;
 			selectedCardImageView = null;
 		}
-	}
-
-	/**
-	 * Animate moving a card from the player's hand to the firepit.
-	 *
-	 * @param cardView
-	 *            The ImageView in the player's hand that was clicked.
-	 */
-	@FXML
-	private Pane animationLayer;
-	@FXML
-	private ImageView firepitImage;
-
-	public void sendToPit(ImageView cardView) {
-		// 1) Clone & size to match the original
-		ImageView animCard = new ImageView(cardView.getImage());
-		double cardW = cardView.getBoundsInParent().getWidth();
-		double cardH = cardView.getBoundsInParent().getHeight();
-		animCard.setFitWidth(cardW);
-		animCard.setFitHeight(cardH);
-		animCard.setPreserveRatio(true);
-		// Copy rotation so the clone looks the same
-		animCard.setRotate(cardView.getRotate());
-
-		// 2) Compute the source center in animationLayer coordinates
-		Bounds localSrcBounds = cardView.getBoundsInLocal();
-		double srcCenterX = localSrcBounds.getMinX()
-				+ localSrcBounds.getWidth() / 2;
-		double srcCenterY = localSrcBounds.getMinY()
-				+ localSrcBounds.getHeight() / 2;
-		// Map that center to scene, then to layer
-		Point2D sceneSrcCenter = cardView.localToScene(srcCenterX, srcCenterY);
-		Point2D start = animationLayer.sceneToLocal(sceneSrcCenter);
-		// Position the clone so its center is at `start`
-		animCard.setLayoutX(start.getX() - cardW / 2);
-		animCard.setLayoutY(start.getY() - cardH / 2);
-
-		// 3) Hide & disable original
-		cardView.setVisible(false);
-		cardView.setDisable(true);
-
-		// 4) Add clone to the overlay
-		animationLayer.getChildren().add(animCard);
-
-		// 5) Compute the target (firepit) center same way
-		Bounds pitLocal = firepitImage.getBoundsInLocal();
-		double pitCenterX = pitLocal.getMinX() + pitLocal.getWidth() / 2;
-		double pitCenterY = pitLocal.getMinY() + pitLocal.getHeight() / 2;
-		Point2D scenePitCenter = firepitImage.localToScene(pitCenterX,
-				pitCenterY);
-		Point2D target = animationLayer.sceneToLocal(scenePitCenter);
-
-		// 6) Calculate how far to move (so the clone’s center ends at `target`)
-		double toX = target.getX() - start.getX();
-		double toY = target.getY() - start.getY();
-
-		// 7) Animate
-		TranslateTransition tt = new TranslateTransition(Duration.millis(400),
-				animCard);
-		tt.setByX(toX);
-		tt.setByY(toY);
-		tt.setInterpolator(Interpolator.EASE_IN);
-		tt.play();
 	}
 
 	// -----------------------------------------------------------------
