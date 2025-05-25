@@ -8,6 +8,8 @@ import view.endScreen.Controller;
 
 import java.io.IOException;
 
+import engine.board.Cell;
+
 public class SceneConfig {
 	// Singleton instance
 	private static final SceneConfig INSTANCE = new SceneConfig();
@@ -182,5 +184,10 @@ public class SceneConfig {
 	public void enablePlayerButtons(){
 		gameController.enablePlayerButtons();
 	}
-
+	
+	
+	public void visualiseTrap(Cell targetCell){
+		gameController.visualizeTrap(targetCell);
+	}
+	
 }

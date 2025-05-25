@@ -374,7 +374,7 @@
                      </font>
                   </Label>
                   <Slider fx:id="splitDistanceSlider" layoutX="47.0" layoutY="94.0" majorTickUnit="1.0" max="6.0" min="1.0" minHeight="-Infinity" minorTickCount="0" onMouseClicked="#onSplitDistanceSliderChanged" onMouseDragged="#onSplitDistanceSliderChanged" prefHeight="13.0" prefWidth="221.0" stylesheets="@style.css" value="1.0" />
-                  <Label fx:id="splitDistanceLabel1" layoutX="33.0" layoutY="123.0" prefHeight="38.0" prefWidth="17.0" text="1">
+                  <Label fx:id="splitDistanceLabel1" layoutX="33.0" layoutY="119.0" prefHeight="42.0" prefWidth="35.0" text="1">
                      <font>
                         <Font name="Orbitron Bold" size="30.0" />
                      </font>

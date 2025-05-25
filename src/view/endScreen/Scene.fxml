@@ -30,7 +30,7 @@
                <children>
                   <Label fx:id="winnerName" layoutX="294.0" layoutY="345.0" prefHeight="212.0" prefWidth="1319.0" style="-fx-alignment: center;" text="You Won!!!" textAlignment="CENTER">
                      <font>
-                        <Font name="Orbitron Bold" size="120.0" />
+                        <Font name="Orbitron Bold" size="105.0" />
                      </font>
                      <textFill>
                         <LinearGradient endX="1.0" endY="1.0">

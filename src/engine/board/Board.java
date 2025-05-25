@@ -2,6 +2,7 @@ package engine.board;
 
 import java.util.ArrayList;
 
+import controller.SceneConfig;
 import view.BoardController;
 import engine.GameManager;
 import exception.CannotFieldException;
@@ -426,7 +427,7 @@ public class Board implements BoardManager {
 			destroyMarble(marble);
 			targetCell.setTrap(false);
 			assignTrapCell();
-			
+			SceneConfig.getInstance().visualiseTrap(targetCell);
 			BoardController.incrementTotalTrapsIfPlayer(gameManager.getActivePlayerColour());
 		}
 

@@ -166,13 +166,13 @@ public class BoardController {
 	public void initialize() throws IOException {
 		game = new Game("PlayerName");
 		players = game.getPlayers();
-		
+
 		// set up stats variables
 		totalTurns = 0;
 		totalTraps = 0;
 		totalDiscards = 0;
 		timeElapsedInSeconds = 0;
-		realPlayerColour=players.get(0).getColour();
+		realPlayerColour = players.get(0).getColour();
 		startTimer();
 
 		cpuCards = new ImageView[][] {
@@ -248,12 +248,14 @@ public class BoardController {
 				ImageView slot = cpuCards[i - 1][j];
 				if (j < handSize) {
 					slot.setVisible(true); // keep it visible
-					slot.setOpacity(1.0);   // in case it was fading out before
+					slot.setOpacity(1.0); // in case it was fading out before
 				} else if (slot.isVisible()) {
-					// If currently visible but should be hidden → animate fade-out
+					// If currently visible but should be hidden → animate
+					// fade-out
 					SoundManager.getInstance().playSound("playCardSoundEffect");
 
-					FadeTransition fadeOut = new FadeTransition(Duration.millis(400), slot);
+					FadeTransition fadeOut = new FadeTransition(
+							Duration.millis(400), slot);
 					fadeOut.setFromValue(1.0);
 					fadeOut.setToValue(0.0);
 					fadeOut.setOnFinished(e -> slot.setVisible(false));
@@ -302,11 +304,14 @@ public class BoardController {
 
 		// 6) Compute translation to center of pitPane + offset
 		Bounds pitBounds = pitPane.getLayoutBounds();
-		double targetX = (pitBounds.getWidth() / 2) - (sourceSlot.getFitWidth() / 2) + offsX;
-		double targetY = (pitBounds.getHeight() / 2) - (sourceSlot.getFitHeight() / 2) + offsY;
+		double targetX = (pitBounds.getWidth() / 2)
+				- (sourceSlot.getFitWidth() / 2) + offsX;
+		double targetY = (pitBounds.getHeight() / 2)
+				- (sourceSlot.getFitHeight() / 2) + offsY;
 
 		// 7) Build the move + rotate animation
-		TranslateTransition tt = new TranslateTransition(Duration.millis(800), ghost);
+		TranslateTransition tt = new TranslateTransition(Duration.millis(800),
+				ghost);
 		tt.setToX(targetX - pitLocal.getX());
 		tt.setToY(targetY - pitLocal.getY());
 		tt.setInterpolator(Interpolator.EASE_IN);
@@ -318,7 +323,7 @@ public class BoardController {
 		ParallelTransition toss = new ParallelTransition(tt, rt);
 		toss.setOnFinished(e -> cleanupPitIfNeeded());
 		toss.play();
-		//Play sound 
+		// Play sound
 		SoundManager.getInstance().playSound("playCardSoundEffect");
 
 	}
@@ -331,7 +336,7 @@ public class BoardController {
 			pitPane.getChildren().subList(0, toRemove).clear();
 		}
 	}
-	
+
 	@FXML
 	private ImageView firepitImage;
 
@@ -357,7 +362,8 @@ public class BoardController {
 		pitPane.getChildren().add(overlay);
 
 		// Fade in the new card
-		FadeTransition fadeIn = new FadeTransition(Duration.millis(600), overlay);
+		FadeTransition fadeIn = new FadeTransition(Duration.millis(600),
+				overlay);
 		fadeIn.setFromValue(0);
 		fadeIn.setToValue(1);
 		fadeIn.setInterpolator(Interpolator.EASE_OUT);
@@ -374,7 +380,6 @@ public class BoardController {
 
 		fadeIn.play();
 	}
-
 
 	private boolean newHand = true;
 
@@ -1044,8 +1049,6 @@ public class BoardController {
 		return -1;
 	}
 
-	
-
 	private void setSafeZones() {
 		for (Node node : animationPane.getChildren()) {
 			if (node instanceof Circle && node.getId() != null
@@ -1661,10 +1664,9 @@ public class BoardController {
 	private Timeline timer;
 
 	private static Colour realPlayerColour;
-	
+
 	private void startTimer() {
-		
-		
+
 		timeElapsedInSeconds = 0;
 
 		timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
@@ -1680,11 +1682,63 @@ public class BoardController {
 			timer.stop();
 		}
 	}
-	
-	public static void incrementTotalTrapsIfPlayer(Colour colour){
-		if (colour==realPlayerColour);
-		 totalTraps++;
+
+	public static void incrementTotalTrapsIfPlayer(Colour colour) {
+		if (colour == realPlayerColour)
+			;
+		totalTraps++;
 	}
-	
+
+	public void visualizeTrap(Cell targetCell) {
+		// Animate the cell to change and then go back
+
+		// Play Trap sound effect
+		SoundManager.getInstance().playSound("trapSoundEffect");
+
+		// Create the "TRAPPED" label
+		Label trappedLabel = new Label("TRAPPED");
+		trappedLabel.setStyle("-fx-font-size: 50px;" + "-fx-text-fill: red;"
+				+ "-fx-font-weight: bold;"
+				+ "-fx-effect: dropshadow(gaussian, white, 15, 0.5, 0, 0);");
+
+		// Set initial opacity to 0 for animation
+		trappedLabel.setOpacity(0);
+
+		// Add it to the pane before binding to ensure proper layout
+		pitPane.getChildren().add(trappedLabel);
+
+		// Bind to center of the pane
+		trappedLabel.layoutXProperty().bind(
+				pitPane.widthProperty().subtract(trappedLabel.widthProperty())
+						.divide(2));
+		trappedLabel.layoutYProperty().bind(
+				pitPane.heightProperty()
+						.subtract(trappedLabel.heightProperty()).divide(2));
+
+		// Create fade-in animation
+		FadeTransition fadeIn = new FadeTransition(Duration.millis(300),
+				trappedLabel);
+		fadeIn.setFromValue(0.0);
+		fadeIn.setToValue(1.0);
+
+		// Pause in the middle
+		PauseTransition stay = new PauseTransition(Duration.seconds(1.5));
+
+		// Create fade-out animation
+		FadeTransition fadeOut = new FadeTransition(Duration.millis(500),
+				trappedLabel);
+		fadeOut.setFromValue(1.0);
+		fadeOut.setToValue(0.0);
+
+		// Chain the animations
+		SequentialTransition sequence = new SequentialTransition(fadeIn, stay,
+				fadeOut);
+		sequence.setOnFinished(e -> pitPane.getChildren().remove(trappedLabel)); // Clean
+																					// up
+																					// after
+
+		// Start the animation
+		sequence.play();
+	}
 
 }
