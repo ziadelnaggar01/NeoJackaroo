@@ -52,7 +52,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="playerB1" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                  <ImageView fx:id="playerB1" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -60,7 +60,7 @@
                         <Insets left="85.0" top="30.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB2" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
+                  <ImageView fx:id="playerB2" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -68,7 +68,7 @@
                         <Insets right="40.0" top="30.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB4" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerB4" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -76,7 +76,7 @@
                         <Insets right="20.0" top="30.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerB3" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerB3" fitHeight="129.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -194,7 +194,7 @@
                   <RowConstraints maxHeight="32.79999999999998" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                        <ImageView fx:id="playerC1" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="90.0">
+                        <ImageView fx:id="playerC1" fitHeight="129.0" fitWidth="95.0" preserveRatio="true">
                             <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -202,7 +202,7 @@
                         <Insets left="50.0" top="120.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerC4" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="90.0" styleClass="neon-card" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <ImageView fx:id="playerC4" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" styleClass="neon-card" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -210,7 +210,7 @@
                         <Insets right="100.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerC3" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
+                        <ImageView fx:id="playerC3" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" GridPane.rowIndex="2">
                             <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -218,7 +218,7 @@
                         <Insets left="50.0" />
                      </GridPane.margin>
                         </ImageView>
-                        <ImageView fx:id="playerC2" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
+                        <ImageView fx:id="playerC2" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" GridPane.columnIndex="1">
                             <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -256,7 +256,7 @@
                   <RowConstraints maxHeight="234.8" minHeight="10.0" prefHeight="112.99998779296877" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fx:id="playerD1" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="90.0">
+                  <ImageView fx:id="playerD1" fitHeight="129.0" fitWidth="95.0" preserveRatio="true">
                      <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -264,7 +264,7 @@
                         <Insets left="50.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerD4" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerD4" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -272,7 +272,7 @@
                         <Insets left="30.0" right="150.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerD3" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="90.0" GridPane.rowIndex="2">
+                  <ImageView fx:id="playerD3" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" GridPane.rowIndex="2">
                      <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>
@@ -280,7 +280,7 @@
                         <Insets left="50.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <ImageView fx:id="playerD2" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" rotate="90.0" GridPane.columnIndex="1">
+                  <ImageView fx:id="playerD2" fitHeight="129.0" fitWidth="95.0" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
                         <Image url="@assests/deck/NeonBack2.png" />
                      </image>

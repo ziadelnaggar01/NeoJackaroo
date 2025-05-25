@@ -163,6 +163,22 @@ public class BoardController {
 
 		cpuCards = new ImageView[][] { { playerB1, playerB2, playerB3, playerB4 },
 				{ playerC1, playerC2, playerC3, playerC4 }, { playerD1, playerD2, playerD3, playerD4 } };
+		for(int i=0;i<3;i++)
+			for(int j=0; j<4; j++)
+			{
+				ImageView slot = cpuCards[i][j];
+
+				// 1) reset transforms & make new Z + Y Rotates
+				slot.getTransforms().clear();
+
+				// pivot at center of slot
+				double cx = slot.getFitWidth() / 2;
+				double cy = slot.getFitHeight() / 2;
+
+				Rotate zRotate = new Rotate(90, cx, cy, 0, Rotate.Z_AXIS);
+
+				slot.getTransforms().addAll(zRotate);
+			}
 
 		playerHand = new ImageView[] { playerCard1, playerCard2, playerCard3, playerCard4 };
 
