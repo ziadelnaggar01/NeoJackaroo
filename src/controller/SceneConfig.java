@@ -23,8 +23,10 @@ public class SceneConfig {
 	private Parent exceptionScene;
 	private Parent descriptionScene;
 	private Parent aboutScene;
+	private Parent fullScreenAlert;
 
 	private boolean inGame = false;
+	private Parent lastScene = startScene;
 	private BoardController gameController;
 	private view.endScreen.Controller endScreenController;
 	private view.description.Controller descriptionController;
@@ -38,6 +40,7 @@ public class SceneConfig {
 			playerNameScene = FXMLLoader.load(getClass().getResource("/view/PlayerName/Scene.fxml"));
 			settingsScene = FXMLLoader.load(getClass().getResource("/view/settingsMenu/Scene.fxml"));
 			aboutScene = FXMLLoader.load(getClass().getResource("/view/aboutMenu/Scene.fxml"));
+			fullScreenAlert = FXMLLoader.load(getClass().getResource("/view/fullScreenAlertScene.fxml"));
 
 			// Load Game Scene and controller
 			FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("/view/BoardScene.fxml"));
@@ -73,40 +76,58 @@ public class SceneConfig {
 
 	/** Getters for each scene */
 	public Parent getStartScene() {
+		lastScene = startScene;
 		return startScene;
 	}
 
 	public Parent getEndScene() {
+		lastScene = endScene;
 		return endScene;
 	}
 
 	public Parent getHowToPlayScene() {
+		lastScene = howToPlayScene;
 		return howToPlayScene;
 	}
 
 	public Parent getPlayerNameScene() {
+		lastScene = playerNameScene;
 		return playerNameScene;
 	}
 
 	public Parent getGameScene() {
+		lastScene = gameScene;
 		return gameScene;
 	}
 
 	public Parent getSettingsScene() {
+		lastScene = settingsScene;
 		return settingsScene;
 	}
 
 	public Parent getExceptionScene() {
+		lastScene = exceptionScene;
 		return exceptionScene;
 	}
 
 	public Parent getDescriptionScene() {
+		lastScene = descriptionScene;
 		return descriptionScene;
 	}
 	
 	public Parent getAboutScene() {
+		lastScene = aboutScene;
 		return aboutScene;
 	}
+
+	public Parent getFullScreenAlert() {
+		return fullScreenAlert;
+	}
+	
+	public Parent getLastScene() {
+		return lastScene;
+	}
+
 
 	public boolean isInGame() {
 		return inGame;

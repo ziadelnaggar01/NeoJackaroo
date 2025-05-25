@@ -29,6 +29,8 @@ public class Controller {
 				(obs, wasMaximized, isMaximized) -> {
 					if (isMaximized) {
 						primaryStage.setFullScreen(true); // Enter fullscreen
+						Parent root = SceneConfig.getInstance().getLastScene();
+						GenericController.switchScene(primaryStage, root);
 					}
 				});
 
@@ -49,6 +51,8 @@ public class Controller {
 						primaryStage.setMaxHeight(initialHeight);
 						primaryStage.setWidth(initialWidth);
 						primaryStage.setHeight(initialHeight);
+						Parent root = SceneConfig.getInstance().getFullScreenAlert();
+						GenericController.switchScene(primaryStage, root);
 					}
 				});
 	}
