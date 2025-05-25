@@ -4,6 +4,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
@@ -30,6 +31,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -41,11 +43,13 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -69,6 +73,7 @@ import model.player.Marble;
 import model.player.Player;
 import engine.Game;
 import engine.board.Cell;
+import engine.board.CellType;
 import engine.board.SafeZone;
 import exception.GameException;
 
@@ -530,7 +535,7 @@ public class BoardController {
 			}
 
 			// System.out.println(card.getName()); // here
-
+			ArrayList<Marble> total = new ArrayList<>();
 			// Link marbles selected by player to back-end
 			for (Circle marble : selectedMarbles) {
 				Circle cellPositionOfMarble = marbleToCellMap.get(marble);
@@ -597,21 +602,34 @@ public class BoardController {
 					curMarble = game.getBoard().getTrack().get(num).getMarble();
 				}
 				curPlayer.selectMarble(curMarble);
+				if (curMarble != null)
+					total.add(curMarble);
 			}
 
 			// play according to selected cards and selected marbles
+			take_action(total, getImageSource(selectedCardID), selectedMarbles, () -> {
+				// This runs AFTER the animation finishes
+				// set it before the animation
+				for (Circle from : selectedMarbles) {
+					from.setLayoutX(from.getLayoutX() + from.getTranslateX());
+					from.setLayoutY(from.getLayoutY() + from.getTranslateY());
+					from.setTranslateX(0);
+					from.setTranslateY(0);
+				}
+				Change_Track();
 
-			game.playPlayerTurn();
-			Change_Track(); // Animate human move
-			sendToPit(selectedCardImageView); // Optional visual logic
-			game.endPlayerTurn();
-			PauseTransition delay = new PauseTransition(Duration.seconds(2));
-			delay.setOnFinished(event -> {
-				updateBoard();
+				sendToPit(selectedCardImageView);
+				game.endPlayerTurn();
+				updatePit();
+				updateCpuHand();
+				updatePlayerHand();
 				deselectAllMarbles();
-				Platform.runLater(this::continueGameLoop);
+				PauseTransition delay = new PauseTransition(Duration.seconds(3));
+				delay.setOnFinished(event -> {
+					Platform.runLater(this::continueGameLoop);
+				});
+				delay.play();
 			});
-			delay.play();
 
 		} catch (Exception e) {
 			SoundManager.getInstance().playSound("errorSoundEffect");
@@ -625,6 +643,500 @@ public class BoardController {
 		}
 
 		disablePlayerButtons();
+	}
+
+	private void swap(Circle a, Circle b, Runnable onFinished) {
+		if (a == null || b == null || a == b) {
+			System.out.println("Invalid swap: one or both marbles are null, or same.");
+			if (onFinished != null)
+				onFinished.run();
+			return;
+		}
+
+		double ax = a.getLayoutX();
+		double ay = a.getLayoutY();
+		double bx = b.getLayoutX();
+		double by = b.getLayoutY();
+
+		TranslateTransition moveA = new TranslateTransition(Duration.millis(1000), a);
+		moveA.setByX(bx - ax);
+		moveA.setByY(by - ay);
+
+		TranslateTransition moveB = new TranslateTransition(Duration.millis(1000), b);
+		moveB.setByX(ax - bx);
+		moveB.setByY(ay - by);
+
+		ParallelTransition swapAnim = new ParallelTransition(moveA, moveB);
+
+		swapAnim.setOnFinished(e -> {
+			a.setLayoutX(bx);
+			a.setLayoutY(by);
+			a.setTranslateX(0);
+			a.setTranslateY(0);
+
+			b.setLayoutX(ax);
+			b.setLayoutY(ay);
+			b.setTranslateX(0);
+			b.setTranslateY(0);
+
+			// Update mapping after animation
+			Circle to = marbleToCellMap.get(a);
+			Circle too = marbleToCellMap.get(b);
+			marbleToCellMap.put(a, too);
+			marbleToCellMap.put(b, to);
+
+			if (onFinished != null)
+				onFinished.run();
+		});
+
+		swapAnim.play();
+	}
+
+	public ArrayList<Circle> movePlease(ArrayList<Cell> Path) {
+		ArrayList<Circle> Cur_Path = new ArrayList<>();
+		for (int i = 0; i < Path.size(); i++) {
+			boolean check = false;
+			if (Path.get(i).getCellType() == CellType.NORMAL || Path.get(i).getCellType() == CellType.ENTRY
+					|| Path.get(i).getCellType() == CellType.BASE) {
+				for (int j = 0; j <= 99; j++) {
+					if (game.getBoard().getTrack().get(j) == Path.get(i)) {
+						String id = "m" + j;
+						Circle here = (Circle) animationPane.lookup("#" + id);
+						Cur_Path.add(here);
+						check = true;
+						break;
+					}
+					if (check)
+						break;
+				}
+			} else if (Path.get(i).getCellType() == CellType.SAFE) {
+				for (int pl = 0; pl < 4; pl++) {
+					for (int k = 0; k < 4; k++) {
+						if (game.getBoard().getSafeZones().get(pl).getCells().get(k) == Path.get(i)) {
+							String id = "safe" + (char) ('A' + pl) + (k + 1);
+							Circle here = (Circle) animationPane.lookup("#" + id);
+							Cur_Path.add(here);
+							check = true;
+							break;
+						}
+					}
+					if (check)
+						break;
+				}
+			}
+		}
+		return Cur_Path;
+	}
+
+	public void take_action(ArrayList<Marble> marbles, ImageView selectedCard, Set<Circle> selectedMarbless,
+			Runnable onFinished) throws GameException {
+		int rank = GenericController.getCardRank(selectedCard, 0, game);
+
+		if (selectedMarbless.isEmpty()) {
+			game.playPlayerTurn();
+			// Handle "field" logic if needed, then run onFinished
+			if (onFinished != null)
+				onFinished.run();
+		} else {
+			// Move marbles
+			switch (rank) {
+			case 4:
+				ArrayList<Cell> Path = game.getBoard().validateSteps(marbles.get(0), -4);
+				Circle first = selectedMarbless.iterator().next();
+				ArrayList<Circle> Cur_Path = movePlease(Path);
+				boolean gg = isTrappp(Cur_Path);
+				game.playPlayerTurn();
+				moveThroughPath(first, Cur_Path, gg, onFinished, true, false);
+				break;
+			case 7: // need to fix
+				if (selectedMarbless.size() == 1) // move as usual
+				{
+					Path = game.getBoard().validateSteps(marbles.get(0), 7);
+					Circle CurMarble1 = selectedMarbles.iterator().next();
+					first = selectedMarbless.iterator().next();
+					Cur_Path = movePlease(Path);
+					gg = isTrappp(Cur_Path);
+					game.playPlayerTurn();
+					moveThroughPath(first, Cur_Path, gg, onFinished, true, false);
+				} else if (selectedMarbless.size() == 2) {
+					Iterator<Circle> iterator = selectedMarbles.iterator();
+					List<Circle> firstTwo = new ArrayList<>();
+					
+					// Safely collect the first two elements
+					while (iterator.hasNext() && firstTwo.size() < 2) {
+						firstTwo.add(iterator.next());
+					}
+					
+					Path = game.getBoard().validateSteps(marbles.get(0), game.getBoard().getSplitDistance());
+					ArrayList<Cell> Path2 = game.getBoard().validateSteps(marbles.get(1),
+							7-game.getBoard().getSplitDistance());
+					Cur_Path = movePlease(Path);
+					ArrayList<Circle> Cur_Path2 = movePlease(Path2);
+					gg = isTrappp(Cur_Path);
+					boolean gg1 = isTrappp(Cur_Path2);
+					game.playPlayerTurn();
+					moveThroughPath(firstTwo.get(0), Cur_Path, gg, onFinished, false, false);
+					moveThroughPath(firstTwo.get(1), Cur_Path2, gg1, onFinished, true, false);
+				} else {
+					game.playPlayerTurn();
+					// Handle "field" logic if needed, then run onFinished
+					if (onFinished != null)
+						onFinished.run();
+				}
+				break;
+			case 13:
+				if (selectedMarbless.isEmpty()) // field
+				{
+					game.playPlayerTurn();
+					if (onFinished != null)
+						onFinished.run();
+					// shit
+				} else if (selectedMarbless.size() == 1)// move 13
+				{
+					Path = game.getBoard().validateSteps(marbles.get(0), 13);
+					Circle CurMarble1 = selectedMarbles.iterator().next();
+					first = selectedMarbless.iterator().next();
+					Cur_Path = movePlease(Path);
+					gg = isTrappp(Cur_Path);
+					game.playPlayerTurn();
+					moveThroughPath(first, Cur_Path, gg, onFinished, true, true);
+				} else {
+					game.playPlayerTurn();
+					// Handle "field" logic if needed, then run onFinished
+					if (onFinished != null)
+						onFinished.run();
+				}
+				break;
+			case 1:
+				if (selectedMarbless.isEmpty()) {
+					// shit
+					game.playPlayerTurn();
+					if (onFinished != null)
+						onFinished.run();
+
+				} else {
+					Path = game.getBoard().validateSteps(marbles.get(0), 1);
+					Circle CurMarble1 = selectedMarbles.iterator().next();
+					first = selectedMarbless.iterator().next();
+					Cur_Path = movePlease(Path);
+					gg = isTrappp(Cur_Path);
+					game.playPlayerTurn();
+					moveThroughPath(first, Cur_Path, gg, onFinished, true, false);
+				}
+				break;
+			case 12:
+			case 10:
+				if (!selectedMarbless.isEmpty()) // move as usual
+				{
+					Path = game.getBoard().validateSteps(marbles.get(0), rank);
+					Circle CurMarble1 = selectedMarbles.iterator().next();
+					first = selectedMarbless.iterator().next();
+					Cur_Path = movePlease(Path);
+					gg = isTrappp(Cur_Path);
+					game.playPlayerTurn();
+					moveThroughPath(first, Cur_Path, gg, onFinished, true, false);
+				} else {
+					// discard card from nextplayer or random player
+					game.playPlayerTurn();
+					if (onFinished != null)
+						onFinished.run();
+				}
+				break;
+			case 11:
+				if (selectedMarbles.size() == 2) {
+					Iterator<Circle> iterator = selectedMarbles.iterator();
+					List<Circle> firstTwo = new ArrayList<>();
+
+					// Safely collect the first two elements
+					while (iterator.hasNext() && firstTwo.size() < 2) {
+						firstTwo.add(iterator.next());
+					}
+
+					game.playPlayerTurn();
+
+					// Animate swap, and run onFinished only after animation completes
+					swap(firstTwo.get(0), firstTwo.get(1), onFinished);
+
+				} else if (selectedMarbles.size() == 1) {
+					Path = game.getBoard().validateSteps(marbles.get(0), rank);
+					Circle CurMarble1 = selectedMarbles.iterator().next();
+					first = selectedMarbless.iterator().next();
+					Cur_Path = movePlease(Path);
+					gg = isTrappp(Cur_Path);
+					game.playPlayerTurn();
+					moveThroughPath(first, Cur_Path, gg, onFinished, true, false);
+
+				} else {
+					game.playPlayerTurn();
+					if (onFinished != null)
+						onFinished.run();
+				}
+				break;
+			case 14:
+				Circle CurMarble1 = selectedMarbles.iterator().next();
+				game.playPlayerTurn();
+				Trap(CurMarble1, game.getPlayers().get(currentPlayerIndex).getMarbles().size(), onFinished);
+				break;
+			case 15:
+				game.playPlayerTurn();
+				if (onFinished != null)
+					onFinished.run();
+				break;
+			default: // standard
+				Path = game.getBoard().validateSteps(marbles.get(0), rank);
+				CurMarble1 = selectedMarbles.iterator().next();
+				first = selectedMarbless.iterator().next();
+				Cur_Path = movePlease(Path);
+				gg = isTrappp(Cur_Path);
+				game.playPlayerTurn();
+				moveThroughPath(first, Cur_Path, gg, onFinished, true, false);
+			}
+		}
+	}
+
+	public boolean isTrappp(ArrayList<Circle> pathNodes) {
+		Circle finalTarget = pathNodes.get(pathNodes.size() - 1);
+		int number = 0;
+		if (finalTarget.getId().charAt(1) != 'A' && finalTarget.getId().charAt(1) != 'B'
+				&& finalTarget.getId().charAt(1) != 'C' && finalTarget.getId().charAt(1) != 'D'
+				&& finalTarget.getId().charAt(1) != 'a') {
+			number = Integer.parseInt(finalTarget.getId().substring(1));
+			if (game.getBoard().getTrack().get(number).isTrap()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void moveThroughPath(Circle marble, List<Circle> pathNodes, boolean trapp, Runnable onFinished,
+			Boolean runIt, Boolean destroy) {
+		if (pathNodes == null || pathNodes.isEmpty()) {
+			if (onFinished != null)
+				onFinished.run();
+			return;
+		}
+
+		if (destroy) {
+			List<ParallelTransition> sendHomeTransitions = new ArrayList<>();
+
+			for (int i = 1; i < pathNodes.size(); i++) {
+				Circle targetCell = pathNodes.get(i);
+				Circle targetMarble = null;
+				for (Map.Entry<Circle, Circle> entry : marbleToCellMap.entrySet()) {
+					if (entry.getValue().getId().equals(targetCell.getId())) {
+						targetMarble = entry.getKey();
+						break;
+					}
+				}
+
+				if (targetMarble != null) {
+					try {
+						String path = "/view/assests/sound/destroy.mp3";
+						URL soundURL = getClass().getResource(path);
+						if (soundURL != null) {
+							AudioClip sound = new AudioClip(soundURL.toString());
+							sound.play();
+							System.out.println("Sound played: " + path);
+						} else {
+							System.out.println("Sound file not found: " + path);
+						}
+					} catch (Exception e) {
+						System.out.println("Error playing sound:");
+						e.printStackTrace();
+					}
+
+					TranslateTransition sendHome = createSendToHomeTransition(targetMarble,
+							game.getPlayers().get(currentPlayerIndex).getMarbles().size());
+					sendHomeTransitions.add(new ParallelTransition(sendHome));
+				}
+			}
+
+			ParallelTransition allSends = new ParallelTransition();
+			allSends.getChildren().addAll(sendHomeTransitions);
+			allSends.setOnFinished(ev -> animateMarbleThroughPath(marble, pathNodes, trapp, onFinished, runIt));
+			allSends.play();
+		} else {
+			animateMarbleThroughPath(marble, pathNodes, trapp, onFinished, runIt);
+		}
+	}
+
+	private void animateMarbleThroughPath(Circle marble, List<Circle> pathNodes, boolean trapp, Runnable onFinished,
+			Boolean runIt) {
+		ScaleTransition resizeTransition = smoothlyResize(marble, pathNodes.get(0));
+		marble.setTranslateX(0);
+		marble.setTranslateY(0);
+
+		SequentialTransition movementSequence = new SequentialTransition();
+		double currentX = marble.getLayoutX();
+		double currentY = marble.getLayoutY();
+
+		for (Circle target : pathNodes) {
+			double targetX = target.getLayoutX();
+			double targetY = target.getLayoutY();
+			double deltaX = targetX - currentX;
+			double deltaY = targetY - currentY;
+
+			TranslateTransition step = new TranslateTransition(Duration.seconds(0.3), marble);
+			step.setByX(deltaX);
+			step.setByY(deltaY);
+			step.setInterpolator(Interpolator.EASE_BOTH);
+			movementSequence.getChildren().add(step);
+
+			currentX = targetX;
+			currentY = targetY;
+		}
+
+		Circle finalTarget = pathNodes.get(pathNodes.size() - 1);
+		marbleToCellMap.put(marble, finalTarget);
+
+		SequentialTransition masterSequence = new SequentialTransition(resizeTransition, movementSequence);
+		masterSequence.setOnFinished(e -> {
+			if (trapp) {
+				System.out.println("fuck all");
+				Trap(marble, game.getPlayers().get(currentPlayerIndex).getMarbles().size(), onFinished);
+			} else {
+				if (runIt && onFinished != null) {
+					onFinished.run();
+				}
+			}
+		});
+
+		masterSequence.play();
+	}
+
+	public void Trap(Circle marble, int homeIndex, Runnable onFinished) {
+		if (marble == null) {
+			System.out.println("Trap: marble is null");
+			if (onFinished != null)
+				onFinished.run();
+			return;
+		}
+
+		// Play trap sound
+		try {
+			URL soundurl = getClass().getResource("/view/assests/sound/bonk.wav");
+			if (soundurl != null) {
+				AudioClip sound = new AudioClip(soundurl.toString());
+				sound.play();
+			} else {
+				System.out.println("Trap: Sound file not found at /view/assests/sound/bonk.wav");
+			}
+		} catch (Exception e) {
+			System.out.println("Trap: Failed to play sound:");
+			e.printStackTrace();
+		}
+
+		// Animate marble growing
+		ScaleTransition growBig = new ScaleTransition(Duration.millis(500), marble);
+		growBig.setToX(2.5);
+		growBig.setToY(2.5);
+		growBig.setInterpolator(Interpolator.EASE_OUT);
+
+		growBig.setOnFinished(e -> {
+			moveToHome(marble, homeIndex, onFinished); // will wait internally
+		});
+
+		growBig.play();
+
+	}
+
+	public void moveToHome(Circle marble, int homeIndex, Runnable onFinished) {
+		if (marble == null) {
+			System.out.println("moveToHome: source marble is null.");
+			return;
+		}
+
+		// Play sound for being sent to home
+		SoundManager.getInstance().playSound("views/assessts/sound/ohh.wav");
+
+		if (marble.getId().length() < 5) {
+			System.out.println("moveToHome: unexpected marble ID format: " + marble.getId());
+			return;
+		}
+
+		char playerLabel = marble.getId().charAt(4); // e.g. 'A'
+		String targetId = "#m" + playerLabel + homeIndex;
+		System.out.println("moveToHome: found: " + targetId);
+		Circle homeCell = (Circle) animationPane.lookup(targetId);
+		if (homeCell == null) {
+			System.out.println("moveToHome: Target home cell not found: " + targetId);
+			return;
+		}
+
+		// Get current absolute position considering translations
+		double currentX = marble.getLayoutX() + marble.getTranslateX();
+		double currentY = marble.getLayoutY() + marble.getTranslateY();
+
+		// Target position
+		double targetX = homeCell.getLayoutX();
+		double targetY = homeCell.getLayoutY();
+
+		// Calculate correct delta
+		double dx = targetX - currentX;
+		double dy = targetY - currentY;
+
+		TranslateTransition transition = new TranslateTransition(Duration.millis(500), marble);
+		transition.setByX(dx);
+		transition.setByY(dy);
+
+		transition.setOnFinished(e -> {
+			// Snap to final layout position
+			marble.setLayoutX(homeCell.getLayoutX());
+			marble.setLayoutY(homeCell.getLayoutY());
+			marble.setTranslateX(0);
+			marble.setTranslateY(0);
+
+			// Restore size
+			marble.setScaleX(1.0);
+			marble.setScaleY(1.0);
+
+			// Update tracking
+			marbleToCellMap.put(marble, homeCell);
+
+			if (onFinished != null) {
+				onFinished.run();
+			}
+		});
+
+		transition.play();
+	}
+
+	private TranslateTransition createSendToHomeTransition(Circle marble, int homeIndex) {
+		char playerLabel = marble.getId().charAt(4);
+		String targetId = "#m" + playerLabel + (homeIndex);
+
+		Circle homeCell = (Circle) animationPane.lookup(targetId);
+		if (homeCell == null) {
+			System.out.println("createSendToHomeTransition: Target home cell not found: " + targetId);
+			return new TranslateTransition(Duration.ZERO);
+		}
+
+		double dx = homeCell.getLayoutX() - marble.getLayoutX();
+		double dy = homeCell.getLayoutY() - marble.getLayoutY();
+
+		TranslateTransition transition = new TranslateTransition(Duration.millis(500), marble);
+		transition.setByX(dx);
+		transition.setByY(dy);
+
+		transition.setOnFinished(e -> {
+			// Snap to final layout position
+			marble.setLayoutX(homeCell.getLayoutX());
+			marble.setLayoutY(homeCell.getLayoutY());
+			marble.setTranslateX(0);
+			marble.setTranslateY(0);
+
+			// Set radius to match the home cell
+			marble.setRadius(homeCell.getRadius());
+
+			// Reset any potential scale changes
+			marble.setScaleX(1.0);
+			marble.setScaleY(1.0);
+
+			// Update mapping
+			marbleToCellMap.put(marble, homeCell);
+		});
+
+		return transition;
 	}
 
 	// Used in onPlayClicked
