@@ -230,7 +230,7 @@ public class BoardController {
 			return;
 			ArrayList<Card> firePit = game.getFirePit();
 			Image front = getCardImage(firePit.get(firePit.size() - 1));
-				sendToPit(cpuCards[i - 1][0], front);
+				sendToPit(cpuCards[i - 1][handSize], front);
 			}
 			for (int j = 0; j < 4; j++) {
 				cpuCards[i - 1][j].setVisible(j < handSize);
@@ -308,12 +308,21 @@ public class BoardController {
 	    ghost.getTransforms().setAll(sourceSlot.getTransforms());
 
 	    // 3) Position it exactly over the source slot:
-	    Point2D start = sourceSlot.localToScene(0, 0);
-	    Point2D pitLocal = pitPane.sceneToLocal(start);
-	    ghost.setLayoutX(pitLocal.getX());
-	    ghost.setLayoutY(pitLocal.getY());
 	    double halfW = ghost.getFitWidth() / 2;
 	    double halfH = ghost.getFitHeight() / 2;
+	    
+
+
+	    // Get center of sourceSlot in scene coordinates
+	    Point2D centerInScene = sourceSlot.localToScene(halfW, halfH);
+
+	    // Map to pitPane’s coordinate system
+	    Point2D centerInPit = pitPane.sceneToLocal(centerInScene);
+	    
+
+	    // Offset ghost to center it at same point
+	    ghost.setLayoutX(centerInPit.getX() - halfW);
+	    ghost.setLayoutY(centerInPit.getY() - halfH);
 
 	    // 4) Add to pitPane:
 	    pitPane.getChildren().add(ghost);
@@ -329,8 +338,8 @@ public class BoardController {
 
 	    // 7) Build the move + rotate + fade (optional) animation
 	    TranslateTransition tt = new TranslateTransition(Duration.millis(800), ghost);
-	    tt.setToX(targetX - pitLocal.getX());
-	    tt.setToY(targetY - pitLocal.getY());
+	    tt.setToX(targetX - centerInPit.getX());
+	    tt.setToY(targetY - centerInPit.getY());
 	    tt.setInterpolator(Interpolator.EASE_IN);
 
 	    RotateTransition rt = new RotateTransition(Duration.millis(800), ghost);
