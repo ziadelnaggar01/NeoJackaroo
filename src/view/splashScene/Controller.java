@@ -56,6 +56,7 @@ public class Controller {
 						"/view/assests/sound/playCardSoundEffect.mp3");
 				SoundManager.getInstance().preloadSound("trapSoundEffect", "/view/assests/sound/trapSoundEffect.mp3");
 				SoundManager.getInstance().preloadSound("playCardSoundEffect", "/view/assests/sound/playCardSoundEffect.mp3");
+				SoundManager.getInstance().preloadSound("trapSoundEffect", "/view/assests/sound/trapSoundEffect.mp3");
 
 				return null;
 			}

@@ -186,8 +186,8 @@ public class SceneConfig {
 	}
 	
 	
-//	public void visualiseTrap(Cell targetCell){
-//		gameController.visualizeTrap(targetCell);
-//	}
-//	
+	public void visualiseTrap(Cell targetCell){
+		gameController.visualizeTrap(targetCell);
+	}
+	
 }

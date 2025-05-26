@@ -427,8 +427,8 @@ public class Board implements BoardManager {
 			destroyMarble(marble);
 			targetCell.setTrap(false);
 			assignTrapCell();
-			//SceneConfig.getInstance().visualiseTrap(targetCell);
-			//BoardController.incrementTotalTrapsIfPlayer(gameManager.getActivePlayerColour());
+			SceneConfig.getInstance().visualiseTrap(targetCell);
+			BoardController.incrementTotalTrapsIfPlayer(gameManager.getActivePlayerColour());
 		}
 
 	}
