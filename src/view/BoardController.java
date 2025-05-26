@@ -1239,10 +1239,10 @@ public class BoardController {
 			Arrays.asList(
 
 					// Serious / Intellectual
-					"Turing", "AdaNova", "Hypatia", "NeuroLynx", "Euler",
+					"Turing", "AdaNova", "Hypatia", "Euler",
 					// Funny / Meme-worthy
-					"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "Meow",
-					"NotABot"));
+					"Hamoksha", "Balabizo", "NullBot"
+					));
 
 	// Called from outside the class
 	public void assignNames(String playerName) {
