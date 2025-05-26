@@ -214,6 +214,11 @@ public class BoardController {
 		List<Player> players = game.getPlayers();
 		int handSize = players.get(0).getHand().size();
 		if (handSize == 4 && newHand) {
+			if (game.getActivePlayerColour() == players.get((0)).getColour() && !game.getFirePit().isEmpty() && cpuCards[2][0].isVisible()) {
+				ArrayList<Card> firePit = game.getFirePit();
+				Image front = getCardImage(firePit.get(firePit.size() - 1));
+				sendToPit(cpuCards[2][0], front);
+			}
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 4; j++) {
 					ImageView slot = cpuCards[i][j];
