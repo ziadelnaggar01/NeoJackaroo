@@ -77,17 +77,10 @@ import engine.board.SafeZone;
 import exception.GameException;
 
 public class BoardController {
-	Image pointerImage = new Image(getClass().getResource(
-			"/view/assets/PurpleHand.png").toExternalForm());
+	Image pointerImage = new Image(getClass().getResource("/view/assets/PurpleHand.png").toExternalForm());
 	ImageCursor pointerCursor = new ImageCursor(pointerImage, 5, 2); // hotspot
 																		// at
 																		// tip
-
-	Image sharpImage = new Image(getClass().getResource(
-			"/view/assets/Mouse Cursor.png").toExternalForm());
-	ImageCursor sharpCursor = new ImageCursor(sharpImage, 5, 2); // hotspot
-																	// at
-																	// tip
 
 	private Game game;
 	private ArrayList<Player> players;
@@ -164,23 +157,15 @@ public class BoardController {
 
 	@FXML
 	public void initialize() throws IOException {
+
 		game = new Game("PlayerName");
 		players = game.getPlayers();
 
-		// set up stats variables
-		totalTurns = 0;
-		totalTraps = 0;
-		totalDiscards = 0;
-		timeElapsedInSeconds = 0;
-		realPlayerColour = players.get(0).getColour();
-		startTimer();
-
-		cpuCards = new ImageView[][] {
-				{ playerB1, playerB2, playerB3, playerB4 },
-				{ playerC1, playerC2, playerC3, playerC4 },
-				{ playerD1, playerD2, playerD3, playerD4 } };
-		for (int i = 0; i < 3; i++)
-			for (int j = 0; j < 4; j++) {
+		cpuCards = new ImageView[][] { { playerB1, playerB2, playerB3, playerB4 },
+				{ playerC1, playerC2, playerC3, playerC4 }, { playerD1, playerD2, playerD3, playerD4 } };
+		for(int i=0;i<3;i++)
+			for(int j=0; j<4; j++)
+			{
 				ImageView slot = cpuCards[i][j];
 
 				// 1) reset transforms & make new Z + Y Rotates
@@ -195,8 +180,7 @@ public class BoardController {
 				slot.getTransforms().addAll(zRotate);
 			}
 
-		playerHand = new ImageView[] { playerCard1, playerCard2, playerCard3,
-				playerCard4 };
+		playerHand = new ImageView[] { playerCard1, playerCard2, playerCard3, playerCard4 };
 
 		setTrack();
 		setSafeZones();
@@ -212,174 +196,180 @@ public class BoardController {
 	public void updateCpuHand() {
 		List<Player> players = game.getPlayers();
 		int handSize = players.get(0).getHand().size();
-		if (handSize == 4 && newHand) {
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 4; j++) {
-					ImageView slot = cpuCards[i][j];
-					slot.setVisible(true);
+		if(handSize==4 && newHand)
+		{
+	        for (int i = 0; i < 3; i++) {
+	            for (int j = 0; j < 4; j++) {
+	                ImageView slot = cpuCards[i][j];
+	                slot.setVisible(true);
 
-					// start hidden/off‑scale
-					slot.setScaleX(0);
-					slot.setScaleY(0);
-					slot.setOpacity(0);
+	                // start hidden/off‑scale
+	                slot.setScaleX(0);
+	                slot.setScaleY(0);
+	                slot.setOpacity(0);
 
-					ScaleTransition st = new ScaleTransition(
-							Duration.millis(1000), slot);
-					st.setFromX(0);
-					st.setToX(1);
-					st.setFromY(0);
-					st.setToY(1);
+	                ScaleTransition st = new ScaleTransition(Duration.millis(1000), slot);
+	                st.setFromX(0); st.setToX(1);
+	                st.setFromY(0); st.setToY(1);
 
-					FadeTransition ft = new FadeTransition(
-							Duration.millis(1000), slot);
-					ft.setFromValue(0);
-					ft.setToValue(1);
+	                FadeTransition ft = new FadeTransition(Duration.millis(1000), slot);
+	                ft.setFromValue(0); ft.setToValue(1);
 
-					// no delay → truly simultaneous
-					new ParallelTransition(st, ft).play();
-				}
-			}
-			return;
+	                // no delay → truly simultaneous
+	                new ParallelTransition(st, ft).play();
+	            }
+	        }
+	        return;
 		}
 		for (int i = 1; i <= 3; i++) {
 			Player cpu = players.get(i);
 			handSize = cpu.getHand().size();
+			if(game.getActivePlayerColour()==players.get((i+1)%4).getColour())
+			{
+			if (game.getFirePit().isEmpty())
+			return;
+			ArrayList<Card> firePit = game.getFirePit();
+			Image front = getCardImage(firePit.get(firePit.size() - 1));
+				sendToPit(cpuCards[i - 1][0], front);
+			}
 			for (int j = 0; j < 4; j++) {
-				ImageView slot = cpuCards[i - 1][j];
-				if (j < handSize) {
-					slot.setVisible(true); // keep it visible
-					slot.setOpacity(1.0); // in case it was fading out before
-				} else if (slot.isVisible()) {
-					// If currently visible but should be hidden → animate
-					// fade-out
-					SoundManager.getInstance().playSound("playCardSoundEffect");
-
-					FadeTransition fadeOut = new FadeTransition(
-							Duration.millis(400), slot);
-					fadeOut.setFromValue(1.0);
-					fadeOut.setToValue(0.0);
-					fadeOut.setOnFinished(e -> slot.setVisible(false));
-					fadeOut.play();
-				}
+				cpuCards[i - 1][j].setVisible(j < handSize);
 			}
 		}
 	}
-
-	@FXML
-	private Pane pitPane;
-
-	private static final int MAX_PIT_CARDS = 102;
+	
+	@FXML private Pane pitPane;
+	
+	private static final int MAX_PIT_CARDS = 102;  
 	private final Random rnd = new Random();
-
+	
 	/**
 	 * Clone the given card ImageView and animate it into the pit.
-	 * 
-	 * @param sourceSlot
-	 *            the ImageView in the player's hand
+	 * @param sourceSlot the ImageView in the player's hand
 	 */
 	private void sendToPit(ImageView sourceSlot) {
-		// 1) Create the “ghost” card
-		ImageView ghost = new ImageView(sourceSlot.getImage());
-		ghost.setFitWidth(sourceSlot.getFitWidth());
-		ghost.setFitHeight(sourceSlot.getFitHeight());
-		ghost.setPreserveRatio(true);
+	    // 1) Create the “ghost” card
+	    ImageView ghost = new ImageView(sourceSlot.getImage());
+	    ghost.setFitWidth(sourceSlot.getFitWidth());
+	    ghost.setFitHeight(sourceSlot.getFitHeight());
+	    ghost.setPreserveRatio(true);
 
-		// 2) Copy any transforms (e.g. your Z/Y rotates):
-		ghost.getTransforms().setAll(sourceSlot.getTransforms());
+	    // 2) Copy any transforms (e.g. your Z/Y rotates):
+	    ghost.getTransforms().setAll(sourceSlot.getTransforms());
 
-		// 3) Position it exactly over the source slot:
-		Point2D start = sourceSlot.localToScene(0, 0);
-		Point2D pitLocal = pitPane.sceneToLocal(start);
-		ghost.setLayoutX(pitLocal.getX());
-		ghost.setLayoutY(pitLocal.getY());
+	    // 3) Position it exactly over the source slot:
+	    Point2D start = sourceSlot.localToScene(0, 0);
+	    Point2D pitLocal = pitPane.sceneToLocal(start);
+	    ghost.setLayoutX(pitLocal.getX());
+	    ghost.setLayoutY(pitLocal.getY());
 
-		// 4) Add to pitPane and bring to front:
-		pitPane.getChildren().add(ghost);
-		ghost.toFront(); // Ensure it's on top of everything else
+	    // 4) Add to pitPane:
+	    pitPane.getChildren().add(ghost);
 
-		// 5) Random final rotation & offset:
-		double finalRotate = (rnd.nextDouble() * 20) - 90; // –90°…–70° roughly
-		double offsX = 0;
-		double offsY = 0;
+	    // 5) Random final rotation & offset:
+	    double finalRotate = (rnd.nextDouble() * 20) - 90; // –30°…+30°
+//	    double offsX = (rnd.nextDouble() * 40) - 35;       // –10px…+10px
+//	    double offsY = (rnd.nextDouble() * 40) - 35;       // –10px…+10px
+	    double offsX = 0;       // –10px…+10px
+	    double offsY = 0;       // –10px…+10px
+	    // 6) Compute translation to center of pitPane + offset
+	    Bounds pitBounds = pitPane.getLayoutBounds();
+	    double targetX = (pitBounds.getWidth() / 2)-(sourceSlot.getFitWidth()/2)  + offsX;
+	    double targetY = (pitBounds.getHeight() / 2)-(sourceSlot.getFitHeight()/2) + offsY;
 
-		// 6) Compute translation to center of pitPane + offset
-		Bounds pitBounds = pitPane.getLayoutBounds();
-		double targetX = (pitBounds.getWidth() / 2)
-				- (sourceSlot.getFitWidth() / 2) + offsX;
-		double targetY = (pitBounds.getHeight() / 2)
-				- (sourceSlot.getFitHeight() / 2) + offsY;
+	    // 7) Build the move + rotate + fade (optional) animation
+	    TranslateTransition tt = new TranslateTransition(Duration.millis(800), ghost);
+	    tt.setToX(targetX - pitLocal.getX());
+	    tt.setToY(targetY - pitLocal.getY());
+	    tt.setInterpolator(Interpolator.EASE_IN);
 
-		// 7) Build the move + rotate animation
-		TranslateTransition tt = new TranslateTransition(Duration.millis(800),
-				ghost);
-		tt.setToX(targetX - pitLocal.getX());
-		tt.setToY(targetY - pitLocal.getY());
-		tt.setInterpolator(Interpolator.EASE_IN);
+	    RotateTransition rt = new RotateTransition(Duration.millis(800), ghost);
+	    rt.setByAngle(finalRotate);
+	    rt.setInterpolator(Interpolator.EASE_IN);
 
-		RotateTransition rt = new RotateTransition(Duration.millis(800), ghost);
-		rt.setByAngle(finalRotate);
-		rt.setInterpolator(Interpolator.EASE_IN);
+//	    FadeTransition ft = new FadeTransition(Duration.millis(800), ghost);
+//	    ft.setFromValue(1);
+//	    ft.setToValue(0.8);
+//	    ParallelTransition toss = new ParallelTransition(tt, rt, ft);
 
-		ParallelTransition toss = new ParallelTransition(tt, rt);
-		toss.setOnFinished(e -> cleanupPitIfNeeded());
-		toss.play();
-		// Play sound
-		SoundManager.getInstance().playSound("playCardSoundEffect");
+	    ParallelTransition toss = new ParallelTransition(tt, rt);
+	    toss.setOnFinished(e -> cleanupPitIfNeeded());
+	    toss.play();
+	}
+	
+	private void sendToPit(ImageView sourceSlot, Image front) {
+	    // 1) Create the “ghost” card
+	    ImageView ghost = new ImageView(sourceSlot.getImage());
+	    ghost.setFitWidth(sourceSlot.getFitWidth());
+	    ghost.setFitHeight(sourceSlot.getFitHeight());
+	    ghost.setPreserveRatio(true);
 
+	    // 2) Copy any transforms (e.g. your Z/Y rotates):
+	    ghost.getTransforms().setAll(sourceSlot.getTransforms());
+
+	    // 3) Position it exactly over the source slot:
+	    Point2D start = sourceSlot.localToScene(0, 0);
+	    Point2D pitLocal = pitPane.sceneToLocal(start);
+	    ghost.setLayoutX(pitLocal.getX());
+	    ghost.setLayoutY(pitLocal.getY());
+	    double halfW = ghost.getFitWidth() / 2;
+	    double halfH = ghost.getFitHeight() / 2;
+
+	    // 4) Add to pitPane:
+	    pitPane.getChildren().add(ghost);
+
+	    // 5) Random final rotation & offset:
+	    double finalRotate = (rnd.nextDouble() * 20) - 90; // –30°…+30°
+	    double offsX = 0;       // –10px…+10px
+	    double offsY = 0;       // –10px…+10px
+	    // 6) Compute translation to center of pitPane + offset
+	    Bounds pitBounds = pitPane.getLayoutBounds();
+	    double targetX = (pitBounds.getWidth() / 2)-(sourceSlot.getFitWidth()/2)  + offsX;
+	    double targetY = (pitBounds.getHeight() / 2)-(sourceSlot.getFitHeight()/2) + offsY;
+
+	    // 7) Build the move + rotate + fade (optional) animation
+	    TranslateTransition tt = new TranslateTransition(Duration.millis(800), ghost);
+	    tt.setToX(targetX - pitLocal.getX());
+	    tt.setToY(targetY - pitLocal.getY());
+	    tt.setInterpolator(Interpolator.EASE_IN);
+
+	    RotateTransition rt = new RotateTransition(Duration.millis(800), ghost);
+	    rt.setByAngle(finalRotate);
+	    rt.setInterpolator(Interpolator.EASE_IN);
+
+	    ParallelTransition toss = new ParallelTransition(tt, rt);
+	    toss.setOnFinished(e -> cleanupPitIfNeeded());
+	    
+	 // 4) Set up the Y-axis flip (0→90°, swap, then 90→180°)
+	    Rotate yFlip = new Rotate(0, halfW, halfH, 0, Rotate.Y_AXIS);
+	    ghost.getTransforms().add(yFlip);
+
+	    Timeline flipOut = new Timeline(
+	      new KeyFrame(Duration.ZERO,        new KeyValue(yFlip.angleProperty(),   0,  Interpolator.EASE_IN)),
+	      new KeyFrame(Duration.millis(400), new KeyValue(yFlip.angleProperty(),  90,  Interpolator.EASE_IN))
+	    );
+	    flipOut.setOnFinished(e -> ghost.setImage(front));
+
+	    Timeline flipIn = new Timeline(
+	      new KeyFrame(Duration.ZERO,        new KeyValue(yFlip.angleProperty(),  90,  Interpolator.EASE_OUT)),
+	      new KeyFrame(Duration.millis(400), new KeyValue(yFlip.angleProperty(), 180,  Interpolator.EASE_OUT))
+	    );
+
+	    // 5) Chain flip → toss
+	    new SequentialTransition(flipOut, flipIn, toss).play();
+	    
+	    //toss.play();
 	}
 
 	/** Remove oldest ghosts if we’ve exceeded MAX_PIT_CARDS */
 	private void cleanupPitIfNeeded() {
-		if (pitPane.getChildren().size() > MAX_PIT_CARDS) {
-			// Remove the first N to bring us back under limit
-			int toRemove = pitPane.getChildren().size() - MAX_PIT_CARDS;
-			pitPane.getChildren().subList(0, toRemove).clear();
-		}
+	    if (pitPane.getChildren().size() > MAX_PIT_CARDS) {
+	        // Remove the first N to bring us back under limit
+	        int toRemove = pitPane.getChildren().size() - MAX_PIT_CARDS;
+	        pitPane.getChildren().subList(0, toRemove).clear();
+	    }
 	}
-
-	@FXML
-	private ImageView firepitImage;
-
-	private void updatePit() {
-		if (game.getFirePit().isEmpty() || currentPlayerIndex == 0)
-			return;
-
-		ArrayList<Card> firePit = game.getFirePit();
-		Image newCardImage = getCardImage(firePit.get(firePit.size() - 1));
-
-		// Create a temporary overlay image
-		ImageView overlay = new ImageView(newCardImage);
-		overlay.setFitWidth(firepitImage.getFitWidth());
-		overlay.setFitHeight(firepitImage.getFitHeight());
-		overlay.setPreserveRatio(true);
-		overlay.setOpacity(0);
-
-		// Position the overlay exactly over the firepitImage
-		overlay.setLayoutX(firepitImage.getLayoutX());
-		overlay.setLayoutY(firepitImage.getLayoutY());
-
-		// Add the overlay on top of the pit
-		pitPane.getChildren().add(overlay);
-
-		// Fade in the new card
-		FadeTransition fadeIn = new FadeTransition(Duration.millis(600),
-				overlay);
-		fadeIn.setFromValue(0);
-		fadeIn.setToValue(1);
-		fadeIn.setInterpolator(Interpolator.EASE_OUT);
-
-		fadeIn.setOnFinished(e -> {
-			// Replace the actual firepitImage and remove the overlay
-			firepitImage.setImage(newCardImage);
-			pitPane.getChildren().remove(overlay);
-
-			// Ensure firepitImage is on top again
-			pitPane.getChildren().remove(firepitImage);
-			pitPane.getChildren().add(firepitImage);
-		});
-
-		fadeIn.play();
-	}
+	
 
 	private boolean newHand = true;
 
@@ -389,8 +379,7 @@ public class BoardController {
 			if (!newHand)
 				return;
 			newHand = false;
-			Image backImage = new Image(getClass().getResourceAsStream(
-					"/view/assests/deck/NeonBack2.png"));
+			Image backImage = new Image(getClass().getResourceAsStream("/view/assests/deck/NeonBack2.png"));
 
 			for (int i = 0; i < 4; i++) {
 				playerHand[i].setVisible(true);
@@ -417,15 +406,13 @@ public class BoardController {
 				slot.setOpacity(0);
 
 				// 3) deal‑in: scale + fade
-				ScaleTransition st = new ScaleTransition(Duration.millis(1000),
-						slot);
+				ScaleTransition st = new ScaleTransition(Duration.millis(1000), slot);
 				st.setFromX(0);
 				st.setToX(1);
 				st.setFromY(0);
 				st.setToY(1);
 
-				FadeTransition ft = new FadeTransition(Duration.millis(1000),
-						slot);
+				FadeTransition ft = new FadeTransition(Duration.millis(1000), slot);
 				ft.setFromValue(0);
 				ft.setToValue(1);
 
@@ -433,29 +420,22 @@ public class BoardController {
 				dealIn.setDelay(Duration.millis(idx * 100));
 
 				// 4) pause before flip
-				PauseTransition pause = new PauseTransition(
-						Duration.millis(200 + idx * 50));
+				PauseTransition pause = new PauseTransition(Duration.millis(200 + idx * 50));
 
 				// 5) first half flip: yRotate.angle 0→90
-				Timeline flipOut = new Timeline(new KeyFrame(Duration.ZERO,
-						new KeyValue(yRotate.angleProperty(), 0,
-								Interpolator.EASE_IN)), new KeyFrame(
-						Duration.millis(500), new KeyValue(
-								yRotate.angleProperty(), 90,
-								Interpolator.EASE_IN)));
-				flipOut.setOnFinished(e -> slot.setImage(getCardImage(hand
-						.get(idx))));
+				Timeline flipOut = new Timeline(
+						new KeyFrame(Duration.ZERO, new KeyValue(yRotate.angleProperty(), 0, Interpolator.EASE_IN)),
+						new KeyFrame(Duration.millis(500),
+								new KeyValue(yRotate.angleProperty(), 90, Interpolator.EASE_IN)));
+				flipOut.setOnFinished(e -> slot.setImage(getCardImage(hand.get(idx))));
 
 				// 6) second half flip: 90→0
-				Timeline flipIn = new Timeline(new KeyFrame(Duration.ZERO,
-						new KeyValue(yRotate.angleProperty(), 90,
-								Interpolator.EASE_OUT)), new KeyFrame(
-						Duration.millis(500), new KeyValue(
-								yRotate.angleProperty(), 0,
-								Interpolator.EASE_OUT)));
+				Timeline flipIn = new Timeline(
+						new KeyFrame(Duration.ZERO, new KeyValue(yRotate.angleProperty(), 90, Interpolator.EASE_OUT)),
+						new KeyFrame(Duration.millis(500),
+								new KeyValue(yRotate.angleProperty(), 0, Interpolator.EASE_OUT)));
 
-				SequentialTransition flip = new SequentialTransition(pause,
-						flipOut, flipIn);
+				SequentialTransition flip = new SequentialTransition(pause, flipOut, flipIn);
 				flip.setDelay(Duration.millis(idx * 100 + 300));
 
 				// 7) play deal‑in then flip
@@ -465,8 +445,7 @@ public class BoardController {
 		} else {
 			newHand = true;
 		}
-		if (game.getActivePlayerColour() == players.get(1).getColour()
-				&& selectedCardImageView != null)
+		if(game.getActivePlayerColour()==players.get(1).getColour()&&selectedCardImageView!=null)
 			sendToPit(selectedCardImageView);
 		int i = 0;
 		for (; i < hand.size(); i++) {
@@ -479,7 +458,7 @@ public class BoardController {
 		for (; i < 4; i++) {
 			playerHand[i].setVisible(false);
 			playerHand[i].setDisable(true);
-
+			
 		}
 		deselectAllCards(playerHand);
 	}
@@ -526,18 +505,15 @@ public class BoardController {
 		for (int i = 0; i < 4; i++) {
 
 			for (int j = 0; j < 4; j++) {
-				Cell cell = game.getBoard().getSafeZones().get(i).getCells()
-						.get(j);
+				Cell cell = game.getBoard().getSafeZones().get(i).getCells().get(j);
 				if (cell.getMarble() != null) {
 					for (int k = 0; k < 4; k++) {
 						if (tot.get(i).get(k) == 0) {
 							tot.get(i).set(k, 1);
 							String newPos = "move" + (char) ('A' + i) + (k + 1);
 							String destId = "safe" + (char) ('A' + i) + (j + 1);
-							Circle from = (Circle) animationPane.lookup("#"
-									+ newPos);
-							Circle to = (Circle) animationPane.lookup("#"
-									+ destId);
+							Circle from = (Circle) animationPane.lookup("#" + newPos);
+							Circle to = (Circle) animationPane.lookup("#" + destId);
 
 							if (from != null && to != null) {
 								marbleToCellMap.put(from, to);
@@ -566,12 +542,9 @@ public class BoardController {
 						for (int k = 0; k < 4; k++) {
 							if (playerPos.get(k) == 0) {
 								playerPos.set(k, 1);
-								String newPos = "move" + (char) ('A' + j)
-										+ (k + 1);
-								Circle from = (Circle) animationPane.lookup("#"
-										+ newPos);
-								Circle to = (Circle) animationPane.lookup("#"
-										+ track.get(i).getId());
+								String newPos = "move" + (char) ('A' + j) + (k + 1);
+								Circle from = (Circle) animationPane.lookup("#" + newPos);
+								Circle to = (Circle) animationPane.lookup("#" + track.get(i).getId());
 
 								if (from != null && to != null) {
 									marbleToCellMap.put(from, to);
@@ -606,45 +579,33 @@ public class BoardController {
 	}
 
 	private void continueGameLoop() {
-
 		setCurrentPlayerLabel();
 		setNextPlayerLabel();
-		totalTurns++;
 
-		if (game.checkWin() != null) {// someone won
-			stopTimer();
+		if (game.checkWin() != null) {
+			SceneConfig.getInstance().setWinnerName(game.checkWin(), players.get(0).getColour());
+			Controller controller = SceneConfig.getInstance().getEndScreenController();
 
-			SceneConfig.getInstance().setWinnerName(game.checkWin(),
-					players.get(0).getColour());
-
-			SceneConfig.getInstance().setStatistics(timeElapsedInSeconds,
-					totalDiscards, totalTraps, totalTurns);
-
-			Controller controller = SceneConfig.getInstance()
-					.getEndScreenController();
+			// controller.setUpEndScreen();
 
 			// Play the first sound
-			SoundManager.getInstance().playSoundOnce(
-					"/view/assets/audio/GameOverVoiceOver.mp3");
+			SoundManager.getInstance().playSoundOnce("/view/assets/audio/GameOverVoiceOver.mp3");
 
 			// Schedule the second sound to play 1 second later
 			PauseTransition delay = new PauseTransition(Duration.seconds(1));
 			delay.setOnFinished(event -> {
-				SoundManager.getInstance().playSoundOnce(
-						"/view/assets/audio/GameOverSoundEffect.mp3");
+				SoundManager.getInstance().playSoundOnce("/view/assets/audio/GameOverSoundEffect.mp3");
 			});
 			delay.play();
 
 			// Fade out the current pane
-			FadeTransition fadeOut = new FadeTransition(Duration.millis(2000),
-					animationPane);
+			FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), animationPane);
 			fadeOut.setFromValue(1.0);
 			fadeOut.setToValue(0.0);
 			fadeOut.setOnFinished(e -> {
 				Parent root = SceneConfig.getInstance().getEndScene();
 
-				controller.updateWinner(game.checkWin(), players.get(0)
-						.getColour());
+				controller.updateWinner(game.checkWin(), players.get(0).getColour());
 				controller.playFadeIn();
 
 				Stage stage = (Stage) animationPane.getScene().getWindow();
@@ -657,11 +618,11 @@ public class BoardController {
 
 		Colour curPlayer = game.getActivePlayerColour();
 		currentPlayerIndex = getIndex(players, curPlayer);
+		System.out.println("Active player abn algazmha ahoooo: " + currentPlayerIndex);
 
 		if (!game.canPlayTurn()) {
-
+			System.out.println(currentPlayerIndex + " cannot play. Skipping turn.");
 			if (currentPlayerIndex == 0) {
-				totalDiscards++;// increase total player discards
 				disablePlayerButtons();
 			}
 
@@ -690,15 +651,15 @@ public class BoardController {
 				skippedPlayerGridPane = null;
 				skippedPlayerStackPane = null;
 			}
-
+			System.out.println(currentPlayerIndex);
+			System.out.println(players.get(currentPlayerIndex).getColour());
 			visualizeSkippedTurn(skippedPlayerGridPane, skippedPlayerStackPane);
 			// Wait before showing animation or calling Change_Track
 			PauseTransition delay = new PauseTransition(Duration.seconds(2));
 			delay.setOnFinished(event -> {
 
 				// add popup you got hacked ..... skip
-				PauseTransition postAnimationDelay = new PauseTransition(
-						Duration.seconds(2));
+				PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
 				postAnimationDelay.setOnFinished(e -> {
 					game.endPlayerTurn();
 					Platform.runLater(this::continueGameLoop);
@@ -729,8 +690,7 @@ public class BoardController {
 			delay.setOnFinished(event -> {
 				game.endPlayerTurn();
 				updateBoard();
-				PauseTransition postAnimationDelay = new PauseTransition(
-						Duration.seconds(2));
+				PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
 				postAnimationDelay.setOnFinished(e -> {
 					Platform.runLater(this::continueGameLoop);
 				});
@@ -742,8 +702,7 @@ public class BoardController {
 		} catch (GameException ee) {
 			ee.printStackTrace();
 			game.endPlayerTurn();
-			PauseTransition postAnimationDelay = new PauseTransition(
-					Duration.seconds(2));
+			PauseTransition postAnimationDelay = new PauseTransition(Duration.seconds(2));
 			updateCpuHand();
 			updatePlayerHand();
 			postAnimationDelay.setOnFinished(e -> {
@@ -802,38 +761,26 @@ public class BoardController {
 				switch (cellPositionOfMarble.getId().charAt(1)) {
 				case 'A': // home cell (m+player+number), player would be A
 					if (game.getPlayers().get(0).getMarbles().size() != 0) {
-						curMarble = game
-								.getPlayers()
-								.get(0)
-								.getMarbles()
+						curMarble = game.getPlayers().get(0).getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
 					break;
 				case 'B':
 					if (game.getPlayers().get(1).getMarbles().size() != 0) {
-						curMarble = game
-								.getPlayers()
-								.get(1)
-								.getMarbles()
+						curMarble = game.getPlayers().get(1).getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
 					break;
 				case 'C':
 					if (game.getPlayers().get(2).getMarbles().size() != 0) {
-						curMarble = game
-								.getPlayers()
-								.get(2)
-								.getMarbles()
+						curMarble = game.getPlayers().get(2).getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 
 					}
 					break;
 				case 'D':
 					if (game.getPlayers().get(3).getMarbles().size() != 0) {
-						curMarble = game
-								.getPlayers()
-								.get(3)
-								.getMarbles()
+						curMarble = game.getPlayers().get(3).getMarbles()
 								.get((cellPositionOfMarble.getId().charAt(2) - '0') - 1);
 					}
 					break;
@@ -848,15 +795,12 @@ public class BoardController {
 						}
 					}
 					System.out.println(cellPositionOfMarble.getId());
-					curMarble = playerSafeZone
-							.getCells()
-							.get((cellPositionOfMarble.getId().charAt(5) - '0') - 1)
+					curMarble = playerSafeZone.getCells().get((cellPositionOfMarble.getId().charAt(5) - '0') - 1)
 							.getMarble();
 					break;
 				default: // marble is on track
 					// get cell number from id (m+number)
-					String positionString = cellPositionOfMarble.getId()
-							.substring(1);
+					String positionString = cellPositionOfMarble.getId().substring(1);
 					int num = Integer.parseInt(positionString);
 					curMarble = game.getBoard().getTrack().get(num).getMarble();
 				}
@@ -879,10 +823,8 @@ public class BoardController {
 
 		} catch (Exception e) {
 			SoundManager.getInstance().playSound("errorSoundEffect");
-			view.exception.Controller exceptionController = SceneConfig
-					.getInstance().getExceptionController();
-			exceptionController.exceptionPopUp(e, animationPane,
-					selectedCardImageView, game);
+			view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
+			exceptionController.exceptionPopUp(e, animationPane, selectedCardImageView, game);
 			game.deselectAll(); // deselct from back-end
 			deselectAllMarbles(); // deselect animation
 			Platform.runLater(this::continueGameLoop);
@@ -930,18 +872,12 @@ public class BoardController {
 
 		// Load marble images
 		Map<Colour, Image> marbleImages = new HashMap<>();
-		marbleImages.put(
-				Colour.BLUE,
-				new Image(getClass().getResourceAsStream(
-						"/view/assests/scene/BlueMarble.png")));
-		marbleImages.put(Colour.GREEN, new Image(getClass()
-				.getResourceAsStream("/view/assests/scene/GreenMarble.png")));
-		marbleImages.put(Colour.YELLOW, new Image(getClass()
-				.getResourceAsStream("/view/assests/scene/YellowMarble.png")));
-		marbleImages.put(
-				Colour.RED,
-				new Image(getClass().getResourceAsStream(
-						"/view/assests/scene/RedMarble.png")));
+		marbleImages.put(Colour.BLUE, new Image(getClass().getResourceAsStream("/view/assests/scene/BlueMarble.png")));
+		marbleImages.put(Colour.GREEN,
+				new Image(getClass().getResourceAsStream("/view/assests/scene/GreenMarble.png")));
+		marbleImages.put(Colour.YELLOW,
+				new Image(getClass().getResourceAsStream("/view/assests/scene/YellowMarble.png")));
+		marbleImages.put(Colour.RED, new Image(getClass().getResourceAsStream("/view/assests/scene/RedMarble.png")));
 
 		for (Node node : animationPane.getChildren()) {
 			if (node instanceof Circle) {
@@ -951,13 +887,10 @@ public class BoardController {
 					char who = id.charAt(4);
 					int index = who - 'A'; // A->0, B->1, etc.
 
-					Image marbleImage = marbleImages
-							.getOrDefault(
-									index >= 0
-											&& index < colourOrderArrayList
-													.size() ? colourOrderArrayList
-											.get(index) : Colour.BLUE, // fallback
-									marbleImages.get(Colour.BLUE));
+					Image marbleImage = marbleImages.getOrDefault(
+							index >= 0 && index < colourOrderArrayList.size() ? colourOrderArrayList.get(index)
+									: Colour.BLUE, // fallback
+							marbleImages.get(Colour.BLUE));
 
 					circle.setFill(new ImagePattern(marbleImage));
 					circle.setStroke(Color.TRANSPARENT);
@@ -968,17 +901,14 @@ public class BoardController {
 					if (mapNode instanceof Circle) {
 						marbleToCellMap.put(circle, (Circle) mapNode);
 					} else {
-						System.out
-								.println("Could not find target circle for ID: "
-										+ posId);
+						System.out.println("Could not find target circle for ID: " + posId);
 					}
 				}
 
 				// Reset fill for other circles marked A-D
 				if (circle.getId() != null && circle.getId().length() > 1) {
 					char playerChar = circle.getId().charAt(1);
-					if (playerChar == 'A' || playerChar == 'B'
-							|| playerChar == 'C' || playerChar == 'D') {
+					if (playerChar == 'A' || playerChar == 'B' || playerChar == 'C' || playerChar == 'D') {
 						circle.setFill(Color.TRANSPARENT);
 						circle.setStroke(Color.TRANSPARENT);
 					}
@@ -988,8 +918,7 @@ public class BoardController {
 
 		// Map each label to its player’s color
 		Label[] bases = { basePlayer1, basePlayer2, basePlayer3, basePlayer4 };
-		Label[] indicators = { colorPlayer1, colorPlayer2, colorPlayer3,
-				colorPlayer4 };
+		Label[] indicators = { colorPlayer1, colorPlayer2, colorPlayer3, colorPlayer4 };
 		for (int i = 0; i < colourOrderArrayList.size() && i < bases.length; i++) {
 			Colour colour = colourOrderArrayList.get(i);
 			Color textFill;
@@ -1048,11 +977,19 @@ public class BoardController {
 		}
 		return -1;
 	}
+	
+	@FXML
+	private ImageView firepitImage;
+	private void updatePit() {
+//		if (game.getFirePit().isEmpty())
+//			return;
+//		ArrayList<Card> firePit = game.getFirePit();
+//		firepitImage.setImage(getCardImage(firePit.get(firePit.size() - 1)));
+	}
 
 	private void setSafeZones() {
 		for (Node node : animationPane.getChildren()) {
-			if (node instanceof Circle && node.getId() != null
-					&& node.getId().startsWith("safe")) {
+			if (node instanceof Circle && node.getId() != null && node.getId().startsWith("safe")) {
 				((Circle) node).setFill(Color.TRANSPARENT);
 			}
 		}
@@ -1084,8 +1021,7 @@ public class BoardController {
 				track.add(circle); // Add to your track list
 			} else {
 				// Debugging: If the circle doesn't exist, print a warning
-				System.out.println("Warning: Circle with fx:id m" + i
-						+ " not found.");
+				System.out.println("Warning: Circle with fx:id m" + i + " not found.");
 			}
 		}
 	}
@@ -1095,12 +1031,10 @@ public class BoardController {
 		double circle2Radius = circle2.getRadius();
 		double scaleFactor = circle2Radius / circle1Radius;
 
-		ScaleTransition scaleTransition = new ScaleTransition(
-				Duration.seconds(1.5), circle1);
+		ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1.5), circle1);
 		scaleTransition.setToX(scaleFactor);
 		scaleTransition.setToY(scaleFactor);
-		scaleTransition
-				.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
+		scaleTransition.setInterpolator(javafx.animation.Interpolator.EASE_BOTH);
 
 		return scaleTransition;
 	}
@@ -1114,8 +1048,7 @@ public class BoardController {
 		double targetY = y.getLayoutY();
 
 		// Create translation animation
-		TranslateTransition move = new TranslateTransition(
-				Duration.millis(1500), x); // match duration
+		TranslateTransition move = new TranslateTransition(Duration.millis(1500), x); // match duration
 		move.setToX(targetX - x.getLayoutX());
 		move.setToY(targetY - x.getLayoutY());
 
@@ -1184,14 +1117,12 @@ public class BoardController {
 	// Setting up names & set current and next player
 
 	// you need to initialize these values, get players from game
-	private ArrayList<String> cpuNames = new ArrayList<>(
-			Arrays.asList(
+	private ArrayList<String> cpuNames = new ArrayList<>(Arrays.asList(
 
-					// Serious / Intellectual
-					"Turing", "AdaNova", "Hypatia", "NeuroLynx", "Euler",
-					// Funny / Meme-worthy
-					"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "Meow",
-					"NotABot"));
+			// Serious / Intellectual
+			"Turing", "AdaNova", "Hypatia", "NeuroLynx", "Euler",
+			// Funny / Meme-worthy
+			"Hamoksha", "Balabizo", "Botzilla", "CPU-nicorn", "Meow", "NotABot"));
 
 	// Called from outside the class
 	public void assignNames(String playerName) {
@@ -1302,8 +1233,7 @@ public class BoardController {
 			card.setOnMouseClicked(event -> {
 				if (event.getButton() == MouseButton.PRIMARY) {
 					SoundManager.getInstance().playSound("Card_Selection");
-					boolean alreadySelected = selectedCardID != null
-							&& selectedCardID.equals(card.getId());
+					boolean alreadySelected = selectedCardID != null && selectedCardID.equals(card.getId());
 
 					if (alreadySelected) {
 						// Deselect all cards
@@ -1326,8 +1256,7 @@ public class BoardController {
 							if (isSelected) {
 								// if the selected card is a seven, make the
 								// controller visible
-								if (GenericController.getCardRank(c,
-										currentPlayerIndex, game) == 7)
+								if (GenericController.getCardRank(c, currentPlayerIndex, game) == 7)
 									splitDistanceAnchorPane.setVisible(true);
 								else
 									// deselected the 7 by clicking on another
@@ -1335,25 +1264,21 @@ public class BoardController {
 									splitDistanceAnchorPane.setVisible(false);
 								selectedCardID = c.getId();
 								selectedCardImageView = c;
-								System.out.println("Selected card ID: "
-										+ selectedCardID);
+								System.out.println("Selected card ID: " + selectedCardID);
 							}
 						}
 					}
 				} else if (event.getButton() == MouseButton.SECONDARY) {
 					// Right-click: show description
-					view.description.Controller controller = SceneConfig
-							.getInstance().getDescriptionController();
-					controller.showCardDescription(event, card,
-							currentPlayerIndex, game);
+					view.description.Controller controller = SceneConfig.getInstance().getDescriptionController();
+					controller.showCardDescription(event, card, currentPlayerIndex, game);
 				}
 			});
 		}
 	}
 
 	private void selectCard(ImageView card, boolean select) {
-		TranslateTransition tt = new TranslateTransition(Duration.millis(150),
-				card);
+		TranslateTransition tt = new TranslateTransition(Duration.millis(150), card);
 		tt.setToY(select ? -15 : 0); // Move up if selected, reset if not
 		tt.play();
 
@@ -1370,8 +1295,7 @@ public class BoardController {
 
 	private void deselectAllCards(ImageView[] cards) {
 		for (ImageView card : cards) {
-			TranslateTransition tt = new TranslateTransition(
-					Duration.millis(150), card);
+			TranslateTransition tt = new TranslateTransition(Duration.millis(150), card);
 			tt.setToY(0); // Move up if selected, reset if not
 			tt.play();
 			card.setEffect(null);
@@ -1408,8 +1332,7 @@ public class BoardController {
 	@FXML
 	private void splitDistanceOkButtonOnClick() {
 		SoundManager.getInstance().playSound("button_click");
-		game.getBoard().setSplitDistance(
-				Integer.parseInt(splitDistanceLabel1.getText()));
+		game.getBoard().setSplitDistance(Integer.parseInt(splitDistanceLabel1.getText()));
 		splitDistanceAnchorPane.setVisible(false);
 	}
 
@@ -1430,18 +1353,14 @@ public class BoardController {
 
 	@FXML
 	private void skipTurnButtonOnClick() throws Exception {
-		if (game.getActivePlayerColour() != game.getPlayers().get(0)
-				.getColour())
+		if (game.getActivePlayerColour() != game.getPlayers().get(0).getColour())
 			return;
 		if (selectedCardImageView == null) {
 			SoundManager.getInstance().playSound("errorSoundEffect");
-			view.exception.Controller exceptionController = SceneConfig
-					.getInstance().getExceptionController();
-			exceptionController
-					.exceptionPopUp(
-							new Exception(
-									"You must first choose a card to sacrifice before you can pass the turn."),
-							animationPane, selectedCardImageView, game);
+			view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
+			exceptionController.exceptionPopUp(
+					new Exception("You must first choose a card to sacrifice before you can pass the turn."),
+					animationPane, selectedCardImageView, game);
 		} else {
 			// Link card selected from GUI to back end
 			Card card = null;
@@ -1482,8 +1401,7 @@ public class BoardController {
 
 	@FXML
 	private void fieldMarbleShortcut(KeyEvent event) {
-		ArrayList<Marble> homeMarbles = players.get(currentPlayerIndex)
-				.getMarbles();
+		ArrayList<Marble> homeMarbles = players.get(currentPlayerIndex).getMarbles();
 
 		int Num = 6;
 		Circle CurMarble = null;
@@ -1506,26 +1424,21 @@ public class BoardController {
 				if (homeMarbles.get(i) != null) {
 					try {
 						game.fieldMarble();
-						updateBoard();
-						PauseTransition delay = new PauseTransition(
-								Duration.seconds(2));
-						delay.setOnFinished(ae -> Platform
-								.runLater(this::continueGameLoop));
+						Change_Track();
+						PauseTransition delay = new PauseTransition(Duration.seconds(2));
+						delay.setOnFinished(ae -> Platform.runLater(this::continueGameLoop));
 						delay.play();
 
 					} catch (Exception e) {
-						view.exception.Controller exceptionController = SceneConfig
-								.getInstance().getExceptionController();
-						exceptionController.exceptionPopUp(e, animationPane,
-								selectedCardImageView, game);
+						view.exception.Controller exceptionController = SceneConfig.getInstance()
+								.getExceptionController();
+						exceptionController.exceptionPopUp(e, animationPane, selectedCardImageView, game);
 					}
 					return;
 				}
 			}
-			view.exception.Controller exceptionController = SceneConfig
-					.getInstance().getExceptionController();
-			exceptionController.exceptionPopUp(new Exception(
-					"No marbles to field"), animationPane,
+			view.exception.Controller exceptionController = SceneConfig.getInstance().getExceptionController();
+			exceptionController.exceptionPopUp(new Exception("No marbles to field"), animationPane,
 					selectedCardImageView, game);
 		}
 	}
@@ -1591,13 +1504,11 @@ public class BoardController {
 	@FXML
 	private AnchorPane skippedPaneP4;
 
-	private void visualizeSkippedTurn(GridPane playerGrid,
-			AnchorPane overlayPane) {
+	private void visualizeSkippedTurn(GridPane playerGrid, AnchorPane overlayPane) {
 		SoundManager.getInstance().playSound("skipTurnSound");
 
 		// === 1. Shake Animation ===
-		TranslateTransition shake = new TranslateTransition(
-				Duration.millis(80), playerGrid);
+		TranslateTransition shake = new TranslateTransition(Duration.millis(80), playerGrid);
 		shake.setFromX(-8);
 		shake.setToX(8);
 		shake.setCycleCount(6); // 3 full shakes
@@ -1606,150 +1517,39 @@ public class BoardController {
 
 		// === 2. Create Neon "SKIPPED" Label ===
 		Label skippedLabel = new Label("SKIPPED");
-		skippedLabel
-				.setStyle("-fx-text-fill: linear-gradient(to bottom, #222, #000);"
-						+ // Neon black theme
-						"-fx-font-size: 40px;"
-						+ // Increased font size
-						"-fx-font-weight: bold;"
-						+ "-fx-effect: dropshadow(gaussian, #FFFFFF, 8, 0.3, 0, 0);"
-						+ // Cyan glow
-						"-fx-background-color: transparent;");
+		skippedLabel.setStyle("-fx-text-fill: linear-gradient(to bottom, #222, #000);" + // Neon black theme
+				"-fx-font-size: 40px;" + // Increased font size
+				"-fx-font-weight: bold;" + "-fx-effect: dropshadow(gaussian, #FFFFFF, 8, 0.3, 0, 0);" + // Cyan glow
+				"-fx-background-color: transparent;");
 		skippedLabel.setOpacity(0); // Start invisible
 
 		overlayPane.getChildren().add(skippedLabel);
 		StackPane.setAlignment(skippedLabel, Pos.CENTER);
 
 		// === 3. Fade In and Out Animation ===
-		FadeTransition fadeIn = new FadeTransition(Duration.millis(300),
-				skippedLabel);
+		FadeTransition fadeIn = new FadeTransition(Duration.millis(300), skippedLabel);
 		fadeIn.setFromValue(0);
 		fadeIn.setToValue(1);
 
 		PauseTransition stay = new PauseTransition(Duration.seconds(3.5));
 
-		FadeTransition fadeOut = new FadeTransition(Duration.millis(400),
-				skippedLabel);
+		FadeTransition fadeOut = new FadeTransition(Duration.millis(400), skippedLabel);
 		fadeOut.setFromValue(1);
 		fadeOut.setToValue(0);
 
 		// === 4. Remove label after fade out ===
-		fadeOut.setOnFinished(e -> overlayPane.getChildren().remove(
-				skippedLabel));
+		fadeOut.setOnFinished(e -> overlayPane.getChildren().remove(skippedLabel));
 
 		// === 5. Temporarily dim the player grid ===
-		Timeline dim = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(
-				playerGrid.opacityProperty(), 1.0)), new KeyFrame(
-				Duration.seconds(0.25), new KeyValue(
-						playerGrid.opacityProperty(), 0.4)), // fade to dim
-				new KeyFrame(Duration.seconds(4), new KeyValue(
-						playerGrid.opacityProperty(), 0.4)), // stay dimmed
-				new KeyFrame(Duration.seconds(4.25), new KeyValue(
-						playerGrid.opacityProperty(), 1.0)) // fade back
+		Timeline dim = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(playerGrid.opacityProperty(), 1.0)),
+				new KeyFrame(Duration.seconds(0.25), new KeyValue(playerGrid.opacityProperty(), 0.4)), // fade to dim
+				new KeyFrame(Duration.seconds(4), new KeyValue(playerGrid.opacityProperty(), 0.4)), // stay dimmed
+				new KeyFrame(Duration.seconds(4.25), new KeyValue(playerGrid.opacityProperty(), 1.0)) // fade back
 		);
 		dim.play();
 
 		// === 6. Play label animation sequence ===
-		SequentialTransition sequence = new SequentialTransition(fadeIn, stay,
-				fadeOut);
-		sequence.play();
-	}
-
-	// stats resources
-
-	private int totalTurns;
-	private static int totalTraps;
-	private int totalDiscards;
-	private int timeElapsedInSeconds;
-	private Timeline timer;
-
-	private static Colour realPlayerColour;
-
-	private void startTimer() {
-
-		timeElapsedInSeconds = 0;
-
-		timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-			timeElapsedInSeconds++;
-			// Optional: update UI label here if needed
-			}));
-		timer.setCycleCount(Timeline.INDEFINITE);
-		timer.play();
-	}
-
-	private void stopTimer() {
-		if (timer != null) {
-			timer.stop();
-		}
-	}
-
-	public static void incrementTotalTrapsIfPlayer(Colour colour) {
-		if (colour == realPlayerColour)
-			;
-		totalTraps++;
-	}
-
-	public void visualizeTrap(Cell targetCell) {
-		// Animate the cell to change and then go back
-		ArrayList<Cell> track = game.getBoard().getTrack();
-		int pos = -1;
-		for (int i = 0; i < track.size(); i++) {
-			if (targetCell == track.get(i)) {
-				pos = i;
-				return;
-			}
-		}
-		// Get FXID of cell 
-		
-		// Animate cell 
-		
-
-		// Play Trap sound effect
-		SoundManager.getInstance().playSound("trapSoundEffect");
-
-		// Create the "TRAPPED" label
-		Label trappedLabel = new Label("TRAPPED");
-		trappedLabel.setStyle("-fx-font-size: 50px;" + "-fx-text-fill: red;"
-				+ "-fx-font-weight: bold;"
-				+ "-fx-effect: dropshadow(gaussian, white, 15, 0.5, 0, 0);");
-
-		// Set initial opacity to 0 for animation
-		trappedLabel.setOpacity(0);
-
-		// Add it to the pane before binding to ensure proper layout
-		pitPane.getChildren().add(trappedLabel);
-
-		// Bind to center of the pane
-		trappedLabel.layoutXProperty().bind(
-				pitPane.widthProperty().subtract(trappedLabel.widthProperty())
-						.divide(2));
-		trappedLabel.layoutYProperty().bind(
-				pitPane.heightProperty()
-						.subtract(trappedLabel.heightProperty()).divide(2));
-
-		// Create fade-in animation
-		FadeTransition fadeIn = new FadeTransition(Duration.millis(300),
-				trappedLabel);
-		fadeIn.setFromValue(0.0);
-		fadeIn.setToValue(1.0);
-
-		// Pause in the middle
-		PauseTransition stay = new PauseTransition(Duration.seconds(1.5));
-
-		// Create fade-out animation
-		FadeTransition fadeOut = new FadeTransition(Duration.millis(500),
-				trappedLabel);
-		fadeOut.setFromValue(1.0);
-		fadeOut.setToValue(0.0);
-
-		// Chain the animations
-		SequentialTransition sequence = new SequentialTransition(fadeIn, stay,
-				fadeOut);
-		sequence.setOnFinished(e -> pitPane.getChildren().remove(trappedLabel)); // Clean
-																					// up
-																					// after
-
-		// Start the animation
+		SequentialTransition sequence = new SequentialTransition(fadeIn, stay, fadeOut);
 		sequence.play();
 	}
 
