@@ -34,6 +34,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -1696,16 +1697,63 @@ public class BoardController {
 		for (int i = 0; i < track.size(); i++) {
 			if (targetCell == track.get(i)) {
 				pos = i;
-				return;
+				break;
 			}
 		}
-		// Get FXID of cell 
-		
-		// Animate cell 
-		
 
-		// Play Trap sound effect
+
+		// Get FXID of cell
+		String fxid = "m" + pos;
+		Circle targetCircle = (Circle) animationPane.lookup("#" + fxid);
+
+		// Animate cell
+
+		if (targetCircle == null)
+			return;
+
+		// Load the image as pattern fill
+		Image image = new Image(getClass().getResource("/view/assets/neonAbyss.png")
+				.toExternalForm());
+		ImagePattern pattern = new ImagePattern(image);
+
+		// Apply the pattern (you can store the old fill if you want to restore
+		// later)
+		Paint originalFill = targetCircle.getFill();
+		targetCircle.setFill(pattern);
+
+		// Fade in
+		FadeTransition fadeIn = new FadeTransition(Duration.millis(500),
+				targetCircle);
+		fadeIn.setFromValue(0);
+		fadeIn.setToValue(1);
+
+		// Shake animation (translate X back and forth)
+		TranslateTransition shake = new TranslateTransition(
+				Duration.millis(200), targetCircle);
+		shake.setByX(5);
+		shake.setAutoReverse(true);
+		shake.setCycleCount(6); // 3 left-right shakes
+
+		// Fade out
+		FadeTransition fadeOut = new FadeTransition(Duration.millis(400),
+				targetCircle);
+		fadeOut.setFromValue(1);
+		fadeOut.setToValue(0);
+
+		// Restore fill after fadeOut
+		fadeOut.setOnFinished(e -> {
+			targetCircle.setFill(originalFill);
+			targetCircle.setOpacity(1); // restore visibility
+		});
+
+		// Play trap sound (if applicable)
 		SoundManager.getInstance().playSound("trapSoundEffect");
+
+		// Sequential + parallel transitions
+		SequentialTransition sequence = new SequentialTransition(fadeIn,
+				new ParallelTransition(shake), fadeOut);
+
+		sequence.play();
 
 		// Create the "TRAPPED" label
 		Label trappedLabel = new Label("TRAPPED");
@@ -1728,29 +1776,29 @@ public class BoardController {
 						.subtract(trappedLabel.heightProperty()).divide(2));
 
 		// Create fade-in animation
-		FadeTransition fadeIn = new FadeTransition(Duration.millis(300),
+		FadeTransition fadeIn2 = new FadeTransition(Duration.millis(300),
 				trappedLabel);
-		fadeIn.setFromValue(0.0);
-		fadeIn.setToValue(1.0);
+		fadeIn2.setFromValue(0.0);
+		fadeIn2.setToValue(1.0);
 
 		// Pause in the middle
 		PauseTransition stay = new PauseTransition(Duration.seconds(1.5));
 
 		// Create fade-out animation
-		FadeTransition fadeOut = new FadeTransition(Duration.millis(500),
+		FadeTransition fadeOut2 = new FadeTransition(Duration.millis(500),
 				trappedLabel);
-		fadeOut.setFromValue(1.0);
-		fadeOut.setToValue(0.0);
+		fadeOut2.setFromValue(1.0);
+		fadeOut2.setToValue(0.0);
 
 		// Chain the animations
-		SequentialTransition sequence = new SequentialTransition(fadeIn, stay,
-				fadeOut);
-		sequence.setOnFinished(e -> pitPane.getChildren().remove(trappedLabel)); // Clean
+		SequentialTransition sequence2 = new SequentialTransition(fadeIn2, stay,
+				fadeOut2);
+		sequence2.setOnFinished(e -> pitPane.getChildren().remove(trappedLabel)); // Clean
 																					// up
 																					// after
 
 		// Start the animation
-		sequence.play();
+		sequence2.play();
 	}
 
 }
