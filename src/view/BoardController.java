@@ -333,8 +333,8 @@ public class BoardController {
 	    double offsY = 0;       // –10px…+10px
 	    // 6) Compute translation to center of pitPane + offset
 	    Bounds pitBounds = pitPane.getLayoutBounds();
-	    double targetX = (pitBounds.getWidth() / 2)-(sourceSlot.getFitWidth()/2)  + offsX;
-	    double targetY = (pitBounds.getHeight() / 2)-(sourceSlot.getFitHeight()/2) + offsY;
+	    double targetX = (pitBounds.getWidth() / 2)  + offsX;
+	    double targetY = (pitBounds.getHeight() / 2) + offsY;
 
 	    // 7) Build the move + rotate + fade (optional) animation
 	    TranslateTransition tt = new TranslateTransition(Duration.millis(800), ghost);
