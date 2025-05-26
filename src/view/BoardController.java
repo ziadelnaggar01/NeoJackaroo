@@ -267,7 +267,7 @@ public class BoardController {
 	@FXML
 	private Pane pitPane;
 
-	private static final int MAX_PIT_CARDS = 102;
+	private static final int MAX_PIT_CARDS = 16;
 	private final Random rnd = new Random();
 
 	/**
