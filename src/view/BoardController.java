@@ -1700,6 +1700,10 @@ public class BoardController {
 		sequence.play();
 	}
 
+	
+	@FXML
+	private AnchorPane trappedLabelPane;
+	
 	public void visualizeTrap(Cell targetCell) {
 		// Animate the cell to change and then go back
 		ArrayList<Cell> track = game.getBoard().getTrack();
@@ -1727,14 +1731,14 @@ public class BoardController {
 		trappedLabel.setOpacity(0);
 
 		// Add it to the pane before binding to ensure proper layout
-		pitPane.getChildren().add(trappedLabel);
+		trappedLabelPane.getChildren().add(trappedLabel);
 
 		// Bind to center of the pane
 		trappedLabel.layoutXProperty().bind(
-				pitPane.widthProperty().subtract(trappedLabel.widthProperty())
+				trappedLabelPane.widthProperty().subtract(trappedLabel.widthProperty())
 						.divide(2));
 		trappedLabel.layoutYProperty().bind(
-				pitPane.heightProperty()
+				trappedLabelPane.heightProperty()
 						.subtract(trappedLabel.heightProperty()).divide(2));
 
 		// Create fade-in animation
@@ -1755,7 +1759,7 @@ public class BoardController {
 		// Chain the animations
 		SequentialTransition sequence = new SequentialTransition(fadeIn, stay,
 				fadeOut);
-		sequence.setOnFinished(e -> pitPane.getChildren().remove(trappedLabel)); // Clean
+		sequence.setOnFinished(e -> trappedLabelPane.getChildren().remove(trappedLabel)); // Clean
 																					// up
 																					// after
 

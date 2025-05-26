@@ -653,6 +653,9 @@
             </Label>
          </children>
       </AnchorPane>
-      <Pane fx:id="pitPane" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Pane fx:id="pitPane" mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane fx:id="trappedLabelPane" layoutX="860.0" layoutY="440.0" prefHeight="200.0" prefWidth="200.0" />
+         </children></Pane>
    </children>
 </AnchorPane>
