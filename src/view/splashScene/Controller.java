@@ -18,6 +18,7 @@ import controller.SoundManager;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.media.Media;
+
 public class Controller {
 	@FXML
 	private MediaView mediaView;
@@ -43,16 +44,22 @@ public class Controller {
 
 		// 2) Kick off FXML preload in background
 		Task<Void> preload = new Task<Void>() {
-		    @Override
-		    protected Void call() {
-		        SceneConfig.getInstance(); // loads all scenes
-		        SoundManager.getInstance().preloadSound("button_click", "/view/assets/audio/button click.mp3");
-		        SoundManager.getInstance().preloadSound("Marble_Selection", "/view/assets/audio/Marble Selection.mp3");
-		        SoundManager.getInstance().preloadSound("Card_Selection", "/view/assets/audio/Card Selection.mp3");
-		        SoundManager.getInstance().preloadSound("errorSoundEffect", "/view/assests/sound/errorSoundEffect.mp3");
-		        SoundManager.getInstance().preloadSound("skipTurnSound", "/view/assests/sound/skipTurnSound.mp3");
-		        return null;
-		    }
+			@Override
+			protected Void call() {
+				SceneConfig.getInstance(); // loads all scenes
+				SoundManager.getInstance().preloadSound("button_click", "/view/assets/audio/button click.mp3");
+				SoundManager.getInstance().preloadSound("Marble_Selection", "/view/assets/audio/Marble Selection.mp3");
+				SoundManager.getInstance().preloadSound("Card_Selection", "/view/assets/audio/Card Selection.mp3");
+				SoundManager.getInstance().preloadSound("errorSoundEffect", "/view/assests/sound/errorSoundEffect.mp3");
+				SoundManager.getInstance().preloadSound("skipTurnSound", "/view/assests/sound/skipTurnSound.mp3");
+				SoundManager.getInstance().preloadSound("playCardSoundEffect",
+						"/view/assests/sound/playCardSoundEffect.mp3");
+				SoundManager.getInstance().preloadSound("trapSoundEffect", "/view/assests/sound/trapSoundEffect.mp3");
+				SoundManager.getInstance().preloadSound("playCardSoundEffect", "/view/assests/sound/playCardSoundEffect.mp3");
+				SoundManager.getInstance().preloadSound("trapSoundEffect", "/view/assests/sound/trapSoundEffect.mp3");
+
+				return null;
+			}
 		};
 		// When preload finishes, set preloadDone and attempt transition
 		preload.setOnSucceeded(evt -> {
@@ -69,53 +76,55 @@ public class Controller {
 	 * Only when both preload and video are done will this actually switch
 	 */
 	private void attemptSwitch(MediaPlayer player) {
-	    if (!preloadDone || !videoDone) return;
+		if (!preloadDone || !videoDone)
+			return;
 
-	    Platform.runLater(() -> {
-	        try {
-	            Stage stage = (Stage) mediaView.getScene().getWindow();
+		Platform.runLater(() -> {
+			try {
+				Stage stage = (Stage) mediaView.getScene().getWindow();
 
-	            // 1. Flash to white overlay
-	            Parent videoRoot = mediaView.getScene().getRoot();
-	            Region whiteFlash = new Region();
-	            whiteFlash.setStyle("-fx-background-color: white;");
-	            whiteFlash.setOpacity(0);
-	            whiteFlash.setPrefSize(videoRoot.getBoundsInParent().getWidth(), videoRoot.getBoundsInParent().getHeight());
+				// 1. Flash to white overlay
+				Parent videoRoot = mediaView.getScene().getRoot();
+				Region whiteFlash = new Region();
+				whiteFlash.setStyle("-fx-background-color: white;");
+				whiteFlash.setOpacity(0);
+				whiteFlash.setPrefSize(videoRoot.getBoundsInParent().getWidth(),
+						videoRoot.getBoundsInParent().getHeight());
 
-	            ((Pane) videoRoot).getChildren().add(whiteFlash);
+				((Pane) videoRoot).getChildren().add(whiteFlash);
 
-	            FadeTransition flash = new FadeTransition(Duration.millis(150), whiteFlash);
-	            flash.setFromValue(0);
-	            flash.setToValue(1);
-	            flash.setOnFinished(e -> {
-	                // 2. Stop video and audio after flash
-	                player.stop();
+				FadeTransition flash = new FadeTransition(Duration.millis(150), whiteFlash);
+				flash.setFromValue(0);
+				flash.setToValue(1);
+				flash.setOnFinished(e -> {
+					// 2. Stop video and audio after flash
+					player.stop();
 
-	                // 3. Start background music with fade-in
-	                MusicManager.getInstance().playMusic("/view/assets/audio/Digital Voyage - Twin Musicom.mp3");
-	                MusicManager.getInstance().getMediaPlayer().setVolume(0); // start silent
+					// 3. Start background music with fade-in
+					MusicManager.getInstance().playMusic("/view/assets/audio/Digital Voyage - Twin Musicom.mp3");
+					MusicManager.getInstance().getMediaPlayer().setVolume(0); // start
+																				// silent
 
-	                Timeline volumeUp = new Timeline(
-	                    new KeyFrame(Duration.seconds(0.5), new KeyValue(MusicManager.getInstance().getMediaPlayer().volumeProperty(), 0.75))
-	                );
-	                volumeUp.play();
+					Timeline volumeUp = new Timeline(new KeyFrame(Duration.seconds(0.5),
+							new KeyValue(MusicManager.getInstance().getMediaPlayer().volumeProperty(), 0.75)));
+					volumeUp.play();
 
-	                // 4. Load and fade in start scene
-	                Parent start = SceneConfig.getInstance().getStartScene();
-	                start.setOpacity(0);
-	                stage.getScene().setRoot(start);
+					// 4. Load and fade in start scene
+					Parent start = SceneConfig.getInstance().getStartScene();
+					start.setOpacity(0);
+					stage.getScene().setRoot(start);
 
-	                FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), start);
-	                fadeIn.setFromValue(0);
-	                fadeIn.setToValue(1);
-	                fadeIn.play();
-	            });
+					FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), start);
+					fadeIn.setFromValue(0);
+					fadeIn.setToValue(1);
+					fadeIn.play();
+				});
 
-	            flash.play();
-	        } catch (Exception ex) {
-	            ex.printStackTrace();
-	        }
-	    });
+				flash.play();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		});
 	}
 
 }
