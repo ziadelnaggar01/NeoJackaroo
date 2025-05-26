@@ -30,8 +30,7 @@ public class Controller {
 	@FXML
 	public void initialize() {
 		// 1) Start the video
-		Media media = new Media(getClass().getResource(
-				"/view/assets/hype_video.mp4").toExternalForm());
+		Media media = new Media(getClass().getResource("/view/assets/hype_video.mp4").toExternalForm());
 		MediaPlayer player = new MediaPlayer(media);
 		mediaView.setMediaPlayer(player);
 
@@ -48,20 +47,15 @@ public class Controller {
 			@Override
 			protected Void call() {
 				SceneConfig.getInstance(); // loads all scenes
-				SoundManager.getInstance().preloadSound("button_click",
-						"/view/assets/audio/button click.mp3");
-				SoundManager.getInstance().preloadSound("Marble_Selection",
-						"/view/assets/audio/Marble Selection.mp3");
-				SoundManager.getInstance().preloadSound("Card_Selection",
-						"/view/assets/audio/Card Selection.mp3");
-				SoundManager.getInstance().preloadSound("errorSoundEffect",
-						"/view/assests/sound/errorSoundEffect.mp3");
-				SoundManager.getInstance().preloadSound("skipTurnSound",
-						"/view/assests/sound/skipTurnSound.mp3");
+				SoundManager.getInstance().preloadSound("button_click", "/view/assets/audio/button click.mp3");
+				SoundManager.getInstance().preloadSound("Marble_Selection", "/view/assets/audio/Marble Selection.mp3");
+				SoundManager.getInstance().preloadSound("Card_Selection", "/view/assets/audio/Card Selection.mp3");
+				SoundManager.getInstance().preloadSound("errorSoundEffect", "/view/assests/sound/errorSoundEffect.mp3");
+				SoundManager.getInstance().preloadSound("skipTurnSound", "/view/assests/sound/skipTurnSound.mp3");
 				SoundManager.getInstance().preloadSound("playCardSoundEffect",
 						"/view/assests/sound/playCardSoundEffect.mp3");
-				SoundManager.getInstance().preloadSound("trapSoundEffect",
-						"/view/assests/sound/trapSoundEffect.mp3");
+				SoundManager.getInstance().preloadSound("trapSoundEffect", "/view/assests/sound/trapSoundEffect.mp3");
+				SoundManager.getInstance().preloadSound("playCardSoundEffect", "/view/assests/sound/playCardSoundEffect.mp3");
 
 				return null;
 			}
@@ -93,14 +87,12 @@ public class Controller {
 				Region whiteFlash = new Region();
 				whiteFlash.setStyle("-fx-background-color: white;");
 				whiteFlash.setOpacity(0);
-				whiteFlash.setPrefSize(
-						videoRoot.getBoundsInParent().getWidth(), videoRoot
-								.getBoundsInParent().getHeight());
+				whiteFlash.setPrefSize(videoRoot.getBoundsInParent().getWidth(),
+						videoRoot.getBoundsInParent().getHeight());
 
 				((Pane) videoRoot).getChildren().add(whiteFlash);
 
-				FadeTransition flash = new FadeTransition(Duration.millis(150),
-						whiteFlash);
+				FadeTransition flash = new FadeTransition(Duration.millis(150), whiteFlash);
 				flash.setFromValue(0);
 				flash.setToValue(1);
 				flash.setOnFinished(e -> {
@@ -108,17 +100,12 @@ public class Controller {
 					player.stop();
 
 					// 3. Start background music with fade-in
-					MusicManager
-							.getInstance()
-							.playMusic(
-									"/view/assets/audio/Digital Voyage - Twin Musicom.mp3");
+					MusicManager.getInstance().playMusic("/view/assets/audio/Digital Voyage - Twin Musicom.mp3");
 					MusicManager.getInstance().getMediaPlayer().setVolume(0); // start
 																				// silent
 
-					Timeline volumeUp = new Timeline(new KeyFrame(Duration
-							.seconds(0.5), new KeyValue(MusicManager
-							.getInstance().getMediaPlayer().volumeProperty(),
-							0.75)));
+					Timeline volumeUp = new Timeline(new KeyFrame(Duration.seconds(0.5),
+							new KeyValue(MusicManager.getInstance().getMediaPlayer().volumeProperty(), 0.75)));
 					volumeUp.play();
 
 					// 4. Load and fade in start scene
@@ -126,8 +113,7 @@ public class Controller {
 					start.setOpacity(0);
 					stage.getScene().setRoot(start);
 
-					FadeTransition fadeIn = new FadeTransition(Duration
-							.seconds(1), start);
+					FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), start);
 					fadeIn.setFromValue(0);
 					fadeIn.setToValue(1);
 					fadeIn.play();

@@ -265,6 +265,7 @@ public class BoardController {
 
 	    // 4) Add to pitPane:
 	    pitPane.getChildren().add(ghost);
+	    SoundManager.getInstance().playSound("playCardSoundEffect");
 
 	    // 5) Random final rotation & offset:
 	    double finalRotate = (rnd.nextDouble() * 20) - 90; // –30°…+30°
@@ -326,6 +327,7 @@ public class BoardController {
 
 	    // 4) Add to pitPane:
 	    pitPane.getChildren().add(ghost);
+	    SoundManager.getInstance().playSound("playCardSoundEffect");
 
 	    // 5) Random final rotation & offset:
 	    double finalRotate = (rnd.nextDouble() * 20) - 90; // –30°…+30°
