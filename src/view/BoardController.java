@@ -907,6 +907,10 @@ public class BoardController {
 			// play according to selected cards and selected marbles
 
 			game.playPlayerTurn();
+			if(GenericController.getRank(card) == 14) // burner
+			{
+				SoundManager.getInstance().playSound("burner");
+			}
 			Change_Track(); // Animate human move
 			// sendToPit(selectedCardImageView); // Optional visual logic
 			game.endPlayerTurn();
@@ -1381,9 +1385,17 @@ public class BoardController {
 										currentPlayerIndex, game) == 7)
 									splitDistanceAnchorPane.setVisible(true);
 								else
+								{
 									// deselected the 7 by clicking on another
 									// card
 									splitDistanceAnchorPane.setVisible(false);
+									if(GenericController.getCardRank(c,
+										currentPlayerIndex, game) == 15)//saver
+									{
+										SoundManager.getInstance().playSound("saver");
+									}
+								}
+								
 								selectedCardID = c.getId();
 								selectedCardImageView = c;
 								System.out.println("Selected card ID: "

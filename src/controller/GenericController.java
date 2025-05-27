@@ -106,7 +106,24 @@ public final class GenericController {
 		}
 		return -1;
 	}
+    public static int getRank(Card card)
+    {
+    	if (card instanceof Standard) {
+			Standard card1 = (Standard) card;
+			int rank = card1.getRank();
+			return rank;
 
+		} else if (card instanceof Wild) {
+			if (card instanceof Burner) {
+				int rank = 14;
+				return rank;
+			} else if (card instanceof Saver) {
+				int rank = 15;
+				return rank;
+			}
+		}
+    	return 0;
+    }
 	public static void applyGlowingEffect(Label label) {
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(5);
