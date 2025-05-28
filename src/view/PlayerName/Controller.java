@@ -1,10 +1,11 @@
 package view.PlayerName;
 
+import view.BoardController;
 import controller.GenericController;
-
 import controller.MusicManager;
 import controller.SceneConfig;
 import controller.SoundManager;
+import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -43,10 +44,18 @@ public class Controller {
 			popUpLabel.setText("Please enter a name!");
 			shakeNode(popUpLabel);
 		} else {
+			BoardController controller = SceneConfig.getInstance()
+					.getBoardController();
+
 			Parent root = SceneConfig.getInstance().getGameScene();
-			SceneConfig.getInstance().setPlayerName(nameTextField.getText().trim());
+			SceneConfig.getInstance().setPlayerName(
+					nameTextField.getText().trim());
 			GenericController.switchScene(event, root);
+			controller.fadeIn();
+			SoundManager.getInstance().playSound("startGame");
+
 			MusicManager.getInstance().playMusic("/view/assets/audio/Vibe.mp3");
+
 		}
 	}
 
@@ -59,9 +68,11 @@ public class Controller {
 				shakeNode(popUpLabel);
 			} else {
 				Parent root = SceneConfig.getInstance().getGameScene();
-				SceneConfig.getInstance().setPlayerName(nameTextField.getText().trim());
+				SceneConfig.getInstance().setPlayerName(
+						nameTextField.getText().trim());
 				GenericController.switchScene(event, root);
-				MusicManager.getInstance().playMusic("/view/assets/audio/Vibe.mp3");
+				MusicManager.getInstance().playMusic(
+						"/view/assets/audio/Vibe.mp3");
 			}
 		}
 	}
@@ -69,7 +80,8 @@ public class Controller {
 	// tip
 
 	private void shakeNode(Node node) {
-		TranslateTransition tt = new TranslateTransition(Duration.millis(50), node);
+		TranslateTransition tt = new TranslateTransition(Duration.millis(50),
+				node);
 		tt.setFromX(0);
 		tt.setByX(10);
 		tt.setCycleCount(6);

@@ -40,6 +40,7 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.util.Duration;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
@@ -1857,5 +1858,40 @@ public class BoardController {
 			timer.stop();
 		}
 	}
+	
+	public void fadeIn() {
+	    Parent root = SceneConfig.getInstance().getGameScene();
+	    
+	    // Start invisible and slightly smaller
+	    root.setOpacity(0.0);
+	    root.setScaleX(0.96);
+	    root.setScaleY(0.96);
+	    
+	    PauseTransition pause = new PauseTransition(Duration.millis(40));
+	    
+	    // Fade animation
+	    FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.7), root);
+	    fadeIn.setFromValue(0.0);
+	    fadeIn.setToValue(1.0);
+	    fadeIn.setInterpolator(Interpolator.EASE_OUT);
+	    
+	    // Scale animation
+	    javafx.animation.ScaleTransition scaleIn = new javafx.animation.ScaleTransition(Duration.seconds(0.7), root);
+	    scaleIn.setFromX(0.96);
+	    scaleIn.setFromY(0.96);
+	    scaleIn.setToX(1.0);
+	    scaleIn.setToY(1.0);
+	    scaleIn.setInterpolator(Interpolator.EASE_OUT);
+	    
+	    // Run fade and scale together
+	    javafx.animation.ParallelTransition parallel = new javafx.animation.ParallelTransition(fadeIn, scaleIn);
+	    
+	    SequentialTransition sequence = new SequentialTransition(pause, parallel);
+	    
+	    Platform.runLater(() -> {
+	        sequence.play();
+	    });
+	}
+
 
 }

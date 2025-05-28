@@ -190,4 +190,8 @@ public class SceneConfig {
 		gameController.visualizeTrap(targetCell);
 	}
 	
+	
+	public BoardController getBoardController(){
+		return gameController;
+	}
 }

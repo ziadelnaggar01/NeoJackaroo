@@ -59,6 +59,8 @@ public class Controller {
 				SoundManager.getInstance().preloadSound("trapSoundEffect", "/view/assests/sound/trapSoundEffect.mp3");
 				SoundManager.getInstance().preloadSound("saver", "/view/assests/sound/saver.mp3");
 				SoundManager.getInstance().preloadSound("burner", "/view/assests/sound/burner.mp3");
+				SoundManager.getInstance().preloadSound("startGame", "/view/assets/audio/startGameSound.mp3");
+
 				return null;
 			}
 		};
