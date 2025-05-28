@@ -5,7 +5,7 @@
 ## 📝 Overview
 NeoJackaroo is a Java-based board game where players compete against computer-controlled opponents using a customized ruleset. The game follows Object-Oriented Programming (OOP) principles and features structured gameplay mechanics.
 
-🚧 Status: This game is currently under development and is not playable yet. 🚧
+🚧 Status: This game is now **complete** and includes custom-designed visuals, sound effects, animations, and innovative rule sets.
 
 ## 🎮 Features
 - Computer-controlled opponents
@@ -52,7 +52,13 @@ After importing, verify that Eclipse recognizes the project correctly:
 2. Check the following:
    - The **Source** tab includes the `src` folder.
    - The **Libraries** tab contains the **JRE System Library**.
-   
----
-🚀 *Enjoy the game and happy coding!*
+  
+# ⚠️ Recommended Setup
+
+### Display resolution: 1920×1080
+
+### Display scaling: 100%
+### Running the game outside these settings may affect UI layout, animations, or game visuals.
+
+# 🚀 *Enjoy the game and happy coding!*
 
