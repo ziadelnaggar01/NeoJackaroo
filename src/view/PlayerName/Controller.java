@@ -67,10 +67,14 @@ public class Controller {
 				popUpLabel.setText("Please enter a name!");
 				shakeNode(popUpLabel);
 			} else {
+				BoardController controller = SceneConfig.getInstance()
+						.getBoardController();
 				Parent root = SceneConfig.getInstance().getGameScene();
 				SceneConfig.getInstance().setPlayerName(
 						nameTextField.getText().trim());
 				GenericController.switchScene(event, root);
+				controller.fadeIn();
+				SoundManager.getInstance().playSound("startGame");
 				MusicManager.getInstance().playMusic(
 						"/view/assets/audio/Vibe.mp3");
 			}
