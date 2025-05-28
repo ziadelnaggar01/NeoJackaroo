@@ -40,11 +40,9 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.util.Duration;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

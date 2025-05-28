@@ -5,7 +5,6 @@ import controller.GenericController;
 import controller.MusicManager;
 import controller.SceneConfig;
 import controller.SoundManager;
-import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
