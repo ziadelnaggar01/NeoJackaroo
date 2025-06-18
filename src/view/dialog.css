@@ -1,0 +1,59 @@
+/* dialog.css: Neon NeoJackaroo Style */
+
+.dialog-pane {
+  /* Dark, slightly translucent background */
+  -fx-background-color: rgba(10,10,30,0.9);
+  
+  /* Neon cyan border with glow */
+  -fx-border-color: #0ff;
+  -fx-border-width: 3;
+  -fx-border-radius: 8;
+  
+  /* Outer glow effect */
+  -fx-effect: dropshadow(gaussian, rgba(0,255,255,0.7), 20, 0.5, 0, 0);
+  -fx-padding: 20;
+}
+
+.dialog-pane .header-panel {
+  -fx-background-color: transparent;
+}
+
+.dialog-pane .header-panel .label {
+  /* Neon magenta header text */
+  -fx-text-fill: #f0f;
+  -fx-font-size: 18px;
+  -fx-font-weight: bold;
+  /* reduced radius, lower opacity, smaller spread */
+  -fx-effect: dropshadow(gaussian, rgba(255,0,255,0.6), 7, 0.43, 0, 0);
+}
+
+.dialog-pane .content {
+  /* Monospaced, glowing cyan text */
+  -fx-font-family: "Consolas", monospace;
+  -fx-font-size: 14px;
+  -fx-text-fill: #0ff;
+  -fx-effect: dropshadow(gaussian, rgba(0,255,255,0.5), 5, 0.5, 0, 0);
+}
+
+.dialog-pane .button-bar .button {
+  /* Dark button with neon outline */
+  -fx-background-color: #111;
+  -fx-text-fill: #0ff;
+  -fx-font-weight: bold;
+  -fx-border-color: #0ff;
+  -fx-border-width: 2;
+  -fx-border-radius: 4;
+  -fx-padding: 6 12 6 12;
+  -fx-effect: dropshadow(gaussian, rgba(0,255,255,0.6), 8, 0.5, 0, 0);
+}
+
+.dialog-pane .button-bar .button:hover {
+  /* Intensify glow on hover */
+  -fx-effect: dropshadow(gaussian, rgba(0,255,255,0.9), 15, 0.7, 0, 0);
+  -fx-background-color: #222;
+}
+
+.dialog-pane .button-bar .button:pressed {
+  /* Brief “pulse” inset glow */
+  -fx-effect: innershadow(gaussian, rgba(0,255,255,0.9), 10, 0.5, 0, 0);
+}
