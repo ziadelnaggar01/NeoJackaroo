@@ -1,5 +1,7 @@
 package view.splashScene;
 
+import java.net.URL;
+
 import controller.MusicManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -30,7 +32,11 @@ public class Controller {
 	@FXML
 	public void initialize() {
 		// 1) Start the video
-		Media media = new Media(getClass().getResource("/view/assets/hype_video.mp4").toExternalForm());
+		URL resource = getClass().getClassLoader().getResource("view/assets/hype_video.mp4");
+		if (resource == null) {
+		    throw new RuntimeException("Could not load video: view/assets/hype_video.mp4");
+		}
+		Media media = new Media(resource.toExternalForm());
 		MediaPlayer player = new MediaPlayer(media);
 		mediaView.setMediaPlayer(player);
 
