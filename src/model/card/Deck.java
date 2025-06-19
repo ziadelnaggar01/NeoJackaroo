@@ -37,11 +37,18 @@ public class Deck {
 	public static void loadCardPool(BoardManager boardManager, GameManager gameManager) throws IOException {
 		cardsPool = new ArrayList<>();
 
-		BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE));
+	       // Get resource as stream using class loader
+        InputStream inputStream = Deck.class.getClassLoader().getResourceAsStream(CARDS_FILE);
+        if (inputStream == null) {
+            throw new FileNotFoundException("Resource not found: " + CARDS_FILE);
+        }
 
-		while (br.ready()) {
-			String nextLine = br.readLine();
-			String[] data = nextLine.split(",");
+        // Use try-with-resources for automatic closing
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            String nextLine;
+            // Use standard null-check reading pattern
+            while ((nextLine = br.readLine()) != null) {
+                String[] data = nextLine.split(",");
 
 			if (data.length == 0)
 				throw new IOException(nextLine);
@@ -106,6 +113,7 @@ public class Deck {
 				cardsPool.add(card);
 			}
 		}
+        }
 	}
 
 	/**
