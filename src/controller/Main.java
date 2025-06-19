@@ -86,7 +86,7 @@ public class Main extends Application {
             pane.setPrefWidth(600);
             //also ensure the text wraps nicely:
             pane.lookup(".content.label").setStyle("-fx-wrap-text: true;");
-            pane.getStylesheets().add(getClass().getResource("/view/dialog.css").toExternalForm());
+            pane.getStylesheets().add(getClass().getResource("/view/css/alert.css").toExternalForm());
             pane.getStyleClass().add("dialog-pane");
             
             ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/view/assests/scene/NeonErrorSymbol.png")));

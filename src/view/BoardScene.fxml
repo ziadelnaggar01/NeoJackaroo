@@ -319,7 +319,7 @@
                   <Image url="@assests/scene/neonSettingsIcon.png" />
                </image>
             </ImageView>
-            <Button fx:id="playButton" graphicTextGap="5.0" layoutX="-29.0" layoutY="113.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="64.0" prefWidth="170.0" style="-fx-background-color: white;" styleClass="play-button" stylesheets="@style.css" text="Play" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="playButton" graphicTextGap="5.0" layoutX="-29.0" layoutY="113.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="64.0" prefWidth="170.0" style="-fx-background-color: white;" styleClass="play-button" stylesheets="@css/style.css" text="Play" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="Orbitron Bold" size="26.0" />
                </font>
@@ -340,7 +340,7 @@
                   </LinearGradient>
                </textFill>
             </Button>
-            <Button fx:id="skipTurnButton" graphicTextGap="5.0" layoutX="152.0" layoutY="113.0" mnemonicParsing="false" onMouseClicked="#skipTurnButtonOnClick" prefHeight="64.0" prefWidth="180.0" style="-fx-background-color: white;" styleClass="play-button" stylesheets="@style.css" text="Skip Turn" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="skipTurnButton" graphicTextGap="5.0" layoutX="152.0" layoutY="113.0" mnemonicParsing="false" onMouseClicked="#skipTurnButtonOnClick" prefHeight="64.0" prefWidth="180.0" style="-fx-background-color: white;" styleClass="play-button" stylesheets="@css/style.css" text="Skip Turn" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="Orbitron Bold" size="26.0" />
                </font>
@@ -373,7 +373,7 @@
                         <Font name="Orbitron Bold" size="27.0" />
                      </font>
                   </Label>
-                  <Slider fx:id="splitDistanceSlider" layoutX="47.0" layoutY="94.0" majorTickUnit="1.0" max="6.0" min="1.0" minHeight="-Infinity" minorTickCount="0" onMouseClicked="#onSplitDistanceSliderChanged" onMouseDragged="#onSplitDistanceSliderChanged" prefHeight="13.0" prefWidth="221.0" stylesheets="@style.css" value="1.0" />
+                  <Slider fx:id="splitDistanceSlider" layoutX="47.0" layoutY="94.0" majorTickUnit="1.0" max="6.0" min="1.0" minHeight="-Infinity" minorTickCount="0" onMouseClicked="#onSplitDistanceSliderChanged" onMouseDragged="#onSplitDistanceSliderChanged" prefHeight="13.0" prefWidth="221.0" stylesheets="@css/style.css" value="1.0" />
                   <Label fx:id="splitDistanceLabel1" layoutX="33.0" layoutY="119.0" prefHeight="42.0" prefWidth="35.0" text="1">
                      <font>
                         <Font name="Orbitron Bold" size="30.0" />
