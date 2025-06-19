@@ -1,4 +1,4 @@
-package view;
+package view.fullScreenAlert;
 
 import javafx.animation.TranslateTransition;
 import javafx.animation.SequentialTransition;
@@ -11,7 +11,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FullScreenAlertController implements Initializable {
+public class Controller implements Initializable {
     @FXML
     private Label alertLabel;
 

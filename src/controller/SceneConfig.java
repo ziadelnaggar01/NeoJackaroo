@@ -41,7 +41,7 @@ public class SceneConfig {
 			playerNameScene = FXMLLoader.load(getClass().getResource("/view/PlayerName/Scene.fxml"));
 			settingsScene = FXMLLoader.load(getClass().getResource("/view/settingsMenu/Scene.fxml"));
 			aboutScene = FXMLLoader.load(getClass().getResource("/view/aboutMenu/Scene.fxml"));
-			fullScreenAlert = FXMLLoader.load(getClass().getResource("/view/fullScreenAlertScene.fxml"));
+			fullScreenAlert = FXMLLoader.load(getClass().getResource("/view/fullScreenAlert/Scene.fxml"));
 
 			// Load Game Scene and controller
 			FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("/view/BoardScene.fxml"));
