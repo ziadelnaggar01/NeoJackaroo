@@ -26,12 +26,10 @@ tasks.withType(Test) {
 sourceSets {
     main {
         java {
-            // All your .java files under src/
-            srcDirs = ['src']
+            srcDirs = ['../src']
         }
         resources {
-            // Everything under src/ (CSV, FXML, CSS, images, etc.), but not the .java
-            srcDirs = ['src']
+            srcDirs = ['../src']
             excludes = ['**/*.java']
         }
     }
