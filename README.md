@@ -1,64 +1,116 @@
 # NeoJackaroo
 
-**A strategic single-player adaptation of Jackaroo with custom rules, unique cards, and computer-controlled opponents.**
+A strategic single-player adaptation of Jackaroo with custom rules, unique cards, and computer-controlled opponents.
 
 ## 📝 Overview
-NeoJackaroo is a Java-based board game where players compete against computer-controlled opponents using a customized ruleset. The game follows Object-Oriented Programming (OOP) principles and features structured gameplay mechanics.
 
-🚧 Status: This game is now **complete** and includes custom-designed visuals, sound effects, animations, and innovative rule sets.
+NeoJackaroo was developed as a part of the project based CSEN401 course at the German University in Cairo. But for us, it wasn’t just about submitting an assignment, it was about simulating a real-world software development experience.
+
+Our team, "الجيم في الجيب," approached this project like a startup: we used Git for collaboration, documented every task in GitHub Projects, and held ourselves to professional standards for coding, documentation, design, and testing.
+
+> 🎥 [Watch the Gameplay on YouTube](https://www.youtube.com/watch?v=7XBjpjv66m4&t=13s)
+
+> 🎮 [Download & Play: You can download the fully packaged executable version of NeoJackaroo here](https://ziadelnaggar.itch.io/neojackaroo).
 
 ## 🎮 Features
-- Computer-controlled opponents
-- Custom card mechanics and new game rules
-- Well-structured OOP-based design
-- Board and marble movement system
-- Exception handling for invalid actions
+
+* 💻 **Computer-controlled opponents**: Face off against intelligent CPU players.
+* 🃏 **Custom card mechanics**: Includes both standard and wild cards with special actions.
+* 🧠 **OOP-compliant design**: Clean architecture using enums, interfaces, and design patterns.
+* 🎨 **Custom-designed assets**: Handcrafted visuals created using Adobe Illustrator and Photoshop.
+* 🧪 **Robust exception handling**: Covers all edge cases and invalid actions gracefully.
+* 🎵 **Sound effects and music**: Engaging audio environment to enhance gameplay.
+* 🎬 **Smooth animations and transitions**: Responsive GUI built using JavaFX and FXML.
 
 ## 📂 Project Structure
+
 ```
 NeoJackaroo/
-│-- src/
-│   │-- engine/              # Core game engine
-│   │-- engine/board/        # Board-related logic
-│   │-- model/               # Game model
-│   │   ├── card/            # General card classes
-│   │   │   ├── standard/    # Standard card mechanics
-│   │   │   ├── wild/        # Wild card mechanics
-│   │   ├── player/          # Player logic
-│   │-- exception/           # Exception handling
-│   │-- test/                # Unit tests
-│   │-- view/                # UI and game representation
-│-- README.md                # Project documentation
+├── src/                         # Java source code
+│   ├── controller/             # App entry point and global managers
+│   ├── engine/                 # Game flow logic
+│   │   └── board/              # Board, cells, movement rules
+│   ├── exception/              # Custom exceptions
+│   ├── model/                  # Cards, players, marbles
+│   │   ├── card/               # Card logic
+│   │   │   ├── standard/       # Standard cards (Ace, King, etc.)
+│   │   │   └── wild/           # Custom wild cards (Burner, Saver)
+│   │   └── player/             # Player and CPU logic
+│   └── view/                   # JavaFX controllers and FXML scenes
+│       └── assets/             # Assets: images, sounds, gifs, CSS
+├── buildsystem/                # Gradle setup
+│   ├── build.gradle            
+│   ├── gradlew / gradlew.bat   # Gradle wrappers
+│   └── build-installer.ps1     # Script to build a Windows installer
+└── README.md                   # This file
 ```
 
 ## 🏃‍➡️ Getting Started
 
-### **1. Clone the Repository**
-First, download the project to your local machine:
+### 1. Install Dependencies
 
-```sh
+Before running or building NeoJackaroo, make sure to install:
+
+* ✅ [**Liberica JDK 21 Full**](https://bell-sw.com/pages/downloads/#/java-21-lts)
+
+  * Includes both JDK and JavaFX (essential for running the game and building the installer).
+
+* ✅ [**WiX Toolset v3.11.1**](https://github.com/wixtoolset/wix3/releases)
+
+  * When you find correct version under "Assets," download `wix311-binaries.zip`
+  * Unzip and place in a folder (e.g., `C:\wix`)
+  * Add full path C:\wix\bin to your system environment variables:
+
+      1. Press Win + S and type Environment Variables
+      
+      2. Click on Edit the system environment variables
+      
+      3. In System Properties, click Environment Variables
+      
+      4. Under System Variables, select Path and click Edit
+      
+      5. Click New and add: C:\wix\bin
+      
+      6. Click OK on all dialogs to save
+
+### 2. Clone the Repository
+
+```bash
 git clone https://github.com/ziadelnaggar01/NeoJackaroo.git
 ```
-### **2. Import the Project into Eclipse**
-1. Open Eclipse.
-2. Go to **File → Import... → Existing Projects into Workspace**.
-3. Click **Select root directory**, then browse and select the cloned repo folder.
-4. Ensure the project appears in the list, then click **Finish**.
 
-### **3. Verify Build Path**
+### 3. Import into Eclipse
+
+* Open Eclipse.
+* Go to **File → Import... → Existing Projects into Workspace**.
+* Click **Select root directory**, then browse and select the cloned repo folder.
+* Ensure the project appears in the list, then click **Finish**.
+
+### 4. Verify Build Path
+
+You can run the game directly from Eclipse or from terminal using Gradle:
 After importing, verify that Eclipse recognizes the project correctly:
 
-1. Right-click the project → **Build Path → Configure Build Path**.
-2. Check the following:
+* Right-click the project → **Build Path → Configure Build Path**.
+*  Check the following:
    - The **Source** tab includes the `src` folder.
    - The **Libraries** tab contains the **JRE System Library**.
-  
-# ⚠️ Recommended Setup
 
-### Display resolution: 1920×1080
+### 5. Build the Windows Installer
+   Open terminal in project directory and run
+```powershell
+powershell -ExecutionPolicy Bypass -File .\build-installer.ps1
+```
 
-### Display scaling: 100%
-### Running the game outside these settings may affect UI layout, animations, or game visuals.
+This generates a `.msi` file with bundled JRE and JavaFX—ready to share!
 
-# 🚀 *Enjoy the game and happy coding!*
+## ⚠️ Recommended Setup
 
+* 💻 Resolution: **1920×1080**
+* 🔍 Display scaling: **100%**
+
+## 🚀 Enjoy the Game
+
+NeoJackaroo is a love letter to teamwork, clean code, and creative gameplay. Whether you're playing or exploring the codebase, we hope you enjoy the experience as much as we did building it.
+
+**Happy coding and game on! 🎮✨**

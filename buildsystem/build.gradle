@@ -1,0 +1,65 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = '21'
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.media']
+}
+
+application {
+    // ← Set this to your own fully‑qualified Main class:
+    mainClass = 'controller.Main'
+}
+
+// Skip all tests when building
+tasks.withType(Test) {
+    enabled = false
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../src']
+        }
+        resources {
+            srcDirs = ['../src']
+            excludes = ['**/*.java']
+        }
+    }
+}
+
+dependencies {
+    // If you use a CSV library, uncomment below:
+    // implementation 'org.apache.commons:commons-csv:1.10.0'
+}
+
+shadowJar {
+    // Produce build/libs/neojackaroo.jar with code, deps, AND all resources
+    archiveBaseName.set('neojackaroo')
+    archiveClassifier.set('')
+    mergeServiceFiles()
+}
+
+// Make the default 'build' task also run shadowJar
+tasks.build.dependsOn(shadowJar)
+
+// Disable the built‑in distTar and distZip tasks
+tasks.named('distTar')         { enabled = false }
+tasks.named('distZip')         { enabled = false }
+
+// Disable the Application plugin’s startScripts
+tasks.named('startScripts')    { enabled = false }
+
+// Disable the Shadow plugin’s startShadowScripts
+tasks.named('startShadowScripts') { enabled = false }
+
+// Disable the Shadow plugin’s distribution zips/tars
+tasks.named('shadowDistZip')   { enabled = false }
+tasks.named('shadowDistTar')   { enabled = false }
