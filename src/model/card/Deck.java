@@ -115,7 +115,6 @@ public class Deck {
 			}
 		}
         }
-	}
 
 	/**
 	 * Draws a set of four cards randomly from the deck. The drawn cards are removed
