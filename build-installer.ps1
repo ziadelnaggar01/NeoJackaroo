@@ -1,7 +1,12 @@
 # Exit immediately if a command fails
 $ErrorActionPreference = "Stop"
 
-# Define paths relative to buildsystem
+# Define color message functions
+function Info($msg) { Write-Host ">>> $msg" -ForegroundColor Cyan }
+function Success($msg) { Write-Host "[OK] $msg" -ForegroundColor Green }
+function ErrorMsg($msg) { Write-Host "[ERROR] $msg" -ForegroundColor Red }
+
+# Define paths
 $buildDir = "buildsystem"
 $runtimeDir = "$buildDir/NeoJackaroo-runtime"
 $distDir = "$buildDir/dist"
@@ -9,17 +14,17 @@ $mainJar = "NeoJackaroo.jar"
 $iconPath = "src/icon.ico"
 $appName = "NeoJackaroo"
 
-Write-Host ">>> Cleaning and building shadow JAR..."
+Info "Cleaning and building shadow JAR..."
 Push-Location $buildDir
 ./gradlew clean shadowJar
 Pop-Location
 
-Write-Host ">>> Deleting old runtime directory (if exists)..."
+Info "Deleting old runtime directory (if exists)..."
 if (Test-Path $runtimeDir) {
     Remove-Item -Recurse -Force $runtimeDir
 }
 
-Write-Host ">>> Creating custom Java runtime image..."
+Info "Creating custom Java runtime image..."
 jlink `
   --add-modules java.base,java.sql,javafx.controls,javafx.fxml,javafx.media,javafx.graphics `
   --output $runtimeDir `
@@ -28,7 +33,7 @@ jlink `
   --no-header-files `
   --no-man-pages
 
-Write-Host ">>> Packaging application with jpackage..."
+Info "Packaging application with jpackage..."
 jpackage `
   --name $appName `
   --input "$buildDir/build/libs" `
@@ -43,4 +48,4 @@ jpackage `
   --vendor "Ziad Elnaggar" `
   --copyright "Copyright © 2024 Ziad Elnaggar. All rights reserved."
 
-Write-Host ">>> Installer created successfully in ./$distDir/"
+Success "Installer created successfully in '$distDir/'"
