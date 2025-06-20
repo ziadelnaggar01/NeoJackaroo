@@ -9,7 +9,9 @@ $iconPath = "src/icon.ico"
 $appName = "NeoJackaroo"
 
 Write-Host ">>> Cleaning and building shadow JAR..."
+Push-Location buildsystem
 ./gradlew clean shadowJar
+Pop-Location
 
 Write-Host ">>> Deleting old runtime directory (if exists)..."
 if (Test-Path $runtimeDir) {
