@@ -5,3 +5,13 @@
 
 # Ignore Gradle build output directory
 build
+
+NeoJackaroo-runtime
+
+.classpath
+
+.project
+
+.settings
+
+dist
