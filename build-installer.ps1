@@ -1,15 +1,16 @@
 # Exit immediately if a command fails
 $ErrorActionPreference = "Stop"
 
-# Define variables
-$runtimeDir = "NeoJackaroo-runtime"
-$distDir = "dist"
+# Define paths relative to buildsystem
+$buildDir = "buildsystem"
+$runtimeDir = "$buildDir/NeoJackaroo-runtime"
+$distDir = "$buildDir/dist"
 $mainJar = "NeoJackaroo.jar"
 $iconPath = "src/icon.ico"
 $appName = "NeoJackaroo"
 
 Write-Host ">>> Cleaning and building shadow JAR..."
-Push-Location buildsystem
+Push-Location $buildDir
 ./gradlew clean shadowJar
 Pop-Location
 
@@ -30,7 +31,7 @@ jlink `
 Write-Host ">>> Packaging application with jpackage..."
 jpackage `
   --name $appName `
-  --input "build/libs" `
+  --input "$buildDir/build/libs" `
   --main-jar $mainJar `
   --runtime-image $runtimeDir `
   --dest $distDir `
