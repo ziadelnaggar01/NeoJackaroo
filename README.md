@@ -72,6 +72,18 @@ Before running or building NeoJackaroo, make sure to install:
       5. Click New and add: C:\wix\bin
       
       6. Click OK on all dialogs to save
+         
+ ### Configure Eclipse to Use It
+ 
+  * Open Eclipse
+  
+  * Go to Window → Preferences → Java → Installed JREs
+  
+  * Click Add → Standard VM
+  
+  * In the JRE home, browse to your Liberica JDK path (e.g., C:\Programs\LibericaJDK-21)
+  
+  * Click Finish, and check the box next to it to set it as default
 
 ### 2. Clone the Repository
 
