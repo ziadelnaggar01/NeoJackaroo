@@ -95,7 +95,7 @@ git clone https://github.com/ziadelnaggar01/NeoJackaroo.git
 
 * Open Eclipse.
 * Go to **File → Import... → Existing Projects into Workspace**.
-* Click **Select root directory**, then browse and select the cloned repo folder.
+* Click **Select root directory**, then browse and select the cloned repository folder.
 * Ensure the project appears in the list, then click **Finish**.
 
 ### 4. Verify Build Path
