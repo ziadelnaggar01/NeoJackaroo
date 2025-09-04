@@ -44,6 +44,28 @@ NeoJackaroo/
 │   └── build-installer.ps1     # Script to build a Windows installer
 └── README.md                   # This file
 ```
+## 🎮 Screenshots from the Game  
+
+### 🎬 Intro  
+<img width="2559" height="1420" alt="Intro Screen" src="https://github.com/user-attachments/assets/ab9c756b-9271-46c5-b7e2-9d7e650f5613" />
+
+---
+### 🕹️ Gameplay  
+<img width="2559" height="1411" alt="Gameplay" src="https://github.com/user-attachments/assets/16339e22-304e-4dbd-b4b6-258bc3595bc4" />
+
+---
+### ⚠️ Handling Errors  
+<img width="1814" height="1069" alt="Error Handling" src="https://github.com/user-attachments/assets/7bce5cef-ece4-4e9d-8228-c74e573676d9"/>
+
+---
+
+### 🏆 Winning Situation  
+<img width="1821" height="1005" alt="Winning Screen" src="https://github.com/user-attachments/assets/c8e9ac41-f218-4dfe-ab6e-56bf5f51b2fb" />
+
+---
+
+✨ ...and much more when you try the game!
+
 
 ## 🏃‍➡️ Getting Started
 
